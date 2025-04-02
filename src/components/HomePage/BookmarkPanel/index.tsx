@@ -1,22 +1,8 @@
-import { Box, HStack, IconButton, Image, Text, VStack } from '@chakra-ui/react';
+import { Box, IconButton, Image, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
 
+import StatItem from '~/components/shared/StatItem';
 import { PADDINGS, SHADOWS } from '~/constants/styles';
-
-interface StatProps {
-    icon: string;
-    value: number;
-    name: string;
-}
-
-const StatItem: React.FC<StatProps> = ({ icon, value, name }) => (
-    <HStack spacing={2}>
-        <Image src={icon} alt={name} boxSize='24px' />
-        <Text fontSize='lg' color='green.500' fontWeight='bold'>
-            {value}
-        </Text>
-    </HStack>
-);
 
 const BookmarkPanel: React.FC = () => (
     <Box
