@@ -1,8 +1,9 @@
-import { Box, IconButton, Image, Text, VStack } from '@chakra-ui/react';
+import { Box, VStack } from '@chakra-ui/react';
 import React from 'react';
 
+import ButtonRounded from '~/components/shared/Button/Rounded';
 import StatItem from '~/components/shared/StatItem';
-import { PADDINGS, SHADOWS } from '~/constants/styles';
+import { PADDINGS } from '~/constants/styles';
 
 const BookmarkPanel: React.FC = () => (
     <Box
@@ -18,25 +19,17 @@ const BookmarkPanel: React.FC = () => (
         top={0}
         pt={PADDINGS.topMenu}
     >
-        <VStack spacing={4} py={28} width={208} height={200} justifyContent='space-between'>
+        <VStack spacing={4} py={4} width={208} height={200} justifyContent='space-between'>
             <StatItem icon='/icons/bookmarks/heart.svg' value={185} name='heart' />
             <StatItem icon='/icons/bookmarks/pople.svg' value={589} name='people' />
             <StatItem icon='/icons/bookmarks/emoji-heart-eyes.svg' value={587} name='face' />
         </VStack>
-        <Box mt={6} width={208} height={208} pt={80} background={`${SHADOWS.green}`}>
-            <IconButton
-                icon={<Image src='/icons/bookmarks/pen.svg' alt='pen' boxSize='48px' />}
-                aria-label='Write Recipe'
-                _hover={{
-                    border: 'none',
-                }}
-                color='white'
-                size='lg'
-                mb={2}
+        <Box mb={14}>
+            <ButtonRounded
+                text='Записать рецепт'
+                iconUrl='/icons/bookmarks/pen.svg'
+                isActive={true}
             />
-            <Text fontSize='sm' textAlign='center' pb={14}>
-                Записать рецепт
-            </Text>
         </Box>
     </Box>
 );

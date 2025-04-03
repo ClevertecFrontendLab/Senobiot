@@ -22,9 +22,6 @@ const SearchMenu: React.FC = () => {
     return (
         <ChakraProvider>
             <Box w='100%' p={6} rounded='md' shadow='md' mt={8} py={8} px={30} width={578}>
-                <Text fontSize='lg' fontWeight='bold' mb={4}>
-                    Приятного аппетита!
-                </Text>
                 <VStack spacing={4} align='stretch'>
                     <InputGroup>
                         <InputLeftElement>

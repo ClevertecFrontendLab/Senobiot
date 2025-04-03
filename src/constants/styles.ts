@@ -1,5 +1,6 @@
 export const PADDINGS: { [key: string]: number } = {
-    topMenu: 80,
+    topMenu: 20,
+    bottomMnu: 21,
     sideMenu: 16,
     footer: 24,
     header: 32,

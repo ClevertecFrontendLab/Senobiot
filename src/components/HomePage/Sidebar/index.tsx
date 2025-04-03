@@ -30,18 +30,18 @@ const SideMenu: React.FC = () => (
         left={0}
         m={0}
         ml={0}
-        pt={32 + PADDINGS.topMenu}
-        pb={32}
+        pt={8 + PADDINGS.topMenu}
+        pb={8}
         margin={0}
         boxShadow={SHADOWS.main}
     >
         <Box overflow='auto' display='flex' flexDirection='column' justifyContent='space-between'>
             <Accordion allowToggle>
                 {dishesCategories.map((item, index) => (
-                    <AccordionItem py={12} key={index}>
-                        <AccordionButton>
+                    <AccordionItem py={2} key={index}>
+                        <AccordionButton px={0}>
                             <Box flex='1' textAlign='left'>
-                                <HStack display='flex' alignItems='start' pl={4}>
+                                <HStack display='flex' alignItems='start' pl={1}>
                                     <Image src={item.icon} alt={item.name} boxSize='24px' />
                                     <Text cursor='pointer' pl={2}>
                                         {item.name}
@@ -53,7 +53,7 @@ const SideMenu: React.FC = () => (
                         <AccordionPanel textAlign='left' pb={4}>
                             {item.subcategories &&
                                 item.subcategories.map((subcategory, subIndex) => (
-                                    <Text py={6} ml={40} key={subIndex} textStyle='xs' pl={4}>
+                                    <Text py={2} ml={5} key={subIndex} textStyle='xs' pl={4}>
                                         {subcategory.name}
                                     </Text>
                                 ))}

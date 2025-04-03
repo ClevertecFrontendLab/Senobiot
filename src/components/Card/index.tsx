@@ -4,6 +4,7 @@ import React from 'react';
 import { BORDERS } from '~/constants/styles';
 
 import StatItem from '../shared/StatItem';
+import TextRegular from '../shared/Text/Regular';
 
 type RecipeCardProps = {
     title: string;
@@ -14,15 +15,25 @@ type RecipeCardProps = {
 };
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ title, description, imageSrc }) => (
-    <Box border={BORDERS.light} borderRadius='8px' overflow='hidden' maxW='md'>
-        <Image src={imageSrc} alt={title} borderRadius='md' />
+    <Box
+        border={BORDERS.light}
+        borderRadius='8px'
+        overflow='hidden'
+        maxWidth={{ md: 356, xl: 668 }}
+        display='flex'
+    >
+        <Image
+            src={imageSrc}
+            alt={title}
+            borderRadius='md'
+            height={{ md: 128, xl: 244 }}
+            width={{ md: 158, xl: 346 }}
+        />
         <Box p='6'>
             <Text fontSize='lg' fontWeight='bold' mb='2'>
                 {title}
             </Text>
-            <Text fontSize='sm' color='gray.500' mb='4'>
-                {description}
-            </Text>
+            <TextRegular text={description} />
             <Box display='flex' justifyContent='space-between' alignItems='center'>
                 <Button
                     leftIcon={

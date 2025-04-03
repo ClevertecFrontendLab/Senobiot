@@ -1,25 +1,36 @@
-import { Box, Flex, Grid, Text } from '@chakra-ui/react';
-import React, { ReactNode } from 'react';
+import { Flex, Grid, useBreakpointValue } from '@chakra-ui/react';
+import React from 'react';
 
 import RecipeCard from '~/components/Card';
+import ButtonViewMore from '~/components/shared/ButtonViewMore';
+import SectionSubTitle from '~/components/shared/SectionSubTitle';
 import { mostTastyCardsData } from '~/data';
 
-interface MostTastySectionProps {
-    children?: ReactNode;
-}
+const MostTastySection: React.FC = () => {
+    const columns =
+        useBreakpointValue({
+            sm: 'fr',
+            md: 'repeat(2, 2fr)',
+            xl: 'repeat(1, 2fr)',
+            '2xl': 'repeat(2, 2fr)',
+        }) || 'repeat(2, 2fr)';
 
-const MostTastySection: React.FC<MostTastySectionProps> = () => (
-    <Box>
-        <Flex alignItems='center'>
-            <Text color='white' fontWeight='bold' fontSize='xl'>
-                Самое сочное
-            </Text>
+    return (
+        <Flex wrap='wrap' justifyContent='space-between'>
+            <SectionSubTitle title='Самое сочноe' />
+            <ButtonViewMore title='Вся побдорка' />
+            <Grid templateColumns={columns} gap={6}>
+                {mostTastyCardsData.map((card, index) => (
+                    <RecipeCard
+                        key={index}
+                        title={card.title}
+                        description={card.description}
+                        imageSrc={card.img}
+                    />
+                ))}
+            </Grid>
         </Flex>
-        <Grid templateColumns='repeat(2, 1fr)' gap={24}>
-            {mostTastyCardsData.map((card) => (
-                <RecipeCard title={card.title} description={card.description} imageSrc={card.img} />
-            ))}
-        </Grid>
-    </Box>
-);
+    );
+};
+
 export default MostTastySection;
