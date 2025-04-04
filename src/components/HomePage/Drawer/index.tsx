@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-import SideMenu from '../Sidebar';
+import SideMenu from '../../layouts-components/SideMenu';
 
 const DrawerMenu: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();

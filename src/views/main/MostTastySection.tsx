@@ -1,0 +1,37 @@
+import { Flex, Grid, useBreakpointValue } from '@chakra-ui/react';
+import React from 'react';
+
+import ButtonViewMore from '~/components/shared-components/ButtonViewMore';
+import RecipeCard from '~/components/shared-components/RecieptCard';
+import TitleText from '~/components/shared-components/Text/Title';
+TitleText;
+import { mostTastyCardsData } from '~/data';
+
+const MostTastySection: React.FC = () => {
+    const columns =
+        useBreakpointValue({
+            sm: 'fr',
+            md: 'repeat(2, 2fr)',
+            xl: 'repeat(1, 2fr)',
+            '2xl': 'repeat(2, 2fr)',
+        }) || 'repeat(2, 2fr)';
+
+    return (
+        <Flex wrap='wrap' justifyContent='space-between'>
+            <TitleText titleText='Самое сочноe' />
+            <ButtonViewMore title='Вся побдорка' />
+            <Grid templateColumns={columns} gap={6}>
+                {mostTastyCardsData.map((card, index) => (
+                    <RecipeCard
+                        key={index}
+                        title={card.title}
+                        text={card.description}
+                        imageSrc={card.img}
+                    />
+                ))}
+            </Grid>
+        </Flex>
+    );
+};
+
+export default MostTastySection;
