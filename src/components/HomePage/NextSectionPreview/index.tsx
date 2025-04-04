@@ -1,8 +1,8 @@
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 
-import SectionSubTitle from '~/components/shared/SectionSubTitle';
 import TextRegular from '~/components/shared/Text/Regular';
+import TitleText from '~/components/shared/Text/Title';
 import { dishesCategories, dishesList } from '~/data';
 
 import NextSectionCard from './NextSectionCard';
@@ -14,10 +14,10 @@ const NextSectionPreview: React.FC = () => (
     <Box>
         <Flex>
             <Box flexBasis='50%'>
-                <SectionSubTitle title={dishesCategoryTitle} />
+                <TitleText titleText={dishesCategoryTitle} />
             </Box>
             <Box flexBasis='50%'>
-                <TextRegular text={dishCategoriesDescription} />
+                <TextRegular regText={dishCategoriesDescription} />
             </Box>
         </Flex>
         <Flex>
@@ -30,10 +30,10 @@ const NextSectionPreview: React.FC = () => (
                     return (
                         <NextSectionCard
                             title={name}
-                            text={description}
-                            dishType={subcategory}
-                            bg='lime.50'
-                            iconUrl={iconUrl}
+                            description={description}
+                            categoryText={subcategory}
+                            categoryBg='lime.50'
+                            categoryIconUrl={iconUrl}
                         />
                     );
                 }

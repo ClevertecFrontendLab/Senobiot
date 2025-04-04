@@ -1,37 +1,34 @@
 import { Text } from '@chakra-ui/react';
 import React from 'react';
 
-export interface TextRegularProps {
-    text: string;
-    fontSize?: string;
-    fontWeight?: string;
-    fontFamily?: string;
-    fontStyle?: string;
-    lineHeight?: string;
-    color?: string;
-    noOfLines?: number;
-}
+export type TextRegularProps = {
+    regText?: string;
+    regTextFz?: string;
+    regTextFw?: number;
+    regTextFf?: string;
+    regTextLh?: string;
+    regTextColor?: string;
+    regTextNoOfLines?: number;
+};
 
 const TextRegular: React.FC<TextRegularProps> = ({
-    text = '',
-    fontSize = '14px',
-    fontWeight = '500',
-    fontFamily = 'Inter',
-    fontStyle = 'normal',
-    lineHeight = '20px',
-    color = 'rgba(0, 0, 0, 0.64)',
-    noOfLines = 3,
+    regText = '',
+    regTextFz = '14px',
+    regTextFw = 500,
+    regTextFf = 'Inter',
+    regTextLh = '20px',
+    regTextColor = 'rgba(0, 0, 0, 0.64)',
+    regTextNoOfLines = 3,
 }) => (
     <Text
-        fontSize={fontSize}
-        fontWeight={fontWeight}
-        fontFamily={fontFamily}
-        fontStyle={fontStyle}
-        lineHeight={lineHeight}
-        color={color}
-        noOfLines={noOfLines}
+        fontSize={regTextFz}
+        fontWeight={regTextFw}
+        fontFamily={regTextFf}
+        lineHeight={regTextLh}
+        color={regTextColor}
+        noOfLines={regTextNoOfLines}
     >
-        {text}
+        {regText}
     </Text>
 );
 

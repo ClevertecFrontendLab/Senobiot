@@ -1,26 +1,28 @@
 import { Button, Image } from '@chakra-ui/react';
 import React from 'react';
 
-type ButtonCategoryProps = {
-    text: string;
-    iconUrl?: string;
-    color?: string;
-    bg?: string;
+export type ButtonCategoryProps = {
+    categoryText?: string;
+    categoryIconUrl?: string;
+    categoryColor?: string;
+    categoryBg?: string;
+    categoryBorderRadius?: string;
 };
 
 const ButtonCategory: React.FC<ButtonCategoryProps> = ({
-    text,
-    iconUrl,
-    color = 'black',
-    bg = 'lime.300',
+    categoryText,
+    categoryIconUrl,
+    categoryColor = 'black',
+    categoryBg = 'lime.300',
+    categoryBorderRadius = '6px',
 }) => (
     <Button
-        bg={bg}
-        color={color}
-        borderRadius='6px'
+        bg={categoryBg}
+        color={categoryColor}
+        borderRadius={categoryBorderRadius}
         px={4}
         py={2}
-        leftIcon={<Image src={iconUrl} alt={`${text} icon`} boxSize={4} mt={1} />}
+        leftIcon={<Image src={categoryIconUrl} alt={`${categoryText} icon`} boxSize={4} mt={1} />}
         _hover={{
             bg: 'lime.50',
         }}
@@ -28,7 +30,7 @@ const ButtonCategory: React.FC<ButtonCategoryProps> = ({
             bg: 'lime.50',
         }}
     >
-        {text}
+        {categoryText}
     </Button>
 );
 

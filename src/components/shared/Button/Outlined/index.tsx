@@ -1,30 +1,30 @@
 import { Button } from '@chakra-ui/react';
 
-type ButtonOutlinedProps = {
-    text: string;
-    color?: string;
-    borderColor?: string;
-    bg?: string;
-    border?: string;
-    borderRadius?: string;
+export type ButtonOutlinedProps = {
+    outlBtnText: string;
+    outlBtnColor?: string;
+    outlBtnBorderColor?: string;
+    outlBtnBg?: string;
+    outlBtnBorder?: string;
+    outlBtnBorderRadius?: string;
 };
 
 const ButtonOutlined: React.FC<ButtonOutlinedProps> = ({
-    text,
-    color = 'lime.600',
-    borderColor = 'green.500',
-    bg = 'white',
-    border = '2px solid',
-    borderRadius = 'md',
+    outlBtnText,
+    outlBtnColor = 'lime.600',
+    outlBtnBorderColor = 'green.500',
+    outlBtnBg = 'white',
+    outlBtnBorder = '2px solid',
+    outlBtnBorderRadius = 'md',
 }) => (
     <Button
-        bg={bg}
-        color={color}
-        borderRadius={borderRadius}
-        border={border}
-        borderColor={borderColor}
+        bg={outlBtnBg}
+        color={outlBtnColor}
+        borderRadius={outlBtnBorderRadius}
+        border={outlBtnBorder}
+        borderColor={outlBtnBorderColor}
     >
-        {text}
+        {outlBtnText}
     </Button>
 );
 

@@ -8,7 +8,6 @@ interface NextSectionCardMinimized {
     title: string;
     buttonText?: string;
     iconUrl?: string;
-    bg?: string;
 }
 
 const NextSectionCardMinimized: React.FC<NextSectionCardMinimized> = ({
@@ -19,10 +18,10 @@ const NextSectionCardMinimized: React.FC<NextSectionCardMinimized> = ({
     <Flex>
         <Image boxSize={6} src={iconUrl}></Image>
         <Box>
-            <TextRegular fontSize='20px' lineHeight='28px' text={title} noOfLines={1} />
+            <TextRegular regTextFz='20px' regTextLh='28px' regText={title} regTextNoOfLines={1} />
         </Box>
         <Box>
-            <ButtonOutlined text={buttonText} />
+            <ButtonOutlined outlBtnText={buttonText} />
         </Box>
     </Flex>
 );

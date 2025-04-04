@@ -1,14 +1,14 @@
 import React from 'react';
 
-import SectionTitle, { SectionTitleProps } from '../SectionTitle';
+import SectionTitle, { SectionTitleProps } from '../Text/Title';
 
 interface SubTitleProps extends SectionTitleProps {
     title: string;
     fontSize?: string;
-    fontWeight?: string;
+    fontWeight?: number;
 }
 
-const SectionSubTitle: React.FC<SubTitleProps> = ({ title, fontWeight = '500', ...restProps }) => (
+const SubTitle: React.FC<SubTitleProps> = ({ title, fontWeight, ...restProps }) => (
     <SectionTitle title={title} fontWeight={fontWeight} {...restProps} />
 );
 

@@ -2,23 +2,24 @@ import { Box } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
 
 import BottomMnu from '~/components/BottomMenu';
-import SectionTitle from '~/components/shared/SectionTitle';
+import SectionTitle from '~/components/shared/Text/Title';
+import Slider from '~/components/Slider';
 import { PADDINGS } from '~/constants/styles';
+import { sliderData } from '~/data';
 
 import BlogSection from '../BlogsSection';
 import NextSectionPreview from '../NextSectionPreview';
 import SearchMenu from '../SearchMenu';
 import MostTastySection from './MostTastySection';
-
 interface ContentProps {
     children?: ReactNode;
 }
 
-const Content: React.FC<ContentProps> = ({ children }) => (
+const Content: React.FC<ContentProps> = () => (
     <Box minH='100vh' mx={PADDINGS.content} pt={PADDINGS.topMenu} maxW={1360}>
-        <SectionTitle title='Приятного аппетита!' />
+        <SectionTitle titleText='Приятного аппетита!' />
         <SearchMenu />
-        <Box>{children}</Box>
+        <Slider slides={sliderData} />
         <MostTastySection />
         <BlogSection />
         <NextSectionPreview />

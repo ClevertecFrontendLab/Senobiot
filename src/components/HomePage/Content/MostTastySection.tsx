@@ -3,7 +3,8 @@ import React from 'react';
 
 import RecipeCard from '~/components/Card';
 import ButtonViewMore from '~/components/shared/ButtonViewMore';
-import SectionSubTitle from '~/components/shared/SectionSubTitle';
+import TitleText from '~/components/shared/Text/Title';
+TitleText;
 import { mostTastyCardsData } from '~/data';
 
 const MostTastySection: React.FC = () => {
@@ -17,7 +18,7 @@ const MostTastySection: React.FC = () => {
 
     return (
         <Flex wrap='wrap' justifyContent='space-between'>
-            <SectionSubTitle title='Самое сочноe' />
+            <TitleText titleText='Самое сочноe' />
             <ButtonViewMore title='Вся побдорка' />
             <Grid templateColumns={columns} gap={6}>
                 {mostTastyCardsData.map((card, index) => (

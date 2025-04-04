@@ -1,29 +1,26 @@
 import { Flex } from '@chakra-ui/react';
 
-import ButtonCategory from '../ButtonCategory';
-import StatItem from '../StatItem';
+import ButtonCategory, { ButtonCategoryProps } from '../ButtonCategory';
+import StatItem, { StatItemProps } from '../StatItem';
 
-interface BookmarksSectionProps {
-    name: string;
-    likeValue?: number;
-    peopleValue?: number;
-    bg?: string;
-    iconUrl?: string;
+export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProps {
     withoutCategory?: boolean;
+    likesAmount?: StatItemProps['statValue'];
+    peopleAmount?: StatItemProps['statValue'];
+    heartIcon?: string;
+    peopleIcon?: string;
 }
 
 const BookmarksSection: React.FC<BookmarksSectionProps> = ({
-    name,
-    likeValue,
-    peopleValue,
-    bg,
-    iconUrl,
-    withoutCategory,
+    heartIcon = '/icons/bookmarks/heart.svg',
+    peopleIcon = '/icons/bookmarks/emoji-heart-eyes.svg',
+    withoutCategory = false,
+    ...props
 }) => (
     <Flex>
-        {!withoutCategory && <ButtonCategory bg={bg} text={name} iconUrl={iconUrl} />}
-        <StatItem icon='/icons/bookmarks/heart.svg' value={likeValue || 85} name='heart' />
-        <StatItem icon='/icons/bookmarks/pople.svg' value={peopleValue || 152} name='people' />
+        {!withoutCategory && <ButtonCategory {...props} />}
+        <StatItem {...props} statIconUrl={heartIcon} />
+        <StatItem {...props} statIconUrl={peopleIcon} />
     </Flex>
 );
 
