@@ -3,10 +3,10 @@ import React from 'react';
 
 import { PADDINGS } from '~/constants/styles';
 
+import { StatItem } from '../shared-components';
 import ButtonRounded from '../shared-components/Button/Rounded';
-import StatItem from '../shared-components/StatItem';
 
-const BookmarkPanel: React.FC = () => (
+export const BookmarkSideMenu: React.FC = () => (
     <Box
         display='flex'
         flexDirection='column'
@@ -46,5 +46,3 @@ const BookmarkPanel: React.FC = () => (
         </Box>
     </Box>
 );
-
-export default BookmarkPanel;

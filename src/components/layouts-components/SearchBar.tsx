@@ -16,7 +16,7 @@ import React, { useState } from 'react';
 
 import { BORDERS } from '~/constants/styles';
 
-const SearchBar: React.FC = () => {
+export const SearchBar: React.FC = () => {
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
 
     return (
@@ -69,5 +69,3 @@ const SearchBar: React.FC = () => {
         </ChakraProvider>
     );
 };
-
-export default SearchBar;

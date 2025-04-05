@@ -6,25 +6,30 @@ export type StatItemProps = {
     statIconAltText?: string;
     statTextColor?: string;
     statTextFontWeight?: number;
-    stateIconSize?: string;
+    stateIconSize?: number;
     stateTextFontSize?: string;
+    stateTextLh?: string;
 };
 
-const StatItem: React.FC<StatItemProps> = ({
+export const StatItem: React.FC<StatItemProps> = ({
     statIconUrl,
     statValue = 85,
-    statTextColor = 'green.500',
+    statTextColor = 'lime.600',
     statTextFontWeight = 700,
-    stateIconSize = '24px',
+    stateIconSize = 8,
     stateTextFontSize = '20px',
     statIconAltText = 'heart',
+    stateTextLh,
 }) => (
-    <HStack spacing={2}>
+    <HStack spacing={2} width={14}>
         <Image src={statIconUrl} alt={statIconAltText} boxSize={stateIconSize} />
-        <Text fontSize={stateTextFontSize} color={statTextColor} fontWeight={statTextFontWeight}>
+        <Text
+            fontSize={stateTextFontSize}
+            color={statTextColor}
+            fontWeight={statTextFontWeight}
+            lineHeight={stateTextLh}
+        >
             {statValue}
         </Text>
     </HStack>
 );
-
-export default StatItem;

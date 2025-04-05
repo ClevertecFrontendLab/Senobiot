@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 
 import ButtonCategory, { ButtonCategoryProps } from '../ButtonCategory';
-import StatItem, { StatItemProps } from '../StatItem';
+import { StatItem, StatItemProps } from '../StatItem';
 
 export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProps {
     noCategory?: boolean;

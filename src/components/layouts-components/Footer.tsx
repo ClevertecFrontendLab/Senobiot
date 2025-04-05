@@ -1,7 +1,7 @@
 import { Box, Button, HStack, Image, Spacer, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
 
-const Footer: React.FC = () => (
+export const Footer: React.FC = () => (
     <Box bg='gray.100' py={4} px={6} borderTop='1px solid' borderColor='gray.300' textAlign='left'>
         <VStack spacing={2} align='stretch'>
             <HStack mb={4}>
@@ -25,5 +25,3 @@ const Footer: React.FC = () => (
         </VStack>
     </Box>
 );
-
-export default Footer;

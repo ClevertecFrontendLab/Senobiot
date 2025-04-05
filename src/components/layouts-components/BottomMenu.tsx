@@ -32,7 +32,7 @@ const bottomMenuProps = [
     },
 ];
 
-const BottomMnu: React.FC = () => {
+export const BottomMnu: React.FC = () => {
     const display =
         useBreakpointValue({
             xl: 'none',
@@ -56,5 +56,3 @@ const BottomMnu: React.FC = () => {
         </Flex>
     );
 };
-
-export default BottomMnu;
