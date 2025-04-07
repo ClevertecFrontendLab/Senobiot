@@ -1,8 +1,10 @@
 import { HStack, Image } from '@chakra-ui/react';
 import React from 'react';
 
+import { WIDTHS } from '~/constants/styles';
+
 const Logo: React.FC = () => (
-    <HStack mr={8}>
+    <HStack pl={4} mr={{ base: 0, lg: 6 }} width={{ base: 'initial', lg: WIDTHS.sideMenu }}>
         <Image src='/logo-img.svg' alt='logo cup' boxSize={8} />
         <Image
             display={{ base: 'none', md: 'block' }}

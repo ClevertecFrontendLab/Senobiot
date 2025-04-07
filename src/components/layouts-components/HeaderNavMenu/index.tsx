@@ -33,7 +33,7 @@ export const HeaderNavMenu: React.FC = () => {
             maxWidth='1920px'
             width='100vw'
             display='flex'
-            px={4}
+            pr={4}
             position='fixed'
             top={0}
             left='50%'
@@ -42,9 +42,9 @@ export const HeaderNavMenu: React.FC = () => {
             justifyContent='space-between'
             alignItems='center'
         >
-            <HStack spacing={8}>
+            <HStack>
                 <Logo />
-                <HStack as='nav' spacing={4} display={{ base: 'none', lg: 'flex' }}>
+                <HStack as='nav' spacing={4} display={{ base: 'none', xl: 'flex' }}>
                     <BreadCrump />
                 </HStack>
             </HStack>

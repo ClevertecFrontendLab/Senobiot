@@ -1,4 +1,4 @@
-import { HStack } from '@chakra-ui/react';
+import { Flex, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
 import { StatItem, StatItemProps } from '../';
@@ -7,15 +7,42 @@ interface ProfileNotificationProps extends StatItemProps {
     bookmarksValue?: number;
     peopleValue?: number;
     likesValue?: number;
+    justifyContent?: string;
+    flexDirection?:
+        | ResponsiveValue<'row' | 'row-reverse' | 'column' | 'column-reverse'>
+        | undefined;
+    alignItems?: string;
+    alignContent?: string;
+    height?: number;
+    width?: string;
+    px?: number;
+    py?: number;
 }
 
 export const ProfileNotification: React.FC<ProfileNotificationProps> = ({
     bookmarksValue = 185,
     peopleValue = 589,
     likesValue = 587,
+    justifyContent = 'space-between',
+    flexDirection,
+    alignItems,
+    alignContent = 'initial',
+    height,
+    width,
+    px,
+    py,
     ...props
 }) => (
-    <HStack gap={0} justifyContent='space-between'>
+    <Flex
+        justifyContent={justifyContent}
+        flexDirection={flexDirection}
+        alignItems={alignItems}
+        alignContent={alignContent}
+        w={width}
+        h={height}
+        px={px}
+        py={py}
+    >
         <StatItem
             {...props}
             statIconUrl='/icons/bookmarks/heart.svg'
@@ -34,5 +61,5 @@ export const ProfileNotification: React.FC<ProfileNotificationProps> = ({
             statValue={likesValue}
             statIconAltText='face'
         />
-    </HStack>
+    </Flex>
 );

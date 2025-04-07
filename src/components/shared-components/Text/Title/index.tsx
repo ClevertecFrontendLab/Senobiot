@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/react';
+import { Heading, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
 export type TitleTextProps = {
@@ -9,6 +9,7 @@ export type TitleTextProps = {
     titleTextFs?: string;
     titleTextLh?: string;
     titleTextColor?: string;
+    textAlign?: ResponsiveValue<'left' | 'center' | 'right' | 'justify'>;
 };
 
 const TitleText: React.FC<TitleTextProps> = ({
@@ -19,17 +20,20 @@ const TitleText: React.FC<TitleTextProps> = ({
     titleTextFs = 'normal',
     titleTextLh = '48px',
     titleTextColor = '#000',
+    textAlign = 'center',
 }) => (
-    <Text
+    <Heading
+        as='h1'
         fontSize={titleTextFz}
         fontWeight={titleTextFw}
         fontFamily={titleTextFf}
         fontStyle={titleTextFs}
         lineHeight={titleTextLh}
         color={titleTextColor}
+        textAlign={textAlign}
     >
         {titleText}
-    </Text>
+    </Heading>
 );
 
 export default TitleText;

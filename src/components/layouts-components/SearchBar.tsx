@@ -1,7 +1,6 @@
-import { SearchIcon, SettingsIcon } from '@chakra-ui/icons';
+import { SearchIcon } from '@chakra-ui/icons';
 import {
-    Box,
-    ChakraProvider,
+    Flex,
     IconButton,
     Input,
     InputGroup,
@@ -10,62 +9,91 @@ import {
     Select,
     Switch,
     Text,
-    VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
-import { BORDERS } from '~/constants/styles';
+import { routeFinder } from '~/configs/navigationConfig';
+import { BORDERS, PADDINGS } from '~/constants/styles';
+import { usePathnames } from '~/utils';
+
+import TitleText from '../shared-components/Text/Title';
 
 export const SearchBar: React.FC = () => {
+    const currentSection = routeFinder(`/${usePathnames()[0]}`)?.title; // временная заглушка
+
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
 
     return (
-        <ChakraProvider>
-            <Box w='100%' p={6} rounded='md' shadow='md' mt={8} py={8} px={30} width={578}>
-                <VStack spacing={4} align='stretch'>
-                    <InputGroup>
-                        <InputLeftElement>
+        <Flex
+            direction='column'
+            position='fixed'
+            top={PADDINGS.topMenu * 4 + 32}
+            left='50%'
+            transform='translateX(-50%)'
+            py={8}
+            maxW={518}
+            w={518}
+        >
+            <TitleText titleText={currentSection} />
+            <Flex direction='column' py={8}>
+                <Flex>
+                    <InputGroup display='flex' alignItems='center' mb={4}>
+                        <InputLeftElement position='initial' display='flex' mr={3}>
                             <IconButton
-                                icon={<SettingsIcon />}
+                                icon={<img src='/icons/filter.svg' alt='filter' />}
                                 aria-label='Filter'
                                 variant='ghost'
-                                p={3}
                                 border={BORDERS.main}
-                                borderRadius={6}
+                                size='lg'
+                                _hover={{ bg: 'lime.50' }}
                             />
                         </InputLeftElement>
                         <Input
+                            display='flex'
                             border={BORDERS.main}
+                            pl={8}
                             placeholder='Название или ингредиент...'
-                            size='md'
+                            size='lg'
+                            _placeholder={{ color: 'lime.800' }}
                             focusBorderColor='teal.500'
-                            ml={20}
                         />
                         <InputRightElement>
-                            <IconButton icon={<SearchIcon />} aria-label='Search' variant='ghost' />
+                            <IconButton
+                                icon={<SearchIcon />}
+                                aria-label='Search'
+                                variant='ghost'
+                                size='lg'
+                                pt={2}
+                                pr={1}
+                                _hover={{ bg: 0 }}
+                            />
                         </InputRightElement>
                     </InputGroup>
-                    <Box display='flex' alignItems='center' justifyContent='space-between'>
-                        <Text fontSize='md' color='gray.600'>
+                </Flex>
+                <Flex>
+                    <Flex alignItems='center' justifyContent='space-between'>
+                        <Text fontSize='md' fontWeight={500} flexShrink={0}>
                             Исключить мои аллергены
                         </Text>
                         <Switch
-                            colorScheme='teal'
+                            pr={4}
+                            pl={3}
                             isChecked={isExcludeAllergens}
                             onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
                         />
                         <Select
+                            textOverflow='ellipsis'
                             placeholder='Выберите из списка...'
-                            focusBorderColor='teal.500'
-                            w={234}
+                            focusBorderColor='blackAlpha.200'
+                            overflow='hidden'
                         >
                             <option value='1'>Корень мандрагоры</option>
                             <option value='2'>Рог единорога</option>
-                            <option value='3'>Секретный ингридиент из слёрма</option>
+                            <option value='3'>Секретный ингридиент из слёрма и еще чего</option>
                         </Select>
-                    </Box>
-                </VStack>
-            </Box>
-        </ChakraProvider>
+                    </Flex>
+                </Flex>
+            </Flex>
+        </Flex>
     );
 };

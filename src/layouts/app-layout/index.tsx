@@ -3,6 +3,7 @@ import React from 'react';
 
 import {
     BookmarkSideMenu,
+    BottomNavMenu,
     HeaderNavMenu,
     SearchBar,
     SideMenu,
@@ -16,6 +17,7 @@ const AppLayout: React.FC = () => (
         <BookmarkSideMenu />
         <SearchBar />
         <AppViews />
+        <BottomNavMenu />
     </Box>
 );
 

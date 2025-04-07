@@ -6,8 +6,10 @@ export interface ButtonRoundedProps extends TextRegularProps {
     text: TextRegularProps['regText'];
     iconUrl: string;
     textColor?: string;
+    activeTextColor?: string;
     fontWeight?: number;
     isActive?: boolean;
+    gap?: number;
 }
 
 const ButtonRounded: React.FC<ButtonRoundedProps> = ({
@@ -16,6 +18,8 @@ const ButtonRounded: React.FC<ButtonRoundedProps> = ({
     isActive = false,
     fontWeight,
     textColor,
+    activeTextColor,
+    gap = 1,
 }) => (
     <Flex
         wrap='wrap'
@@ -32,7 +36,7 @@ const ButtonRounded: React.FC<ButtonRoundedProps> = ({
             alignItems='center'
             borderRadius='50%'
             bg={isActive ? 'black' : 'none'}
-            mb={1}
+            mb={gap}
             boxShadow={isActive ? '0 0 40px #C4FF61' : 'none'}
         >
             <Image
@@ -46,7 +50,7 @@ const ButtonRounded: React.FC<ButtonRoundedProps> = ({
                 regText={text}
                 regTextFz='12px'
                 regTextLh='16px'
-                regTextColor={isActive ? 'black' : textColor}
+                regTextColor={isActive ? (activeTextColor ? activeTextColor : 'black') : textColor}
                 regTextFw={!isActive ? 400 : fontWeight}
             />
         </Box>

@@ -1,13 +1,12 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import React from 'react';
-import { useLocation } from 'react-router';
-// import { navTree } from '~/configs/navigationConfig';
+
+import { routeFinder } from '~/configs/navigationConfig';
+import { usePathnames } from '~/utils';
 
 const BreadCrump: React.FC = () => {
-    const location = useLocation();
-    const pathnames = location.pathname.split('/').filter((x) => x);
-    !pathnames.length && pathnames.push();
+    const pathnames = usePathnames();
 
     return (
         <Breadcrumb
@@ -15,9 +14,10 @@ const BreadCrump: React.FC = () => {
             separator={<ChevronRightIcon color='gray.500' />}
             fontSize='md'
         >
-            {pathnames.map((path, index) => {
+            {pathnames.map((_, index) => {
                 const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
                 const isLast = index === pathnames.length - 1;
+                const branch = routeFinder(routeTo);
 
                 return (
                     <BreadcrumbItem key={index}>
@@ -25,7 +25,7 @@ const BreadCrump: React.FC = () => {
                             color={isLast ? 'black' : `black.alpha700`}
                             href={isLast ? '#' : routeTo}
                         >
-                            {path}
+                            {branch?.title}
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                 );

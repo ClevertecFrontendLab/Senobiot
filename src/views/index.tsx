@@ -9,12 +9,17 @@ const AppViews: React.FC = () => (
         <Routes>
             {navTree.map((navItem) => (
                 <Route
-                    key={navItem.key}
-                    path={navItem.path}
-                    Component={lazy(() => import(`./${navItem.key}`))}
+                    key={navItem.navKey}
+                    path={navItem.route}
+                    Component={lazy(() =>
+                        import(`./${navItem.route}`).catch(() => {
+                            console.error(`Не сделал "${navItem.navKey}`);
+                            return import('./main');
+                        }),
+                    )}
                 />
             ))}
-            <Route path='*' element={<Navigate to={navTree[0]?.path} replace />} />
+            <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
     </Suspense>
 );
