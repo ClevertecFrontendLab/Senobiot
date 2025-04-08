@@ -17,8 +17,8 @@ import { BORDERS, PADDINGS } from '~/constants/styles';
 import { allergensIngredients } from '~/data';
 import { usePathnames } from '~/utils';
 
-import TextRegular from '../Text/Regular';
-import TitleText from '../Text/Title';
+import TextRegular from '../../shared-components/Text/Regular';
+import TitleText from '../../shared-components/Text/Title';
 
 export const SearchBar: React.FC = () => {
     const path = usePathnames();

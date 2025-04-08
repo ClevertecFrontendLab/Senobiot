@@ -84,6 +84,8 @@ export const HeaderNavMenu: React.FC = () => {
             </Flex>
             <Flex display={{ base: 'flex', xl: 'none' }}>
                 <ProfileNotification
+                    gap={4}
+                    px={4}
                     stateIconSize={3}
                     statTextFontWeight={600}
                     stateTextFontSize='12px'

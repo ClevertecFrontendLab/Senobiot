@@ -30,6 +30,8 @@ export const BookmarkSideMenu: React.FC = () => (
             py={6}
             width='100%'
             alignItems='center'
+            stackDirection='column'
+            gap={10}
         />
         <Box mb={14}>
             <ButtonRounded

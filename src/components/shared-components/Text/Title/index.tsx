@@ -9,7 +9,9 @@ export type TitleTextProps = {
     titleTextFs?: string;
     titleTextLh?: ResponsiveValue<string>;
     titleTextColor?: string;
-    textAlign?: ResponsiveValue<'left' | 'center' | 'right' | 'justify'>;
+    titleTextAlign?: ResponsiveValue<'left' | 'center' | 'right' | 'justify'>;
+    titleHeading?: React.ElementType;
+    titleTextNoOfLines?: ResponsiveValue<number> | number;
 };
 
 const TitleText: React.FC<TitleTextProps> = ({
@@ -20,17 +22,20 @@ const TitleText: React.FC<TitleTextProps> = ({
     titleTextFs = 'normal',
     titleTextLh = '48px',
     titleTextColor = '#000',
-    textAlign = 'center',
+    titleTextAlign = 'center',
+    titleHeading = 'h1',
+    titleTextNoOfLines = 3,
 }) => (
     <Heading
-        as='h1'
+        as={titleHeading}
         fontSize={titleTextFz}
         fontWeight={titleTextFw}
         fontFamily={titleTextFf}
         fontStyle={titleTextFs}
         lineHeight={titleTextLh}
         color={titleTextColor}
-        textAlign={textAlign}
+        textAlign={titleTextAlign}
+        noOfLines={titleTextNoOfLines}
     >
         {titleText}
     </Heading>

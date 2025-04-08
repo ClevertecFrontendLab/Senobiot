@@ -1,4 +1,4 @@
-import { HStack, Image, Text } from '@chakra-ui/react';
+import { Flex, HStack, Image, Text } from '@chakra-ui/react';
 
 export type StatItemProps = {
     statIconUrl?: string;
@@ -9,6 +9,8 @@ export type StatItemProps = {
     stateIconSize?: number;
     stateTextFontSize?: string;
     stateTextLh?: string;
+    statAlign?: string;
+    statGap?: string | number;
 };
 
 export const StatItem: React.FC<StatItemProps> = ({
@@ -20,16 +22,20 @@ export const StatItem: React.FC<StatItemProps> = ({
     stateTextFontSize = '20px',
     statIconAltText = 'heart',
     stateTextLh,
+    statAlign = 'center',
+    statGap = 2,
 }) => (
-    <HStack spacing={2} width={14}>
-        <Image src={statIconUrl} alt={statIconAltText} boxSize={stateIconSize} />
-        <Text
-            fontSize={stateTextFontSize}
-            color={statTextColor}
-            fontWeight={statTextFontWeight}
-            lineHeight={stateTextLh}
-        >
-            {statValue}
-        </Text>
-    </HStack>
+    <Flex alignItems={statAlign}>
+        <HStack spacing={statGap}>
+            <Image src={statIconUrl} alt={statIconAltText} boxSize={stateIconSize} />
+            <Text
+                fontSize={stateTextFontSize}
+                color={statTextColor}
+                fontWeight={statTextFontWeight}
+                lineHeight={stateTextLh}
+            >
+                {statValue}
+            </Text>
+        </HStack>
+    </Flex>
 );

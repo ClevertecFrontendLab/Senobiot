@@ -1,4 +1,4 @@
-import { Flex, ResponsiveValue } from '@chakra-ui/react';
+import { Flex, ResponsiveValue, Stack } from '@chakra-ui/react';
 import React from 'react';
 
 import { StatItem, StatItemProps } from '../';
@@ -17,6 +17,8 @@ interface ProfileNotificationProps extends StatItemProps {
     width?: string;
     px?: number;
     py?: number;
+    stackDirection?: ResponsiveValue<'row' | 'column' | 'row-reverse' | 'column-reverse'>;
+    gap?: string | number;
 }
 
 export const ProfileNotification: React.FC<ProfileNotificationProps> = ({
@@ -31,6 +33,8 @@ export const ProfileNotification: React.FC<ProfileNotificationProps> = ({
     width,
     px,
     py,
+    stackDirection = 'row',
+    gap,
     ...props
 }) => (
     <Flex
@@ -43,23 +47,25 @@ export const ProfileNotification: React.FC<ProfileNotificationProps> = ({
         px={px}
         py={py}
     >
-        <StatItem
-            {...props}
-            statIconUrl='/icons/bookmarks/heart.svg'
-            statValue={bookmarksValue}
-            statIconAltText='heart'
-        />
-        <StatItem
-            {...props}
-            statIconUrl='/icons/bookmarks/pople.svg'
-            statValue={peopleValue}
-            statIconAltText='people'
-        />
-        <StatItem
-            {...props}
-            statIconUrl='/icons/bookmarks/emoji-heart-eyes.svg'
-            statValue={likesValue}
-            statIconAltText='face'
-        />
+        <Stack direction={stackDirection} spacing={gap}>
+            <StatItem
+                {...props}
+                statIconUrl='/icons/bookmarks/heart.svg'
+                statValue={bookmarksValue}
+                statIconAltText='heart'
+            />
+            <StatItem
+                {...props}
+                statIconUrl='/icons/bookmarks/pople.svg'
+                statValue={peopleValue}
+                statIconAltText='people'
+            />
+            <StatItem
+                {...props}
+                statIconUrl='/icons/bookmarks/emoji-heart-eyes.svg'
+                statValue={likesValue}
+                statIconAltText='face'
+            />
+        </Stack>
     </Flex>
 );

@@ -2,6 +2,8 @@ interface MostTastyCardsDataProps {
     title: string;
     description: string;
     img: string;
+    subcategory?: string;
+    icon?: string;
 }
 
 interface DishCategoryProps {
@@ -247,48 +249,65 @@ export const sliderData: MostTastyCardsDataProps[] = [
         description:
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить...',
         img: '/card-images/card-1.png',
+        subcategory: 'Первые блюда',
+        icon: '/icons/dishes-category/pot.svg',
     },
     {
         title: 'Лапша с курицей и шафраном',
         description:
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить...',
         img: '/card-images/card-2.png',
+        subcategory: 'Веганская кухня',
+        icon: '/icons/dishes-category/leaf.svg',
     },
     {
         title: 'Пряная ветчина по итальянски',
         description:
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить...',
         img: '/card-images/card-3.png',
+        subcategory: 'Десерты и выпечка',
+        icon: '/icons/dishes-category/salates.svg',
     },
     {
         title: 'Том-ям с капустой кимчи',
         description:
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить...',
         img: '/card-images/card-4.png',
+        subcategory: 'Десерты и выпечка',
+        icon: '/icons/dishes-category/pot.svg',
     },
     {
         title: 'Кнели со спагетти',
         description:
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить...',
         img: '/card-images/card-1.png',
+        subcategory: 'Веганская кухня',
+        icon: '/icons/dishes-category/leaf.svg',
     },
+
     {
         title: 'Лапша с курицей и шафраном',
         description:
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить...',
         img: '/card-images/card-2.png',
+        subcategory: 'Первые блюда',
+        icon: '/icons/dishes-category/pot.svg',
     },
     {
         title: 'Пряная ветчина по итальянски',
         description:
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить...',
         img: '/card-images/card-3.png',
+        subcategory: 'Салаты',
+        icon: '/icons/dishes-category/eggplant.svg',
     },
     {
         title: 'Том-ям с капустой кимчи',
         description:
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить...',
         img: '/card-images/card-4.png',
+        subcategory: 'Салаты',
+        icon: '/icons/dishes-category/eggplant.svg',
     },
 ];
 
