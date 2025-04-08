@@ -5,7 +5,6 @@ import {
     BookmarkSideMenu,
     BottomNavMenu,
     HeaderNavMenu,
-    SearchBar,
     SideMenu,
 } from '~/components/layouts-components';
 import AppViews from '~/views';
@@ -15,7 +14,6 @@ const AppLayout: React.FC = () => (
         <HeaderNavMenu />
         <SideMenu />
         <BookmarkSideMenu />
-        <SearchBar />
         <AppViews />
         <BottomNavMenu />
     </Box>

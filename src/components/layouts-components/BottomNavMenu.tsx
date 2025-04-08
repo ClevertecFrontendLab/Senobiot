@@ -43,8 +43,13 @@ export const BottomNavMenu: React.FC = () => (
         width='100%'
         justifyContent='space-around'
     >
-        {bottomMenuProps.map((button) => (
-            <ButtonRounded text={button.name} iconUrl={button.iconUrl} isActive={button.isActive} />
+        {bottomMenuProps.map((button, index) => (
+            <ButtonRounded
+                key={index}
+                text={button.name}
+                iconUrl={button.iconUrl}
+                isActive={button.isActive}
+            />
         ))}
     </Flex>
 );

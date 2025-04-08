@@ -291,3 +291,9 @@ export const sliderData: MostTastyCardsDataProps[] = [
         img: '/card-images/card-4.png',
     },
 ];
+
+export const allergensIngredients = [
+    'Корень мандрагоры',
+    'Рог единорога',
+    'Секретный ингридиент из слёрма и еще чего',
+];

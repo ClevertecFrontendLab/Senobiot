@@ -20,6 +20,7 @@ export const SideMenu: React.FC = () => {
             maxHeight='100vh'
             position='fixed'
             zIndex={9}
+            bg='white'
             left={0}
             m={0}
             ml={0}
@@ -57,9 +58,10 @@ export const SideMenu: React.FC = () => {
                 }}
             >
                 <Accordion allowToggle>
-                    {navTree.map((item, index) => (
-                        <SideNavMenuItem {...item} key={index} />
-                    ))}
+                    {navTree.map(
+                        (item, index) =>
+                            !item.skipSideMenu && <SideNavMenuItem {...item} key={index} />,
+                    )}
                 </Accordion>
             </Box>
             <Footer text-a />

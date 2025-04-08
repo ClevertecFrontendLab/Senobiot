@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import { PADDINGS, WIDTHS } from '~/constants/styles';
@@ -7,7 +7,7 @@ import ButtonRounded from '../shared-components/Button/Rounded';
 import { ProfileNotification } from '../shared-components/ProfileNotification';
 
 export const BookmarkSideMenu: React.FC = () => (
-    <Box
+    <Flex
         display={{ base: 'none', xl: 'flex' }}
         flexDirection='column'
         justifyContent='space-between'
@@ -16,8 +16,10 @@ export const BookmarkSideMenu: React.FC = () => (
         h='100vh'
         maxHeight='100vh'
         position='fixed'
+        zIndex={9}
         right={0}
         top={0}
+        bg='white'
         pt={PADDINGS.topMenu}
     >
         <ProfileNotification
@@ -39,5 +41,5 @@ export const BookmarkSideMenu: React.FC = () => (
                 gap={3}
             />
         </Box>
-    </Box>
+    </Flex>
 );

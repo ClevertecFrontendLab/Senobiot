@@ -1,13 +1,11 @@
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter } from 'react-router';
 
 import AppLayout from '~/layouts/app-layout';
 
 function App() {
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path='*' element={<AppLayout />} />
-            </Routes>
+            <AppLayout />
         </BrowserRouter>
     );
 }

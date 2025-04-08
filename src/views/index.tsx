@@ -11,12 +11,12 @@ const AppViews: React.FC = () => (
                 <Route
                     key={navItem.navKey}
                     path={navItem.route}
-                    Component={lazy(() =>
-                        import(`./${navItem.route}`).catch(() => {
-                            console.error(`Не сделал "${navItem.navKey}`);
-                            return import('./main');
-                        }),
-                    )}
+                    Component={lazy(() => {
+                        if (navItem.route === '/') {
+                            return import('./home');
+                        }
+                        return import('./category');
+                    })}
                 />
             ))}
             <Route path='*' element={<Navigate to='/' replace />} />

@@ -2,13 +2,33 @@ export type navTreeProps = {
     navKey: string;
     route: string;
     title: string;
+    subTitle?: string;
     icon?: string;
     breadcrumb: boolean;
     description?: string;
     submenu: Array<navTreeProps>;
+    skipSideMenu?: boolean;
 };
 
 export const navTree: Array<navTreeProps> = [
+    {
+        navKey: 'home',
+        route: '/',
+        title: 'Главная',
+        subTitle: 'Приятного аппетита!',
+        breadcrumb: true,
+        skipSideMenu: true,
+        submenu: [
+            {
+                navKey: 'juiciest',
+                route: '/juiciest',
+                title: 'Самое сочное',
+                skipSideMenu: true,
+                breadcrumb: true,
+                submenu: [],
+            },
+        ],
+    },
     {
         navKey: 'salates',
         route: '/salates',
@@ -243,6 +263,8 @@ export const navTree: Array<navTreeProps> = [
         title: 'Десерты и выпечка',
         icon: '/icons/dishes-category/salates.svg',
         breadcrumb: true,
+        description:
+            'Без них невозможно представить себе ни современную, ни традиционную кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб — рецепты изделий из теста многообразны и невероятно популярны.',
         submenu: [
             {
                 navKey: 'pancakes',
@@ -394,6 +416,8 @@ export const navTree: Array<navTreeProps> = [
         title: 'Веганская кухня',
         icon: '/icons/dishes-category/leaf.svg',
         breadcrumb: true,
+        description:
+            'Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.',
         submenu: [
             {
                 navKey: 'vegan-appetizers',
@@ -929,7 +953,7 @@ export const navTree: Array<navTreeProps> = [
     },
 ];
 
-export const routeFinder = (route: string) => {
+export const routeFinder = (route?: string) => {
     for (let index = 0; index < navTree.length; index++) {
         if (navTree[index].route === route) {
             return navTree[index];
@@ -939,7 +963,5 @@ export const routeFinder = (route: string) => {
         if (result) {
             return result;
         }
-
-        return { title: 'Главная' };
     }
 };

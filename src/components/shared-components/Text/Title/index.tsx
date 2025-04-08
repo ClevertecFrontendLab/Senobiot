@@ -3,11 +3,11 @@ import React from 'react';
 
 export type TitleTextProps = {
     titleText?: string;
-    titleTextFz?: string;
+    titleTextFz?: ResponsiveValue<string>;
     titleTextFw?: number;
     titleTextFf?: string;
     titleTextFs?: string;
-    titleTextLh?: string;
+    titleTextLh?: ResponsiveValue<string>;
     titleTextColor?: string;
     textAlign?: ResponsiveValue<'left' | 'center' | 'right' | 'justify'>;
 };
