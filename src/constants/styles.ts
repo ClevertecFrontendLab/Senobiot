@@ -1,11 +1,14 @@
-export const PADDINGS: { [key: string]: number } = {
+export const PADDINGS: { [key: string]: number | { [key: string]: number } } = {
     topMenu: 20,
     bottomMnu: 21,
     sideMenu: 16,
     footer: 24,
     header: 32,
     content: 280,
-};
+    sectionMx: { base: 0, xl: 280 },
+    subsectionMb: { base: 8, xl: 10 },
+    subsectionHeaderMb: { base: 3, xl: 4, '2xl': 6 },
+} as const;
 
 export const WIDTHS: { [key: string]: number } = {
     sideMenu: 64,

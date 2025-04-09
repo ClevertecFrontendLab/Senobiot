@@ -1,4 +1,6 @@
-import { Button, Image } from '@chakra-ui/react';
+import { Button, Image, Text } from '@chakra-ui/react';
+
+import { BORDERS } from '~/constants/styles';
 
 export interface ButtonBookBtnProps {
     bookBtnText?: string;
@@ -11,21 +13,30 @@ export interface ButtonBookBtnProps {
     bookBtnIconUrl?: string;
     bookBtnIconAltText?: string;
     bookBtnIconsize?: string;
+    bookBtnSize?: string;
 }
 
 const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
-    bookBtnText,
-    bookBtnTextcolor,
+    bookBtnText = 'Сохранить',
+    bookBtnTextcolor = 'blackAlpha.800',
     bookBtnBorderColor,
     bookBtnBg,
-    bookBtnBorder = '2px solid',
+    bookBtnBorder = BORDERS.main,
     bookBtnBorderRadius = 'md',
     bookBtnVariant = 'outline',
-    bookBtnIconUrl = '/icons/bookBtns/heart.svg',
+    bookBtnIconUrl = '/icons/bookmarks/heart.svg',
     bookBtnIconAltText = 'Сохранить',
-    bookBtnIconsize = '24px',
+    bookBtnIconsize = { base: 3, xl: 3.5 },
+    bookBtnSize = { base: 6, xl: 'initial' },
 }) => (
     <Button
+        size={{ base: 'xs', xl: 'sm' }}
+        maxWidth={bookBtnSize}
+        sx={{
+            '& .chakra-button__icon': {
+                marginInlineEnd: { base: 0, xl: 2.4375 },
+            },
+        }}
         bg={bookBtnBg}
         color={bookBtnTextcolor}
         borderRadius={bookBtnBorderRadius}
@@ -34,7 +45,7 @@ const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
         leftIcon={<Image src={bookBtnIconUrl} alt={bookBtnIconAltText} boxSize={bookBtnIconsize} />}
         variant={bookBtnVariant}
     >
-        {bookBtnText}
+        <Text display={{ base: 'none', xl: 'initial' }}>{bookBtnText}</Text>
     </Button>
 );
 

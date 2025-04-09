@@ -1,10 +1,4 @@
-interface MostTastyCardsDataProps {
-    title: string;
-    description: string;
-    img: string;
-    subcategory?: string;
-    icon?: string;
-}
+import { CategorySectionDataProps } from '~/components/shared-components/CategorySection';
 
 interface DishCategoryProps {
     name: string;
@@ -115,7 +109,7 @@ export const dishesCategories: DishCategoryProps[] = [
     },
 ];
 
-export const mostTastyCardsData: MostTastyCardsDataProps[] = [
+export const mostTastyCardsData: CategorySectionDataProps[] = [
     {
         title: 'Кнели со спагетти',
         description:
@@ -243,7 +237,7 @@ export const dishesList: DishesListDataType[] = [
     },
 ];
 
-export const sliderData: MostTastyCardsDataProps[] = [
+export const sliderData: CategorySectionDataProps[] = [
     {
         title: 'Кнели со спагетти',
         description:

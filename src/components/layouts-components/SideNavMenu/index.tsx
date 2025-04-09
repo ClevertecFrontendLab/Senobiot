@@ -1,4 +1,4 @@
-import { Accordion, Box, Flex, useTheme } from '@chakra-ui/react';
+import { Accordion, Flex, useTheme } from '@chakra-ui/react';
 import React from 'react';
 
 import { navTree } from '~/configs/navigationConfig';
@@ -32,9 +32,8 @@ export const SideMenu: React.FC = () => {
             boxShadow={SHADOWS.main}
             display={{ base: 'none', xl: 'flex' }}
         >
-            <Box
+            <Flex
                 overflow='auto'
-                display='flex'
                 flexDirection='column'
                 justifyContent='space-between'
                 borderRadius='8px'
@@ -63,7 +62,7 @@ export const SideMenu: React.FC = () => {
                             !item.skipSideMenu && <SideNavMenuItem {...item} key={index} />,
                     )}
                 </Accordion>
-            </Box>
+            </Flex>
             <Footer text-a />
         </Flex>
     );

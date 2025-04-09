@@ -14,7 +14,7 @@ export type TitleTextProps = {
     titleTextNoOfLines?: ResponsiveValue<number> | number;
 };
 
-const TitleText: React.FC<TitleTextProps> = ({
+export const TitleText: React.FC<TitleTextProps> = ({
     titleText = '',
     titleTextFz = '48px',
     titleTextFw = '700',
@@ -40,5 +40,3 @@ const TitleText: React.FC<TitleTextProps> = ({
         {titleText}
     </Heading>
 );
-
-export default TitleText;

@@ -8,6 +8,8 @@ export type ButtonCategoryProps = {
     categoryBg?: string;
     categoryBorderRadius?: string;
     categorySx?: SystemStyleObject;
+    categoryPx?: string | number;
+    categoryPy?: string | number;
 };
 
 const ButtonCategory: React.FC<ButtonCategoryProps> = ({
@@ -17,6 +19,8 @@ const ButtonCategory: React.FC<ButtonCategoryProps> = ({
     categoryBg = 'lime.300',
     categoryBorderRadius = '4px',
     categorySx,
+    categoryPx = 4,
+    categoryPy = 2,
 }) => (
     <Button
         sx={categorySx}
@@ -24,8 +28,8 @@ const ButtonCategory: React.FC<ButtonCategoryProps> = ({
         bg={categoryBg}
         color={categoryColor}
         borderRadius={categoryBorderRadius}
-        px={4}
-        py={2}
+        px={categoryPx}
+        py={categoryPy}
         leftIcon={<Image src={categoryIconUrl} alt={`${categoryText} icon`} boxSize={4} mt={1} />}
         _hover={{
             bg: categoryBg,

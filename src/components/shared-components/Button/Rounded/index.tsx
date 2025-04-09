@@ -1,6 +1,6 @@
-import { Box, Flex, Image } from '@chakra-ui/react';
+import { Flex, Image } from '@chakra-ui/react';
 
-import TextRegular, { TextRegularProps } from '../../Text/Regular';
+import { TextRegular, TextRegularProps } from '../../Text/Regular';
 
 export interface ButtonRoundedProps extends TextRegularProps {
     text: TextRegularProps['regText'];
@@ -28,9 +28,8 @@ const ButtonRounded: React.FC<ButtonRoundedProps> = ({
         alignContent='center'
         _hover={{ cursor: 'pointer', boxShadow: 'lime.300 0 0 15px' }} // так не работает - не надо будет - убрать
     >
-        <Box
+        <Flex
             justifyContent='center'
-            display='flex'
             width='40px'
             height='40px'
             alignItems='center'
@@ -44,8 +43,8 @@ const ButtonRounded: React.FC<ButtonRoundedProps> = ({
                 alt={`${text} icon`}
                 // filter={isActive ? "invert(1)" : "none" }// в макете не хватает картинки
             />
-        </Box>
-        <Box flexBasis='100%'>
+        </Flex>
+        <Flex flexBasis='100%' justifyContent='center'>
             <TextRegular
                 regText={text}
                 regTextFz='12px'
@@ -53,7 +52,7 @@ const ButtonRounded: React.FC<ButtonRoundedProps> = ({
                 regTextColor={isActive ? (activeTextColor ? activeTextColor : 'black') : textColor}
                 regTextFw={!isActive ? 400 : fontWeight}
             />
-        </Box>
+        </Flex>
     </Flex>
 );
 

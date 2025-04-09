@@ -1,8 +1,8 @@
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 
-import TextRegular from '~/components/shared/Text/Regular';
-import TitleText from '~/components/shared/Text/Title';
+import { TextRegular } from '~/components/shared-components';
+import { TitleText } from '~/components/shared-components';
 import { dishesCategories, dishesList } from '~/data';
 
 import NextSectionCard from './NextSectionCard';

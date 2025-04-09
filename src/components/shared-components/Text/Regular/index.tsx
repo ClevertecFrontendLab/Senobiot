@@ -11,7 +11,7 @@ export type TextRegularProps = {
     regTextNoOfLines?: number;
 };
 
-const TextRegular: React.FC<TextRegularProps> = ({
+export const TextRegular: React.FC<TextRegularProps> = ({
     regText = '',
     regTextFz = '14px',
     regTextFw = 500,
@@ -31,5 +31,3 @@ const TextRegular: React.FC<TextRegularProps> = ({
         {regText}
     </Text>
 );
-
-export default TextRegular;

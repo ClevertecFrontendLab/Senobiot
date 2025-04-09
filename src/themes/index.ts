@@ -11,6 +11,8 @@ export const defaultTheme = extendTheme({
             800: '134B00',
         },
         blackAlpha: {
+            900: 'rgba(0, 0, 0, 0.92)',
+            800: 'rgba(0, 0, 0, 0.8)',
             700: 'rgba(0, 0, 0, 0.64)',
             400: 'rgba(0, 0, 0, 0.24)',
             300: 'rgba(0, 0, 0, 0.16)',

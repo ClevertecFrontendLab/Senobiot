@@ -11,18 +11,20 @@ export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProp
     peopleIcon?: string;
     bookmarkJustify?: string;
     bookmarkStatGap?: number;
+    bookmarkMb?: ResponsiveValue<number | string>;
 }
 
 const BookmarksSection: React.FC<BookmarksSectionProps> = ({
     heartIcon = '/icons/bookmarks/heart.svg',
     peopleIcon = '/icons/bookmarks/emoji-heart-eyes.svg',
     noCategory = false,
-    bookmarkJustify,
+    bookmarkJustify = 'space-between',
     bookmarkStatGap,
     categoryBg = 'lime.150',
+    bookmarkMb,
     ...props
 }) => (
-    <Flex justifyContent={bookmarkJustify}>
+    <Flex justifyContent={bookmarkJustify} w='100%' mb={bookmarkMb}>
         {!noCategory && <ButtonCategory {...props} categoryBg={categoryBg} />}
         <HStack spacing={bookmarkStatGap}>
             <StatItem {...props} statIconUrl={heartIcon} />

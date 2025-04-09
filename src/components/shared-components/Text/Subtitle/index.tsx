@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TitleText, { TitleTextProps } from '../Title';
+import { TitleText, TitleTextProps } from '../Title';
 
 interface SubtitleText extends TitleTextProps {
     titleText: string;
@@ -8,7 +8,7 @@ interface SubtitleText extends TitleTextProps {
     titleHeading?: React.ElementType;
 }
 
-const SubtitleText: React.FC<SubtitleText> = ({
+export const SubtitleText: React.FC<SubtitleText> = ({
     titleText,
     titleTextFw = 500,
     titleHeading = 'h2',
@@ -21,5 +21,3 @@ const SubtitleText: React.FC<SubtitleText> = ({
         titleHeading={titleHeading}
     />
 );
-
-export default SubtitleText;

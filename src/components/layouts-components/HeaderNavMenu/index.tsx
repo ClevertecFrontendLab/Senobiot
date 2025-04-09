@@ -1,7 +1,6 @@
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
     Avatar,
-    Box,
     Button,
     Flex,
     HStack,
@@ -15,9 +14,8 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
+import { TextRegular, TitleText } from '~/components/shared-components';
 import { ProfileNotification } from '~/components/shared-components/ProfileNotification';
-import TextRegular from '~/components/shared-components/Text/Regular';
-import TitleText from '~/components/shared-components/Text/Title';
 import { PADDINGS } from '~/constants/styles';
 
 import BreadCrump from './BreadCrump';
@@ -27,12 +25,12 @@ export const HeaderNavMenu: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
-        <Box
+        <Flex
+            as='header'
             bg='lime.50'
             h={PADDINGS.topMenu}
             maxWidth='1920px'
             width='100vw'
-            display='flex'
             pr={4}
             position='fixed'
             top={0}
@@ -102,6 +100,6 @@ export const HeaderNavMenu: React.FC = () => {
                     }}
                 />
             </Flex>
-        </Box>
+        </Flex>
     );
 };
