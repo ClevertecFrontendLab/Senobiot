@@ -965,3 +965,10 @@ export const routeFinder = (route?: string) => {
         }
     }
 };
+
+export const getSubCategoryList = (category: string) => {
+    const targetCategory = navTree.find((e) => e.title === category);
+    if (targetCategory && targetCategory.submenu) {
+        return targetCategory.submenu;
+    }
+};

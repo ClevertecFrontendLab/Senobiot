@@ -3,7 +3,7 @@ export const PADDINGS: { [key: string]: number | { [key: string]: number } } = {
     bottomMnu: 21,
     sideMenu: 16,
     footer: 24,
-    header: 32,
+    header: 32 + 20 * 4,
     content: 280,
     sectionMx: { base: 0, xl: 280 },
     subsectionMb: { base: 8, xl: 10 },

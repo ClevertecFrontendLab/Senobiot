@@ -1,18 +1,24 @@
 import { Flex } from '@chakra-ui/react';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { Slider } from '~/components/shared-components';
 import { CategoryHeader } from '~/components/shared-components';
 import { PADDINGS, WIDTHS } from '~/constants/styles';
 import { sliderData } from '~/data';
 
-import { CategorySection } from '../../components/shared-components';
+import { CategorySection, CategorySectionDataProps } from '../../components/shared-components';
 
-interface MainProps {
-    children?: ReactNode;
+export interface PageProps {
+    categoryTitle?: string;
+    categoryData?: CategorySectionDataProps[];
+    categoryButtonText?: string;
 }
 
-const Main: React.FC<MainProps> = () => (
+const HomePage: React.FC<PageProps> = ({
+    categoryTitle = 'Самое сочноe',
+    categoryData = sliderData,
+    categoryButtonText = 'Вся подборка',
+}) => (
     <Flex
         minH='100vh'
         mx={PADDINGS.sectionMx}
@@ -21,14 +27,16 @@ const Main: React.FC<MainProps> = () => (
     >
         <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
             <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
-            <Slider slides={sliderData} />
+            <Slider slides={categoryData} />
         </Flex>
         <CategorySection
-            сategoryTitle='Самое сочноe'
-            data={sliderData}
-            сategoryButtonText='Вся подборка'
+            categoryTitle={categoryTitle}
+            data={categoryData}
+            categoryButtonText={categoryButtonText}
+            noFooter={true}
+            noNavMenu={true}
         />
     </Flex>
 );
 
-export default Main;
+export default HomePage;

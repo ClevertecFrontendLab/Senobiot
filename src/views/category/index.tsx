@@ -1,19 +1,25 @@
 import { Flex } from '@chakra-ui/react';
-import React, { ReactNode } from 'react';
 
-import { WIDTHS } from '~/constants/styles';
+import { PADDINGS, WIDTHS } from '~/constants/styles';
+import { sliderData } from '~/data';
 
-interface MainProps {
-    children?: ReactNode;
-}
+import { CategorySection } from '../../components/shared-components';
+import { PageProps } from '../home';
 
-const CategoryPage: React.FC<MainProps> = () => (
+const CategoryPage: React.FC<PageProps> = ({ categoryTitle = '', categoryData = sliderData }) => (
     <Flex
-        justifyContent='center'
         minH='100vh'
-        w='100%'
+        mx={PADDINGS.sectionMx}
         px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
-    ></Flex>
+        display='column'
+    >
+        <CategorySection
+            categoryTitle={categoryTitle}
+            data={categoryData}
+            categoryButtonText='Загрузить еще'
+            noHeader={true}
+        />
+    </Flex>
 );
 
 export default CategoryPage;

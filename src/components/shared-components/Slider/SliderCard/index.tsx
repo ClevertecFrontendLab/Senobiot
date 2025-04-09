@@ -30,7 +30,7 @@ const SliderCard: React.FC<SliderCardProps> = ({ title, description, subcategory
     });
 
     return (
-        <RecieptCard
+        <RecieptCard // TODO скинуть в дефолтные пропсы одинаковые с CategoryCard !!!!
             minWidth={{ base: 158, xl: 322 }}
             text={description}
             title={title}
