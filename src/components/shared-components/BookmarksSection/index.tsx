@@ -10,11 +10,11 @@ export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProp
     heartIcon?: string;
     peopleIcon?: string;
     bookmarkJustify?: string;
-    bookmarkStatGap?: number;
+    bookmarkStatGap?: ResponsiveValue<number>;
     bookmarkMb?: ResponsiveValue<number | string>;
 }
 
-const BookmarksSection: React.FC<BookmarksSectionProps> = ({
+export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
     heartIcon = '/icons/bookmarks/heart.svg',
     peopleIcon = '/icons/bookmarks/emoji-heart-eyes.svg',
     noCategory = false,
@@ -32,5 +32,3 @@ const BookmarksSection: React.FC<BookmarksSectionProps> = ({
         </HStack>
     </Flex>
 );
-
-export default BookmarksSection;

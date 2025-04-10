@@ -11,9 +11,9 @@ interface DishCategoryProps {
 export type BlogType = {
     id: number;
     name: string;
-    username: string;
+    email: string;
     profilePic: string;
-    excerpt: string;
+    quote: string;
 };
 
 export const dishesCategories: DishCategoryProps[] = [
@@ -140,31 +140,28 @@ export const blogsData: BlogType[] = [
     {
         id: 1,
         name: 'Елена Высоцкая',
-        username: '@elenadvor',
-        profilePic: 'path/to/avatar1.jpg',
-        excerpt:
-            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время...',
+        email: '@elenadvor',
+        profilePic: '/avatars/avatar-1.png',
+        quote: 'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время...',
     },
     {
         id: 2,
         name: 'Alex Cook',
-        username: '@funtasticcooking',
-        profilePic: 'path/to/avatar2.jpg',
-        excerpt:
-            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время...',
+        email: '@funtasticcooking',
+        profilePic: '/avatars/avatar-3.png',
+        quote: 'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время...',
     },
     {
         id: 3,
         name: 'Екатерина Константинова',
-        username: '@bake_and_pie',
-        profilePic: 'path/to/avatar3.jpg',
-        excerpt:
-            'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время...',
+        email: '@bake_and_pie',
+        profilePic: '/avatars/avatar-2.png',
+        quote: 'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время...',
     },
 ];
 
 export type DishesListDataType = {
-    name: string;
+    title: string;
     route: string;
     category: string;
     subcategory: string;
@@ -174,61 +171,61 @@ export type DishesListDataType = {
 
 export const dishesList: DishesListDataType[] = [
     {
-        name: 'Картошка, тушенная с болгарским перцем и фасолью в томатном соусе',
+        title: 'Картошка, тушенная с болгарским перцем и фасолью в томатном соусе',
         route: '/kartoshka-tushenaya',
         category: 'Веганская кухня',
         subcategory: 'Национальные блюда',
-        img: '/dishes/vegan/potato.svg',
+        img: '/icons/dishes-category/frying-pan.svg',
         description:
             'Картошка, тушенная с болгарским перцем, фасолью, морковью и луком, - вариант сытного блюда на каждый день. Фасоль в данном случае заменяет мясо, делая рагу сытным и питательным. Чтобы сократить время приготовления, возьмём консервированную фасоль. Блюдо хоть и простое, но в полной мере наполнено ароматами и имеет выразительный вкус за счёт добавления томатной пасты.',
     },
     {
-        name: 'Картофельные рулетики с грибами',
+        title: 'Картофельные рулетики с грибами',
         route: '/kartofelnye-ruletiki',
         category: 'Веганская кухня',
         subcategory: 'Детские блюда',
-        img: '/dishes/kids/potato_rolls.svg',
+        img: '/icons/dishes-category/salates.svg',
         description:
             'Рекомендуем всем приготовить постное блюдо из картофеля и грибов. Готовится это блюдо без яиц, масла и молока.',
     },
     {
-        name: 'Том-ям с капустой кимчи',
+        title: 'Том-ям с капустой кимчи',
         route: '/tom-yam-kimchi',
         category: 'Веганская кухня',
         subcategory: 'Национальные блюда',
-        img: '/dishes/national/tom_yam_kimchi.svg',
+        img: '/icons/dishes-category/salates.svg',
         description:
             'Как раз после праздников, когда мясные продукты ещё остались, но никто их уже не хочет, время варить суп.',
     },
     {
-        name: 'Овощная лазанья из лаваша',
+        title: 'Овощная лазанья из лаваша',
         route: '/ovoshchnaya-lazanya',
         category: 'Веганская кухня',
         subcategory: 'Блюда на гриле',
-        img: '/dishes/grill/vegetable_lasagna.svg',
+        img: '/icons/dishes-category/salates.svg',
         description:
             'Большое, сытное блюдо для семейного обеда! Такая лазанья готовится с овощным соусом.',
     },
     {
-        name: 'Тефтели из булгура и чечевицы',
+        title: 'Тефтели из булгура и чечевицы',
         route: '/tefteli-bulgur-chechevitsa',
         category: 'Веганская кухня',
         subcategory: 'Вторые блюда',
-        img: '/dishes/main/bulgur_lentil_meatballs.svg',
+        img: '/icons/dishes-category/salates.svg',
         description:
             'Тефтели из булгура и чечевицы – яркие и питательные, отлично подходят для постного и вегетарианского меню.',
     },
     {
-        name: 'Чесночная картошка',
+        title: 'Чесночная картошка',
         route: '/chesnochnaya-kartoshka',
         category: 'Веганская кухня',
         subcategory: 'Национальные блюда',
-        img: '/dishes/national/garlic_potato.svg',
+        img: '/icons/dishes-category/salates.svg',
         description:
             'Такая картошка украсит любой семейный обед! Все будут в полном восторге, очень вкусно! А аромат чеснока!',
     },
     {
-        name: 'Пури',
+        title: 'Пури',
         route: '/puri',
         category: 'Веганская кухня',
         subcategory: 'Национальные блюда',

@@ -1,8 +1,9 @@
-import { Flex, Image, ResponsiveValue } from '@chakra-ui/react';
+import { Flex, FlexProps, Image, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
 import { TextRegular, TextRegularProps } from '~/components/shared-components';
-import BookmarksSection, {
+import {
+    BookmarksSection,
     BookmarksSectionProps,
 } from '~/components/shared-components/BookmarksSection';
 import { TitleTextProps } from '~/components/shared-components/Text/Title';
@@ -15,49 +16,40 @@ interface RecieptCardProps
     extends BookmarksSectionProps,
         TextRegularProps,
         TitleTextProps,
-        RecieptButtonsSectionProps {
+        RecieptButtonsSectionProps,
+        FlexProps {
+    // Pick<FlexProps, 'textAlign' | 'position' | 'wrap' | 'border' | 'borderRadius' | 'order' | 'padding' | 'marginBottom' | 'marginTop' | 'width' | 'minWidth' | 'flex' | 'justifyContent' | 'gap'>
     title: string;
     text?: string;
-    cardBorder?: string;
-    cardBorderRadius?: string | number;
+    cardBorder?: FlexProps['border'];
+    cardBorderRadius?: FlexProps['borderRadius'];
+    cardContentPadding?: FlexProps['padding'];
+    cardContentTextAlign?: FlexProps['textAlign'];
+    cardFlexWidth?: FlexProps['flex'];
     imageBorderRadius?: string | number;
-    minWidth?: ResponsiveValue<string | number>;
-    width?: ResponsiveValue<string | number>;
-    position?: ResponsiveValue<
-        '-webkit-sticky' | 'absolute' | 'fixed' | 'relative' | 'static' | 'sticky'
-    >;
-    wrap?: ResponsiveValue<'wrap' | 'nowrap' | 'wrap-reverse'>;
+    minWidth?: FlexProps['minWidth'];
+    width?: FlexProps['width'];
+    position?: FlexProps['position'];
+    wrap?: FlexProps['wrap'];
     noImage?: boolean;
     noButtons?: ResponsiveValue<boolean>;
     noDescription?: ResponsiveValue<boolean>;
     imageSrc?: string;
     imageWidth?: ResponsiveValue<number>;
     imageHeight?: ResponsiveValue<number>;
-    titleMargin?: number | string;
-    descriptionMargin?: number | string;
-    cardContentPadding?: ResponsiveValue<string | number>;
-    cardContentTextAlign?: ResponsiveValue<
-        | '-webkit-match-parent'
-        | 'center'
-        | 'end'
-        | 'justify'
-        | 'left'
-        | 'match-parent'
-        | 'right'
-        | 'start'
-    >;
-    subtitleOrder?: ResponsiveValue<number>;
-    descriptionOrder?: ResponsiveValue<number>;
-    bookmarksOrder?: ResponsiveValue<number>;
-    buttonsOrder?: ResponsiveValue<number>;
-    buttonsJustify?: ResponsiveValue<string>;
-    gap?: ResponsiveValue<number>;
-    cardFlexeidth?: ResponsiveValue<string>;
-    buttonsMargin?: ResponsiveValue<string>;
+    titleMargin?: FlexProps['marginBottom'];
+    descriptionMargin?: FlexProps['marginBottom'];
+    subtitleOrder?: FlexProps['order'];
+    descriptionOrder?: FlexProps['order'];
+    bookmarksOrder?: FlexProps['order'];
+    buttonsOrder?: FlexProps['order'];
+    buttonsMargin?: FlexProps['marginTop'];
+    buttonsJustify?: FlexProps['justifyContent'];
+    gap?: FlexProps['gap'];
 }
 
 const RecieptCard: React.FC<RecieptCardProps> = ({
-    cardFlexeidth,
+    cardFlexWidth,
     minWidth = '328px',
     width = '100%',
     wrap = 'wrap',
@@ -87,7 +79,7 @@ const RecieptCard: React.FC<RecieptCardProps> = ({
     ...rest
 }) => (
     <Flex
-        flex={cardFlexeidth}
+        flex={cardFlexWidth}
         position={position}
         minWidth={minWidth}
         w={width}

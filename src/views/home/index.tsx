@@ -3,10 +3,18 @@ import React from 'react';
 
 import { Slider } from '~/components/shared-components';
 import { CategoryHeader } from '~/components/shared-components';
+import { BlogsSection } from '~/components/shared-components/BlogsSection';
+import { navTree } from '~/configs/navigationConfig'; // TODO remove after true api
 import { PADDINGS, WIDTHS } from '~/constants/styles';
-import { sliderData } from '~/data';
+import { dishesList, sliderData } from '~/data';
 
-import { CategorySection, CategorySectionDataProps } from '../../components/shared-components';
+import {
+    CategorySection,
+    CategorySectionDataProps,
+    CategorySectionNext,
+} from '../../components/shared-components';
+
+const nexSection = navTree.find((e) => e.navKey === 'vegan-cuisine'); // TODO remove after true api
 
 export interface PageProps {
     categoryTitle?: string;
@@ -15,7 +23,7 @@ export interface PageProps {
 }
 
 const HomePage: React.FC<PageProps> = ({
-    categoryTitle = 'Самое сочноe',
+    categoryTitle = 'Самое сочное',
     categoryData = sliderData,
     categoryButtonText = 'Вся подборка',
 }) => (
@@ -24,6 +32,7 @@ const HomePage: React.FC<PageProps> = ({
         mx={PADDINGS.sectionMx}
         px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
         display='column'
+        mb={250}
     >
         <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
             <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
@@ -35,6 +44,12 @@ const HomePage: React.FC<PageProps> = ({
             categoryButtonText={categoryButtonText}
             noFooter={true}
             noNavMenu={true}
+        />
+        <BlogsSection />
+        <CategorySectionNext
+            title={nexSection?.title || ''}
+            description={nexSection?.description || ''}
+            data={dishesList}
         />
     </Flex>
 );

@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, ResponsiveValue } from '@chakra-ui/react';
 
 export type ButtonOutlinedProps = {
     outlBtnText: string;
@@ -8,11 +8,12 @@ export type ButtonOutlinedProps = {
     outlBtnBorder?: string;
     outlBtnBorderBottom?: string;
     outlBtnBorderRadius?: string;
+    size?: ResponsiveValue<string>;
     gap?: number;
     as?: React.ElementType;
 };
 
-const ButtonOutlined: React.FC<ButtonOutlinedProps> = ({
+export const ButtonOutlined: React.FC<ButtonOutlinedProps> = ({
     outlBtnText,
     outlBtnColor = 'lime.600',
     outlBtnBorderColor = 'green.500',
@@ -21,9 +22,11 @@ const ButtonOutlined: React.FC<ButtonOutlinedProps> = ({
     outlBtnBorderBottom,
     outlBtnBorderRadius = 'md',
     gap = 0,
+    size,
     as,
 }) => (
     <Button
+        size={size}
         gap={gap}
         bg={outlBtnBg}
         color={outlBtnColor}
@@ -39,5 +42,3 @@ const ButtonOutlined: React.FC<ButtonOutlinedProps> = ({
         {outlBtnText}
     </Button>
 );
-
-export default ButtonOutlined;

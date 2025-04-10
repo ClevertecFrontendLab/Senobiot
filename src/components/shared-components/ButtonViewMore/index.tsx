@@ -1,12 +1,13 @@
-import { Button, Image } from '@chakra-ui/react';
+import { Button, Image, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
 type ButtonViewMoreProps = {
     title: string;
     noButtonIcon?: boolean;
+    fz?: ResponsiveValue<string | number>;
 };
 
-const ButtonViewMore: React.FC<ButtonViewMoreProps> = ({ title, noButtonIcon = true }) => (
+const ButtonViewMore: React.FC<ButtonViewMoreProps> = ({ title, noButtonIcon = true, fz }) => (
     <Button
         bg='lime.300'
         color='black'
@@ -24,6 +25,7 @@ const ButtonViewMore: React.FC<ButtonViewMoreProps> = ({ title, noButtonIcon = t
         _active={{
             bg: 'lime.50',
         }}
+        fontSize={fz}
     >
         {title}
     </Button>

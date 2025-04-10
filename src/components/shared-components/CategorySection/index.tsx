@@ -23,11 +23,11 @@ export type CategorySectionProps = {
     categoryButtonText?: string;
     noButton?: boolean;
     data: CategorySectionDataProps[];
-    mb?: string | number;
     categoryHeaderMb?: string | number;
     noHeader?: boolean;
     noFooter?: boolean;
     noNavMenu?: boolean;
+    mb?: string | number;
 };
 
 export const CategorySection: React.FC<CategorySectionProps> = ({

@@ -5,7 +5,7 @@ import { BORDERS } from '~/constants/styles';
 
 import RecieptCard from '../../RecieptCard';
 
-type CategoryCardProps = {
+export type CategoryCardProps = {
     title: string;
     description?: string;
     subcategory?: string;
@@ -42,7 +42,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             text={description}
             title={title}
             titleMargin={2}
-            titleTextFz='xl'
+            titleTextFz={{ base: 'md', xl: 'lg', '2xl': 'xl' }}
             titleTextLh='28px'
             titleHeading='h3'
             titleTextAlign='left'
@@ -67,7 +67,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             categoryText={subcategory}
             categoryIconUrl={icon}
             bookmarkJustify='space-between'
-            cardFlexeidth={{ md: '1 1 40%', xl: '1 1 100%', '2xl': '1 1 40%' }}
+            cardFlexWidth={{ md: '1 1 40%', xl: '1 1 100%', '2xl': '1 1 40%' }}
             titleTextNoOfLines={{ base: 2, xl: 1 }}
             wrap={{ base: 'nowrap' }}
             bookmarksOrder={{ base: -1 }}
