@@ -1,4 +1,4 @@
-import { Flex, Heading } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import { blogsData } from '~/data';
@@ -17,16 +17,17 @@ export const BlogsSection: React.FC = () => (
         mb={8}
         p={{ base: 3, xl: 6 }}
     >
-        <Heading size='lg' mb={{ base: 3, xl: 4, '2xl': 8 }}>
+        <Box mb={{ base: 3, xl: 4, '2xl': 8 }}>
             <TitleText
                 titleText=' Кулинарные блоги'
                 titleTextFz={{ base: '2xl', xl: '3xl' }}
                 titleTextFw={500}
+                titleHeading='h5'
             />
-        </Heading>
+        </Box>
         <Flex gap={3} order={{ base: 0, xl: 1 }} direction={{ base: 'column', md: 'row' }}>
-            {blogsData.map((blog) => (
-                <BlogCard key={blog.id} {...blog} />
+            {blogsData.map((blog, index) => (
+                <BlogCard key={index} {...blog} />
             ))}
         </Flex>
         <Flex

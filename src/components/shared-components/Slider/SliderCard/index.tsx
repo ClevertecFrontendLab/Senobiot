@@ -1,7 +1,5 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 
-import { BORDERS } from '~/constants/styles';
-
 import RecieptCard from '../../RecieptCard';
 
 type SliderCardProps = {
@@ -30,7 +28,7 @@ const SliderCard: React.FC<SliderCardProps> = ({ title, description, subcategory
     });
 
     return (
-        <RecieptCard // TODO скинуть в дефолтные пропсы одинаковые с CategoryCard !!!!
+        <RecieptCard
             minWidth={{ base: 158, xl: 322 }}
             text={description}
             title={title}
@@ -41,16 +39,9 @@ const SliderCard: React.FC<SliderCardProps> = ({ title, description, subcategory
             titleTextAlign='left'
             noButtons={true}
             position={{ base: 'relative', xl: 'static' }}
-            cardBorderRadius='4px'
             noDescription={hiddenElements}
             categorySx={categoryResponsivePosition}
             imageSrc={img}
-            descriptionMargin={6}
-            cardContentPadding={{
-                base: '8px',
-                xl: '16px 24px 20px',
-            }}
-            cardBorder={BORDERS.light}
             stateIconSize={3}
             stateTextFontSize='12px'
             statTextFontWeight={600}

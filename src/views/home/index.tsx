@@ -32,7 +32,7 @@ const HomePage: React.FC<PageProps> = ({
         mx={PADDINGS.sectionMx}
         px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
         display='column'
-        mb={250}
+        mb={PADDINGS.bottomMnu * 4 + 20}
     >
         <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
             <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />

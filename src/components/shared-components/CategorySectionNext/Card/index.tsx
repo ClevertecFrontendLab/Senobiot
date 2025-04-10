@@ -1,5 +1,4 @@
 import { CategoryCardProps } from '~/components/shared-components/CategorySection/CategorySectionCard';
-import { BORDERS } from '~/constants/styles';
 
 import RecieptCard from '../../RecieptCard';
 
@@ -10,6 +9,7 @@ const CategorySectionNextCard: React.FC<CategoryCardProps> = ({
     icon,
 }) => (
     <RecieptCard
+        minWidth='initial'
         text={description}
         title={title}
         titleMargin={2}
@@ -18,18 +18,11 @@ const CategorySectionNextCard: React.FC<CategoryCardProps> = ({
         titleHeading='h3'
         titleTextAlign='left'
         categoryBg='lime.50'
-        categoryPy={0} // очень криво из-за --chakra-line-clamp
+        categoryPy={0}
         categoryPx={2}
-        cardBorderRadius='4px'
         noCategory={false}
         noImage={true}
         noButtons={true}
-        descriptionMargin={6}
-        cardContentPadding={{
-            base: '12px',
-            xl: '16px 24px 20px',
-        }}
-        cardBorder={BORDERS.light}
         stateIconSize={3}
         stateTextFontSize='14px'
         statTextFontWeight={600}
@@ -40,7 +33,7 @@ const CategorySectionNextCard: React.FC<CategoryCardProps> = ({
         bookmarkStatGap={{ base: 2, md: 4, xl: 2 }}
         titleTextNoOfLines={{ base: 2, md: 1 }}
         categoryTextNoofLines={{ base: 1, md: 0, xl: 1 }}
-        cardFlexWidth={{ base: '1 1 100%', md: '0 0 33%', xl: '0 0 33%', '2xl': '0 0 322px' }}
+        cardFlexWidth={{ base: '1 1 100%', md: '0 0 33%', xl: '0 1 33%', '2xl': '0 1 322px' }}
     />
 );
 

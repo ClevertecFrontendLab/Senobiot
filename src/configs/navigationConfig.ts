@@ -972,3 +972,24 @@ export const getSubCategoryList = (category: string) => {
         return targetCategory.submenu;
     }
 };
+
+export const getNavBranches = (route: string) => {
+    const homeBranch = navTree.find((e) => e.route === '/');
+    const result = [homeBranch];
+
+    if (route === '/') {
+        return result;
+    }
+
+    const pathnames = route.split('/').filter((e) => e);
+    const category = navTree.find((e) => e.route === `/${pathnames[0]}`);
+    result.push(category);
+
+    if (pathnames.length > 1 && category) {
+        const subcategory = category.submenu.find(
+            (e) => e.route === `${category.route}/${pathnames[1]}`,
+        );
+        result.push(subcategory);
+    }
+    return result;
+};

@@ -12,24 +12,23 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
+import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, PADDINGS } from '~/constants/styles';
 import { allergensIngredients } from '~/data';
-import { getActiveCategory } from '~/utils';
+import { usePathnames } from '~/utils';
 
 import { TextRegular, TitleText } from '../../shared-components';
 
 export const SearchBar: React.FC = () => {
-    const activeCategory = getActiveCategory(); // когда будет апи всё это выпилить
+    const pathnames = usePathnames();
+    const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]); // когда будет апи всё это выпилить
     const title = activeCategory?.subTitle || activeCategory?.title; // когда будет апи всё это выпилить
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
+    const styles = { base: '2xl', xl: '5xl' };
 
     return (
         <Flex direction='column' pt={PADDINGS.header}>
-            <TitleText
-                titleText={title}
-                titleTextFz={{ base: '2xl', xl: '5xl' }}
-                titleTextLh={{ base: '2xl', xl: '5xl' }}
-            />
+            <TitleText titleText={title} titleTextFz={styles} titleTextLh={styles} />
             {activeCategory?.description && (
                 <Flex maxW={{ xl: 696 }} m='0 auto' mt={{ base: 4, xl: 3 }} textAlign='center'>
                     <TextRegular regText={activeCategory.description} />

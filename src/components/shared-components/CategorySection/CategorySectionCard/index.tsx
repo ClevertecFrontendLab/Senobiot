@@ -1,8 +1,6 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
-import { BORDERS } from '~/constants/styles';
-
 import RecieptCard from '../../RecieptCard';
 
 export type CategoryCardProps = {
@@ -50,17 +48,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             categoryPy={1}
             categoryPx={1}
             position={{ base: 'relative', xl: 'static' }}
-            cardBorderRadius='4px'
             imageBorderRadius='6px 0 0 6px'
             noDescription={hiddenElements}
             categorySx={categoryResponsivePosition}
             imageSrc={img}
-            descriptionMargin={6}
-            cardContentPadding={{
-                base: '8px',
-                xl: '16px 24px 20px',
-            }}
-            cardBorder={BORDERS.light}
             stateIconSize={3}
             stateTextFontSize='12px'
             statTextFontWeight={600}

@@ -4,21 +4,27 @@ import { Navigate, Route, Routes } from 'react-router';
 import { navTree } from '~/configs/navigationConfig';
 
 const AppViews: React.FC = () => (
-    // TODO Make normal LOADER
     <Suspense fallback={<div>Загрузка...</div>}>
         <Routes>
-            {navTree.map((navItem) => (
-                <Route
-                    key={navItem.navKey}
-                    path={navItem.route}
-                    Component={lazy(() => {
-                        if (navItem.route === '/') {
-                            return import('./home');
-                        }
-                        return import('./category');
-                    })}
-                />
-            ))}
+            {navTree.map((navItem) => {
+                const MainComponent =
+                    navItem.route === '/'
+                        ? lazy(() => import('./home'))
+                        : lazy(() => import('./category'));
+
+                return (
+                    <React.Fragment key={navItem.navKey}>
+                        <Route path={navItem.route} Component={MainComponent} />
+                        {navItem.submenu?.map((subNavItem) => (
+                            <Route
+                                key={subNavItem.navKey}
+                                path={subNavItem.route}
+                                Component={lazy(() => import('./category'))}
+                            />
+                        ))}
+                    </React.Fragment>
+                );
+            })}
             <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
     </Suspense>

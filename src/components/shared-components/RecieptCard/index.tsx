@@ -7,7 +7,7 @@ import {
     BookmarksSectionProps,
 } from '~/components/shared-components/BookmarksSection';
 import { TitleTextProps } from '~/components/shared-components/Text/Title';
-import { SHADOWS } from '~/constants/styles';
+import { BORDERS, SHADOWS } from '~/constants/styles';
 
 import { SubtitleText } from '../Text';
 import RecieptButtonsSection, { RecieptButtonsSectionProps } from './RecieptButtonsSection';
@@ -61,13 +61,16 @@ const RecieptCard: React.FC<RecieptCardProps> = ({
     imageSrc,
     title,
     text,
-    cardContentPadding,
+    cardContentPadding = {
+        base: '12px',
+        xl: '16px 24px 20px',
+    },
     cardContentTextAlign = 'start',
     titleMargin,
-    descriptionMargin,
-    cardBorder,
+    descriptionMargin = 6,
+    cardBorder = BORDERS.light,
     position,
-    cardBorderRadius,
+    cardBorderRadius = '4px',
     imageBorderRadius = cardBorderRadius,
     subtitleOrder,
     descriptionOrder,

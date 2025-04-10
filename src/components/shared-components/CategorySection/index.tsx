@@ -2,9 +2,9 @@ import { Flex, useBreakpointValue } from '@chakra-ui/react';
 import React, { useMemo } from 'react';
 
 import ButtonViewMore from '~/components/shared-components/ButtonViewMore';
-import { getSubCategoryList } from '~/configs/navigationConfig';
+import { getSubCategoryList, routeFinder } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
-import { getActiveCategory } from '~/utils';
+import { usePathnames } from '~/utils';
 
 import { CategoryHeader } from '../Headers';
 import CategoryMenu from './CategoryMenu';
@@ -45,8 +45,9 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
         lg: false,
     });
 
-    const activeCategory = getActiveCategory()?.title; //
-    const menuList = activeCategory ? getSubCategoryList(activeCategory) : []; // когда будет апи всё это выпилить
+    const pathnames = usePathnames();
+    const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]);
+    const menuList = activeCategory?.title ? getSubCategoryList(activeCategory?.title) : []; // когда будет апи всё это выпилить
     const memoizedValues = useMemo(() => hiddenElements, [hiddenElements]);
 
     return (
@@ -57,7 +58,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                     {!memoizedValues && <ButtonViewMore title={categoryButtonText} />}
                 </Flex>
             )}
-            {!noNavMenu && <CategoryMenu list={menuList} selected='Вторые блюда' />}
+            {!noNavMenu && <CategoryMenu list={menuList} />}
             <Flex flexWrap='wrap' gap={4} mb={4}>
                 {data.map((card, index) => {
                     const { title, description, img, subcategory, icon } = card;

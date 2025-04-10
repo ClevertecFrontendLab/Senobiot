@@ -1,16 +1,16 @@
 import { Button, Flex, HStack } from '@chakra-ui/react';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 import { navTreeProps } from '~/configs/navigationConfig';
 import { BORDERS } from '~/constants/styles';
 
 type CategoryMenuProps = {
     list?: navTreeProps[];
-    selected?: string;
 };
 
-const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [], selected }) => {
-    console.log(selected, list);
+const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [] }) => {
+    const { pathname } = useLocation();
+
     return (
         <Flex
             borderBottom={BORDERS.light}
@@ -31,9 +31,9 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [], selected }) => {
                         key={index}
                         as={Link}
                         size={{ base: 'sm', xl: 'md' }}
-                        color={item.title === selected ? 'lime.600' : 'none'}
+                        color={item.route === pathname ? 'lime.600' : 'none'}
                         border='none'
-                        borderBottom={item.title === selected ? '2px solid' : 'none'}
+                        borderBottom={item.route === pathname ? '2px solid' : 'none'}
                         borderRadius='none'
                         bg='none'
                         _hover={{

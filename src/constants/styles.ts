@@ -1,4 +1,8 @@
-export const PADDINGS: { [key: string]: number | { [key: string]: number } } = {
+export const PADDINGS: {
+    bottomMnu: number;
+    topMenu: number;
+    [key: string]: number | { [key: string]: number };
+} = {
     topMenu: 20,
     bottomMnu: 21,
     sideMenu: 16,

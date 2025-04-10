@@ -7,8 +7,8 @@ import {
     TextRegular,
 } from '~/components/shared-components';
 
-import CategorySectionNextCard from './CategoryNextSectionCard';
-import NextSectionCardMinimized from './NextSectionCardMinimized';
+import Card from './Card';
+import CardMinimized from './CardMinimized';
 
 type CategorySectionNextProps = {
     title: string;
@@ -41,7 +41,7 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                 if (index < 2) {
                     const { title, description, img, subcategory } = card;
                     return (
-                        <CategorySectionNextCard
+                        <Card
                             key={index}
                             title={title}
                             description={description}
@@ -59,7 +59,7 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                 {data.map((card, index) => {
                     const { title, img } = card;
                     if (index >= 2 && index < 5) {
-                        return <NextSectionCardMinimized title={title} iconUrl={img} />;
+                        return <CardMinimized key={index} title={title} iconUrl={img} />;
                     }
                 })}
             </Flex>
