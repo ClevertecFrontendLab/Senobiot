@@ -37,7 +37,7 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                 mb={{ base: 3, md: 0 }}
                 flex={{ md: '1 0 33%', xl: '1 0 33%', '2xl': `0 0 calc(100% - 668px)` }}
             />
-            <TextRegular regText={description} regTextNoOfLines={4} />
+            <TextRegular regText={description} regTextNoOfLines={0} regTextColor='blackAlpha.600' />
         </Flex>
         <Flex direction={{ base: 'column', md: 'row' }} gap={3}>
             {data.map((card, index) => {

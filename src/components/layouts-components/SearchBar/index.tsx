@@ -30,7 +30,11 @@ export const SearchBar: React.FC = () => {
             <TitleText titleText={title} titleTextFz={styles} titleTextLh={styles} />
             {activeCategory?.description && (
                 <Flex maxW={{ xl: 696 }} m='0 auto' mt={{ base: 4, xl: 3 }} textAlign='center'>
-                    <TextRegular regTextNoOfLines={4} regText={activeCategory.description} />
+                    <TextRegular
+                        regTextNoOfLines={4}
+                        regText={activeCategory.description}
+                        regTextColor='blackAlpha.600'
+                    />
                 </Flex>
             )}
             <Flex
@@ -73,7 +77,6 @@ export const SearchBar: React.FC = () => {
                             placeholder='Название или ингредиент...'
                             size={{ base: 'sm', xl: 'lg' }}
                             _placeholder={{ color: 'lime.800' }}
-                            focusBorderColor='teal.500'
                             maxWidth='auto'
                         />
                         <InputRightElement display='flex'>
@@ -109,6 +112,7 @@ export const SearchBar: React.FC = () => {
                         placeholder='Выберите из списка...'
                         focusBorderColor='blackAlpha.200'
                         overflow='hidden'
+                        color='blackAlpha.700'
                     >
                         {allergensIngredients.map((inggredient, index) => (
                             <option key={index} value={index}>

@@ -46,7 +46,7 @@ export const Slider: React.FC<SliderProps> = ({ controlsSize = 12, slides = [] }
             />
             <HStack
                 ref={sliderRef}
-                spacing={8}
+                spacing={3}
                 overflowX='auto'
                 css={{
                     scrollbarWidth: 'none',

@@ -10,6 +10,7 @@ export interface ButtonRoundedProps extends TextRegularProps {
     fontWeight?: number;
     isActive?: boolean;
     gap?: number;
+    minWidth?: string | number;
 }
 
 export const ButtonRounded: React.FC<ButtonRoundedProps> = ({
@@ -20,8 +21,10 @@ export const ButtonRounded: React.FC<ButtonRoundedProps> = ({
     textColor,
     activeTextColor,
     gap = 1,
+    minWidth,
 }) => (
     <Flex
+        minWidth={minWidth}
         wrap='wrap'
         justifyContent='center'
         textAlign='center'

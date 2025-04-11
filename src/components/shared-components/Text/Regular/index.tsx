@@ -17,7 +17,7 @@ export const TextRegular: React.FC<TextRegularProps> = ({
     regTextFw = 500,
     regTextFf = 'Inter',
     regTextLh = '20px',
-    regTextColor = 'rgba(0, 0, 0, 0.64)',
+    regTextColor = '#000',
     regTextNoOfLines = 3,
 }) => (
     <Text

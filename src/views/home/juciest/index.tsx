@@ -19,6 +19,7 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryT
                 to='/juiciest'
                 data-test-id='juiciest-link'
                 title='Вся подборка'
+                noButtonIcon={false}
             />
         </Flex>
         <Flex flexWrap='wrap' gap={4}>
@@ -42,6 +43,7 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryT
             mt={{ base: 3, xl: 0 }}
         >
             <ButtonViewMore
+                noButtonIcon={false}
                 data-test-id='juiciest-link-mobile'
                 title='Вся подборка'
                 as={Link}

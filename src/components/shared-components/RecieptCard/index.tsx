@@ -45,6 +45,7 @@ interface RecieptCardProps
     buttonsMargin?: FlexProps['marginTop'];
     buttonsJustify?: FlexProps['justifyContent'];
     gap?: FlexProps['gap'];
+    cardHeaderNoOfLines?: number;
 }
 
 export const RecieptCard: React.FC<RecieptCardProps> = ({
@@ -61,7 +62,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     title,
     text,
     cardContentPadding = {
-        base: '12px',
+        base: '8px 8px 4px',
         xl: '16px 24px 20px',
     },
     cardContentTextAlign = 'start',
@@ -70,6 +71,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     cardBorder = BORDERS.light,
     position,
     cardBorderRadius = '4px',
+    cardHeaderNoOfLines,
     imageBorderRadius = cardBorderRadius,
     subtitleOrder,
     descriptionOrder,
@@ -109,7 +111,11 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
             width='100%'
         >
             <Flex mb={titleMargin} order={subtitleOrder}>
-                <SubtitleText {...rest} titleText={title} />
+                <SubtitleText
+                    {...rest}
+                    titleText={title}
+                    titleTextNoOfLines={cardHeaderNoOfLines}
+                />
             </Flex>
             {!noDescription && (
                 <Flex mb={descriptionMargin} order={descriptionOrder}>

@@ -70,7 +70,11 @@ export const HeaderNavMenu: React.FC = () => {
                                 titleTextLh='28px'
                                 titleText='Екатерина Константинопольская'
                             />
-                            <TextRegular regTextFw={400} regText='@bake_and_pie' />
+                            <TextRegular
+                                regTextFw={400}
+                                regText='@bake_and_pie'
+                                regTextColor='blackAlpha.700'
+                            />
                         </Flex>
                     </MenuButton>
                     <MenuList>
