@@ -45,7 +45,7 @@ interface RecieptCardProps
     buttonsMargin?: FlexProps['marginTop'];
     buttonsJustify?: FlexProps['justifyContent'];
     gap?: FlexProps['gap'];
-    cardHeaderNoOfLines?: number;
+    cardHeaderNoOfLines?: ResponsiveValue<number>;
 }
 
 export const RecieptCard: React.FC<RecieptCardProps> = ({

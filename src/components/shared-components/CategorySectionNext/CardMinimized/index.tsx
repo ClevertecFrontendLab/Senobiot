@@ -31,7 +31,14 @@ const NextSectionCardMinimized: React.FC<NextSectionCardMinimized> = ({
             />
         </Flex>
         <Flex flex='0 0 32px'>
-            <ButtonOutlined size='sm' outlBtnText={buttonText} />
+            <ButtonOutlined
+                size='sm'
+                outlBtnText={buttonText}
+                outlBtnColor='lime.600'
+                outlBtnBorderColor='lime.600'
+                outlBtnBorder='1px solid'
+                maxWidth={{ base: 70, '2xl': 'unset' }}
+            />
         </Flex>
     </Flex>
 );

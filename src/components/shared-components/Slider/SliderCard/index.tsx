@@ -49,6 +49,7 @@ const SliderCard: React.FC<SliderCardProps> = ({ title, description, subcategory
             categoryIconUrl={icon}
             bookmarkJustify='space-between'
             titleTextNoOfLines={{ base: 2, xl: 1 }}
+            cardHeaderNoOfLines={{ base: 2, xl: 1 }}
         />
     );
 };
