@@ -1,7 +1,7 @@
 import { Button, HStack } from '@chakra-ui/react';
 import React from 'react';
 
-import ButtonBookmark, { ButtonBookBtnProps } from '~/components/shared-components/Button/Bookmark';
+import { ButtonbookBtn, ButtonBookBtnProps } from '../../Buttons';
 
 export interface RecieptButtonsSectionProps extends ButtonBookBtnProps {
     coockingButtonText?: string;
@@ -14,7 +14,7 @@ const RecieptButtonsSection: React.FC<RecieptButtonsSectionProps> = ({
     ...props
 }) => (
     <HStack wrap='wrap' gap={3}>
-        <ButtonBookmark {...props} />
+        <ButtonbookBtn {...props} />
         <Button
             variant={actionButtonVariant}
             bg='blackAlpha.900'

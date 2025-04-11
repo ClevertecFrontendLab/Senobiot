@@ -4,7 +4,7 @@ import React from 'react';
 import { BORDERS } from '~/constants/styles';
 import { BlogType } from '~/data';
 
-import { TextRegular } from '../Text';
+import { TextRegular } from '../../Text';
 
 const BlogCard: React.FC<BlogType> = ({ name, email, profilePic, quote }) => (
     <Flex

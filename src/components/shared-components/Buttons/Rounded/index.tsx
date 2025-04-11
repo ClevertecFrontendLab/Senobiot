@@ -12,7 +12,7 @@ export interface ButtonRoundedProps extends TextRegularProps {
     gap?: number;
 }
 
-const ButtonRounded: React.FC<ButtonRoundedProps> = ({
+export const ButtonRounded: React.FC<ButtonRoundedProps> = ({
     text,
     iconUrl,
     isActive = false,
@@ -55,5 +55,3 @@ const ButtonRounded: React.FC<ButtonRoundedProps> = ({
         </Flex>
     </Flex>
 );
-
-export default ButtonRounded;

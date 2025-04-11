@@ -3,9 +3,9 @@ import React from 'react';
 
 import { blogsData } from '~/data';
 
-import ButtonViewMore from '../ButtonViewMore';
+import { ButtonViewMore } from '../';
 import { TitleText } from '../Text';
-import BlogCard from './BlogCard';
+import BlogCard from './Card';
 
 export const BlogsSection: React.FC = () => (
     <Flex

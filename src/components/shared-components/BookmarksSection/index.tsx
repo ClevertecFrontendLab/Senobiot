@@ -1,6 +1,6 @@
 import { Flex, HStack, ResponsiveValue } from '@chakra-ui/react';
 
-import ButtonCategory, { ButtonCategoryProps } from '../ButtonCategory';
+import { ButtonCategory, ButtonCategoryProps } from '../Buttons';
 import { StatItem, StatItemProps } from '../StatItem';
 
 export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProps {

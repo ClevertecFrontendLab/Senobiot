@@ -13,7 +13,13 @@ import { Link, useLocation } from 'react-router';
 
 import { navTreeProps } from '~/configs/navigationConfig';
 
-const SideNavMenuItem: React.FC<navTreeProps> = ({ title, icon = '', route, submenu = [] }) => {
+const SideNavMenuItem: React.FC<navTreeProps> = ({
+    title,
+    icon = '',
+    route,
+    submenu = [],
+    navKey,
+}) => {
     const { pathname } = useLocation();
 
     return (
@@ -22,6 +28,7 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({ title, icon = '', route, subm
                 <>
                     <Link to={route}>
                         <AccordionButton
+                            data-test-id={navKey}
                             bg={isExpanded ? 'lime.100' : 'white'}
                             px={2.5}
                             height={12}

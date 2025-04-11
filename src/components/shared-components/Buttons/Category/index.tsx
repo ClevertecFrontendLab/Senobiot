@@ -15,7 +15,7 @@ export type ButtonCategoryProps = {
     categoryTextNoofLines?: ResponsiveValue<number>;
 };
 
-const ButtonCategory: React.FC<ButtonCategoryProps> = ({
+export const ButtonCategory: React.FC<ButtonCategoryProps> = ({
     categoryText,
     categoryIconUrl,
     categoryColor = 'black',
@@ -51,5 +51,3 @@ const ButtonCategory: React.FC<ButtonCategoryProps> = ({
         {categoryText}
     </Button>
 );
-
-export default ButtonCategory;

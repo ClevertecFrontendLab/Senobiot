@@ -1,6 +1,6 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 
-import RecieptCard from '../../RecieptCard';
+import { RecieptCard } from '../..';
 
 type SliderCardProps = {
     title: string;

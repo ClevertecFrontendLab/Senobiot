@@ -1,6 +1,6 @@
 import { CategoryCardProps } from '~/components/shared-components/CategorySection/CategorySectionCard';
 
-import RecieptCard from '../../RecieptCard';
+import { RecieptCard } from '../..';
 
 const CategorySectionNextCard: React.FC<CategoryCardProps> = ({
     title,

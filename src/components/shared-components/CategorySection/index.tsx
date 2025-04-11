@@ -1,10 +1,10 @@
 import { Flex } from '@chakra-ui/react';
 
-import ButtonViewMore from '~/components/shared-components/ButtonViewMore';
 import { getSubCategoryList, routeFinder } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
 import { usePathnames } from '~/utils';
 
+import { ButtonViewMore } from '../Buttons';
 import { CategoryHeader } from '../Headers';
 import CategoryMenu from './CategoryMenu';
 import CategoryCard from './CategorySectionCard';
@@ -53,15 +53,11 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                 <Flex justifyContent='space-between' mb={categoryHeaderMb}>
                     <CategoryHeader title={categoryTitle} />
                     {!noHeaderButton && (
-                        <ButtonViewMore
-                            dataTestId='juiciest-link'
-                            title={categoryButtonText}
-                            noButtonIcon={noButtonIcon}
-                        />
+                        <ButtonViewMore title={categoryButtonText} noButtonIcon={noButtonIcon} />
                     )}
                 </Flex>
             )}
-            {!noNavMenu && <CategoryMenu list={menuList} />}
+            {!noNavMenu && !activeCategory?.skipSideMenu && <CategoryMenu list={menuList} />}
             <Flex flexWrap='wrap' gap={4}>
                 {data.map((card, index) => {
                     const { title, description, img, subcategory, icon } = card;
@@ -80,7 +76,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             </Flex>
             {!noFooter && (
                 <Flex justifyContent='center' mt={categoryHeaderMb}>
-                    <ButtonViewMore title={categoryButtonText} dataTestId='juiciest-link-mobile' />
+                    <ButtonViewMore title={categoryButtonText} />
                 </Flex>
             )}
         </Flex>

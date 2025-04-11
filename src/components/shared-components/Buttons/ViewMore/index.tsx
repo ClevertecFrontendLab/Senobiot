@@ -1,26 +1,27 @@
-import { Button, Image, ResponsiveValue } from '@chakra-ui/react';
+import { Button, ButtonProps, Image, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
+import { LinkProps } from 'react-router';
 
-type ButtonViewMoreProps = {
+interface ButtonViewMoreProps extends ButtonProps {
     title: string;
     noButtonIcon?: boolean;
     fz?: ResponsiveValue<string | number>;
-    dataTestId?: string;
-};
+    to?: LinkProps['to'];
+}
 
-const ButtonViewMore: React.FC<ButtonViewMoreProps> = ({
+export const ButtonViewMore: React.FC<ButtonViewMoreProps> = ({
     title,
     noButtonIcon = true,
     fz,
-    dataTestId,
+    ...rest
 }) => (
     <Button
+        {...rest}
         bg='lime.300'
         color='black'
         borderRadius='6px'
         px={4}
         py={2}
-        data-test-id={dataTestId}
         rightIcon={
             noButtonIcon ? undefined : (
                 <Image src='/icons/arrow-right.svg' alt='arrow right' boxSize={4} mt={1} />
@@ -37,5 +38,3 @@ const ButtonViewMore: React.FC<ButtonViewMoreProps> = ({
         {title}
     </Button>
 );
-
-export default ButtonViewMore;

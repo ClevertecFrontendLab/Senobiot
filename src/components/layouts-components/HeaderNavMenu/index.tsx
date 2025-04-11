@@ -15,7 +15,7 @@ import {
 import React from 'react';
 
 import { TextRegular, TitleText } from '~/components/shared-components';
-import { ProfileNotification } from '~/components/shared-components/ProfileNotification';
+import { ProfileNotification } from '~/components/shared-components';
 import { PADDINGS } from '~/constants/styles';
 
 import BreadCrump from './BreadCrump';

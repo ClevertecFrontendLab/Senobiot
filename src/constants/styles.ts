@@ -1,6 +1,7 @@
 export const PADDINGS: {
     bottomMnu: number;
     topMenu: number;
+    footer: number;
     [key: string]: number | { [key: string]: number };
 } = {
     topMenu: 20,
@@ -30,31 +31,18 @@ export const BORDERS: { [key: string]: string } = {
 };
 
 // p (padding)
-
 // px (horizontal padding)
-
 // py (vertical padding)
-
 // pt (padding top)
-
 // pb (padding bottom)
-
 // pl (padding left)
-
 // pr (padding right)
-
 // m (margin)
-
 // mx (horizontal margin)
-
 // my (vertical margin)
-
 // mt (margin top)
-
 // mb (margin bottom)
-
 // ml (margin left)
-
 // mr (margin right)
 
 // xs	0.75rem	12px

@@ -6,6 +6,7 @@ import {
     CategorySectionDataProps,
     TextRegular,
 } from '~/components/shared-components';
+import { PADDINGS } from '~/constants/styles';
 
 import Card from './Card';
 import CardMinimized from './CardMinimized';
@@ -26,7 +27,10 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
     description,
     data,
 }) => (
-    <Flex direction='column'>
+    <Flex
+        direction='column'
+        mb={{ base: PADDINGS.footer, xl: 'unset' }} // конец контента
+    >
         <Flex mb={4} gap={2} direction={{ base: 'column', md: 'row' }} alignItems='center'>
             <CategoryHeader
                 title={title}

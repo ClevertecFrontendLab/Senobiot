@@ -10,7 +10,7 @@ import { TitleTextProps } from '~/components/shared-components/Text/Title';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 
 import { SubtitleText } from '../Text';
-import RecieptButtonsSection, { RecieptButtonsSectionProps } from './RecieptButtonsSection';
+import RecieptButtonsSection, { RecieptButtonsSectionProps } from './ButtonsBlock';
 
 interface RecieptCardProps
     extends BookmarksSectionProps,
@@ -18,7 +18,6 @@ interface RecieptCardProps
         TitleTextProps,
         RecieptButtonsSectionProps,
         FlexProps {
-    // Pick<FlexProps, 'textAlign' | 'position' | 'wrap' | 'border' | 'borderRadius' | 'order' | 'padding' | 'marginBottom' | 'marginTop' | 'width' | 'minWidth' | 'flex' | 'justifyContent' | 'gap'>
     title: string;
     text?: string;
     cardBorder?: FlexProps['border'];
@@ -48,7 +47,7 @@ interface RecieptCardProps
     gap?: FlexProps['gap'];
 }
 
-const RecieptCard: React.FC<RecieptCardProps> = ({
+export const RecieptCard: React.FC<RecieptCardProps> = ({
     cardFlexWidth,
     minWidth = '328px',
     width = '100%',
@@ -126,5 +125,3 @@ const RecieptCard: React.FC<RecieptCardProps> = ({
         </Flex>
     </Flex>
 );
-
-export default RecieptCard;

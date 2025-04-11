@@ -19,15 +19,23 @@ export const navTree: Array<navTreeProps> = [
         breadcrumb: true,
         skipSideMenu: true,
         submenu: [
-            {
-                navKey: 'juiciest',
-                route: '/juiciest',
-                title: 'Самое сочное',
-                skipSideMenu: true,
-                breadcrumb: true,
-                submenu: [],
-            },
+            // {
+            //     navKey: 'juiciest',
+            //     route: '/juiciest',
+            //     title: 'Самое сочное',
+            //     skipSideMenu: true,
+            //     breadcrumb: true,
+            //     submenu: [],
+            // },
         ],
+    },
+    {
+        navKey: 'juiciest',
+        route: '/juiciest',
+        title: 'Самое сочное',
+        skipSideMenu: true,
+        breadcrumb: true,
+        submenu: [],
     },
     {
         navKey: 'salates',

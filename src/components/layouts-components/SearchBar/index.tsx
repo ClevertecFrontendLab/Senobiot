@@ -12,12 +12,11 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
+import { TextRegular, TitleText } from '~/components/shared-components';
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, PADDINGS } from '~/constants/styles';
 import { allergensIngredients } from '~/data';
 import { usePathnames } from '~/utils';
-
-import { TextRegular, TitleText } from '../../shared-components';
 
 export const SearchBar: React.FC = () => {
     const pathnames = usePathnames();

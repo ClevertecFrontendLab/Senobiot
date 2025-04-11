@@ -1,7 +1,7 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
-import RecieptCard from '../../RecieptCard';
+import { RecieptCard } from '../..';
 
 export type CategoryCardProps = {
     title: string;

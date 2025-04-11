@@ -1,11 +1,11 @@
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
+import { ButtonRounded } from '~/components/shared-components';
 import { PADDINGS } from '~/constants/styles';
 
-import ButtonRounded from '../shared-components/Button/Rounded';
-
 const bottomMenuProps = [
+    // TODO возможно потом вынести куда
     {
         name: 'Главная',
         iconUrl: '/icons/bottom-menu/home.svg',

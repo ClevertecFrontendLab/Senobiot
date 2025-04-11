@@ -1,10 +1,8 @@
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 
+import { ButtonRounded, ProfileNotification } from '~/components/shared-components';
 import { PADDINGS, WIDTHS } from '~/constants/styles';
-
-import ButtonRounded from '../shared-components/Button/Rounded';
-import { ProfileNotification } from '../shared-components/ProfileNotification';
 
 export const BookmarkSideMenu: React.FC = () => (
     <Flex

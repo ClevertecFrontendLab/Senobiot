@@ -16,7 +16,7 @@ export interface ButtonBookBtnProps {
     bookBtnSize?: string;
 }
 
-const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
+export const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
     bookBtnText = 'Сохранить',
     bookBtnTextcolor = 'blackAlpha.800',
     bookBtnBorderColor,
@@ -48,5 +48,3 @@ const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
         <Text display={{ base: 'none', xl: 'initial' }}>{bookBtnText}</Text>
     </Button>
 );
-
-export default ButtonbookBtn;
