@@ -54,7 +54,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                     <CategoryHeader title={categoryTitle} />
                     {!noHeaderButton && (
                         <ButtonViewMore
-                            data-test-id='juiciest-link'
+                            dataTestId='juiciest-link'
                             title={categoryButtonText}
                             noButtonIcon={noButtonIcon}
                         />
@@ -80,10 +80,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             </Flex>
             {!noFooter && (
                 <Flex justifyContent='center' mt={categoryHeaderMb}>
-                    <ButtonViewMore
-                        title={categoryButtonText}
-                        data-test-id='juiciest-link-mobile'
-                    />
+                    <ButtonViewMore title={categoryButtonText} dataTestId='juiciest-link-mobile' />
                 </Flex>
             )}
         </Flex>

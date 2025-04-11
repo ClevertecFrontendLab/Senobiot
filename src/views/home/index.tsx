@@ -29,7 +29,7 @@ const HomePage: React.FC<PageProps> = ({
 }) => {
     const hiddenElements = useBreakpointValue({
         base: true,
-        md: false,
+        xl: false,
     });
     const isMobile = useMemo(() => hiddenElements, [hiddenElements]);
 
