@@ -18,7 +18,6 @@ type CategorySectionNextProps = {
     mb?: string | number;
     categoryHeaderMb?: string | number;
     noHeader?: boolean;
-    noFooter?: boolean;
     noNavMenu?: boolean;
 };
 
@@ -32,7 +31,7 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
             <CategoryHeader
                 title={title}
                 mb={{ base: 3, md: 0 }}
-                flex={{ md: '1 0 34%', xl: '0 0 322px', '2xl': '0 0 668px' }}
+                flex={{ md: '1 0 33%', xl: '1 0 33%', '2xl': `0 0 calc(100% - 668px)` }}
             />
             <TextRegular regText={description} regTextNoOfLines={4} />
         </Flex>

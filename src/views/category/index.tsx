@@ -1,10 +1,13 @@
 import { Flex } from '@chakra-ui/react';
 
+import { navTree } from '~/configs/navigationConfig';
 import { PADDINGS, WIDTHS } from '~/constants/styles';
-import { sliderData } from '~/data';
+import { dishesList, sliderData } from '~/data';
 
-import { CategorySection } from '../../components/shared-components';
+import { CategorySection, CategorySectionNext } from '../../components/shared-components';
 import { PageProps } from '../home';
+
+const nexSection = navTree.find((e) => e.navKey === 'desserts-baking'); // TODO remove after true api
 
 const CategoryPage: React.FC<PageProps> = ({ categoryTitle = '', categoryData = sliderData }) => (
     <Flex
@@ -18,6 +21,11 @@ const CategoryPage: React.FC<PageProps> = ({ categoryTitle = '', categoryData = 
             data={categoryData}
             categoryButtonText='Загрузить еще'
             noHeader={true}
+        />
+        <CategorySectionNext
+            title={nexSection?.title || ''}
+            description={nexSection?.description || ''}
+            data={dishesList}
         />
     </Flex>
 );

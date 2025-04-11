@@ -39,6 +39,7 @@ export const HeaderNavMenu: React.FC = () => {
             zIndex={10}
             justifyContent='space-between'
             alignItems='center'
+            data-test-id='header'
         >
             <HStack>
                 <Logo />

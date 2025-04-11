@@ -1,5 +1,4 @@
-import { Flex, useBreakpointValue } from '@chakra-ui/react';
-import React, { useMemo } from 'react';
+import { Flex } from '@chakra-ui/react';
 
 import ButtonViewMore from '~/components/shared-components/ButtonViewMore';
 import { getSubCategoryList, routeFinder } from '~/configs/navigationConfig';
@@ -27,6 +26,8 @@ export type CategorySectionProps = {
     noHeader?: boolean;
     noFooter?: boolean;
     noNavMenu?: boolean;
+    noButtonIcon?: boolean;
+    noHeaderButton?: boolean;
     mb?: string | number;
 };
 
@@ -36,30 +37,32 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     data,
     categoryHeaderMb = PADDINGS.subsectionHeaderMb,
     mb = PADDINGS.subsectionMb,
+    noHeaderButton = false,
     noHeader = false,
     noFooter = false,
     noNavMenu = false,
+    noButtonIcon,
 }) => {
-    const hiddenElements = useBreakpointValue({
-        base: true,
-        lg: false,
-    });
-
     const pathnames = usePathnames();
     const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]);
     const menuList = activeCategory?.title ? getSubCategoryList(activeCategory?.title) : []; // когда будет апи всё это выпилить
-    const memoizedValues = useMemo(() => hiddenElements, [hiddenElements]);
 
     return (
         <Flex justifyContent='space-between' mb={mb} direction='column'>
             {!noHeader && (
                 <Flex justifyContent='space-between' mb={categoryHeaderMb}>
                     <CategoryHeader title={categoryTitle} />
-                    {!memoizedValues && <ButtonViewMore title={categoryButtonText} />}
+                    {!noHeaderButton && (
+                        <ButtonViewMore
+                            data-test-id='juiciest-link'
+                            title={categoryButtonText}
+                            noButtonIcon={noButtonIcon}
+                        />
+                    )}
                 </Flex>
             )}
             {!noNavMenu && <CategoryMenu list={menuList} />}
-            <Flex flexWrap='wrap' gap={4} mb={4}>
+            <Flex flexWrap='wrap' gap={4}>
                 {data.map((card, index) => {
                     const { title, description, img, subcategory, icon } = card;
 
@@ -76,8 +79,11 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                 })}
             </Flex>
             {!noFooter && (
-                <Flex justifyContent='center' mb={categoryHeaderMb}>
-                    <ButtonViewMore title={categoryButtonText} />
+                <Flex justifyContent='center' mt={categoryHeaderMb}>
+                    <ButtonViewMore
+                        title={categoryButtonText}
+                        data-test-id='juiciest-link-mobile'
+                    />
                 </Flex>
             )}
         </Flex>

@@ -34,6 +34,7 @@ const bottomMenuProps = [
 
 export const BottomNavMenu: React.FC = () => (
     <Flex
+        data-test-id='footer'
         position='fixed'
         bottom={0}
         zIndex={10}
