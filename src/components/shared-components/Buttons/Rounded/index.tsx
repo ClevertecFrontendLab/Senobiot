@@ -40,6 +40,21 @@ export const ButtonRounded: React.FC<ButtonRoundedProps> = ({
             bg={isActive ? 'black' : 'none'}
             mb={gap}
             boxShadow={isActive ? '0 0 40px #C4FF61' : 'none'}
+            position='relative'
+            sx={{
+                '&::before': {
+                    content: '""',
+                    borderRadius: '50%',
+                    height: isActive ? '200%' : 0,
+                    width: isActive ? '200%' : 0,
+                    position: 'absolute',
+                    top: '-50%',
+                    left: '-50%',
+                    zIndex: -1,
+                    background:
+                        'radial-gradient(50% 50% at 50% 50%, rgba(196, 255, 97, 0.7) 0%, rgba(255, 255, 255, 0) 100%)',
+                },
+            }}
         >
             <Image
                 src={iconUrl}

@@ -268,7 +268,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'desserts-baking',
         route: '/desserts-baking',
-        title: 'Десерты и выпечка',
+        title: 'Десерты, выпечка',
         icon: '/icons/dishes-category/salates.svg',
         breadcrumb: true,
         description:

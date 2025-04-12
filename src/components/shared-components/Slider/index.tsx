@@ -35,7 +35,7 @@ export const Slider: React.FC<SliderProps> = ({ controlsSize = 12, slides = [] }
     };
 
     return (
-        <Flex direction='column' overflow='hidden' position='relative'>
+        <Flex direction='column' position='relative'>
             <SliderLeftButton
                 controlsSize={controlsSize}
                 controlCallback={() => scrollSmooth('left')}

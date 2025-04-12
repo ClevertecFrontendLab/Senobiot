@@ -16,19 +16,15 @@ export const SideMenu: React.FC = () => {
             justifyContent='space-between'
             w='256px'
             h='100vh'
-            px='16px'
+            pt={PADDINGS.topMenu}
+            pl={2.5}
+            pb={8}
+            pr={1}
             maxHeight='100vh'
             position='fixed'
             zIndex={9}
             bg='white'
             left={0}
-            m={0}
-            ml={0}
-            pt={8 + PADDINGS.topMenu}
-            pb={8}
-            pl={2.5}
-            pr={1}
-            margin={0}
             boxShadow={SHADOWS.main}
             display={{ base: 'none', xl: 'flex' }}
         >
@@ -37,6 +33,8 @@ export const SideMenu: React.FC = () => {
                 flexDirection='column'
                 justifyContent='space-between'
                 borderRadius='8px'
+                pr={1}
+                pt={6}
                 css={{
                     '&::-webkit-scrollbar': {
                         width: 8,

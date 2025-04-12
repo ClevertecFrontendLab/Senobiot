@@ -9,13 +9,13 @@ type SliderButtonsProps = {
 const arrowLeftStyle = {
     position: 'absolute',
     top: 'calc((100% - 48px) / 2)',
-    left: 0,
+    left: '-8px',
     '& .chakra-button__icon': {
         marginInlineEnd: 0,
     },
 };
 
-const arrowRightStyle = { ...arrowLeftStyle, right: 0, left: 'initial' };
+const arrowRightStyle = { ...arrowLeftStyle, right: '-8px', left: 'initial' };
 
 export const SliderLeftButton: React.FC<SliderButtonsProps> = ({
     controlCallback,

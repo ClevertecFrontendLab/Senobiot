@@ -12,7 +12,7 @@ import { BORDERS, SHADOWS } from '~/constants/styles';
 import { SubtitleText } from '../Text';
 import RecieptButtonsSection, { RecieptButtonsSectionProps } from './ButtonsBlock';
 
-interface RecieptCardProps
+export interface RecieptCardProps
     extends BookmarksSectionProps,
         TextRegularProps,
         TitleTextProps,
@@ -28,6 +28,7 @@ interface RecieptCardProps
     imageBorderRadius?: string | number;
     minWidth?: FlexProps['minWidth'];
     width?: FlexProps['width'];
+    height?: FlexProps['height'];
     position?: FlexProps['position'];
     wrap?: FlexProps['wrap'];
     noImage?: boolean;
@@ -46,12 +47,14 @@ interface RecieptCardProps
     buttonsJustify?: FlexProps['justifyContent'];
     gap?: FlexProps['gap'];
     cardHeaderNoOfLines?: ResponsiveValue<number>;
+    descriptionHeight?: FlexProps['height'];
 }
 
 export const RecieptCard: React.FC<RecieptCardProps> = ({
     cardFlexWidth,
     minWidth = '328px',
     width = '100%',
+    height,
     wrap = 'wrap',
     noImage = false,
     noButtons = false,
@@ -80,6 +83,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     buttonsJustify = 'flex-end',
     gap,
     buttonsMargin = 'auto',
+    descriptionHeight,
     ...rest
 }) => (
     <Flex
@@ -87,6 +91,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
         position={position}
         minWidth={minWidth}
         w={width}
+        h={height}
         wrap={wrap}
         border={cardBorder}
         cursor='pointer'
@@ -118,7 +123,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
                 />
             </Flex>
             {!noDescription && (
-                <Flex mb={descriptionMargin} order={descriptionOrder}>
+                <Flex mb={descriptionMargin} order={descriptionOrder} height={descriptionHeight}>
                     <TextRegular regText={text} />
                 </Flex>
             )}

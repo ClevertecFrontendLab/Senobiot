@@ -8,13 +8,13 @@ export type TextRegularProps = {
     regTextFf?: string;
     regTextLh?: string;
     regTextColor?: string;
-    regTextNoOfLines?: number;
+    regTextNoOfLines?: ResponsiveValue<number>;
 };
 
 export const TextRegular: React.FC<TextRegularProps> = ({
     regText = '',
     regTextFz = '14px',
-    regTextFw = 500,
+    regTextFw = 400,
     regTextFf = 'Inter',
     regTextLh = '20px',
     regTextColor = '#000',

@@ -24,7 +24,7 @@ const HomePage: React.FC<PageProps> = ({ categoryData = sliderData }) => (
         mx={PADDINGS.sectionMx}
         px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
         display='column'
-        mb={PADDINGS.bottomMnu * 4 + 20}
+        mb={{ base: '96px', xl: 3 }}
     >
         <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
             <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />

@@ -15,11 +15,19 @@ const NextSectionCardMinimized: React.FC<NextSectionCardMinimized> = ({
     iconUrl,
     buttonText = 'Готовить',
 }) => (
-    <Flex gap={2} alignItems='center' border={BORDERS.light} py={2.5} px={3} borderRadius='6px'>
+    <Flex
+        maxH={{ base: '52px', '2xl': '56px' }}
+        gap={2}
+        alignItems='center'
+        border={BORDERS.light}
+        py={2.5}
+        px={3}
+        borderRadius='6px'
+        flexGrow={1}
+    >
         <Flex flex='0 0 24px'>
             <Image boxSize={6} src={iconUrl}></Image>
         </Flex>
-
         <Flex flex='1 1 100%' justifyContent='flex-start' textAlign='left'>
             <SubtitleText
                 titleTextLh='24px'

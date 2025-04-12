@@ -1,10 +1,9 @@
 export const PADDINGS: {
     bottomMnu: number;
-    topMenu: number;
     footer: number;
     [key: string]: number | { [key: string]: number };
 } = {
-    topMenu: 20,
+    topMenu: { base: 16, xl: 20 },
     bottomMnu: 21,
     sideMenu: 16,
     footer: 24,

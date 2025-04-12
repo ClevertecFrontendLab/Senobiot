@@ -76,7 +76,7 @@ export const SearchBar: React.FC = () => {
                             pl={3}
                             placeholder='Название или ингредиент...'
                             size={{ base: 'sm', xl: 'lg' }}
-                            _placeholder={{ color: 'lime.800' }}
+                            _placeholder={{ color: '#134B00' }} //тему можно применить только через приватное сво-во
                             maxWidth='auto'
                         />
                         <InputRightElement display='flex'>

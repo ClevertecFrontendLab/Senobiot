@@ -6,7 +6,6 @@ import {
     CategorySectionDataProps,
     TextRegular,
 } from '~/components/shared-components';
-import { PADDINGS } from '~/constants/styles';
 
 import Card from './Card';
 import CardMinimized from './CardMinimized';
@@ -29,17 +28,32 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
 }) => (
     <Flex
         direction='column'
-        mb={{ base: PADDINGS.footer, xl: 'unset' }} // конец контента
+        borderTop='1px solid'
+        borderColor='blackAlpha.200'
+        // pb={{ base: PADDINGS.footer, xl: 'unset' }} // конец контента
     >
-        <Flex mb={4} gap={2} direction={{ base: 'column', md: 'row' }} alignItems='center'>
+        <Flex
+            gap={{ md: 3, xl: 4, '2xl': 6 }}
+            direction={{ base: 'column', md: 'row' }}
+            textAlign='left'
+            pt={{ base: 2, xl: 6 }}
+            pb={{ base: 2, xl: 4 }}
+        >
             <CategoryHeader
+                alignItems='center'
+                titleTextAlign='left'
                 title={title}
-                mb={{ base: 3, md: 0 }}
-                flex={{ md: '1 0 33%', xl: '1 0 33%', '2xl': `0 0 calc(100% - 668px)` }}
+                flex={{ base: '1 0 100%', md: '1 0 33.33%', '2xl': `0 0 668px` }}
             />
-            <TextRegular regText={description} regTextNoOfLines={0} regTextColor='blackAlpha.600' />
+            <Flex flex={{ base: '1 0 100%', md: '1 0 66.67%', '2xl': `1 0 322px` }}>
+                <TextRegular
+                    regText={description}
+                    regTextNoOfLines={0}
+                    regTextColor='blackAlpha.600'
+                />
+            </Flex>
         </Flex>
-        <Flex direction={{ base: 'column', md: 'row' }} gap={3}>
+        <Flex direction={{ base: 'column', md: 'row' }} gap={{ base: 3, xl: 4, '2xl': 6 }}>
             {data.map((card, index) => {
                 if (index < 2) {
                     const { title, description, img, subcategory } = card;
@@ -50,14 +64,18 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                             description={description}
                             subcategory={subcategory}
                             icon={img}
+                            regTextNoOfLines={{ base: 3 }}
+                            height={{ md: '168px', xl: '180px', '2xl': '192px' }}
                         />
                     );
                 }
             })}
             <Flex
                 direction='column'
-                flex={{ base: '1 1 100%', md: '1 1 33%', xl: '1 0 33%', '2xl': '1 0 668px' }}
-                gap={2.5}
+                gap={{ base: 2.5, md: 1.5 }}
+                flex={{ base: '1 0 100%', md: '1 1 33.33%', '2xl': '0 1 668px' }}
+                height={{ md: '168px', xl: '180px', '2xl': '192px' }}
+                justifyContent='space-between'
             >
                 {data.map((card, index) => {
                     const { title, img } = card;

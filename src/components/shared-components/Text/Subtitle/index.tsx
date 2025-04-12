@@ -2,7 +2,7 @@ import React from 'react';
 
 import { TitleText, TitleTextProps } from '../Title';
 
-interface SubtitleText extends TitleTextProps {
+export interface SubtitleText extends TitleTextProps {
     titleText: string;
     titleTextFw?: number;
     titleHeading?: React.ElementType;

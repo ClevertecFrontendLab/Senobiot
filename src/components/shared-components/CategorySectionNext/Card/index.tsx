@@ -7,8 +7,10 @@ const CategorySectionNextCard: React.FC<CategoryCardProps> = ({
     description,
     subcategory,
     icon,
+    ...props
 }) => (
     <RecieptCard
+        {...props}
         minWidth='initial'
         text={description}
         title={title}
@@ -33,7 +35,7 @@ const CategorySectionNextCard: React.FC<CategoryCardProps> = ({
         bookmarkStatGap={{ base: 2, md: 4, xl: 2 }}
         titleTextNoOfLines={{ base: 2, md: 1 }}
         categoryTextNoofLines={{ base: 1, md: 0, xl: 1 }}
-        cardFlexWidth={{ base: '1 1 100%', md: '0 0 33%', xl: '0 1 33%', '2xl': '0 1 322px' }}
+        cardFlexWidth={{ base: '1 1 100%', md: '0 0 33.33%', xl: '0 0 33.33%', '2xl': '1 0 322px' }}
         cardContentPadding={{
             base: '8px',
             xl: '16px',

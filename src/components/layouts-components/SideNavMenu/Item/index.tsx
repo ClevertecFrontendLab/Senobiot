@@ -36,7 +36,7 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
                         <AccordionButton
                             data-test-id={navKey}
                             bg={isExpanded ? 'lime.100' : 'white'}
-                            px={2.5}
+                            px={2}
                             height={12}
                             fontWeight={500}
                             fontSize={16}

@@ -1,9 +1,9 @@
 import { Flex, FlexProps, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
-import { SubtitleText } from '../../Text/Subtitle';
+import { SubtitleText, TitleTextProps } from '../..';
 
-interface CategoryHeaderProps {
+interface CategoryHeaderProps extends TitleTextProps {
     title: string;
     mb?: ResponsiveValue<string | number>;
     flex?: FlexProps['flex'];

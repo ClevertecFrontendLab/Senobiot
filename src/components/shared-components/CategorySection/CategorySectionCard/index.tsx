@@ -1,16 +1,16 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
-import { RecieptCard } from '../..';
+import { RecieptCard, RecieptCardProps } from '../..';
 
-export type CategoryCardProps = {
+export interface CategoryCardProps extends RecieptCardProps {
     title: string;
     description?: string;
     subcategory?: string;
     img?: string;
     icon?: string;
     hiddenElements?: boolean;
-};
+}
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
     title,
