@@ -7,7 +7,7 @@ export const PADDINGS: {
     bottomMnu: 21,
     sideMenu: 16,
     footer: 24,
-    header: 32 + 20 * 4,
+    header: { base: 20, xl: 28 },
     content: 280,
     sectionMx: { base: 0, xl: 280 },
     subsectionMb: { base: 8, xl: 10 },

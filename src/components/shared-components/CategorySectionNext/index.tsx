@@ -44,6 +44,7 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                 titleTextAlign='left'
                 title={title}
                 flex={{ base: '1 0 100%', md: '1 0 33.33%', '2xl': `0 0 668px` }}
+                mb={{ base: 3, xl: 0 }}
             />
             <Flex flex={{ base: '1 0 100%', md: '1 0 66.67%', '2xl': `1 0 322px` }}>
                 <TextRegular
