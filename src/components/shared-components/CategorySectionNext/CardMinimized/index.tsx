@@ -45,7 +45,10 @@ const NextSectionCardMinimized: React.FC<NextSectionCardMinimized> = ({
                 outlBtnColor='lime.600'
                 outlBtnBorderColor='lime.600'
                 outlBtnBorder='1px solid'
-                maxWidth={{ base: 70, '2xl': 'unset' }}
+                maxWidth={{ base: '70px', '2xl': '87px' }}
+                minWidth={{ base: '70px', '2xl': '87px' }}
+                outlBtnTextFontSize={{ base: '12px', '2xl': '14px' }}
+                outlBtnTextPadding={{ base: '8px', '2xl': '6px 12px' }}
             />
         </Flex>
     </Flex>

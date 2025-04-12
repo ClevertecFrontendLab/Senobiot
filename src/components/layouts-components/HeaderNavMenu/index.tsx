@@ -29,7 +29,7 @@ export const HeaderNavMenu: React.FC = () => {
             as='header'
             bg='lime.50'
             h={PADDINGS.topMenu}
-            maxWidth='1920px'
+            // maxWidth='1920px'
             width='100vw'
             pr={4}
             position='fixed'

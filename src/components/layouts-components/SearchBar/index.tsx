@@ -40,7 +40,7 @@ export const SearchBar: React.FC = () => {
             <Flex
                 m='0 auto'
                 mt={{ base: 4, xl: 8 }}
-                mb={8}
+                mb={{ base: 8, '2xl': 14 }}
                 w={{ base: 328, md: 448, xl: 518 }}
                 maxW={{ base: 328, md: 448, xl: 518 }}
                 direction='column'

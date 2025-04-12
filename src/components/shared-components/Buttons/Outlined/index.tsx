@@ -12,6 +12,9 @@ export type ButtonOutlinedProps = {
     gap?: number;
     as?: React.ElementType;
     maxWidth?: ResponsiveValue<number | string>;
+    minWidth?: ResponsiveValue<number | string>;
+    outlBtnTextFontSize?: ResponsiveValue<number | string>;
+    outlBtnTextPadding?: ResponsiveValue<number | string>;
 };
 
 export const ButtonOutlined: React.FC<ButtonOutlinedProps> = ({
@@ -26,8 +29,14 @@ export const ButtonOutlined: React.FC<ButtonOutlinedProps> = ({
     size,
     as,
     maxWidth,
+    minWidth,
+    outlBtnTextFontSize,
+    outlBtnTextPadding,
 }) => (
     <Button
+        minWidth={minWidth}
+        p={outlBtnTextPadding}
+        fontSize={outlBtnTextFontSize}
         maxWidth={maxWidth}
         size={size}
         gap={gap}
