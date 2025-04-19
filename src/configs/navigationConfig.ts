@@ -8,6 +8,7 @@ export type navTreeProps = {
     description?: string;
     submenu: Array<navTreeProps>;
     skipSideMenu?: boolean;
+    redirect?: string;
 };
 
 export const navTree: Array<navTreeProps> = [
@@ -31,6 +32,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'salads',
         route: '/salads',
+        redirect: '/salads/meat',
         title: 'Салаты',
         icon: '/icons/dishes-category/eggplant.svg',
         description: '',
@@ -69,6 +71,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'appetizers',
         route: '/appetizers',
+        redirect: '/appetizers/meat',
         title: 'Закуски',
         icon: '/icons/dishes-category/healthy-eating.svg',
         description: '',
@@ -121,6 +124,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'first-courses',
         route: '/first-courses',
+        redirect: '/first-courses/meat-soups',
         title: 'Первые блюда',
         icon: '/icons/dishes-category/pot.svg',
         description: '',
@@ -166,6 +170,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'second-dish',
         route: '/second-dish',
+        redirect: '/second-dish/meat',
         title: 'Вторые блюда',
         icon: '/icons/dishes-category/frying-pan.svg',
         breadcrumb: true,
@@ -259,6 +264,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'desserts-baking',
         route: '/desserts-baking',
+        redirect: '/desserts-baking/pancakes',
         title: 'Десерты, выпечка',
         icon: '/icons/dishes-category/salads.svg',
         breadcrumb: true,
@@ -361,6 +367,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'grilled-dishes',
         route: '/grilled-dishes',
+        redirect: '/grilled-dishes/beef',
         title: 'Блюда на гриле',
         icon: '/icons/dishes-category/washing-maschine.svg',
         breadcrumb: true,
@@ -412,6 +419,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'vegan',
         route: '/vegan',
+        redirect: '/vegan/snacks',
         title: 'Веганская кухня',
         icon: '/icons/dishes-category/leaf.svg',
         breadcrumb: true,
@@ -479,6 +487,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'children-dishes',
         route: '/children-dishes',
+        redirect: '/children-dishes/first-courses',
         icon: '/icons/dishes-category/child-tasty.svg',
         title: 'Детские блюда',
         breadcrumb: true,
@@ -544,6 +553,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'therapeutic-nutrition',
         route: '/therapeutic-nutrition',
+        redirect: '/therapeutic-nutrition/children-diet',
         title: 'Лечебное питание',
         icon: '/icons/dishes-category/pot-medical.svg',
         breadcrumb: true,
@@ -672,6 +682,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'national',
         route: '/national',
+        redirect: '/national/american-cuisine',
         title: 'Национальные',
         icon: '/icons/dishes-category/international-food.svg',
         breadcrumb: true,
@@ -786,6 +797,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'sauces',
         route: '/sauces',
+        redirect: '/sauces/meat',
         title: 'Соусы',
         icon: '/icons/dishes-category/mortar.svg',
         breadcrumb: true,
@@ -816,6 +828,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'drinks',
         route: '/drinks',
+        redirect: '/drinks/juices-fresh',
         title: 'Напитки',
         icon: '/icons/dishes-category/cup-tea.svg',
         breadcrumb: true,
@@ -888,6 +901,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'preserves',
         route: '/preserves',
+        redirect: '/preserves/meat',
         title: 'Заготовки',
         icon: '/icons/dishes-category/pasta.svg',
         breadcrumb: true,

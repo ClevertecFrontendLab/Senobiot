@@ -7,7 +7,7 @@ import { getNavBranches } from '~/configs/navigationConfig';
 const BreadCrump: React.FC = () => {
     const { pathname } = useLocation();
     const pathes = getNavBranches(pathname);
-
+    console.log(pathes);
     return (
         <Breadcrumb
             alignItems='center'
@@ -21,7 +21,11 @@ const BreadCrump: React.FC = () => {
                         {isLast ? (
                             <span style={{ color: 'black' }}>{path?.title}</span>
                         ) : (
-                            <BreadcrumbLink as={Link} to={path?.route} color='blackAlpha.700'>
+                            <BreadcrumbLink
+                                as={Link}
+                                to={path?.redirect || path?.route}
+                                color='blackAlpha.700'
+                            >
                                 {path?.title}
                             </BreadcrumbLink>
                         )}

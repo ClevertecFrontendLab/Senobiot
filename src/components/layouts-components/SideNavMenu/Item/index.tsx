@@ -9,7 +9,6 @@ import {
     Text,
 } from '@chakra-ui/react';
 import React from 'react';
-import { Navigate } from 'react-router'; // убрать после первого спринта
 import { Link, useLocation } from 'react-router';
 
 import { navTreeProps } from '~/configs/navigationConfig';
@@ -17,22 +16,18 @@ import { navTreeProps } from '~/configs/navigationConfig';
 const SideNavMenuItem: React.FC<navTreeProps> = ({
     title,
     icon = '',
-    route,
     submenu = [],
+    redirect,
+    route,
     navKey,
 }) => {
     const { pathname } = useLocation();
-
-    if (pathname === '/vegan-cuisine') {
-        // убрать после первого спринта
-        return <Navigate to='/vegan-cuisine/second-courses' />; // убрать после первого спринта
-    }
 
     return (
         <AccordionItem border={0}>
             {({ isExpanded }) => (
                 <>
-                    <Link to={route}>
+                    <Link to={redirect || route}>
                         <AccordionButton
                             data-test-id={navKey}
                             bg={isExpanded ? 'lime.100' : 'white'}
