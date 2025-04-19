@@ -1,8 +1,11 @@
 import { Button, Flex, HStack, Image, Spacer, Text } from '@chakra-ui/react';
 import React from 'react';
 
-export const Footer: React.FC = () => (
-    <Flex flexDirection='column' px={6} pt={8} fontSize={12} as='footer'>
+export const Footer: React.FC<{ noExitButton?: boolean; p?: string }> = ({
+    noExitButton = false,
+    p = '32px 24px 0px',
+}) => (
+    <Flex flexDirection='column' p={p} fontSize={12} as='footer'>
         <HStack mb={4}>
             <Text color='blackAlpha.400'>Версия программы 03.25</Text>
             <Spacer />
@@ -12,14 +15,16 @@ export const Footer: React.FC = () => (
             <br />
             ©Клевер Технолоджи, 2025
         </Text>
-        <Button
-            justifyContent='start'
-            colorScheme='black'
-            variant='link'
-            size='sm'
-            leftIcon={<Image src='/icons/left-icon.svg' boxSize={3} alt='icon' />}
-        >
-            Выйти
-        </Button>
+        {!noExitButton && (
+            <Button
+                justifyContent='start'
+                colorScheme='black'
+                variant='link'
+                size='sm'
+                leftIcon={<Image src='/icons/left-icon.svg' boxSize={3} alt='icon' />}
+            >
+                Выйти
+            </Button>
+        )}
     </Flex>
 );

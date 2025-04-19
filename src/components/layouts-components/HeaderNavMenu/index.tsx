@@ -2,6 +2,12 @@ import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
     Avatar,
     Button,
+    Drawer,
+    DrawerBody,
+    DrawerCloseButton,
+    DrawerContent,
+    DrawerHeader,
+    DrawerOverlay,
     Flex,
     HStack,
     IconButton,
@@ -18,6 +24,7 @@ import { TextRegular, TitleText } from '~/components/shared-components';
 import { ProfileNotification } from '~/components/shared-components';
 import { PADDINGS } from '~/constants/styles';
 
+import { BurgerNavMenu } from '../BurgerNavMenu';
 import BreadCrump from './BreadCrump';
 import Logo from './Logo';
 
@@ -29,7 +36,6 @@ export const HeaderNavMenu: React.FC = () => {
             as='header'
             bg='lime.50'
             h={PADDINGS.topMenu}
-            // maxWidth='1920px'
             width='100vw'
             pr={4}
             position='fixed'
@@ -103,7 +109,49 @@ export const HeaderNavMenu: React.FC = () => {
                     _hover={{
                         background: 'none',
                     }}
+                    data-test-id='hamburger-icon'
                 />
+                <Drawer isOpen={isOpen} placement='right' onClose={onClose}>
+                    <DrawerOverlay />
+                    <DrawerContent
+                        minW='100vw'
+                        bgColor='none'
+                        bg='none'
+                        px={2}
+                        motionProps={{
+                            variants: {
+                                enter: {
+                                    x: '0%',
+                                    transition: { duration: 0.1 },
+                                },
+                                exit: {
+                                    x: '100%',
+                                    transition: { duration: 0.1 },
+                                },
+                            },
+                        }}
+                    >
+                        <DrawerHeader
+                            w='100vw'
+                            position='fixed'
+                            top={0}
+                            left={0}
+                            bgColor='#fff'
+                            zIndex={10}
+                            px={5}
+                            py={4}
+                            h={PADDINGS.topMenu}
+                        >
+                            <Flex justifyContent='space-between' alignItems='center'>
+                                <Logo />
+                                <DrawerCloseButton position='static' data-test-id='close-icon' />
+                            </Flex>
+                        </DrawerHeader>
+                        <DrawerBody p={0} ml='auto'>
+                            <BurgerNavMenu data-test-id='nav' />
+                        </DrawerBody>
+                    </DrawerContent>
+                </Drawer>
             </Flex>
         </Flex>
     );

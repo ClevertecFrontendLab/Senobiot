@@ -1,38 +1,35 @@
 import { Flex, useTheme } from '@chakra-ui/react';
 
-import { PADDINGS, SHADOWS } from '~/constants/styles';
+import { PADDINGS, SHADOWS, WIDTHS } from '~/constants/styles';
 
 import { Footer } from '..';
 import { AccordionNav } from '../AccordionNavMenu';
+import BreadCrump from '../HeaderNavMenu/BreadCrump';
 
-export const SideMenu: React.FC = () => {
+export const BurgerNavMenu: React.FC = () => {
     const theme = useTheme();
 
     return (
         <Flex
             flexDirection='column'
             justifyContent='space-between'
-            w='256px'
-            h='100vh'
-            pt={PADDINGS.topMenu}
-            pl={2.5}
-            pb={8}
+            w={WIDTHS.burgerNavMenu}
+            pt={PADDINGS.burgerMenu}
+            maxH={`calc(100vh - ${PADDINGS.bottomMnu * 4}px)`}
+            pl={5}
             pr={1}
-            maxHeight='100vh'
-            position='fixed'
-            zIndex={9}
             bg='white'
-            left={0}
-            boxShadow={SHADOWS.main}
-            display={{ base: 'none', xl: 'flex' }}
+            borderRadius='0 0 12px 12px'
+            boxShadow={SHADOWS.burgerNavMenu}
         >
+            <BreadCrump />
             <Flex
                 overflow='auto'
                 flexDirection='column'
                 justifyContent='space-between'
                 borderRadius='8px'
                 pr={1}
-                pt={6}
+                pt={{ base: '20px', md: '30px' }}
                 css={{
                     '&::-webkit-scrollbar': {
                         width: 8,
@@ -47,14 +44,15 @@ export const SideMenu: React.FC = () => {
                     '&::-webkit-scrollbar-thumb:hover': {
                         background: theme.colors.lime[50],
                     },
-                    '&:hover': {
-                        boxShadow: SHADOWS.sideMunu,
+                    '.chakra-accordion__button': {
+                        paddingLeft: 0,
+                        paddingRight: '24px',
                     },
                 }}
             >
                 <AccordionNav />
             </Flex>
-            <Footer text-a />
+            <Footer text-a p='28px 24px 32px 4px' />
         </Flex>
     );
 };

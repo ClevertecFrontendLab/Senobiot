@@ -27,9 +27,8 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
         <AccordionItem border={0}>
             {({ isExpanded }) => (
                 <>
-                    <Link to={redirect || route}>
+                    <Link data-test-id={navKey} to={redirect || route}>
                         <AccordionButton
-                            data-test-id={navKey}
                             bg={isExpanded ? 'lime.100' : 'white'}
                             px={2}
                             height={12}
@@ -52,9 +51,12 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
                     </Link>
                     <AccordionPanel textAlign='left' pb={4}>
                         {submenu.map((category, index) => (
-                            <Link to={category.route} key={index}>
+                            <Link
+                                to={category.route}
+                                key={index}
+                                data-test-id={`tab-${category.navKey}${pathname === category.route ? '-active' : ''}`}
+                            >
                                 <Text
-                                    data-test-id={`tab-${category.title}${pathname === category.route ? '-active' : ''}`}
                                     py={2}
                                     ml={5}
                                     textStyle='xs'

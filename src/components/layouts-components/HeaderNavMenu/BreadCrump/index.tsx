@@ -7,12 +7,18 @@ import { getNavBranches } from '~/configs/navigationConfig';
 const BreadCrump: React.FC = () => {
     const { pathname } = useLocation();
     const pathes = getNavBranches(pathname);
-    console.log(pathes);
+
     return (
         <Breadcrumb
             alignItems='center'
             separator={<ChevronRightIcon color='gray.500' />}
             fontSize='md'
+            data-test-id='breadcrumbs'
+            sx={{
+                '& ol': {
+                    flexWrap: 'wrap',
+                },
+            }}
         >
             {pathes.map((path, index) => {
                 const isLast = index === pathes.length - 1;

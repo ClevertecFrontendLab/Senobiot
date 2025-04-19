@@ -1,9 +1,11 @@
 export const PADDINGS: {
     bottomMnu: number;
     footer: number;
+    burgerMenu: number;
     [key: string]: number | { [key: string]: number };
 } = {
     topMenu: { base: 16, xl: 20 },
+    burgerMenu: 20,
     bottomMnu: 21,
     sideMenu: 16,
     footer: 24,
@@ -16,12 +18,18 @@ export const PADDINGS: {
 
 export const WIDTHS: { [key: string]: number } = {
     sideMenu: 64,
+    burgerNavMenu: 344,
+};
+
+export const HEIGHTS: { [key: string]: number } = {
+    burgerNavMenu: 652,
 };
 
 export const SHADOWS: { [key: string]: string } = {
     main: '0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2)',
     green: 'radial-gradient(  circle at 50% 50%,   rgba(196, 255, 97, 0.7) 0%,   rgba(255, 255, 255, 0) 50%)',
     sideMunu: '0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
+    burgerNavMenu: '0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)',
 };
 
 export const BORDERS: { [key: string]: string } = {

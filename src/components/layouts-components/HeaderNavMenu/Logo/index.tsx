@@ -10,7 +10,6 @@ const Logo: React.FC = () => (
             display={{ base: 'none', md: 'block' }}
             src='/logo-text.svg'
             alt='logo text Yeedaa'
-            boxSize='96px'
         />
     </HStack>
 );

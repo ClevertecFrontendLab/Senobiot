@@ -39,7 +39,6 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             {!noNavMenu && !activeCategory?.skipSideMenu && <CategoryMenu list={menuList} />}
             <Flex flexWrap='wrap' gap={4}>
                 {data.map((card, index) => {
-                    console.log(card);
                     const { title, description, image, category } = card;
 
                     return (

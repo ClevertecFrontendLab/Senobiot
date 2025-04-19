@@ -50,6 +50,7 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [] }) => {
                                 outline: 'none',
                                 boxShadow: 'none',
                             }}
+                            data-test-id={`tab-${item.navKey}-${index}`}
                         >
                             {item.title}
                         </Tab>
