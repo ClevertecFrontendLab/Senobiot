@@ -59,6 +59,7 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
                         {submenu.map((category, index) => (
                             <Link to={category.route} key={index}>
                                 <Text
+                                    data-test-id={`tab-${category.title}${pathname === category.route ? '-active' : ''}`}
                                     py={2}
                                     ml={5}
                                     textStyle='xs'

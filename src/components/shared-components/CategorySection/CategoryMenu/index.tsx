@@ -1,4 +1,4 @@
-import { Button, Flex, HStack } from '@chakra-ui/react';
+import { Flex, Tab, TabList, Tabs } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router';
 
 import { navTreeProps } from '~/configs/navigationConfig';
@@ -11,41 +11,52 @@ type CategoryMenuProps = {
 const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [] }) => {
     const { pathname } = useLocation();
 
+    const activeIndex = list.findIndex((item) => item.route === pathname);
+    const selectedIndex = activeIndex !== -1 ? activeIndex : 0;
+
     return (
-        <Flex
-            borderBottom={BORDERS.light}
-            mb={6}
-            overflowX='auto'
-            justifyContent='center'
-            css={{
-                scrollbarWidth: 'none',
-                '::-webkit-scrollbar': {
-                    display: 'none',
-                },
-            }}
-        >
-            <HStack align='start' spacing={0}>
-                {list.map((item, index) => (
-                    <Button
-                        to={item.route}
-                        key={index}
-                        as={Link}
-                        size={{ base: 'sm', xl: 'md' }}
-                        color={item.route === pathname ? 'lime.600' : 'none'}
-                        border='none'
-                        borderBottom={item.route === pathname ? '2px solid' : 'none'}
-                        borderRadius='none'
-                        bg='none'
-                        _hover={{
-                            bg: 0,
-                            bgColor: 0,
-                        }}
-                    >
-                        {item.title}
-                    </Button>
-                ))}
-            </HStack>
-        </Flex>
+        <Tabs variant='unstyled' index={selectedIndex}>
+            <Flex justifyContent='center'>
+                <TabList
+                    borderBottom={BORDERS.light}
+                    mb={6}
+                    overflowX='auto'
+                    whiteSpace='nowrap'
+                    css={{
+                        scrollbarWidth: 'none',
+                        '::-webkit-scrollbar': {
+                            display: 'none',
+                        },
+                    }}
+                >
+                    {list.map((item, index) => (
+                        <Tab
+                            outline='none'
+                            key={index}
+                            as={Link}
+                            to={item.route}
+                            fontSize={{ base: 'sm', xl: 'md' }}
+                            border='none'
+                            borderRadius='none'
+                            bg='none'
+                            _selected={{
+                                color: 'lime.600',
+                                borderBottom: '2px solid',
+                                borderColor: 'lime.600',
+                                boxShadow: 'none',
+                            }}
+                            _hover={{ bg: 'none' }}
+                            _focus={{
+                                outline: 'none',
+                                boxShadow: 'none',
+                            }}
+                        >
+                            {item.title}
+                        </Tab>
+                    ))}
+                </TabList>
+            </Flex>
+        </Tabs>
     );
 };
 
