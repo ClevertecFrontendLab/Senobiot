@@ -1,31 +1,25 @@
 import { Flex } from '@chakra-ui/react';
 
+import { CategorySection, CategorySectionNext } from '~/components/shared-components';
 import { navTree } from '~/configs/navigationConfig';
 import { PADDINGS, WIDTHS } from '~/constants/styles';
-import { dishesList, sliderData } from '~/data';
+import mockRespone from '~/data/data.json';
 
-import { CategorySection, CategorySectionNext } from '../../components/shared-components';
-import { PageProps } from '../home';
-
+const data = JSON.parse(JSON.stringify(mockRespone));
 const nexSection = navTree.find((e) => e.navKey === 'desserts-baking'); // TODO remove after true api
 
-const CategoryPage: React.FC<PageProps> = ({ categoryTitle = '', categoryData = sliderData }) => (
+const CategoryPage: React.FC = () => (
     <Flex
         minH='100vh'
         mx={PADDINGS.sectionMx}
         px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
         display='column'
     >
-        <CategorySection
-            categoryTitle={categoryTitle}
-            data={categoryData}
-            categoryButtonText='Загрузить еще'
-            noHeader={true}
-        />
+        <CategorySection data={data} categoryButtonText='Загрузить еще' noHeader={true} />
         <CategorySectionNext
             title={nexSection?.title || ''}
             description={nexSection?.description || ''}
-            data={dishesList}
+            data={data}
         />
     </Flex>
 );

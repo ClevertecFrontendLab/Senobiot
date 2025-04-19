@@ -1,15 +1,12 @@
 import { Flex } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
-import {
-    ButtonViewMore,
-    CategoryHeader,
-    CategorySectionProps,
-} from '~/components/shared-components';
+import { ButtonViewMore, CategoryHeader } from '~/components/shared-components';
 import CategoryCard from '~/components/shared-components/CategorySection/CategorySectionCard';
 import { PADDINGS } from '~/constants/styles';
+import { CategorySectionProps } from '~/types';
 
-export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryTitle }) => (
+export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryTitle = '' }) => (
     <Flex justifyContent='space-between' direction='column' mb={{ base: 8, xl: 10 }}>
         <Flex justifyContent='space-between'>
             <CategoryHeader title={categoryTitle} mb={PADDINGS.subsectionHeaderMb} />
@@ -23,16 +20,15 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryT
             />
         </Flex>
         <Flex flexWrap='wrap' gap={4}>
-            {data.slice(4).map((card, index) => {
-                const { title, description, img, subcategory, icon } = card;
+            {data.slice(0, 4).map((card, index) => {
+                const { title, description, category, image } = card;
                 return (
                     <CategoryCard
+                        img={image}
                         key={index}
                         title={title}
                         description={description}
-                        img={img}
-                        subcategory={subcategory}
-                        icon={icon}
+                        categories={category}
                     />
                 );
             })}

@@ -2,6 +2,7 @@ import { Flex } from '@chakra-ui/react';
 
 import { getSubCategoryList, routeFinder } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
+import { CategorySectionProps } from '~/types';
 import { usePathnames } from '~/utils';
 
 import { ButtonViewMore } from '../Buttons';
@@ -9,30 +10,8 @@ import { CategoryHeader } from '../Headers';
 import CategoryMenu from './CategoryMenu';
 import CategoryCard from './CategorySectionCard';
 
-export type CategorySectionDataProps = {
-    title: string;
-    description: string;
-    img: string;
-    subcategory?: string;
-    icon?: string;
-};
-
-export type CategorySectionProps = {
-    categoryTitle: string;
-    categoryButtonText?: string;
-    noButton?: boolean;
-    data: CategorySectionDataProps[];
-    categoryHeaderMb?: string | number;
-    noHeader?: boolean;
-    noFooter?: boolean;
-    noNavMenu?: boolean;
-    noButtonIcon?: boolean;
-    noHeaderButton?: boolean;
-    mb?: string | number;
-};
-
 export const CategorySection: React.FC<CategorySectionProps> = ({
-    categoryTitle,
+    categoryTitle = '',
     categoryButtonText = '',
     data,
     categoryHeaderMb = PADDINGS.subsectionHeaderMb,
@@ -60,16 +39,16 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             {!noNavMenu && !activeCategory?.skipSideMenu && <CategoryMenu list={menuList} />}
             <Flex flexWrap='wrap' gap={4}>
                 {data.map((card, index) => {
-                    const { title, description, img, subcategory, icon } = card;
+                    console.log(card);
+                    const { title, description, image, category } = card;
 
                     return (
                         <CategoryCard
                             key={index}
                             title={title}
                             description={description}
-                            img={img}
-                            subcategory={subcategory}
-                            icon={icon}
+                            img={image}
+                            categories={category}
                         />
                     );
                 })}

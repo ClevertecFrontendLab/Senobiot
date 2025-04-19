@@ -5,7 +5,7 @@ import { RecieptCard } from '../..';
 const CategorySectionNextCard: React.FC<CategoryCardProps> = ({
     title,
     description,
-    subcategory,
+    categories,
     icon,
     ...props
 }) => (
@@ -28,7 +28,7 @@ const CategorySectionNextCard: React.FC<CategoryCardProps> = ({
         stateIconSize={3}
         stateTextFontSize='14px'
         statTextFontWeight={600}
-        categoryText={subcategory}
+        categories={categories}
         categoryTextFz={14}
         categoryIconUrl={icon}
         bookmarkJustify='space-between'

@@ -127,9 +127,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
                     <TextRegular regText={text} />
                 </Flex>
             )}
-            <Flex order={bookmarksOrder}>
-                <BookmarksSection {...rest} />
-            </Flex>
+            <BookmarksSection {...rest} order={bookmarksOrder} />
             <Flex order={buttonsOrder} justifyContent={buttonsJustify} mt={buttonsMargin}>
                 {!noButtons && <RecieptButtonsSection {...rest} />}
             </Flex>

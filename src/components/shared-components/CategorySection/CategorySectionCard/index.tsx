@@ -6,19 +6,13 @@ import { RecieptCard, RecieptCardProps } from '../..';
 export interface CategoryCardProps extends RecieptCardProps {
     title: string;
     description?: string;
-    subcategory?: string;
     img?: string;
     icon?: string;
     hiddenElements?: boolean;
+    categories: string[];
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = ({
-    title,
-    description,
-    subcategory,
-    img,
-    icon,
-}) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, img, categories }) => {
     const responsiveValues = useBreakpointValue({
         base: {
             hiddenElements: true,
@@ -55,14 +49,13 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             stateIconSize={3}
             stateTextFontSize='12px'
             statTextFontWeight={600}
-            categoryText={subcategory}
-            categoryIconUrl={icon}
             bookmarkJustify='space-between'
             cardFlexWidth={{ md: '1 1 40%', xl: '1 1 100%', '2xl': '1 1 40%' }}
             titleTextNoOfLines={{ base: 2, xl: 1 }}
             wrap={{ base: 'nowrap' }}
             bookmarksOrder={{ base: -1 }}
             bookmarkMb={{ xl: 6 }}
+            categories={categories}
         />
     );
 };

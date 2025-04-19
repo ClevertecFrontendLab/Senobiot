@@ -1,4 +1,4 @@
-import { Flex, HStack, ResponsiveValue } from '@chakra-ui/react';
+import { Flex, FlexProps, HStack, ResponsiveValue, SystemStyleObject } from '@chakra-ui/react';
 
 import { ButtonCategory, ButtonCategoryProps } from '../Buttons';
 import { StatItem, StatItemProps } from '../StatItem';
@@ -12,6 +12,9 @@ export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProp
     bookmarkJustify?: string;
     bookmarkStatGap?: ResponsiveValue<number>;
     bookmarkMb?: ResponsiveValue<number | string>;
+    categories?: string[];
+    categorySx?: SystemStyleObject;
+    order?: FlexProps['order'];
 }
 
 export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
@@ -21,12 +24,40 @@ export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
     bookmarkJustify = 'space-between',
     bookmarkStatGap,
     categoryBg = 'lime.150',
+    categories = [],
+    categorySx,
     bookmarkMb,
+    order,
     ...props
 }) => (
-    <Flex justifyContent={bookmarkJustify} w='100%' mb={bookmarkMb}>
-        {!noCategory && <ButtonCategory {...props} categoryBg={categoryBg} />}
-        <HStack spacing={bookmarkStatGap}>
+    <Flex
+        justifyContent={bookmarkJustify}
+        mb={bookmarkMb}
+        order={order}
+        flexShrink={1}
+        flexGrow={0}
+    >
+        {!noCategory && (
+            <Flex
+                maxW={{ '2xl': 150 }}
+                overflow='hidden'
+                wrap='nowrap'
+                flexDirection={{ base: 'column', md: 'row', lg: 'column', xl: 'row' }}
+                gap={1}
+                sx={categorySx}
+                mr={2}
+            >
+                {categories.map((e, index) => (
+                    <ButtonCategory
+                        key={index}
+                        {...props}
+                        categoryBg={categoryBg}
+                        categoryKey={e}
+                    />
+                ))}
+            </Flex>
+        )}
+        <HStack spacing={bookmarkStatGap} minW='72px'>
             <StatItem {...props} statIconUrl={heartIcon} />
             <StatItem {...props} statIconUrl={peopleIcon} />
         </HStack>

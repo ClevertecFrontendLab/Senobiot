@@ -3,22 +3,18 @@ import { Flex } from '@chakra-ui/react';
 import { Slider } from '~/components/shared-components';
 import { CategoryHeader } from '~/components/shared-components';
 import { BlogsSection } from '~/components/shared-components';
-import { CategorySectionDataProps, CategorySectionNext } from '~/components/shared-components';
+import { CategorySectionNext } from '~/components/shared-components';
 import { navTree } from '~/configs/navigationConfig'; // TODO remove after true api
 import { PADDINGS, WIDTHS } from '~/constants/styles';
-import { dishesList, sliderData } from '~/data';
+import { sliderData } from '~/data';
+import mockRespone from '~/data/data.json';
 
 import { JuciestSection } from './juciest';
+const data = JSON.parse(JSON.stringify(mockRespone));
 
 const nexSection = navTree.find((e) => e.navKey === 'vegan-cuisine'); // TODO remove after true api
 
-export interface PageProps {
-    categoryTitle?: string;
-    categoryData?: CategorySectionDataProps[];
-    categoryButtonText?: string;
-}
-
-const HomePage: React.FC<PageProps> = ({ categoryData = sliderData }) => (
+const HomePage: React.FC = () => (
     <Flex
         minH='100vh'
         mx={PADDINGS.sectionMx}
@@ -28,14 +24,14 @@ const HomePage: React.FC<PageProps> = ({ categoryData = sliderData }) => (
     >
         <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
             <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
-            <Slider slides={categoryData} />
+            <Slider slides={sliderData} />
         </Flex>
-        <JuciestSection data={sliderData} categoryTitle='Самое сочное' />
+        <JuciestSection data={data} categoryTitle='Самое сочное' />
         <BlogsSection />
         <CategorySectionNext
             title={nexSection?.title || ''}
             description={nexSection?.description || ''}
-            data={dishesList}
+            data={data}
         />
     </Flex>
 );
