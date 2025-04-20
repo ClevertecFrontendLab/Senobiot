@@ -5,7 +5,7 @@ import { CategoryHeader, TextRegular } from '~/components/shared-components';
 import { PADDINGS } from '~/constants/styles';
 import { RecipeProps } from '~/types';
 
-import Card from './Card';
+import CategorySectionNextCard from './Card';
 import CardMinimized from './CardMinimized';
 
 type CategorySectionNextProps = {
@@ -57,13 +57,14 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                 if (index < 2) {
                     const { title, description, category } = card;
                     return (
-                        <Card
+                        <CategorySectionNextCard
                             key={index}
                             title={title}
                             description={description}
                             categories={category}
                             regTextNoOfLines={{ base: 3 }}
                             height={{ md: '168px', xl: '180px', '2xl': '192px' }}
+                            bookmarkMaxHeight={6}
                         />
                     );
                 }

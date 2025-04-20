@@ -29,6 +29,7 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryT
                         title={title}
                         description={description}
                         categories={category}
+                        bookmarkMaxHeight={6}
                     />
                 );
             })}

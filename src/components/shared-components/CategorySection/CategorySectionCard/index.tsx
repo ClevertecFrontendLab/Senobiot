@@ -12,7 +12,13 @@ export interface CategoryCardProps extends RecieptCardProps {
     categories: string[];
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, img, categories }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({
+    title,
+    description,
+    img,
+    categories,
+    ...props
+}) => {
     const responsiveValues = useBreakpointValue({
         base: {
             hiddenElements: true,
@@ -30,6 +36,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, img, ca
 
     return (
         <RecieptCard
+            {...props}
             minWidth={{ base: 158, xl: 322 }}
             text={description}
             title={title}
@@ -51,7 +58,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, img, ca
             statTextFontWeight={600}
             bookmarkJustify='space-between'
             cardFlexWidth={{ md: '1 1 40%', xl: '1 1 100%', '2xl': '1 1 40%' }}
-            titleTextNoOfLines={{ base: 2, xl: 1 }}
+            cardHeaderNoOfLines={{ base: 2, xl: 1 }}
             wrap={{ base: 'nowrap' }}
             bookmarksOrder={{ base: -1 }}
             bookmarkMb={{ xl: 6 }}

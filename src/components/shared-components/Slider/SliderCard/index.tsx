@@ -53,6 +53,7 @@ const SliderCard: React.FC<SliderCardProps> = ({ title, description, categories,
             cardHeaderNoOfLines={{ base: 2, xl: 1 }}
             noDescription={hiddenElements}
             categorySx={categoryResponsivePosition}
+            bookmarkMaxHeight={{ base: 'unset', xl: 6 }}
         />
     );
 };

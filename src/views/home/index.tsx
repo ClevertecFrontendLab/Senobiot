@@ -19,8 +19,7 @@ const HomePage: React.FC = () => (
         mx={PADDINGS.sectionMx} // на макете не учтен скроллбар
         px={{ base: 4, md: 5, xl: 0 }}
         display='column'
-        mb={{ base: '96px', xl: 3 }}
-        maxW={1360}
+        w={{ '2xl': 1360 }}
     >
         <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
             <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
