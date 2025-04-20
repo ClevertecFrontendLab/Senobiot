@@ -22,6 +22,8 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [] }) => {
                     mb={6}
                     overflowX='auto'
                     whiteSpace='nowrap'
+                    flexWrap={{ base: 'unset', xl: 'wrap' }}
+                    justifyContent='center'
                     css={{
                         scrollbarWidth: 'none',
                         '::-webkit-scrollbar': {

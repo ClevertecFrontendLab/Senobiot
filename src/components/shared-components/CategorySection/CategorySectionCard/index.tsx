@@ -62,6 +62,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             wrap={{ base: 'nowrap' }}
             bookmarksOrder={{ base: -1 }}
             bookmarkMb={{ xl: 6 }}
+            bookmarkMaxHeight={{ base: 'unset', xl: 6 }}
             categories={categories}
         />
     );

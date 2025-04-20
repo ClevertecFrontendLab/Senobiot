@@ -6,6 +6,7 @@ export * from './CategorySectionNext';
 export * from './Headers';
 export * from './ProfileNotification';
 export * from './RecieptCard';
+export * from './RecieptSection';
 export * from './Slider';
 export * from './StatItem';
 export * from './Text';

@@ -1,4 +1,5 @@
 import { Flex } from '@chakra-ui/react';
+import { Link } from 'react-router';
 
 import { getSubCategoryList, routeFinder } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
@@ -39,7 +40,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             {!noNavMenu && !activeCategory?.skipSideMenu && <CategoryMenu list={menuList} />}
             <Flex flexWrap='wrap' gap={4}>
                 {data.map((card, index) => {
-                    const { title, description, image, category } = card;
+                    const { title, description, image, category, subcategory, id } = card;
 
                     return (
                         <CategoryCard
@@ -48,6 +49,9 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                             description={description}
                             img={image}
                             categories={category}
+                            bookmarkMaxHeight={6}
+                            coockingButtonAs={Link}
+                            coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
                         />
                     );
                 })}

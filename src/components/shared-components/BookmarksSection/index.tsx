@@ -16,6 +16,7 @@ export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProp
     categorySx?: SystemStyleObject;
     order?: FlexProps['order'];
     bookmarkMaxHeight?: FlexProps['maxHeight'];
+    bookmarkWrap?: ResponsiveValue<'wrap' | 'nowrap' | 'wrap-reverse'>;
 }
 
 export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
@@ -30,6 +31,7 @@ export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
     bookmarkMb,
     order,
     bookmarkMaxHeight,
+    bookmarkWrap = 'wrap',
     ...props
 }) => (
     <Flex
@@ -43,9 +45,9 @@ export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
             <Flex
                 maxH={bookmarkMaxHeight} // скрывает категории которые не влазят в одну строку если их несколько по умолчанию 6 * 4 = 24px
                 overflow='hidden'
-                // wrap='nowrap'
-                wrap='wrap'
-                flexDirection={{ base: 'column', md: 'row', lg: 'column', xl: 'row' }}
+                wrap={bookmarkWrap}
+                flexDirection={{ base: 'column', xl: 'row' }}
+                // flexDirection={{ base: 'column', md: 'row', lg: 'column', xl: 'row' }}
                 gap={1}
                 sx={categorySx}
                 mr={2}

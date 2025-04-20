@@ -21,7 +21,7 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryT
         </Flex>
         <Flex flexWrap='wrap' gap={4}>
             {data.slice(0, 4).map((card, index) => {
-                const { title, description, category, image } = card;
+                const { title, description, category, subcategory, image, id } = card;
                 return (
                     <CategoryCard
                         img={image}
@@ -30,6 +30,8 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryT
                         description={description}
                         categories={category}
                         bookmarkMaxHeight={6}
+                        coockingButtonAs={Link}
+                        coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
                     />
                 );
             })}

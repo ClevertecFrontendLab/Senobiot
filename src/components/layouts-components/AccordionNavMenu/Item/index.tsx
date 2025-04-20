@@ -54,7 +54,7 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
                             <Link
                                 to={category.route}
                                 key={index}
-                                data-test-id={`tab-${category.navKey}${pathname === category.route ? '-active' : ''}`}
+                                data-test-id={`${category.navKey}${pathname === category.route ? '-active' : ''}`}
                             >
                                 <Text
                                     py={2}
