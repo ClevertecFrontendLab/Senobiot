@@ -122,7 +122,7 @@ export const HeaderNavMenu: React.FC = () => {
                 />
                 <Drawer
                     isOpen={isOpen}
-                    // placement='right'
+                    //placement='right'
                     onClose={onClose}
                 >
                     <DrawerOverlay />
@@ -130,7 +130,7 @@ export const HeaderNavMenu: React.FC = () => {
                         minW='100vw'
                         bgColor='none'
                         bg='none'
-                        px={2}
+                        // px={2}
                         motionProps={{
                             variants: {
                                 enter: {
@@ -160,7 +160,7 @@ export const HeaderNavMenu: React.FC = () => {
                                 <DrawerCloseButton position='static' data-test-id='close-icon' />
                             </Flex>
                         </DrawerHeader>
-                        <DrawerBody minW='100vw' p={0} onClick={handleKeyDown}>
+                        <DrawerBody minW='100vw' p={0} onClick={handleKeyDown} pr={2}>
                             <BurgerNavMenu data-test-id='nav' onClick={menuClickHandler} />
                         </DrawerBody>
                     </DrawerContent>

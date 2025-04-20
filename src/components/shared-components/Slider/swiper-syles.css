@@ -1,0 +1,12 @@
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'swiper/css/scrollbar';
+
+.swiper {
+    width: 100%;
+}
+
+.swiper-slide {
+    max-width: 322px;
+}

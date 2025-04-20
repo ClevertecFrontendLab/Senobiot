@@ -27,6 +27,7 @@ export interface RecieptCardProps
     cardFlexWidth?: FlexProps['flex'];
     imageBorderRadius?: string | number;
     minWidth?: FlexProps['minWidth'];
+    maxWidth?: FlexProps['maxWidth'];
     width?: FlexProps['width'];
     height?: FlexProps['height'];
     position?: FlexProps['position'];
@@ -35,7 +36,7 @@ export interface RecieptCardProps
     noButtons?: ResponsiveValue<boolean>;
     noDescription?: ResponsiveValue<boolean>;
     imageSrc?: string;
-    imageWidth?: ResponsiveValue<number>;
+    imageWidth?: ResponsiveValue<number | string>;
     imageHeight?: ResponsiveValue<number>;
     titleMargin?: FlexProps['marginBottom'];
     descriptionMargin?: FlexProps['marginBottom'];
@@ -52,6 +53,7 @@ export interface RecieptCardProps
 
 export const RecieptCard: React.FC<RecieptCardProps> = ({
     cardFlexWidth,
+    maxWidth,
     minWidth = '328px',
     width = '100%',
     height,
@@ -90,6 +92,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
         flex={cardFlexWidth}
         position={position}
         minWidth={minWidth}
+        maxWidth={maxWidth}
         w={width}
         h={height}
         wrap={wrap}

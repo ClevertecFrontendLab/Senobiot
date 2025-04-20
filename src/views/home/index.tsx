@@ -5,8 +5,7 @@ import { CategoryHeader } from '~/components/shared-components';
 import { BlogsSection } from '~/components/shared-components';
 import { CategorySectionNext } from '~/components/shared-components';
 import { navTree } from '~/configs/navigationConfig'; // TODO remove after true api
-import { PADDINGS, WIDTHS } from '~/constants/styles';
-import { sliderData } from '~/data';
+import { PADDINGS } from '~/constants/styles';
 import mockRespone from '~/data/data.json';
 
 import { JuciestSection } from './juciest';
@@ -17,14 +16,15 @@ const nexSection = navTree.find((e) => e.navKey === 'vegan-cuisine'); // TODO re
 const HomePage: React.FC = () => (
     <Flex
         minH='100vh'
-        mx={PADDINGS.sectionMx}
-        px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
+        mx={PADDINGS.sectionMx} // на макете не учтен скроллбар
+        px={{ base: 4, md: 5, xl: 0 }}
         display='column'
         mb={{ base: '96px', xl: 3 }}
+        maxW={1360}
     >
         <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
             <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
-            <Slider slides={sliderData} />
+            <Slider slides={data} />
         </Flex>
         <JuciestSection data={data} categoryTitle='Самое сочное' />
         <BlogsSection />

@@ -13,6 +13,7 @@ export const BurgerNavMenu: React.FC<{
 
     return (
         <Flex
+            // ml='auto'
             ml='auto'
             flexDirection='column'
             justifyContent='space-between'

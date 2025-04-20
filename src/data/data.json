@@ -383,7 +383,89 @@
         ]
     },
     {
-        "id": "5",
+        "id": "9",
+        "title": "Капустные котлеты",
+        "description": "Капустные котлеты по этому рецепту получаются необычайно пышными и невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных блюд.",
+        "category": ["vegan"],
+        "subcategory": ["second-dish", "snacks"],
+        "image": "/card-images/kapusta-kotleta.png",
+        "bookmarks": 2,
+        "likes": 1,
+        "date": "2024-02-05T00:00:00Z",
+        "time": "35 минут",
+        "portions": 4,
+        "nutritionValue": {
+            "calories": 150,
+            "proteins": 5,
+            "fats": 4,
+            "carbohydrates": 20
+        },
+        "ingredients": [
+            { "title": "капуста", "count": "300", "measureUnit": "г" },
+            { "title": "мука", "count": "50", "measureUnit": "г" },
+            { "title": "специи", "count": "0", "measureUnit": "по вкусу" }
+        ],
+        "steps": [
+            {
+                "stepNumber": 1,
+                "description": "Нарезать капусту и отварить.",
+                "image": "url"
+            },
+            {
+                "stepNumber": 2,
+                "description": "Смешать с мукой и сформировать котлеты.",
+                "image": "url"
+            },
+            {
+                "stepNumber": 3,
+                "description": "Обжарить до золотистой корочки.",
+                "image": "url"
+            }
+        ]
+    },
+    {
+        "id": "10",
+        "title": "Капустные котлеты",
+        "description": "Капустные котлеты по этому рецепту получаются необычайно пышными и невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных блюд.",
+        "category": ["vegan"],
+        "subcategory": ["second-dish", "snacks"],
+        "image": "/card-images/kapusta-kotleta.png",
+        "bookmarks": 2,
+        "likes": 1,
+        "date": "2024-02-05T00:00:00Z",
+        "time": "35 минут",
+        "portions": 4,
+        "nutritionValue": {
+            "calories": 150,
+            "proteins": 5,
+            "fats": 4,
+            "carbohydrates": 20
+        },
+        "ingredients": [
+            { "title": "капуста", "count": "300", "measureUnit": "г" },
+            { "title": "мука", "count": "50", "measureUnit": "г" },
+            { "title": "специи", "count": "0", "measureUnit": "по вкусу" }
+        ],
+        "steps": [
+            {
+                "stepNumber": 1,
+                "description": "Нарезать капусту и отварить.",
+                "image": "url"
+            },
+            {
+                "stepNumber": 2,
+                "description": "Смешать с мукой и сформировать котлеты.",
+                "image": "url"
+            },
+            {
+                "stepNumber": 3,
+                "description": "Обжарить до золотистой корочки.",
+                "image": "url"
+            }
+        ]
+    },
+    {
+        "id": "11",
         "title": "Капустные котлеты",
         "description": "Капустные котлеты по этому рецепту получаются необычайно пышными и невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных блюд.",
         "category": ["vegan"],
