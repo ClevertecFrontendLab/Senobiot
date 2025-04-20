@@ -6,11 +6,14 @@ import { Footer } from '..';
 import { AccordionNav } from '../AccordionNavMenu';
 import BreadCrump from '../HeaderNavMenu/BreadCrump';
 
-export const BurgerNavMenu: React.FC = () => {
+export const BurgerNavMenu: React.FC<{
+    onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+}> = ({ onClick }) => {
     const theme = useTheme();
 
     return (
         <Flex
+            ml='auto'
             flexDirection='column'
             justifyContent='space-between'
             w={WIDTHS.burgerNavMenu}
@@ -21,6 +24,7 @@ export const BurgerNavMenu: React.FC = () => {
             bg='white'
             borderRadius='0 0 12px 12px'
             boxShadow={SHADOWS.burgerNavMenu}
+            onClick={onClick}
         >
             <BreadCrump />
             <Flex

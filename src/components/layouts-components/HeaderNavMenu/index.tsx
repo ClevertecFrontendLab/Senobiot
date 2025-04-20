@@ -30,6 +30,15 @@ import Logo from './Logo';
 
 export const HeaderNavMenu: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const handleKeyDown = () => {
+        console.log('missed menu - closing ');
+        onClose();
+    };
+
+    const menuClickHandler = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.stopPropagation();
+        console.log('click on menu');
+    };
 
     return (
         <Flex
@@ -111,7 +120,11 @@ export const HeaderNavMenu: React.FC = () => {
                     }}
                     data-test-id='hamburger-icon'
                 />
-                <Drawer isOpen={isOpen} placement='right' onClose={onClose}>
+                <Drawer
+                    isOpen={isOpen}
+                    // placement='right'
+                    onClose={onClose}
+                >
                     <DrawerOverlay />
                     <DrawerContent
                         minW='100vw'
@@ -147,8 +160,8 @@ export const HeaderNavMenu: React.FC = () => {
                                 <DrawerCloseButton position='static' data-test-id='close-icon' />
                             </Flex>
                         </DrawerHeader>
-                        <DrawerBody p={0} ml='auto'>
-                            <BurgerNavMenu data-test-id='nav' />
+                        <DrawerBody minW='100vw' p={0} onClick={handleKeyDown}>
+                            <BurgerNavMenu data-test-id='nav' onClick={menuClickHandler} />
                         </DrawerBody>
                     </DrawerContent>
                 </Drawer>
