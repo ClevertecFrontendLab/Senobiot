@@ -13,7 +13,7 @@ export interface ButtonBookBtnProps {
     bookBtnIconUrl?: string;
     bookBtnIconAltText?: string;
     bookBtnIconsize?: string;
-    bookBtnSize?: string;
+    bookBtnSize?: ResponsiveValue<string>;
     bookBtnTextDisplay?: ResponsiveValue<string>;
     bookBtnIconMarginInlineEnd?: ResponsiveValue<number>;
 }

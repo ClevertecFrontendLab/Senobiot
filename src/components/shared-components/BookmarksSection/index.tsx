@@ -19,6 +19,8 @@ export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProp
     order?: FlexProps['order'];
     bookmarkMaxHeight?: FlexProps['maxHeight'];
     bookmarkWrap?: ResponsiveValue<'wrap' | 'nowrap' | 'wrap-reverse'>;
+    bookmarksBookmarksValue?: number | string;
+    bookmarksLikesValue?: number | string;
 }
 
 export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
@@ -36,6 +38,8 @@ export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
     bookmarkMaxHeight,
     bookmarkWrap = 'wrap',
     bookmarkMarginTop,
+    bookmarksBookmarksValue,
+    bookmarksLikesValue,
     ...props
 }) => (
     <Flex
@@ -69,8 +73,8 @@ export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
             </Flex>
         )}
         <HStack spacing={bookmarkStatGap} minW='72px'>
-            <StatItem {...props} statIconUrl={heartIcon} />
-            <StatItem {...props} statIconUrl={peopleIcon} />
+            <StatItem {...props} statIconUrl={heartIcon} statValue={bookmarksBookmarksValue} />
+            <StatItem {...props} statIconUrl={peopleIcon} statValue={bookmarksLikesValue} />
         </HStack>
     </Flex>
 );

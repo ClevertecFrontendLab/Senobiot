@@ -1,19 +1,26 @@
-import { Button, Image, Text } from '@chakra-ui/react';
+import { Button, Image, ResponsiveValue, Text } from '@chakra-ui/react';
 
 export interface ButtonTimeBtnProps {
     timeBtnText?: string;
-    timeBtnIconsize?: string;
+    timeBtnIconsize?: string | number;
+    timeBtnMarginBottom?: ResponsiveValue<string | number>;
 }
 
 export const ButtonTimeBtn: React.FC<ButtonTimeBtnProps> = ({
     timeBtnText = '0 минут',
-    timeBtnIconsize = { base: 3, xl: 3.5 },
+    timeBtnIconsize = 4,
+    timeBtnMarginBottom = 0,
 }) => (
     <Button
-        size={{ base: 'xs', xl: 'sm' }}
+        h={6}
         bg='blackAlpha.100'
         color='blackAlpha.800'
         borderRadius='md'
+        fontSize='14px'
+        fontWeight={400}
+        w={104}
+        py={1}
+        mb={timeBtnMarginBottom}
         leftIcon={
             <Image
                 src='/icons/bookmarks/clock.svg'

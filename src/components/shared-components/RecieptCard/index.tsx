@@ -37,7 +37,7 @@ export interface RecieptCardProps
     noDescription?: ResponsiveValue<boolean>;
     imageSrc?: string;
     imageWidth?: ResponsiveValue<number | string>;
-    imageHeight?: ResponsiveValue<number>;
+    imageHeight?: ResponsiveValue<number | string>;
     titleMargin?: FlexProps['marginBottom'];
     descriptionMargin?: FlexProps['marginBottom'];
     subtitleOrder?: FlexProps['order'];
@@ -50,6 +50,7 @@ export interface RecieptCardProps
     cardHeaderNoOfLines?: ResponsiveValue<number>;
     descriptionHeight?: FlexProps['height'];
     imageFit?: ImageProps['objectFit'];
+    noHoverEffect?: boolean;
 }
 
 export const RecieptCard: React.FC<RecieptCardProps> = ({
@@ -61,6 +62,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     wrap = 'wrap',
     noImage = false,
     noButtons = false,
+    noHoverEffect = false,
     noDescription,
     imageWidth = { base: 158, xl: 346 },
     imageHeight = { base: 128, xl: 244 },
@@ -100,7 +102,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
         wrap={wrap}
         border={cardBorder}
         cursor='pointer'
-        _hover={{ boxShadow: SHADOWS.sideMunu }}
+        _hover={!noHoverEffect ? { boxShadow: SHADOWS.sideMunu } : ''}
         transition='box-shadow 0.35s'
         borderRadius={cardBorderRadius}
         gap={gap}

@@ -2,7 +2,6 @@ import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import { CategoryHeader, TextRegular } from '~/components/shared-components';
-import { PADDINGS } from '~/constants/styles';
 import { RecipeProps } from '~/types';
 
 import CategorySectionNextCard from './Card';
@@ -11,12 +10,7 @@ import CardMinimized from './CardMinimized';
 type CategorySectionNextProps = {
     title: string;
     description?: string;
-    noButton?: boolean;
     data: RecipeProps[];
-    mb?: string | number;
-    categoryHeaderMb?: string | number;
-    noHeader?: boolean;
-    noNavMenu?: boolean;
 };
 
 export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
@@ -24,12 +18,7 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
     description,
     data,
 }) => (
-    <Flex
-        direction='column'
-        borderTop='1px solid'
-        borderColor='blackAlpha.200'
-        pb={{ base: PADDINGS.footer, xl: 'unset' }} // конец контента
-    >
+    <Flex direction='column' borderTop='1px solid' borderColor='blackAlpha.200'>
         <Flex
             gap={{ md: 3, xl: 4, '2xl': 6 }}
             direction={{ base: 'column', md: 'row' }}

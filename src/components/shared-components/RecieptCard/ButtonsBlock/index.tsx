@@ -1,4 +1,12 @@
-import { Button, ButtonProps, Flex, HStack, Image, ResponsiveValue } from '@chakra-ui/react';
+import {
+    Button,
+    ButtonProps,
+    Flex,
+    FlexProps,
+    HStack,
+    Image,
+    ResponsiveValue,
+} from '@chakra-ui/react';
 import React from 'react';
 import { Path } from 'react-router';
 
@@ -15,6 +23,7 @@ export interface RecieptButtonsSectionProps extends ButtonBookBtnProps, ButtonTi
     coockingButtonIconUrl?: string;
     coockingButtonIconSize?: ResponsiveValue<number>;
     noTimeButton?: boolean;
+    recieptButtonsSectionDirection?: FlexProps['direction'];
 }
 
 const RecieptButtonsSection: React.FC<RecieptButtonsSectionProps> = ({
@@ -27,9 +36,14 @@ const RecieptButtonsSection: React.FC<RecieptButtonsSectionProps> = ({
     coockingButtonIconUrl = '',
     coockingButtonIconSize = 4,
     noTimeButton = true,
+    recieptButtonsSectionDirection,
     ...props
 }) => (
-    <Flex justifyContent='space-between' width={!noTimeButton ? '100%' : 'unset'}>
+    <Flex
+        justifyContent='space-between'
+        width={!noTimeButton ? '100%' : 'unset'}
+        direction={recieptButtonsSectionDirection}
+    >
         {!noTimeButton && <ButtonTimeBtn {...props} />}
         <HStack wrap='wrap' gap={3}>
             <ButtonbookBtn {...props} />

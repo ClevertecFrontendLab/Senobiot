@@ -15,6 +15,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ pt = PADDINGS.pageTop, childr
         display='column'
         w={{ '2xl': 1360 }}
         pt={pt}
+        pb={{ base: PADDINGS.footer, xl: 'unset' }} // конец контента
     >
         {children}
     </Flex>

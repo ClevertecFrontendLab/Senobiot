@@ -2,7 +2,7 @@ import { ResponsiveValue, Text } from '@chakra-ui/react';
 import React from 'react';
 
 export type TextRegularProps = {
-    regText?: string;
+    regText?: string | number;
     regTextFz?: ResponsiveValue<string>;
     regTextFw?: number;
     regTextFf?: string;
