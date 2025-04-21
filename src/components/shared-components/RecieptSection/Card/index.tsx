@@ -51,6 +51,7 @@ const RecieptSectionCard: React.FC<{ reciept: RecipeProps }> = ({ reciept }) => 
             timeBtnMarginBottom={{ base: 3, md: 'unset' }}
             bookBtnIconMarginInlineEnd={2}
             noHoverEffect={true}
+            recieptButtonsSize={{ base: 'xs', xl: 'sm', '2xl': 'lg' }}
         />
     );
 };

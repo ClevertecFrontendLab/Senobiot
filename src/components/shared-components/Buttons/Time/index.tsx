@@ -21,6 +21,7 @@ export const ButtonTimeBtn: React.FC<ButtonTimeBtnProps> = ({
         w={104}
         py={1}
         mb={timeBtnMarginBottom}
+        mt='auto'
         leftIcon={
             <Image
                 src='/icons/bookmarks/clock.svg'

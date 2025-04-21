@@ -13,9 +13,10 @@ export interface ButtonBookBtnProps {
     bookBtnIconUrl?: string;
     bookBtnIconAltText?: string;
     bookBtnIconsize?: string;
-    bookBtnSize?: ResponsiveValue<string>;
+    bookBtnSize?: ResponsiveValue<string | number>;
     bookBtnTextDisplay?: ResponsiveValue<string>;
     bookBtnIconMarginInlineEnd?: ResponsiveValue<number>;
+    recieptButtonsSize?: ResponsiveValue<string>;
 }
 
 export const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
@@ -32,9 +33,10 @@ export const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
     bookBtnIconsize = { base: 3, xl: 3.5 },
     bookBtnSize = { base: 6, xl: 'initial' },
     bookBtnTextDisplay = { base: 'none', xl: 'initial' },
+    recieptButtonsSize = { base: 'xs', xl: 'sm' },
 }) => (
     <Button
-        size={{ base: 'xs', xl: 'sm' }}
+        size={recieptButtonsSize}
         maxWidth={bookBtnSize}
         sx={{
             '& .chakra-button__icon': {

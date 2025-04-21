@@ -37,6 +37,7 @@ const RecieptButtonsSection: React.FC<RecieptButtonsSectionProps> = ({
     coockingButtonIconSize = 4,
     noTimeButton = true,
     recieptButtonsSectionDirection,
+    recieptButtonsSize = { base: 'xs', xl: 'sm' },
     ...props
 }) => (
     <Flex
@@ -46,14 +47,14 @@ const RecieptButtonsSection: React.FC<RecieptButtonsSectionProps> = ({
     >
         {!noTimeButton && <ButtonTimeBtn {...props} />}
         <HStack wrap='wrap' gap={3}>
-            <ButtonbookBtn {...props} />
+            <ButtonbookBtn {...props} recieptButtonsSize={recieptButtonsSize} />
             <Button
                 bg={coockingButtonBg}
                 as={coockingButtonAs}
                 to={coockingButtonRoute}
                 variant={actionButtonVariant}
                 color={coockingButtonTextColor}
-                size={{ base: 'xs', xl: 'sm' }}
+                size={recieptButtonsSize}
                 leftIcon={
                     coockingButtonIconUrl ? (
                         <Image
