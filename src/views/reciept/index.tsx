@@ -1,20 +1,14 @@
-import { Flex } from '@chakra-ui/react';
-
 import { RecieptSection } from '~/components/shared-components';
-import { PADDINGS, WIDTHS } from '~/constants/styles';
+import PageWrapper from '~/components/shared-components/PageWrapper';
+import { PADDINGS } from '~/constants/styles';
 import mockRespone from '~/data/data.json';
 
 const data = JSON.parse(JSON.stringify(mockRespone));
 
 const RecieptPage: React.FC = () => (
-    <Flex
-        minH='100vh'
-        mx={PADDINGS.sectionMx}
-        px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
-        display='column'
-    >
+    <PageWrapper pt={PADDINGS.pageRecieptTop}>
         <RecieptSection reciept={data[0]} />
-    </Flex>
+    </PageWrapper>
 );
 
 export default RecieptPage;

@@ -1,4 +1,4 @@
-import { Flex, FlexProps, Image, ResponsiveValue } from '@chakra-ui/react';
+import { Flex, FlexProps, Image, ImageProps, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
 import { TextRegular, TextRegularProps } from '~/components/shared-components';
@@ -49,6 +49,7 @@ export interface RecieptCardProps
     gap?: FlexProps['gap'];
     cardHeaderNoOfLines?: ResponsiveValue<number>;
     descriptionHeight?: FlexProps['height'];
+    imageFit?: ImageProps['objectFit'];
 }
 
 export const RecieptCard: React.FC<RecieptCardProps> = ({
@@ -86,6 +87,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     gap,
     buttonsMargin = 'auto',
     descriptionHeight,
+    imageFit = 'unset',
     ...rest
 }) => (
     <Flex
@@ -110,6 +112,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
                 borderRadius={imageBorderRadius}
                 height={imageHeight}
                 width={imageWidth}
+                objectFit={imageFit}
             />
         )}
         <Flex
@@ -127,7 +130,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
             </Flex>
             {!noDescription && (
                 <Flex mb={descriptionMargin} order={descriptionOrder} height={descriptionHeight}>
-                    <TextRegular regText={text} />
+                    <TextRegular {...rest} regText={text} />
                 </Flex>
             )}
             <BookmarksSection {...rest} order={bookmarksOrder} />

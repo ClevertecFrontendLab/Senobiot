@@ -10,11 +10,15 @@ export const PADDINGS: {
     sideMenu: 16,
     footer: 24,
     header: { base: 20, xl: 28 },
+    pageTop: { base: 20, xl: 8 + 20 },
+    pageRecieptTop: { base: 20, xl: 136 },
     content: 280,
     sectionMx: { base: 0, xl: 280 },
     subsectionMb: { base: 8, xl: 10 },
     subsectionHeaderMb: { base: 3, xl: 4, '2xl': 6 },
 } as const;
+
+export const MARGINS: { [key: string]: number } = {};
 
 export const WIDTHS: { [key: string]: number } = {
     sideMenu: 64,

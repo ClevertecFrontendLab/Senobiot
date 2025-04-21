@@ -10,8 +10,10 @@ export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProp
     heartIcon?: string;
     peopleIcon?: string;
     bookmarkJustify?: string;
+    bookmarkAlignItems?: FlexProps['alignItems']; // Исправили тип
     bookmarkStatGap?: ResponsiveValue<number>;
     bookmarkMb?: ResponsiveValue<number | string>;
+    bookmarkMarginTop?: ResponsiveValue<number | string>;
     categories?: string[];
     categorySx?: SystemStyleObject;
     order?: FlexProps['order'];
@@ -24,6 +26,7 @@ export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
     peopleIcon = '/icons/bookmarks/emoji-heart-eyes.svg',
     noCategory = false,
     bookmarkJustify = 'space-between',
+    bookmarkAlignItems = 'flex-start',
     bookmarkStatGap,
     categoryBg = 'lime.150',
     categories = [],
@@ -32,11 +35,14 @@ export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
     order,
     bookmarkMaxHeight,
     bookmarkWrap = 'wrap',
+    bookmarkMarginTop,
     ...props
 }) => (
     <Flex
         justifyContent={bookmarkJustify}
+        alignItems={bookmarkAlignItems}
         mb={bookmarkMb}
+        mt={bookmarkMarginTop}
         order={order}
         flexShrink={1}
         flexGrow={0}

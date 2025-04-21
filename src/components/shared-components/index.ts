@@ -4,6 +4,7 @@ export * from './Buttons';
 export * from './CategorySection';
 export * from './CategorySectionNext';
 export * from './Headers';
+export * from './PageWrapper';
 export * from './ProfileNotification';
 export * from './RecieptCard';
 export * from './RecieptSection';

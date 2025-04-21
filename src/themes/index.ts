@@ -7,6 +7,7 @@ export const defaultTheme = extendTheme({
             150: '#D7FF94',
             100: '#EAFFC7',
             300: '#C4FF61',
+            400: '#B1FF2E',
             600: '#2DB100',
             800: '134B00',
         },

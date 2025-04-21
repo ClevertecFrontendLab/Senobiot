@@ -32,7 +32,7 @@ export const SideMenu: React.FC = () => {
                 justifyContent='space-between'
                 borderRadius='8px'
                 pr={1}
-                pt={6}
+                pt={8}
                 css={{
                     '&::-webkit-scrollbar': {
                         width: 8,

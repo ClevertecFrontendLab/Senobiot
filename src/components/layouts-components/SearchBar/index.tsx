@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 
 import { TextRegular, TitleText } from '~/components/shared-components';
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
-import { BORDERS, PADDINGS, WIDTHS } from '~/constants/styles';
+import { BORDERS, WIDTHS } from '~/constants/styles';
 import { allergensIngredients } from '~/data';
 import { usePathnames } from '~/utils';
 
@@ -26,7 +26,11 @@ export const SearchBar: React.FC = () => {
     const styles = { base: '2xl', xl: '5xl' };
 
     return (
-        <Flex direction='column' pt={PADDINGS.header} px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}>
+        <Flex
+            direction='column'
+            // pt={PADDINGS.header}
+            px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
+        >
             <TitleText titleText={title} titleTextFz={styles} titleTextLh={styles} />
             {activeCategory?.description && (
                 <Flex maxW={{ xl: 696 }} m='0 auto' mt={{ base: 4, xl: 3 }} textAlign='center'>

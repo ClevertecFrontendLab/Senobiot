@@ -7,7 +7,7 @@ import {
     HeaderNavMenu,
     SideMenu,
 } from '~/components/layouts-components';
-import { SearchBar } from '~/components/layouts-components/SearchBar';
+// import { SearchBar } from '~/components/layouts-components/SearchBar';
 import AppViews from '~/views';
 
 const AppLayout: React.FC = () => (
@@ -15,7 +15,7 @@ const AppLayout: React.FC = () => (
         <HeaderNavMenu />
         <SideMenu />
         <BookmarkSideMenu />
-        <SearchBar />
+        {/* <SearchBar /> */}
         <AppViews />
         <BottomNavMenu />
     </Box>
