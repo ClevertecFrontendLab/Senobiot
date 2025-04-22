@@ -7,7 +7,8 @@ const IngridientItem: React.FC<{
     count: string | number;
     measureUnit: string;
     isGrayed: boolean;
-}> = ({ title, count, isGrayed, measureUnit }) => (
+    index: number;
+}> = ({ title, count, isGrayed, measureUnit, index }) => (
     <Flex
         justifyContent='space-between'
         w='100%'
@@ -21,7 +22,11 @@ const IngridientItem: React.FC<{
             <TextRegular regTextFw={500} regTextColor='blackAlpha.900' regText={title} />
         </Flex>
         <Flex>
-            <TextRegular regText={count || ''} regTextColor='blackAlpha.900' />
+            <TextRegular
+                data-test-id={`ingredient-quantity-${index}`}
+                regText={count || ''}
+                regTextColor='blackAlpha.900'
+            />
             &nbsp;
             <TextRegular regText={measureUnit} regTextColor='blackAlpha.900' />
         </Flex>

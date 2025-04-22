@@ -43,8 +43,12 @@ export const Ingridients: React.FC<{ ingredients: RecipeProps['ingredients'] }> 
                 >
                     <NumberInputField fontSize='16px' />
                     <NumberInputStepper>
-                        <NumberIncrementStepper onClick={() => setPortions((prev) => prev + 1)} />
+                        <NumberIncrementStepper
+                            data-test-id='increment-stepper'
+                            onClick={() => setPortions((prev) => prev + 1)}
+                        />
                         <NumberDecrementStepper
+                            data-test-id='decrement-stepper'
                             onClick={() => setPortions((prev) => Math.max(prev - 1, 1))}
                         />
                     </NumberInputStepper>
@@ -56,6 +60,7 @@ export const Ingridients: React.FC<{ ingredients: RecipeProps['ingredients'] }> 
 
                     return (
                         <IngridientItem
+                            index={index}
                             key={index}
                             title={title}
                             count={+count * portions}
