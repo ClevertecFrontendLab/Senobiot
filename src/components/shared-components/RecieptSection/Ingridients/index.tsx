@@ -14,7 +14,9 @@ import { RecipeProps } from '~/types';
 
 import IngridientItem from './Item';
 
-const Ingridients: React.FC<{ ingredients: RecipeProps['ingredients'] }> = ({ ingredients }) => {
+export const Ingridients: React.FC<{ ingredients: RecipeProps['ingredients'] }> = ({
+    ingredients,
+}) => {
     const [portions, setPortions] = useState<number>(1);
     console.log(portions);
     return (
@@ -66,5 +68,3 @@ const Ingridients: React.FC<{ ingredients: RecipeProps['ingredients'] }> = ({ in
         </VStack>
     );
 };
-
-export default Ingridients;

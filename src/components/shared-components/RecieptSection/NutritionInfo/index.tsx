@@ -6,7 +6,7 @@ import { RecipeProps } from '~/types';
 import { TextRegular } from '../..';
 import NutritionInfoItem from './NutritionInfoItem';
 
-const NutritionInfo: React.FC<{ nutritionValue: RecipeProps['nutritionValue'] }> = ({
+export const NutritionInfo: React.FC<{ nutritionValue: RecipeProps['nutritionValue'] }> = ({
     nutritionValue,
 }) => (
     <Flex gap={3} direction='column' w='100%'>
@@ -27,5 +27,3 @@ const NutritionInfo: React.FC<{ nutritionValue: RecipeProps['nutritionValue'] }>
         </Flex>
     </Flex>
 );
-
-export default NutritionInfo;
