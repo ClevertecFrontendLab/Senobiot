@@ -23,7 +23,7 @@ export const navTree: Array<navTreeProps> = [
     },
     {
         navKey: 'juiciest',
-        route: '/juiciest',
+        route: '/the-juiciest',
         title: 'Самое сочное',
         skipSideMenu: true,
         breadcrumb: true,

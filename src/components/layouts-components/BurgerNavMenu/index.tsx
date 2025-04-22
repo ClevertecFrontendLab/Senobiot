@@ -13,6 +13,7 @@ export const BurgerNavMenu: React.FC<{
 
     return (
         <Flex
+            data-test-id='nav'
             // ml='auto'
             ml='auto'
             flexDirection='column'

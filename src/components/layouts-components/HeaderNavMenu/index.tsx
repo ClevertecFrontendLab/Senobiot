@@ -1,4 +1,4 @@
-import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { HamburgerIcon } from '@chakra-ui/icons';
 import {
     Avatar,
     Button,
@@ -30,6 +30,7 @@ import Logo from './Logo';
 
 export const HeaderNavMenu: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
     const handleKeyDown = () => {
         console.log('missed menu - closing ');
         onClose();
@@ -109,62 +110,58 @@ export const HeaderNavMenu: React.FC = () => {
                     stateTextFontSize='12px'
                     stateTextLh='16px'
                 />
-                <IconButton
-                    size='lg'
-                    icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-                    aria-label='Open Menu'
-                    onClick={isOpen ? onClose : onOpen}
-                    bg='none'
-                    _hover={{
-                        background: 'none',
-                    }}
-                    data-test-id='hamburger-icon'
-                />
-                <Drawer
-                    isOpen={isOpen}
-                    //placement='right'
-                    onClose={onClose}
-                >
-                    <DrawerOverlay />
-                    <DrawerContent
-                        minW='100vw'
-                        bgColor='none'
+                {!isOpen && (
+                    <IconButton
+                        size='lg'
+                        icon={<HamburgerIcon />}
+                        aria-label='Open Menu'
+                        onClick={isOpen ? onClose : onOpen}
                         bg='none'
-                        // px={2}
-                        motionProps={{
-                            variants: {
-                                enter: {
-                                    x: '0%',
-                                    transition: { duration: 0.1 },
-                                },
-                                exit: {
-                                    x: '100%',
-                                    transition: { duration: 0.1 },
-                                },
-                            },
+                        _hover={{
+                            background: 'none',
                         }}
-                    >
-                        <DrawerHeader
-                            w='100vw'
-                            position='fixed'
-                            top={0}
-                            left={0}
-                            bgColor='#fff'
-                            zIndex={10}
-                            px={5}
-                            py={4}
-                            h={PADDINGS.topMenu}
+                        data-test-id='hamburger-icon'
+                    />
+                )}
+                {isOpen && (
+                    <Drawer isOpen={isOpen} onClose={onClose}>
+                        <DrawerOverlay />
+                        <DrawerContent
+                            minW='100vw'
+                            bgColor='none'
+                            bg='none'
+                            motionProps={{
+                                variants: {
+                                    enter: { x: '0%', transition: { duration: 0.1 } },
+                                    exit: { x: '100%', transition: { duration: 0.1 } },
+                                },
+                            }}
                         >
-                            <Flex justifyContent='space-between' alignItems='center'>
-                                <Logo />
-                                <DrawerCloseButton position='static' data-test-id='close-icon' />
-                            </Flex>
-                        </DrawerHeader>
-                        <DrawerBody minW='100vw' p={0} onClick={handleKeyDown} pr={2}>
-                            <BurgerNavMenu data-test-id='nav' onClick={menuClickHandler} />
-                        </DrawerBody>
-                    </DrawerContent>
-                </Drawer>
+                            <DrawerHeader
+                                w='100vw'
+                                position='fixed'
+                                top={0}
+                                left={0}
+                                bgColor='#fff'
+                                zIndex={10}
+                                px={5}
+                                py={4}
+                                h={PADDINGS.topMenu}
+                            >
+                                <Flex justifyContent='space-between' alignItems='center'>
+                                    <Logo />
+                                    <DrawerCloseButton
+                                        position='static'
+                                        data-test-id='close-icon'
+                                    />
+                                </Flex>
+                            </DrawerHeader>
+                            <DrawerBody minW='100vw' p={0} onClick={handleKeyDown} pr={2}>
+                                <BurgerNavMenu onClick={menuClickHandler} />
+                            </DrawerBody>
+                        </DrawerContent>
+                    </Drawer>
+                )}
             </Flex>
         </Flex>
     );

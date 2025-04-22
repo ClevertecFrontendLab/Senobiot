@@ -10,6 +10,7 @@ export const SideMenu: React.FC = () => {
 
     return (
         <Flex
+            data-test-id='nav'
             flexDirection='column'
             justifyContent='space-between'
             w='256px'
