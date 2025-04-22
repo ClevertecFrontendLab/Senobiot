@@ -14,6 +14,7 @@ const CookingStep: React.FC<{
             <Image
                 maxWidth={{ base: '158px', xl: '346px' }}
                 w={{ base: '158px', xl: '346px' }}
+                minW={{ base: '158px', xl: '346px' }}
                 maxH={{ base: '128px', xl: '244px' }}
                 src={image}
                 alt={`Cooking step ${stepNumber}`}
@@ -24,7 +25,7 @@ const CookingStep: React.FC<{
             gap={{ base: 3, xl: 4 }}
             px={{ base: 2, xl: 6 }}
             pt={{ base: 2, xl: 5 }}
-            pb={1}
+            pb={{ base: 1, xl: 5 }}
         >
             <Button
                 bg={isLastStep ? 'lime.50' : 'blackAlpha.100'}

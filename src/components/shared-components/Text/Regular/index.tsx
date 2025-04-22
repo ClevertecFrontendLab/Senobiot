@@ -1,4 +1,4 @@
-import { ResponsiveValue, Text } from '@chakra-ui/react';
+import { ResponsiveValue, Text, TextProps } from '@chakra-ui/react';
 import React from 'react';
 
 export type TextRegularProps = {
@@ -6,9 +6,10 @@ export type TextRegularProps = {
     regTextFz?: ResponsiveValue<string>;
     regTextFw?: number;
     regTextFf?: string;
-    regTextLh?: string;
+    regTextLh?: ResponsiveValue<string>;
     regTextColor?: string;
     regTextNoOfLines?: ResponsiveValue<number>;
+    regTextAlign?: TextProps['textAlign'];
 };
 
 export const TextRegular: React.FC<TextRegularProps> = ({
@@ -19,8 +20,10 @@ export const TextRegular: React.FC<TextRegularProps> = ({
     regTextLh = '20px',
     regTextColor = '#000',
     regTextNoOfLines = 3,
+    regTextAlign = 'left',
 }) => (
     <Text
+        textAlign={regTextAlign}
         fontSize={regTextFz}
         fontWeight={regTextFw}
         fontFamily={regTextFf}

@@ -1,6 +1,7 @@
 import './swiper-syles.css';
 
 import { Flex } from '@chakra-ui/react';
+import { Link } from 'react-router';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -47,16 +48,18 @@ export const Slider: React.FC<SliderProps> = ({ slides = [] }) => (
             }}
         >
             {slides.map((slide, index) => {
-                const { title, description, image, category } = slide;
+                const { title, description, image, category, subcategory, id } = slide;
 
                 return (
                     <SwiperSlide key={index} data-test-id={`carousel-card-${index}`}>
-                        <SliderCard
-                            title={title}
-                            description={description}
-                            image={image}
-                            categories={category}
-                        />
+                        <Link to={`/${category[0]}/${subcategory[0]}/${id}`}>
+                            <SliderCard
+                                title={title}
+                                description={description}
+                                image={image}
+                                categories={category}
+                            />
+                        </Link>
                     </SwiperSlide>
                 );
             })}
