@@ -15,6 +15,7 @@ import { PADDINGS } from '~/constants/styles';
 import mockRespone from '~/data/data.json';
 
 const data = JSON.parse(JSON.stringify(mockRespone)); // ТУТ НАДО ПЕРЕХВАТЫВАТЬ УРЛ
+const sliderData = data.slice(0, 10);
 //непонятно где автором брать в рецепта нет
 const authorData = {
     id: 1,
@@ -48,7 +49,7 @@ const RecieptPage: React.FC = () => {
             </VStack>
             <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
                 <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
-                <Slider slides={data} />
+                <Slider slides={sliderData} />
             </Flex>
         </PageWrapper>
     );

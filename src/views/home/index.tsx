@@ -13,7 +13,7 @@ import mockRespone from '~/data/data.json';
 import { JuciestSection } from './juciest';
 
 const data = JSON.parse(JSON.stringify(mockRespone));
-
+const sliderData = data.slice(0, 10);
 const nexSection = navTree.find((e) => e.navKey === 'vegan-cuisine'); // TODO remove after true api
 
 const HomePage: React.FC = () => (
@@ -21,7 +21,7 @@ const HomePage: React.FC = () => (
         <SearchBar />
         <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
             <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
-            <Slider slides={data} />
+            <Slider slides={sliderData} />
         </Flex>
         <JuciestSection data={data} categoryTitle='Самое сочное' />
         <BlogsSection />

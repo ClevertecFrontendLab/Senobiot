@@ -27,7 +27,7 @@ export const Slider: React.FC<SliderProps> = ({ slides = [] }) => (
             spaceBetween={20}
             slidesPerView={4}
             loop={true}
-            speed={200}
+            speed={300}
             breakpoints={{
                 360: {
                     slidesPerView: 2.1,
@@ -70,7 +70,7 @@ export const Slider: React.FC<SliderProps> = ({ slides = [] }) => (
             left={-2}
             zIndex={8}
             className='slider-left-button'
-            data-test-id='carousel-forward'
+            data-test-id='carousel-back'
         >
             <SliderLeftButton />
         </Flex>
@@ -80,7 +80,7 @@ export const Slider: React.FC<SliderProps> = ({ slides = [] }) => (
             top='40%'
             right={{ xl: -1, '2xl': -2 }}
             zIndex={8}
-            data-test-id='carousel-back'
+            data-test-id='carousel-forward'
         >
             <SliderRightButton />
         </Flex>
