@@ -51,6 +51,7 @@ export interface RecieptCardProps
     descriptionHeight?: FlexProps['height'];
     imageFit?: ImageProps['objectFit'];
     noHoverEffect?: boolean;
+    cardDataTestId?: string;
 }
 
 export const RecieptCard: React.FC<RecieptCardProps> = ({
@@ -90,9 +91,11 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     buttonsMargin = 'auto',
     descriptionHeight,
     imageFit = 'unset',
+    cardDataTestId,
     ...rest
 }) => (
     <Flex
+        data-test-id={cardDataTestId}
         flex={cardFlexWidth}
         position={position}
         minWidth={minWidth}

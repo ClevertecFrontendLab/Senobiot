@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
-import { getSubCategoryList, routeFinder } from '~/configs/navigationConfig';
+import { getActiveSubcatgory, getSubCategoryList, routeFinder } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
 import { CategorySectionProps } from '~/types';
 import { usePathnames } from '~/utils';
@@ -24,9 +24,10 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     noButtonIcon,
 }) => {
     const pathnames = usePathnames();
+    console.log(pathnames);
     const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]);
     const menuList = activeCategory?.title ? getSubCategoryList(activeCategory?.title) : []; // когда будет апи всё это выпилить
-
+    const activeSubcatgory = getActiveSubcatgory(pathnames);
     return (
         <Flex justifyContent='space-between' mb={mb} direction='column'>
             {!noHeader && (
@@ -39,22 +40,25 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             )}
             {!noNavMenu && !activeCategory?.skipSideMenu && <CategoryMenu list={menuList} />}
             <Flex flexWrap='wrap' gap={4}>
-                {data.map((card, index) => {
-                    const { title, description, image, category, subcategory, id } = card;
+                {data
+                    .filter((e) => e.subcategory[0] === activeSubcatgory.navKey)
+                    .map((card, index) => {
+                        const { title, description, image, category, subcategory, id } = card;
 
-                    return (
-                        <CategoryCard
-                            key={index}
-                            title={title}
-                            description={description}
-                            img={image}
-                            categories={category}
-                            bookmarkMaxHeight={6}
-                            coockingButtonAs={Link}
-                            coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
-                        />
-                    );
-                })}
+                        return (
+                            <CategoryCard
+                                cardDataTestId={`food-card-${index}`}
+                                key={index}
+                                title={title}
+                                description={description}
+                                img={image}
+                                categories={category}
+                                bookmarkMaxHeight={6}
+                                coockingButtonAs={Link}
+                                coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
+                            />
+                        );
+                    })}
             </Flex>
             {!noFooter && (
                 <Flex justifyContent='center' mt={categoryHeaderMb}>

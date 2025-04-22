@@ -434,49 +434,49 @@ export const navTree: Array<navTreeProps> = [
                 submenu: [],
             },
             {
-                navKey: 'vegan-first-courses',
+                navKey: 'first-courses',
                 route: '/vegan/first-courses',
                 title: 'Первые блюда',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-second-dish',
+                navKey: 'second-dish',
                 route: '/vegan/second-dish',
                 title: 'Вторые блюда',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-side-dishes',
+                navKey: 'side-dishes',
                 route: '/vegan/side-dishes',
                 title: 'Гарниры',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-desserts',
+                navKey: 'desserts',
                 route: '/vegan/desserts',
                 title: 'Десерты',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-baked-goods',
+                navKey: 'baked-goods',
                 route: '/vegan/baked-goods',
                 title: 'Выпечка',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-raw-dishes',
+                navKey: 'raw-dishes',
                 route: '/vegan/raw-food-dishes',
                 title: 'Сыроедческие блюда',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-drinks',
+                navKey: 'drinks',
                 route: '/vegan/drinks',
                 title: 'Напитки',
                 breadcrumb: true,
@@ -1008,3 +1008,18 @@ export const getNavBranches = (route: string) => {
 };
 
 export const getCategoryByKey = (key: string) => navTree.find((cat) => cat.navKey === key);
+
+export const getActiveSubcatgory = (pathnames: string[]) => {
+    if (pathnames.length > 2) {
+        const category = navTree.find((cat) => cat.route === pathnames[1]);
+        if (category) {
+            const subcategory = category.submenu.find(
+                (subcat) => subcat.route === pathnames[1] + pathnames[2],
+            );
+            return subcategory || category;
+        }
+
+        return navTree[0];
+    }
+    return navTree[0];
+};
