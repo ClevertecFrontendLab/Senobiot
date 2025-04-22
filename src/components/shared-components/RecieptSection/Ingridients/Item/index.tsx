@@ -23,7 +23,7 @@ const IngridientItem: React.FC<{
         </Flex>
         <Flex>
             <TextRegular
-                data-test-id={`ingredient-quantity-${index}`}
+                regTextDataId={index}
                 regText={count || ''}
                 regTextColor='blackAlpha.900'
             />

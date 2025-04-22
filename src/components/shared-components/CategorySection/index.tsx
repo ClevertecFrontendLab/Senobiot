@@ -56,6 +56,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                                 bookmarkMaxHeight={6}
                                 coockingButtonAs={Link}
                                 coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
+                                coockingButtonDataId={index}
                             />
                         );
                     })}

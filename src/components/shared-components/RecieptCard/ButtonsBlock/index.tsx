@@ -24,6 +24,7 @@ export interface RecieptButtonsSectionProps extends ButtonBookBtnProps, ButtonTi
     coockingButtonIconSize?: ResponsiveValue<number>;
     noTimeButton?: boolean;
     recieptButtonsSectionDirection?: FlexProps['direction'];
+    coockingButtonDataId: string | number;
 }
 
 const RecieptButtonsSection: React.FC<RecieptButtonsSectionProps> = ({
@@ -38,6 +39,7 @@ const RecieptButtonsSection: React.FC<RecieptButtonsSectionProps> = ({
     noTimeButton = true,
     recieptButtonsSectionDirection,
     recieptButtonsSize = { base: 'xs', xl: 'sm' },
+    coockingButtonDataId,
     ...props
 }) => (
     <Flex
@@ -49,6 +51,7 @@ const RecieptButtonsSection: React.FC<RecieptButtonsSectionProps> = ({
         <HStack wrap='wrap' gap={3}>
             <ButtonbookBtn {...props} recieptButtonsSize={recieptButtonsSize} />
             <Button
+                data-test-id={`card-link-${coockingButtonDataId}`}
                 bg={coockingButtonBg}
                 as={coockingButtonAs}
                 to={coockingButtonRoute}

@@ -43,7 +43,7 @@ const RecieptPage: React.FC = () => {
                 mb={{ base: 10, xl: 14 }}
             >
                 <NutritionInfo nutritionValue={reciept.nutritionValue} />
-                <Ingridients ingredients={reciept.ingredients} />
+                <Ingridients ingredients={reciept.ingredients} defaultPortions={reciept.portions} />
                 <CookingSteps steps={reciept.steps} />
                 <AuthorCard authorData={authorData} />
             </VStack>

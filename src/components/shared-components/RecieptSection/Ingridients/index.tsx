@@ -14,11 +14,12 @@ import { RecipeProps } from '~/types';
 
 import IngridientItem from './Item';
 
-export const Ingridients: React.FC<{ ingredients: RecipeProps['ingredients'] }> = ({
-    ingredients,
-}) => {
-    const [portions, setPortions] = useState<number>(1);
-    console.log(portions);
+export const Ingridients: React.FC<{
+    ingredients: RecipeProps['ingredients'];
+    defaultPortions: number;
+}> = ({ ingredients, defaultPortions }) => {
+    const [portions, setPortions] = useState<number>(defaultPortions);
+
     return (
         <VStack w='100%'>
             <Flex fontFamily='Inter' gap={4} alignItems='center' w='100%' pl={{ base: 2, md: 6 }}>
@@ -63,7 +64,7 @@ export const Ingridients: React.FC<{ ingredients: RecipeProps['ingredients'] }> 
                             index={index}
                             key={index}
                             title={title}
-                            count={+count * portions}
+                            count={+count * (portions / defaultPortions)}
                             measureUnit={measureUnit}
                             isGrayed={!!(index % 2)}
                         />

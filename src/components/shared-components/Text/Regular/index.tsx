@@ -10,6 +10,7 @@ export type TextRegularProps = {
     regTextColor?: string;
     regTextNoOfLines?: ResponsiveValue<number>;
     regTextAlign?: TextProps['textAlign'];
+    regTextDataId?: string | number;
 };
 
 export const TextRegular: React.FC<TextRegularProps> = ({
@@ -21,8 +22,10 @@ export const TextRegular: React.FC<TextRegularProps> = ({
     regTextColor = '#000',
     regTextNoOfLines = 3,
     regTextAlign = 'left',
+    regTextDataId,
 }) => (
     <Text
+        data-test-id={`ingredient-quantity-${regTextDataId}`}
         textAlign={regTextAlign}
         fontSize={regTextFz}
         fontWeight={regTextFw}
