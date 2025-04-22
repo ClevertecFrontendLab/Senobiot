@@ -417,7 +417,7 @@ export const navTree: Array<navTreeProps> = [
         ],
     },
     {
-        navKey: 'vegan',
+        navKey: 'vegan-cuisine',
         route: '/vegan',
         redirect: '/vegan/snacks',
         title: 'Веганская кухня',
