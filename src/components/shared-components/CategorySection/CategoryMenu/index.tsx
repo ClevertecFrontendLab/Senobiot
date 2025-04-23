@@ -1,17 +1,16 @@
 import { Flex, Tab, TabList, Tabs } from '@chakra-ui/react';
-import { Link, useLocation } from 'react-router';
+import { Link } from 'react-router';
 
 import { navTreeProps } from '~/configs/navigationConfig';
 import { BORDERS } from '~/constants/styles';
 
 type CategoryMenuProps = {
     list?: navTreeProps[];
+    activeSubcategory?: string;
 };
 
-const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [] }) => {
-    const { pathname } = useLocation();
-
-    const activeIndex = list.findIndex((item) => item.route === pathname);
+const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [], activeSubcategory }) => {
+    const activeIndex = list.findIndex((item) => item.route === activeSubcategory);
     const selectedIndex = activeIndex !== -1 ? activeIndex : 0;
 
     return (

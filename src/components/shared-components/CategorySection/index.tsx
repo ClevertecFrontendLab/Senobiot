@@ -1,10 +1,9 @@
 import { Flex } from '@chakra-ui/react';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
-import { getActiveSubcatgory, getSubCategoryList, routeFinder } from '~/configs/navigationConfig';
+import { getLocation } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
 import { CategorySectionProps } from '~/types';
-import { usePathnames } from '~/utils';
 
 import { ButtonViewMore } from '../Buttons';
 import { CategoryHeader } from '../Headers';
@@ -23,11 +22,11 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     noNavMenu = false,
     noButtonIcon,
 }) => {
-    const pathnames = usePathnames();
+    const location = getLocation(useLocation().pathname);
+    const categoryCards = data
+        .filter((e) => e.category.includes(location.categoryName!))
+        .filter((e) => e.subcategory.includes(location.subcategoryName!));
 
-    const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]);
-    const menuList = activeCategory?.title ? getSubCategoryList(activeCategory?.title) : []; // когда будет апи всё это выпилить
-    const activeSubcatgory = getActiveSubcatgory(pathnames);
     return (
         <Flex justifyContent='space-between' mb={mb} direction='column'>
             {!noHeader && (
@@ -38,28 +37,31 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                     )}
                 </Flex>
             )}
-            {!noNavMenu && !activeCategory?.skipSideMenu && <CategoryMenu list={menuList} />}
+            {!noNavMenu && !location?.category?.skipSideMenu && (
+                <CategoryMenu
+                    list={location.category?.submenu}
+                    activeSubcategory={location.subcategory?.route}
+                />
+            )}
             <Flex flexWrap='wrap' gap={4}>
-                {data
-                    .filter((e) => e.subcategory[0] === activeSubcatgory.navKey)
-                    .map((card, index) => {
-                        const { title, description, image, category, subcategory, id } = card;
+                {categoryCards.map((card, index) => {
+                    const { title, description, image, category, subcategory, id } = card;
 
-                        return (
-                            <CategoryCard
-                                cardDataTestId={`food-card-${index}`}
-                                key={index}
-                                title={title}
-                                description={description}
-                                img={image}
-                                categories={category}
-                                bookmarkMaxHeight={6}
-                                coockingButtonAs={Link}
-                                coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
-                                coockingButtonDataId={index}
-                            />
-                        );
-                    })}
+                    return (
+                        <CategoryCard
+                            cardDataTestId={`food-card-${index}`}
+                            key={index}
+                            title={title}
+                            description={description}
+                            img={image}
+                            categories={category}
+                            bookmarkMaxHeight={6}
+                            coockingButtonAs={Link}
+                            coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
+                            coockingButtonDataId={index}
+                        />
+                    );
+                })}
             </Flex>
             {!noFooter && (
                 <Flex justifyContent='center' mt={categoryHeaderMb}>

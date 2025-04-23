@@ -1023,3 +1023,47 @@ export const getActiveSubcatgory = (pathnames: string[]) => {
     }
     return navTree[0];
 };
+
+type CurrentLocation = {
+    root: navTreeProps;
+    category?: navTreeProps;
+    categoryName?: string;
+    subcategory?: navTreeProps;
+    subcategoryName?: string;
+    reciepeId?: string;
+};
+
+export const getLocation = (location: string): CurrentLocation => {
+    const result: CurrentLocation = { root: navTree[0] };
+
+    const pathnamesArray = location.split('/').filter((e) => e);
+
+    if (!pathnamesArray.length) return result;
+
+    const category = navTree.find((e) => e.route === '/' + pathnamesArray[0]);
+
+    if (!category) return result;
+
+    result.category = category;
+    result.categoryName = pathnamesArray[0];
+
+    if (pathnamesArray.length === 1) return result;
+
+    const subcategory = category.submenu.find(
+        (e) => e.route === `${category.route}/${pathnamesArray[1]}`,
+    );
+
+    if (!subcategory) return result;
+
+    result.subcategory = subcategory;
+    result.subcategoryName = pathnamesArray[1];
+
+    if (pathnamesArray.length === 2) return result;
+
+    if (pathnamesArray.length === 3) {
+        result.reciepeId = pathnamesArray[2];
+        return result;
+    }
+
+    return result;
+};

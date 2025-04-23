@@ -383,124 +383,37 @@
         ]
     },
     {
-        "id": "9",
-        "title": "Капустные котлеты",
-        "description": "Капустные котлеты по этому рецепту получаются необычайно пышными и невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных блюд.",
-        "category": ["vegan"],
-        "subcategory": ["second-dish", "snacks"],
-        "image": "/card-images/kapusta-kotleta.png",
-        "bookmarks": 2,
-        "likes": 1,
-        "date": "2024-02-05T00:00:00Z",
-        "time": "35 минут",
-        "portions": 4,
+        "id": "8",
+        "title": "Гриль-салат с овощами",
+        "description": "Салат с обжаренными на гриле овощами и легкой заправкой.",
+        "category": ["salads"],
+        "subcategory": ["warm-salads"],
+        "image": "/card-images/grill-salad.png",
+        "bookmarks": 10,
+        "likes": 80,
+        "date": "2023-03-20T00:00:00Z",
+        "time": "25 минут",
         "nutritionValue": {
             "calories": 150,
-            "proteins": 5,
-            "fats": 4,
+            "proteins": 4,
+            "fats": 6,
             "carbohydrates": 20
         },
         "ingredients": [
-            { "title": "капуста", "count": "300", "measureUnit": "г" },
-            { "title": "мука", "count": "50", "measureUnit": "г" },
-            { "title": "специи", "count": "0", "measureUnit": "по вкусу" }
+            { "title": "цуккини", "count": "1", "measureUnit": "шт." },
+            { "title": "болгарский перец", "count": "1", "measureUnit": "шт." },
+            { "title": "баклажан", "count": "1", "measureUnit": "шт." },
+            { "title": "оливковое масло", "count": "0", "measureUnit": "по вкусу" }
         ],
         "steps": [
             {
                 "stepNumber": 1,
-                "description": "Нарезать капусту и отварить.",
+                "description": "Обжарить овощи на гриле.",
                 "image": ""
             },
             {
                 "stepNumber": 2,
-                "description": "Смешать с мукой и сформировать котлеты.",
-                "image": ""
-            },
-            {
-                "stepNumber": 3,
-                "description": "Обжарить до золотистой корочки.",
-                "image": ""
-            }
-        ]
-    },
-    {
-        "id": "10",
-        "title": "Капустные котлеты",
-        "description": "Капустные котлеты по этому рецепту получаются необычайно пышными и невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных блюд.",
-        "category": ["vegan"],
-        "subcategory": ["second-dish", "snacks"],
-        "image": "/card-images/kapusta-kotleta.png",
-        "bookmarks": 2,
-        "likes": 1,
-        "date": "2024-02-05T00:00:00Z",
-        "time": "35 минут",
-        "portions": 4,
-        "nutritionValue": {
-            "calories": 150,
-            "proteins": 5,
-            "fats": 4,
-            "carbohydrates": 20
-        },
-        "ingredients": [
-            { "title": "капуста", "count": "300", "measureUnit": "г" },
-            { "title": "мука", "count": "50", "measureUnit": "г" },
-            { "title": "специи", "count": "0", "measureUnit": "по вкусу" }
-        ],
-        "steps": [
-            {
-                "stepNumber": 1,
-                "description": "Нарезать капусту и отварить.",
-                "image": ""
-            },
-            {
-                "stepNumber": 2,
-                "description": "Смешать с мукой и сформировать котлеты.",
-                "image": ""
-            },
-            {
-                "stepNumber": 3,
-                "description": "Обжарить до золотистой корочки.",
-                "image": ""
-            }
-        ]
-    },
-    {
-        "id": "11",
-        "title": "Капустные котлеты",
-        "description": "Капустные котлеты по этому рецепту получаются необычайно пышными и невероятно вкусными. Мягкий вкус и лёгкая пряная нотка наверняка помогут сделать эти чудесные котлеты из капусты одним из ваших любимых овощных блюд.",
-        "category": ["vegan"],
-        "subcategory": ["second-dish", "snacks"],
-        "image": "/card-images/kapusta-kotleta.png",
-        "bookmarks": 2,
-        "likes": 1,
-        "date": "2024-02-05T00:00:00Z",
-        "time": "35 минут",
-        "portions": 4,
-        "nutritionValue": {
-            "calories": 150,
-            "proteins": 5,
-            "fats": 4,
-            "carbohydrates": 20
-        },
-        "ingredients": [
-            { "title": "капуста", "count": "300", "measureUnit": "г" },
-            { "title": "мука", "count": "50", "measureUnit": "г" },
-            { "title": "специи", "count": "0", "measureUnit": "по вкусу" }
-        ],
-        "steps": [
-            {
-                "stepNumber": 1,
-                "description": "Нарезать капусту и отварить.",
-                "image": ""
-            },
-            {
-                "stepNumber": 2,
-                "description": "Смешать с мукой и сформировать котлеты.",
-                "image": ""
-            },
-            {
-                "stepNumber": 3,
-                "description": "Обжарить до золотистой корочки.",
+                "description": "Смешать с заправкой и подавать.",
                 "image": ""
             }
         ]
