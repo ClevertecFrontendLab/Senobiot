@@ -24,7 +24,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     noButtonIcon,
 }) => {
     const pathnames = usePathnames();
-    console.log(pathnames);
+
     const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]);
     const menuList = activeCategory?.title ? getSubCategoryList(activeCategory?.title) : []; // когда будет апи всё это выпилить
     const activeSubcatgory = getActiveSubcatgory(pathnames);

@@ -1007,7 +1007,7 @@ export const getNavBranches = (route: string) => {
     return result;
 };
 
-export const getCategoryByKey = (key: string) => navTree.find((cat) => cat.navKey === key);
+export const getCategoryByKey = (key: string) => navTree.find((cat) => cat.route === '/' + key);
 
 export const getActiveSubcatgory = (pathnames: string[]) => {
     if (pathnames.length > 2) {
