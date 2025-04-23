@@ -34,11 +34,13 @@ export const SHADOWS: { [key: string]: string } = {
     green: 'radial-gradient(  circle at 50% 50%,   rgba(196, 255, 97, 0.7) 0%,   rgba(255, 255, 255, 0) 50%)',
     sideMunu: '0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06)',
     burgerNavMenu: '0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05)',
+    allergensMenu: '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)',
 };
 
 export const BORDERS: { [key: string]: string } = {
     main: '1px solid rgba(0, 0, 0, 0.48)',
     light: '1px solid rgba(0, 0, 0, 0.08)',
+    lime: '2px solid #D7FF94',
 };
 
 // p (padding)

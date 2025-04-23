@@ -38,6 +38,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         <RecieptCard
             {...props}
             minWidth={{ base: 158, xl: 322 }}
+            imageHeight='auto' // тут добавил чтобы в карточках где много (светло-желтых плашек) растягивались картинки вниз
+            imageWidth={{ base: 158, xl: 322 }} // тут добавил чтобы в карточках где много (светло-желтых плашек) растягивались картинки
             text={description}
             title={title}
             titleMargin={2}
@@ -62,7 +64,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             wrap={{ base: 'nowrap' }}
             bookmarksOrder={{ base: -1 }}
             bookmarkMb={{ xl: 6 }}
-            bookmarkMaxHeight={{ base: 'unset', xl: 6 }}
+            bookmarkMaxHeight={{ base: 'unset' }} // тут количество категори в карточках (светло-желтых плашек)
             categories={categories}
         />
     );

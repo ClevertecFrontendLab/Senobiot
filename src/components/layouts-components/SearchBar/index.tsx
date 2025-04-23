@@ -6,7 +6,6 @@ import {
     InputGroup,
     InputLeftElement,
     InputRightElement,
-    Select,
     Switch,
     Text,
 } from '@chakra-ui/react';
@@ -15,8 +14,9 @@ import React, { useState } from 'react';
 import { TextRegular, TitleText } from '~/components/shared-components';
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, WIDTHS } from '~/constants/styles';
-import { allergensIngredients } from '~/data';
 import { usePathnames } from '~/utils';
+
+import Allergens from './Allergens';
 
 export const SearchBar: React.FC = () => {
     const pathnames = usePathnames();
@@ -103,27 +103,20 @@ export const SearchBar: React.FC = () => {
                     display={{ base: 'none', xl: 'flex' }}
                 >
                     <Text fontSize='md' fontWeight={500} flexShrink={0}>
-                        Исключить мои аллергены
+                        Исключить аллергены
                     </Text>
                     <Switch
                         pr={4}
                         pl={3}
+                        _checked={{
+                            '& .chakra-switch__track': {
+                                bg: 'lime.400',
+                            },
+                        }}
                         isChecked={isExcludeAllergens}
                         onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
                     />
-                    <Select
-                        textOverflow='ellipsis'
-                        placeholder='Выберите из списка...'
-                        focusBorderColor='blackAlpha.200'
-                        overflow='hidden'
-                        color='blackAlpha.700'
-                    >
-                        {allergensIngredients.map((inggredient, index) => (
-                            <option key={index} value={index}>
-                                {inggredient}
-                            </option>
-                        ))}
-                    </Select>
+                    <Allergens />
                 </Flex>
             </Flex>
         </Flex>
