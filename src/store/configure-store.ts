@@ -1,12 +1,15 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { apiSlice } from '~/query/create-api';
+import { recieptsReducer } from '~/reducers/reciepts';
 
 import appReducer, { appSlice } from './app-slice';
+
 const isProduction = false;
 const rootReducer = combineReducers({
     [appSlice.name]: appReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
+    reciepts: recieptsReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;

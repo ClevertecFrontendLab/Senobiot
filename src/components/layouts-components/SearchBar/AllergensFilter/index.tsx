@@ -1,7 +1,10 @@
 import { Box, Flex, VStack } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { SHADOWS } from '~/constants/styles';
+import { filtrateReciepts } from '~/reducers';
+import { getFilteredReciepts } from '~/selectors';
 
 import AllergenCheckBox from './CheckBox';
 import CustomAllergen from './CustomAllergenAddField';
@@ -20,6 +23,8 @@ const predefinedAllergens: string[] = [
 ];
 
 const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
+    const dispatch = useDispatch();
+    const data = useSelector(getFilteredReciepts);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedAllergens, setSelectedAllergens] = useState<string[]>([
         // 'Рыба',
@@ -54,6 +59,19 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
         }
     };
 
+    useEffect(() => {
+        const filteredRecipes = data.filter(
+            (recipe) =>
+                !recipe.ingredients.some((ingredient) =>
+                    selectedAllergens.some((allergen) =>
+                        ingredient.title.toLowerCase().includes(allergen.toLowerCase()),
+                    ),
+                ),
+        );
+        dispatch(filtrateReciepts(filteredRecipes));
+        console.log(filteredRecipes);
+    }, [selectedAllergens]);
+
     return (
         <Box
             width='100%'
@@ -80,6 +98,7 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
                     <VStack align='start'>
                         {predefinedAllergens.map((allergen, index) => (
                             <AllergenCheckBox
+                                key={index}
                                 index={index}
                                 allergen={allergen}
                                 isChecked={selectedAllergens.includes(allergen)}

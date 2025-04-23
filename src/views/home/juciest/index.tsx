@@ -7,7 +7,7 @@ import { PADDINGS } from '~/constants/styles';
 import { CategorySectionProps } from '~/types';
 
 export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryTitle = '' }) => {
-    const juciestData = data.sort((a, b) => b.likes - a.likes).slice(0, 4);
+    const juciestData = [...data].sort((a, b) => b.likes - a.likes).slice(0, 4);
 
     return (
         <Flex justifyContent='space-between' direction='column' mb={{ base: 8, xl: 10 }}>
