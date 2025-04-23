@@ -16,7 +16,7 @@ import { routeFinder } from '~/configs/navigationConfig'; // когда буде
 import { BORDERS, WIDTHS } from '~/constants/styles';
 import { usePathnames } from '~/utils';
 
-import Allergens from './Allergens';
+import AllergensFilter from './AllergensFilter';
 
 export const SearchBar: React.FC = () => {
     const pathnames = usePathnames();
@@ -116,7 +116,7 @@ export const SearchBar: React.FC = () => {
                         isChecked={isExcludeAllergens}
                         onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
                     />
-                    <Allergens />
+                    <AllergensFilter disabled={!isExcludeAllergens} />
                 </Flex>
             </Flex>
         </Flex>

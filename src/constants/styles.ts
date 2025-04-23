@@ -41,6 +41,7 @@ export const BORDERS: { [key: string]: string } = {
     main: '1px solid rgba(0, 0, 0, 0.48)',
     light: '1px solid rgba(0, 0, 0, 0.08)',
     lime: '2px solid #D7FF94',
+    allergenTag: '1px solid #B1FF2E',
 };
 
 // p (padding)

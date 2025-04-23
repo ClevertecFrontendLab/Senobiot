@@ -1,5 +1,5 @@
 import { Box, Flex, VStack } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { SHADOWS } from '~/constants/styles';
 
@@ -19,7 +19,7 @@ const predefinedAllergens: string[] = [
     'Шоколад',
 ];
 
-const CustomSelect: React.FC = () => {
+const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedAllergens, setSelectedAllergens] = useState<string[]>([
         // 'Рыба',
@@ -41,6 +41,11 @@ const CustomSelect: React.FC = () => {
         setNewAllergen(e.target.value);
     };
 
+    const handleReset = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.stopPropagation();
+        setSelectedAllergens([]);
+    };
+
     const addNewAllergen = () => {
         const trimmed = newAllergen.trim();
         if (trimmed && !selectedAllergens.includes(trimmed)) {
@@ -50,8 +55,14 @@ const CustomSelect: React.FC = () => {
     };
 
     return (
-        <Box width='100%' position='relative'>
+        <Box
+            width='100%'
+            position='relative'
+            userSelect={disabled ? 'none' : 'unset'}
+            pointerEvents={disabled ? 'none' : 'auto'}
+        >
             <SelectableBox
+                onReset={handleReset}
                 selectedAllergens={selectedAllergens}
                 toggleDropdown={toggleDropdown}
                 isOpen={isOpen}
@@ -89,4 +100,4 @@ const CustomSelect: React.FC = () => {
     );
 };
 
-export default CustomSelect;
+export default AllergensFilter;
