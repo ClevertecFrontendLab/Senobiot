@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SHADOWS } from '~/constants/styles';
-import { filtrateReciepts } from '~/reducers';
-import { getFilteredReciepts } from '~/selectors';
+import { filtrateReciepts, resetRecieptFilters } from '~/reducers';
+import { getAllReciepts } from '~/selectors';
 
 import AllergenCheckBox from './CheckBox';
 import CustomAllergen from './CustomAllergenAddField';
@@ -24,7 +24,7 @@ const predefinedAllergens: string[] = [
 
 const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
     const dispatch = useDispatch();
-    const data = useSelector(getFilteredReciepts);
+    const allRecipes = useSelector(getAllReciepts);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedAllergens, setSelectedAllergens] = useState<string[]>([
         // 'Рыба',
@@ -48,6 +48,7 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
 
     const handleReset = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
+        dispatch(resetRecieptFilters());
         setSelectedAllergens([]);
     };
 
@@ -60,7 +61,7 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
     };
 
     useEffect(() => {
-        const filteredRecipes = data.filter(
+        const filteredRecipes = allRecipes.filter(
             (recipe) =>
                 !recipe.ingredients.some((ingredient) =>
                     selectedAllergens.some((allergen) =>
@@ -68,9 +69,9 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
                     ),
                 ),
         );
+
         dispatch(filtrateReciepts(filteredRecipes));
-        console.log(filteredRecipes);
-    }, [selectedAllergens]);
+    }, [selectedAllergens, allRecipes, dispatch]);
 
     return (
         <Box

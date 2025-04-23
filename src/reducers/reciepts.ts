@@ -21,8 +21,11 @@ const reciepts = createSlice({
         filtrateReciepts(state, action: PayloadAction<RecipeProps[]>) {
             state.filtrated = action.payload;
         },
+        resetRecieptFilters(state) {
+            state.filtrated = state.initial;
+        },
     },
 });
 
-export const { filtrateReciepts } = reciepts.actions;
+export const { filtrateReciepts, resetRecieptFilters } = reciepts.actions;
 export const { reducer: recieptsReducer } = reciepts;
