@@ -33,15 +33,17 @@ export const HeaderNavMenu: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const isDesktop = useBreakpointValue({ base: false, xl: true });
 
-    const handleKeyDown = () => {
-        console.log('missed menu - closing ');
+    const missClickHandler = () => {
+        onClose();
+    };
+
+    const breadCrumbsClickHandler = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.stopPropagation();
         onClose();
     };
 
     const menuClickHandler = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
-        onClose();
-        console.log('click on menu');
     };
 
     return (
@@ -161,8 +163,11 @@ export const HeaderNavMenu: React.FC = () => {
                                     />
                                 </Flex>
                             </DrawerHeader>
-                            <DrawerBody minW='100vw' p={0} onClick={handleKeyDown} pr={2}>
-                                <BurgerNavMenu onClick={menuClickHandler} />
+                            <DrawerBody minW='100vw' p={0} onClick={missClickHandler} pr={2}>
+                                <BurgerNavMenu
+                                    menuClickHandler={menuClickHandler}
+                                    breadCrumbsClickHandler={breadCrumbsClickHandler}
+                                />
                             </DrawerBody>
                         </DrawerContent>
                     </Drawer>

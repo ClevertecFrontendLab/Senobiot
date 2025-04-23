@@ -7,8 +7,9 @@ import { AccordionNav } from '../AccordionNavMenu';
 import BreadCrump from '../HeaderNavMenu/BreadCrump';
 
 export const BurgerNavMenu: React.FC<{
-    onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-}> = ({ onClick }) => {
+    breadCrumbsClickHandler: React.MouseEventHandler<HTMLAnchorElement>;
+    menuClickHandler: React.MouseEventHandler<HTMLDivElement>;
+}> = ({ breadCrumbsClickHandler, menuClickHandler }) => {
     const theme = useTheme();
 
     return (
@@ -26,9 +27,9 @@ export const BurgerNavMenu: React.FC<{
             bg='white'
             borderRadius='0 0 12px 12px'
             boxShadow={SHADOWS.burgerNavMenu}
-            onClick={onClick}
+            onClick={menuClickHandler}
         >
-            <BreadCrump />
+            <BreadCrump onClick={breadCrumbsClickHandler} />
             <Flex
                 overflow='auto'
                 flexDirection='column'

@@ -6,7 +6,9 @@ import { getNavBranches } from '~/configs/navigationConfig';
 import mockRespone from '~/data/data.json';
 import { RecipeProps } from '~/types';
 
-const BreadCrump: React.FC = () => {
+const BreadCrump: React.FC<{
+    onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+}> = ({ onClick }) => {
     const { pathname } = useLocation();
     const pathes = getNavBranches(pathname);
     const pahnames = pathname.split('/');
@@ -38,6 +40,7 @@ const BreadCrump: React.FC = () => {
                             <span style={{ color: 'black' }}>{path?.title}</span>
                         ) : (
                             <BreadcrumbLink
+                                onClick={onClick}
                                 as={Link}
                                 to={path?.redirect || path?.route}
                                 color='blackAlpha.700'
