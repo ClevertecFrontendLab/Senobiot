@@ -16,6 +16,7 @@ import {
     MenuDivider,
     MenuItem,
     MenuList,
+    useBreakpointValue,
     useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
@@ -30,6 +31,7 @@ import Logo from './Logo';
 
 export const HeaderNavMenu: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const isDesktop = useBreakpointValue({ base: false, xl: true });
 
     const handleKeyDown = () => {
         console.log('missed menu - closing ');
@@ -38,6 +40,7 @@ export const HeaderNavMenu: React.FC = () => {
 
     const menuClickHandler = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
+        onClose();
         console.log('click on menu');
     };
 
@@ -59,9 +62,11 @@ export const HeaderNavMenu: React.FC = () => {
         >
             <HStack>
                 <Logo />
-                <HStack as='nav' spacing={4} display={{ base: 'none', xl: 'flex' }}>
-                    <BreadCrump />
-                </HStack>
+                {isDesktop && (
+                    <HStack as='nav' spacing={4} display={{ base: 'none', xl: 'flex' }}>
+                        <BreadCrump />
+                    </HStack>
+                )}
             </HStack>
             <Flex pr={14}>
                 <Menu>

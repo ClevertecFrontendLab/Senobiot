@@ -24,7 +24,7 @@ export interface RecieptButtonsSectionProps extends ButtonBookBtnProps, ButtonTi
     coockingButtonIconSize?: ResponsiveValue<number>;
     noTimeButton?: boolean;
     recieptButtonsSectionDirection?: FlexProps['direction'];
-    coockingButtonDataId: string | number;
+    coockingButtonDataId?: string | number;
 }
 
 const RecieptButtonsSection: React.FC<RecieptButtonsSectionProps> = ({

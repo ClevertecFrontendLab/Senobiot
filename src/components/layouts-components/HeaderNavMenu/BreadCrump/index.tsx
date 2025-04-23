@@ -3,11 +3,21 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router';
 
 import { getNavBranches } from '~/configs/navigationConfig';
+import mockRespone from '~/data/data.json';
+import { RecipeProps } from '~/types';
 
 const BreadCrump: React.FC = () => {
     const { pathname } = useLocation();
     const pathes = getNavBranches(pathname);
+    const pahnames = pathname.split('/');
 
+    if (pahnames.length === 4) {
+        const data = JSON.parse(JSON.stringify(mockRespone));
+        const recieptName = data.find((e: RecipeProps) => e.id === pahnames[3]);
+        if (recieptName) {
+            pathes.push(recieptName);
+        }
+    }
     return (
         <Breadcrumb
             alignItems='center'
