@@ -106,6 +106,7 @@ export const SearchBar: React.FC = () => {
                         Исключить аллергены
                     </Text>
                     <Switch
+                        data-test-id='allergens-switcher'
                         pr={4}
                         pl={3}
                         _checked={{

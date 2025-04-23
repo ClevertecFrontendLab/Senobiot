@@ -7,8 +7,10 @@ const AllergenCheckBox: React.FC<{
     allergen: string;
     isChecked: boolean;
     toggleAllergen: CallableFunction;
-}> = ({ index, allergen, isChecked, toggleAllergen }) => (
+    dataTestIds?: string | number;
+}> = ({ index, allergen, isChecked, toggleAllergen, dataTestIds }) => (
     <Checkbox
+        data-test-id={`allergen-${dataTestIds}`}
         px={4}
         h={8}
         w='100%'

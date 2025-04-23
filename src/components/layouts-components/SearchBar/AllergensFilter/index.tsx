@@ -75,10 +75,15 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
 
     return (
         <Box
+            as='button'
             width='100%'
             position='relative'
             userSelect={disabled ? 'none' : 'unset'}
             pointerEvents={disabled ? 'none' : 'auto'}
+            data-test-id='allergens-menu-button'
+            aria-disabled={disabled}
+            disabled={disabled}
+            textAlign='left'
         >
             <SelectableBox
                 onReset={handleReset}
@@ -88,6 +93,7 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
             />
             {isOpen && (
                 <Box
+                    data-test-id='allergens-menu'
                     mt={2}
                     borderRadius='4px'
                     bg='white'
@@ -99,6 +105,7 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
                     <VStack align='start'>
                         {predefinedAllergens.map((allergen, index) => (
                             <AllergenCheckBox
+                                dataTestIds={index}
                                 key={index}
                                 index={index}
                                 allergen={allergen}

@@ -11,11 +11,8 @@ import { navTree } from '~/configs/navigationConfig'; // TODO remove after true 
 import { PADDINGS } from '~/constants/styles';
 import { ApplicationState } from '~/store/configure-store';
 
-// import mockRespone from '~/data/data.json';
 import { JuciestSection } from './juciest';
 
-// const data = JSON.parse(JSON.stringify(mockRespone));
-// const sliderData = data.slice(0, 10);
 const nexSection = navTree.find((e) => e.navKey === 'vegan-cuisine'); // TODO remove after true api
 
 const HomePage: React.FC = () => {
