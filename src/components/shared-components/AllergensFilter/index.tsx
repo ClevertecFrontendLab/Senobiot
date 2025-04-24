@@ -1,8 +1,13 @@
 import { Box, Flex, VStack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CheckBoxLime, SelectLime, TextInputCustom } from '~/components/shared-components';
+import {
+    CheckBoxLime,
+    SelectInnerTags,
+    SelectOuterTags,
+    TextInputCustom,
+} from '~/components/shared-components';
 import { SHADOWS } from '~/constants/styles';
 import { filtrateReciepts, resetRecieptFilters } from '~/reducers';
 import { getAllReciepts } from '~/selectors';
@@ -19,7 +24,10 @@ const predefinedAllergens: string[] = [
     'Шоколад',
 ];
 
-const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
+export const AllergensFilter: React.FC<{
+    disabled: boolean;
+    outerTags?: boolean;
+}> = ({ disabled, outerTags = false }) => {
     const dispatch = useDispatch();
     const allRecipes = useSelector(getAllReciepts);
     const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +37,9 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
     ]);
     const [newAllergen, setNewAllergen] = useState<string>('');
 
-    const toggleDropdown = () => setIsOpen(!isOpen);
+    const toggleDropdown = useCallback(() => {
+        setIsOpen((prevIsOpen) => !prevIsOpen);
+    }, []);
 
     const toggleAllergen = (allergen: string) => {
         const allergenValue = allergen.replace(/ .*/, '');
@@ -71,25 +81,45 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
         dispatch(filtrateReciepts(filteredRecipes));
     }, [selectedAllergens, allRecipes, dispatch]);
 
+    useEffect(() => {
+        if (disabled && selectedAllergens.length) {
+            dispatch(resetRecieptFilters());
+            setSelectedAllergens([]);
+            if (isOpen) {
+                toggleDropdown();
+            }
+        }
+    }, [disabled, selectedAllergens.length, dispatch, isOpen, toggleDropdown]);
+
     return (
         <Box
-            as='button'
+            // as='button'
             width='100%'
             position='relative'
             userSelect={disabled ? 'none' : 'unset'}
             pointerEvents={disabled ? 'none' : 'auto'}
             data-test-id='allergens-menu-button'
             aria-disabled={disabled}
-            disabled={disabled}
+            // disabled={disabled}
             textAlign='left'
         >
-            <SelectLime
-                options={selectedAllergens}
-                toggleDropdown={toggleDropdown}
-                isOpen={isOpen}
-                onReset={handleReset}
-                noTagCloseButton={true}
-            />
+            {outerTags ? (
+                <SelectOuterTags
+                    options={selectedAllergens}
+                    toggleDropdown={toggleDropdown}
+                    isOpen={isOpen}
+                    onReset={handleReset}
+                    noTagCloseButton={true}
+                />
+            ) : (
+                <SelectInnerTags
+                    options={selectedAllergens}
+                    toggleDropdown={toggleDropdown}
+                    isOpen={isOpen}
+                    onReset={handleReset}
+                    noTagCloseButton={true}
+                />
+            )}
             {isOpen && (
                 <Box
                     data-test-id='allergens-menu'
@@ -104,6 +134,7 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
                     <VStack align='start'>
                         {predefinedAllergens.map((allergen, index) => (
                             <CheckBoxLime
+                                key={index}
                                 index={index}
                                 item={allergen}
                                 isChecked={selectedAllergens.includes(allergen.replace(/ .*/, ''))}
@@ -127,5 +158,3 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
         </Box>
     );
 };
-
-export default AllergensFilter;

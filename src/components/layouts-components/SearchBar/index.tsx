@@ -9,13 +9,16 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
-import { SwitchToggler, TextRegular, TitleText } from '~/components/shared-components';
+import {
+    AllergensFilter,
+    SwitchToggler,
+    TextRegular,
+    TitleText,
+} from '~/components/shared-components';
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, WIDTHS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
 import { usePathnames } from '~/utils';
-
-import AllergensFilter from './AllergensFilter';
 
 export const SearchBar: React.FC = () => {
     const { openDrawer } = useDrawer();

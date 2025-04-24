@@ -10,7 +10,7 @@ export const TextInputCustom: React.FC<{
     dataTestInputId?: string;
     dataTestButtonId?: string;
 }> = ({ item, itemChange, addItem, dataTestInputId, dataTestButtonId }) => (
-    <Flex pt={2} pb={3} pl={6} alignItems='center'>
+    <Flex pt={2} pl={2} alignItems='center'>
         <Input
             data-test-id={dataTestInputId}
             placeholder='Другой аллерген'

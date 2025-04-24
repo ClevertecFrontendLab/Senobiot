@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { apiSlice } from '~/query/create-api';
+import { keysReducer } from '~/reducers/keys';
 import { recieptsReducer } from '~/reducers/reciepts';
 
 import appReducer, { appSlice } from './app-slice';
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
     [appSlice.name]: appReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
     reciepts: recieptsReducer,
+    keys: keysReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;

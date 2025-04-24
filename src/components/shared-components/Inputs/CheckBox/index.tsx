@@ -9,10 +9,21 @@ export const CheckBoxLime: React.FC<{
     toggleItem: CallableFunction;
     dataTestIds?: string | number;
     dataTestkey?: string;
-}> = ({ index, item, isChecked = false, toggleItem, dataTestIds = '', dataTestkey = '' }) => (
+    px?: number;
+    labelColor?: string;
+}> = ({
+    index,
+    item,
+    isChecked = false,
+    toggleItem,
+    dataTestIds = '',
+    dataTestkey = '',
+    px = 4,
+    labelColor = 'blackAlpha.800',
+}) => (
     <Checkbox
         data-test-id={`${dataTestkey}${dataTestIds}`}
-        px={4}
+        px={px}
         h={8}
         w='100%'
         bg={index % 2 ? 'blackAlpha.100' : 'unset'}
@@ -52,7 +63,7 @@ export const CheckBoxLime: React.FC<{
                 fontSize: '4px',
             },
             '.chakra-checkbox__label': {
-                color: 'blackAlpha.800',
+                color: labelColor,
                 fontSize: '14px',
                 lineHeight: '20px',
                 fontFamily: 'Inter',

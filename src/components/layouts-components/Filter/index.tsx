@@ -8,34 +8,62 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
-    Select,
-    Tag,
-    TagCloseButton,
-    TagLabel,
+    Flex,
+    HStack,
+    VStack,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import { CheckBoxLime, SwitchToggler } from '~/components/shared-components';
+import {
+    AllergensFilter,
+    CheckBoxLime,
+    SelectRegular,
+    SwitchToggler,
+} from '~/components/shared-components';
+import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
+import { getCategories, getGarnishes, getMeats } from '~/selectors';
+
+import FilterTag from './FilterTag';
+import FilterTitle from './FilterTitle';
 
 export const RecipeFilter: React.FC = () => {
+    const meats = useSelector(getMeats);
+    const garnishes = useSelector(getGarnishes);
+    const categories = useSelector(getCategories);
+    const authors = ['Сергей Разумов'];
+
     const { isOpen, closeDrawer } = useDrawer();
+
+    const [isCategoryOpen, setIsCategoryOpen] = useState(false); // Возможно стоит декомпозировать всё
+    const [isAuthorsOpen, setIsAuthorsOpen] = useState(false);
+
     const [selectedMeats, setSelectedMeats] = useState<string[]>([]);
     const [selectedGarnishes, setSelectedGarnishes] = useState<string[]>([]);
-    const [excludeAllergens, setExcludeAllergens] = useState<boolean>(false);
-    const [allergen, setAllergen] = useState<string>('');
+    const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
 
-    const meats = ['Курица', 'Свинина', 'Говядина', 'Индейка', 'Утка'];
-    const garnishes = [
-        'Картошка',
-        'Гречка',
-        'Паста',
-        'Спагетти',
-        'Рис',
-        'Капуста',
-        'Фасоль',
-        'Другие овощи',
-    ];
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [selectedAuthors, setSelectedAuthors] = useState<string[]>([]);
+
+    const toggleCategoriesDropdown = () => setIsCategoryOpen(!isCategoryOpen);
+    const toggleAuthorsDropdown = () => setIsAuthorsOpen(!isAuthorsOpen);
+
+    const toggleCategorySelection = (category: string) => {
+        setSelectedCategories((prev) =>
+            prev.includes(category)
+                ? prev.filter((item) => item !== category)
+                : [...prev, category],
+        );
+    };
+
+    const toggleAuthorSelection = (category: string) => {
+        setSelectedAuthors((prev) =>
+            prev.includes(category)
+                ? prev.filter((item) => item !== category)
+                : [...prev, category],
+        );
+    };
 
     const toggleMeatSelection = (meat: string) => {
         setSelectedMeats((prev) =>
@@ -49,135 +77,205 @@ export const RecipeFilter: React.FC = () => {
         );
     };
 
+    const resetCategories = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        setSelectedCategories([]);
+    };
+
+    const resetAuthors = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        setSelectedAuthors([]);
+    };
+
     const clearFilters = () => {
+        setSelectedAuthors([]);
+        setSelectedCategories([]);
         setSelectedMeats([]);
         setSelectedGarnishes([]);
-        setExcludeAllergens(false);
-        setAllergen('');
+        setIsExcludeAllergens(false);
+        if (isCategoryOpen) {
+            toggleCategoriesDropdown();
+        }
+        if (isAuthorsOpen) {
+            toggleAuthorsDropdown();
+        }
     };
 
     return (
         <Drawer isOpen={isOpen} placement='right' onClose={closeDrawer}>
             <DrawerOverlay />
-            <DrawerContent>
+            <DrawerContent
+                minW={{ base: 344, xl: 463 }}
+                p={{ base: 4, xl: 8 }}
+                pr={{ base: 1.5, xl: 2 }}
+            >
                 <DrawerCloseButton />
                 <DrawerHeader>Фильтр</DrawerHeader>
-
-                <DrawerBody>
-                    <Select placeholder='Категория'>
-                        <option value='breakfast'>Завтрак</option>
-                        <option value='lunch'>Обед</option>
-                        <option value='dinner'>Ужин</option>
-                    </Select>
-
-                    <Select placeholder='Поиск по автору' mt={4}>
-                        <option value='author1'>Автор 1</option>
-                        <option value='author2'>Автор 2</option>
-                        <option value='author3'>Автор 3</option>
-                    </Select>
-
-                    {/* meat */}
-                    <Box mt={4}>
-                        <Box fontWeight='bold'>Тип мяса:</Box>
-                        {meats.map((meat, index) => (
-                            <CheckBoxLime
-                                key={index}
-                                index={0}
-                                item={meat}
-                                isChecked={selectedMeats.includes(meat)}
-                                toggleItem={toggleMeatSelection}
+                <DrawerBody
+                    width='100%'
+                    display='flex'
+                    flexDirection='column'
+                    justifyContent='space-between'
+                    p={0}
+                    h='100%'
+                >
+                    <VStack w='100%' gap={4} pr={{ base: 2.5 }}>
+                        {/* Категория */}
+                        <VStack w='100%'>
+                            <SelectRegular
+                                noResetButton={!selectedCategories.length}
+                                placeholder='Категория'
+                                isOpen={isCategoryOpen}
+                                toggleDropdown={toggleCategoriesDropdown}
+                                onReset={resetCategories}
                             />
-                        ))}
-                    </Box>
+                            {isCategoryOpen && (
+                                <VStack
+                                    align='start'
+                                    w='100%'
+                                    borderRadius='4px'
+                                    boxShadow={SHADOWS.allergensMenu}
+                                    border={BORDERS.light}
+                                >
+                                    {categories.map((category, index) => (
+                                        <CheckBoxLime
+                                            key={index}
+                                            index={index}
+                                            item={category}
+                                            isChecked={selectedCategories.includes(category)}
+                                            toggleItem={toggleCategorySelection}
+                                            // dataTestIds={index}
+                                            // dataTestkey='allergen-'
+                                        />
+                                    ))}
+                                </VStack>
+                            )}
+                        </VStack>
 
-                    {/* garnish */}
-                    <Box mt={4}>
-                        <Box fontWeight='bold'>Тип гарнира:</Box>
-                        {garnishes.map((garnish, index) => (
-                            <CheckBoxLime
-                                key={index}
-                                index={0}
-                                item={garnish}
-                                isChecked={selectedGarnishes.includes(garnish)}
-                                toggleItem={() => toggleGarnishSelection(garnish)}
+                        {/* Авторы */}
+                        <VStack w='100%'>
+                            <SelectRegular
+                                noResetButton={!selectedAuthors.length}
+                                placeholder='Поиск по автору'
+                                isOpen={isAuthorsOpen}
+                                toggleDropdown={toggleAuthorsDropdown}
+                                onReset={resetAuthors}
                             />
-                        ))}
-                    </Box>
+                            {isAuthorsOpen && (
+                                <VStack w='100%' align='start'>
+                                    {authors.map((author, index) => (
+                                        <CheckBoxLime
+                                            key={index}
+                                            index={index}
+                                            item={author}
+                                            isChecked={selectedAuthors.includes(author)}
+                                            toggleItem={toggleAuthorSelection}
+                                            // dataTestIds={index}
+                                            // dataTestkey='allergen-'
+                                        />
+                                    ))}
+                                </VStack>
+                            )}
+                        </VStack>
 
-                    <SwitchToggler
-                        text='Исключить аллергены'
-                        onChange={() => setExcludeAllergens(!excludeAllergens)}
-                        isChecked={excludeAllergens}
-                    />
-                    <Box mt={4}>
-                        <Select
-                            placeholder='Выберите аллерген'
-                            mt={2}
-                            value={allergen}
-                            onChange={(e) => setAllergen(e.target.value)}
-                        >
-                            <option value='egg'>Яйцо</option>
-                            <option value='milk'>Молоко</option>
-                            <option value='nuts'>Орехи</option>
-                        </Select>
-                    </Box>
-
-                    <Box mt={4}>
-                        <Box fontWeight='bold' mb={2}>
-                            Выбранные фильтры:
+                        {/* meat */}
+                        <Box mt={4}>
+                            <FilterTitle title='Тип мяса' />
+                            {meats.map((meat, index) => (
+                                <CheckBoxLime
+                                    labelColor='#000'
+                                    px={0}
+                                    key={index}
+                                    index={0}
+                                    item={meat}
+                                    isChecked={selectedMeats.includes(meat)}
+                                    toggleItem={toggleMeatSelection}
+                                />
+                            ))}
                         </Box>
-                        {selectedMeats.map((meat) => (
-                            <Tag
-                                key={meat}
-                                size='lg'
-                                variant='solid'
-                                colorScheme='green'
-                                mr={2}
-                                mb={2}
+
+                        {/* garnish */}
+                        <Box mt={4} w='100%'>
+                            <FilterTitle title='Тип гарнира' />
+                            {garnishes.map((garnish, index) => (
+                                <CheckBoxLime
+                                    labelColor='#000'
+                                    px={0}
+                                    key={index}
+                                    index={0}
+                                    item={garnish}
+                                    isChecked={selectedGarnishes.includes(garnish)}
+                                    toggleItem={() => toggleGarnishSelection(garnish)}
+                                />
+                            ))}
+                        </Box>
+
+                        {/* Allergens */}
+                        <Box w='100%'>
+                            <Flex
+                                w='100%'
+                                alignItems='center'
+                                // justifyContent='space-between'
+                                // display={{ base: 'none', xl: 'flex' }}
+                                wrap='wrap'
+                                gap={2}
                             >
-                                <TagLabel>{meat}</TagLabel>
-                                <TagCloseButton onClick={() => toggleMeatSelection(meat)} />
-                            </Tag>
+                                <SwitchToggler
+                                    text=' Исключить аллергены'
+                                    onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
+                                    isChecked={isExcludeAllergens}
+                                />
+                                <AllergensFilter disabled={!isExcludeAllergens} />
+                            </Flex>
+                        </Box>
+                    </VStack>
+                    <HStack w='100%' wrap='wrap'>
+                        {selectedCategories.map((category) => (
+                            <FilterTag
+                                item={category}
+                                onClick={() => toggleCategorySelection(category)}
+                            />
+                        ))}
+                        {selectedAuthors.map((author) => (
+                            <FilterTag
+                                item={author}
+                                onClick={() => toggleAuthorSelection(author)}
+                            />
+                        ))}
+                        {selectedMeats.map((meat) => (
+                            <FilterTag item={meat} onClick={() => toggleMeatSelection(meat)} />
                         ))}
                         {selectedGarnishes.map((garnish) => (
-                            <Tag
-                                key={garnish}
-                                size='lg'
-                                variant='solid'
-                                colorScheme='blue'
-                                mr={2}
-                                mb={2}
-                            >
-                                <TagLabel>{garnish}</TagLabel>
-                                <TagCloseButton onClick={() => toggleGarnishSelection(garnish)} />
-                            </Tag>
+                            <FilterTag
+                                item={garnish}
+                                onClick={() => toggleGarnishSelection(garnish)}
+                            />
                         ))}
-                        {excludeAllergens && allergen && (
-                            <Tag
-                                key={allergen}
-                                size='lg'
-                                variant='solid'
-                                colorScheme='red'
-                                mr={2}
-                                mb={2}
-                            >
-                                <TagLabel>{allergen}</TagLabel>
-                                <TagCloseButton
-                                    onClick={() => {
-                                        setExcludeAllergens(false);
-                                        setAllergen('');
-                                    }}
-                                />
-                            </Tag>
-                        )}
-                    </Box>
+                    </HStack>
                 </DrawerBody>
-
-                <DrawerFooter display='flex' justifyContent='space-between'>
-                    <Button variant='outline' mr={3} onClick={clearFilters}>
+                <DrawerFooter display='flex' p='32px 14px 0 0' w='100%'>
+                    <Button
+                        variant='outline'
+                        mr={2}
+                        onClick={clearFilters}
+                        px={6}
+                        border={BORDERS.main}
+                    >
                         Очистить фильтр
                     </Button>
-                    <Button colorScheme='blue' onClick={closeDrawer}>
+                    <Button
+                        isDisabled={
+                            !selectedCategories.length &&
+                            !selectedAuthors.length &&
+                            !selectedMeats.length &&
+                            !selectedGarnishes.length
+                        }
+                        bg='#000'
+                        color='#fff'
+                        onClick={closeDrawer}
+                        px={6}
+                        _hover={{ bg: '#000' }}
+                    >
                         Найти рецепты
                     </Button>
                 </DrawerFooter>

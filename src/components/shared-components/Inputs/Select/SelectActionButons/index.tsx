@@ -19,6 +19,7 @@ export const ResetButton: React.FC<{
 
 export const ExpandButton: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
     <Box
+        zIndex={2}
         top={3}
         right={4}
         position='absolute'

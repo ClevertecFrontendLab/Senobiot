@@ -1,4 +1,4 @@
 export { CheckBoxLime } from './CheckBox';
-export { SelectLime } from './Select';
+export { SelectInnerTags, SelectOuterTags, SelectRegular } from './Select';
 export { SwitchToggler } from './SwitchToggler';
 export { TextInputCustom } from './TextCustom';

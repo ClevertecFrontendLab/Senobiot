@@ -7,7 +7,7 @@ export const SwitchToggler: React.FC<{
     text?: string;
 }> = ({ onChange, text, isChecked }) => (
     <>
-        <Text fontSize='md' fontWeight={500} flexShrink={0}>
+        <Text fontSize='md' fontWeight={500} flexShrink={0} fontFamily='Inter'>
             {text}
         </Text>
         <Switch
