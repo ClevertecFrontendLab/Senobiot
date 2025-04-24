@@ -6,19 +6,19 @@ import {
     InputGroup,
     InputLeftElement,
     InputRightElement,
-    Switch,
-    Text,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
-import { TextRegular, TitleText } from '~/components/shared-components';
+import { SwitchToggler, TextRegular, TitleText } from '~/components/shared-components';
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, WIDTHS } from '~/constants/styles';
+import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
 import { usePathnames } from '~/utils';
 
 import AllergensFilter from './AllergensFilter';
 
 export const SearchBar: React.FC = () => {
+    const { openDrawer } = useDrawer();
     const pathnames = usePathnames();
     const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]); // когда будет апи всё это выпилить
     const title = activeCategory?.subTitle || activeCategory?.title; // когда будет апи всё это выпилить
@@ -53,6 +53,7 @@ export const SearchBar: React.FC = () => {
                     <InputGroup display='flex' alignItems='center' mb={4}>
                         <InputLeftElement position='initial' display='flex' mr={3}>
                             <IconButton
+                                onClick={openDrawer}
                                 icon={
                                     <Image
                                         src='/icons/filter.svg'
@@ -102,20 +103,10 @@ export const SearchBar: React.FC = () => {
                     justifyContent='space-between'
                     display={{ base: 'none', xl: 'flex' }}
                 >
-                    <Text fontSize='md' fontWeight={500} flexShrink={0}>
-                        Исключить аллергены
-                    </Text>
-                    <Switch
-                        data-test-id='allergens-switcher'
-                        pr={4}
-                        pl={3}
-                        _checked={{
-                            '& .chakra-switch__track': {
-                                bg: 'lime.400',
-                            },
-                        }}
-                        isChecked={isExcludeAllergens}
+                    <SwitchToggler
+                        text=' Исключить аллергены'
                         onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
+                        isChecked={isExcludeAllergens}
                     />
                     <AllergensFilter disabled={!isExcludeAllergens} />
                 </Flex>

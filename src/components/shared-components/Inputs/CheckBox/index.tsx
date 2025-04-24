@@ -2,15 +2,16 @@ import { Checkbox } from '@chakra-ui/react';
 
 import { BORDERS } from '~/constants/styles';
 
-const AllergenCheckBox: React.FC<{
+export const CheckBoxLime: React.FC<{
     index: number;
-    allergen: string;
+    item: string;
     isChecked: boolean;
-    toggleAllergen: CallableFunction;
+    toggleItem: CallableFunction;
     dataTestIds?: string | number;
-}> = ({ index, allergen, isChecked, toggleAllergen, dataTestIds }) => (
+    dataTestkey?: string;
+}> = ({ index, item, isChecked = false, toggleItem, dataTestIds = '', dataTestkey = '' }) => (
     <Checkbox
-        data-test-id={`allergen-${dataTestIds}`}
+        data-test-id={`${dataTestkey}${dataTestIds}`}
         px={4}
         h={8}
         w='100%'
@@ -59,10 +60,8 @@ const AllergenCheckBox: React.FC<{
         }}
         key={index}
         isChecked={isChecked}
-        onChange={() => toggleAllergen(allergen)}
+        onChange={() => toggleItem(item)}
     >
-        {allergen}
+        {item}
     </Checkbox>
 );
-
-export default AllergenCheckBox;

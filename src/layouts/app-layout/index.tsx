@@ -1,13 +1,12 @@
 import { Box, useBreakpointValue } from '@chakra-ui/react';
-import React from 'react';
 
 import {
     BookmarkSideMenu,
     BottomNavMenu,
     HeaderNavMenu,
+    RecipeFilter,
     SideMenu,
 } from '~/components/layouts-components';
-// import { SearchBar } from '~/components/layouts-components/SearchBar';
 import AppViews from '~/views';
 
 const AppLayout: React.FC = () => {
@@ -18,7 +17,7 @@ const AppLayout: React.FC = () => {
             <HeaderNavMenu />
             {isDesktop && <SideMenu />}
             <BookmarkSideMenu />
-            {/* <SearchBar /> */}
+            <RecipeFilter />
             <AppViews />
             <BottomNavMenu />
         </Box>

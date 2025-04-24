@@ -2,11 +2,11 @@ import { Box, Flex, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { CheckBoxLime } from '~/components/shared-components';
 import { SHADOWS } from '~/constants/styles';
 import { filtrateReciepts, resetRecieptFilters } from '~/reducers';
 import { getAllReciepts } from '~/selectors';
 
-import AllergenCheckBox from './CheckBox';
 import CustomAllergen from './CustomAllergenAddField';
 import SelectableBox from './SelectableBox';
 
@@ -104,13 +104,13 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
                 >
                     <VStack align='start'>
                         {predefinedAllergens.map((allergen, index) => (
-                            <AllergenCheckBox
-                                dataTestIds={index}
-                                key={index}
+                            <CheckBoxLime
                                 index={index}
-                                allergen={allergen}
+                                item={allergen}
                                 isChecked={selectedAllergens.includes(allergen)}
-                                toggleAllergen={toggleAllergen}
+                                toggleItem={toggleAllergen}
+                                dataTestIds={index}
+                                dataTestkey='allergen-'
                             />
                         ))}
                     </VStack>
