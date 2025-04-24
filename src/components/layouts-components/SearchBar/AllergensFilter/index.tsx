@@ -2,13 +2,10 @@ import { Box, Flex, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CheckBoxLime } from '~/components/shared-components';
+import { CheckBoxLime, SelectLime, TextInputCustom } from '~/components/shared-components';
 import { SHADOWS } from '~/constants/styles';
 import { filtrateReciepts, resetRecieptFilters } from '~/reducers';
 import { getAllReciepts } from '~/selectors';
-
-import CustomAllergen from './CustomAllergenAddField';
-import SelectableBox from './SelectableBox';
 
 const predefinedAllergens: string[] = [
     'Молочные продукты',
@@ -35,10 +32,11 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
     const toggleDropdown = () => setIsOpen(!isOpen);
 
     const toggleAllergen = (allergen: string) => {
-        if (selectedAllergens.includes(allergen)) {
-            setSelectedAllergens(selectedAllergens.filter((item) => item !== allergen));
+        const allergenValue = allergen.replace(/ .*/, '');
+        if (selectedAllergens.includes(allergenValue)) {
+            setSelectedAllergens(selectedAllergens.filter((item) => item !== allergenValue));
         } else {
-            setSelectedAllergens([...selectedAllergens, allergen]);
+            setSelectedAllergens([...selectedAllergens, allergenValue]);
         }
     };
 
@@ -46,8 +44,8 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
         setNewAllergen(e.target.value);
     };
 
-    const handleReset = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        event.stopPropagation();
+    const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
         dispatch(resetRecieptFilters());
         setSelectedAllergens([]);
     };
@@ -85,11 +83,12 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
             disabled={disabled}
             textAlign='left'
         >
-            <SelectableBox
-                onReset={handleReset}
-                selectedAllergens={selectedAllergens}
+            <SelectLime
+                options={selectedAllergens}
                 toggleDropdown={toggleDropdown}
                 isOpen={isOpen}
+                onReset={handleReset}
+                noTagCloseButton={true}
             />
             {isOpen && (
                 <Box
@@ -107,7 +106,7 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
                             <CheckBoxLime
                                 index={index}
                                 item={allergen}
-                                isChecked={selectedAllergens.includes(allergen)}
+                                isChecked={selectedAllergens.includes(allergen.replace(/ .*/, ''))}
                                 toggleItem={toggleAllergen}
                                 dataTestIds={index}
                                 dataTestkey='allergen-'
@@ -115,10 +114,12 @@ const AllergensFilter: React.FC<{ disabled: boolean }> = ({ disabled }) => {
                         ))}
                     </VStack>
                     <Flex pt={2} pb={3} pl={6} alignItems='center'>
-                        <CustomAllergen
-                            newAllergen={newAllergen}
-                            handleNewAllergenChange={handleNewAllergenChange}
-                            addNewAllergen={addNewAllergen}
+                        <TextInputCustom
+                            item={newAllergen}
+                            itemChange={handleNewAllergenChange}
+                            addItem={addNewAllergen}
+                            dataTestButtonId='add-allergen-button'
+                            dataTestInputId='add-other-allergen'
                         />
                     </Flex>
                 </Box>

@@ -10,6 +10,7 @@ const nexSection = navTree.find((e) => e.navKey === 'desserts-baking'); // TODO 
 
 const CategoryPage: React.FC = () => {
     const data = useSelector((state: ApplicationState) => state.reciepts.filtrated);
+
     return (
         <PageWrapper>
             <SearchBar />

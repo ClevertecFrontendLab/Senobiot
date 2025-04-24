@@ -7,6 +7,8 @@ const data = JSON.parse(JSON.stringify(mockRespone));
 type Reciepts = {
     initial: RecipeProps[];
     filtrated: RecipeProps[];
+    categoryInitial?: RecipeProps[];
+    categoryFiltrated?: RecipeProps[];
 };
 
 const initialState: Reciepts = {
@@ -21,11 +23,18 @@ const reciepts = createSlice({
         filtrateReciepts(state, action: PayloadAction<RecipeProps[]>) {
             state.filtrated = action.payload;
         },
+        filtrateCategory(state, action: PayloadAction<RecipeProps[]>) {
+            state.filtrated = action.payload;
+        },
         resetRecieptFilters(state) {
+            state.filtrated = state.initial;
+        },
+        resetCategory(state) {
             state.filtrated = state.initial;
         },
     },
 });
 
-export const { filtrateReciepts, resetRecieptFilters } = reciepts.actions;
+export const { filtrateReciepts, resetRecieptFilters, filtrateCategory, resetCategory } =
+    reciepts.actions;
 export const { reducer: recieptsReducer } = reciepts;
