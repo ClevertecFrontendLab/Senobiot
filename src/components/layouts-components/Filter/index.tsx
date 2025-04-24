@@ -23,7 +23,7 @@ import {
 } from '~/components/shared-components';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
-import { applyFilters } from '~/reducers';
+import { applyFilters, resetRecieptFilters } from '~/reducers';
 import { getCategories, getMeats, getSides } from '~/selectors';
 import { ComposeFiltersPayloadType } from '~/types';
 
@@ -34,7 +34,9 @@ export const RecipeFilter: React.FC = () => {
     const dispatch = useDispatch();
     const meats = useSelector(getMeats);
     const sides = useSelector(getSides);
-    const categories = useSelector(getCategories);
+    const categoriesMap = useSelector(getCategories);
+    const categories = Object.keys(categoriesMap);
+
     const authors = ['Сергей Разумов'];
 
     const { isOpen, closeDrawer } = useDrawer();
@@ -44,6 +46,7 @@ export const RecipeFilter: React.FC = () => {
 
     const [selectedMeats, setSelectedMeats] = useState<string[]>([]);
     const [selectedSides, setSelectedSides] = useState<string[]>([]);
+    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -91,8 +94,10 @@ export const RecipeFilter: React.FC = () => {
     };
 
     const searchReciepts = () => {
+        const categoryKeys = selectedCategories.map((e) => categoriesMap[e]);
+
         const appliedFilters: ComposeFiltersPayloadType = {
-            category: selectedCategories,
+            category: categoryKeys,
             author: selectedAuthors,
             meat: selectedMeats,
             side: selectedSides,
@@ -107,7 +112,9 @@ export const RecipeFilter: React.FC = () => {
         setSelectedCategories([]);
         setSelectedMeats([]);
         setSelectedSides([]);
+        setSelectedAllergens([]);
         setIsExcludeAllergens(false);
+        dispatch(resetRecieptFilters());
         if (isCategoryOpen) {
             toggleCategoriesDropdown();
         }
@@ -240,7 +247,11 @@ export const RecipeFilter: React.FC = () => {
                                     onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
                                     isChecked={isExcludeAllergens}
                                 />
-                                <AllergensFilter disabled={!isExcludeAllergens} />
+                                <AllergensFilter
+                                    selectedAllergens={selectedAllergens}
+                                    setSelectedAllergens={setSelectedAllergens}
+                                    disabled={!isExcludeAllergens}
+                                />
                             </Flex>
                         </Box>
                     </VStack>

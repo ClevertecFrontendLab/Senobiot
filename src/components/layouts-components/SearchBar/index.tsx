@@ -26,6 +26,7 @@ export const SearchBar: React.FC = () => {
     const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]); // когда будет апи всё это выпилить
     const title = activeCategory?.subTitle || activeCategory?.title; // когда будет апи всё это выпилить
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
+    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const styles = { base: '2xl', xl: '5xl' };
 
     return (
@@ -111,7 +112,11 @@ export const SearchBar: React.FC = () => {
                         onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
                         isChecked={isExcludeAllergens}
                     />
-                    <AllergensFilter disabled={!isExcludeAllergens} />
+                    <AllergensFilter
+                        selectedAllergens={selectedAllergens}
+                        setSelectedAllergens={setSelectedAllergens}
+                        disabled={!isExcludeAllergens}
+                    />
                 </Flex>
             </Flex>
         </Flex>

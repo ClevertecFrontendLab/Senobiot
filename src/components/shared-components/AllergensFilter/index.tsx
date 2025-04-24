@@ -1,6 +1,6 @@
 import { Box, Flex, VStack } from '@chakra-ui/react';
-import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
     CheckBoxLime,
@@ -9,8 +9,7 @@ import {
     TextInputCustom,
 } from '~/components/shared-components';
 import { SHADOWS } from '~/constants/styles';
-import { filtrateReciepts, resetRecieptFilters } from '~/reducers';
-import { getAllReciepts } from '~/selectors';
+import { filterByAllergens, resetRecieptFilters } from '~/reducers';
 
 const predefinedAllergens: string[] = [
     'Молочные продукты',
@@ -27,24 +26,28 @@ const predefinedAllergens: string[] = [
 export const AllergensFilter: React.FC<{
     disabled: boolean;
     outerTags?: boolean;
-}> = ({ disabled, outerTags = false }) => {
+    selectedAllergens: string[];
+    setSelectedAllergens: CallableFunction;
+}> = ({ disabled, outerTags = false, selectedAllergens = [], setSelectedAllergens }) => {
     const dispatch = useDispatch();
-    const allRecipes = useSelector(getAllReciepts);
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const [newAllergen, setNewAllergen] = useState<string>('');
-
     const toggleDropdown = useCallback(() => {
         setIsOpen((prevIsOpen) => !prevIsOpen);
     }, []);
 
     const toggleAllergen = (allergen: string) => {
         const allergenValue = allergen.replace(/ .*/, '');
+        let updatedSelectedAllergens: string[];
+
         if (selectedAllergens.includes(allergenValue)) {
-            setSelectedAllergens(selectedAllergens.filter((item) => item !== allergenValue));
+            updatedSelectedAllergens = selectedAllergens.filter((item) => item !== allergenValue);
         } else {
-            setSelectedAllergens([...selectedAllergens, allergenValue]);
+            updatedSelectedAllergens = [...selectedAllergens, allergenValue];
         }
+
+        setSelectedAllergens(updatedSelectedAllergens);
+        dispatch(filterByAllergens({ allergens: updatedSelectedAllergens }));
     };
 
     const handleNewAllergenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,34 +62,16 @@ export const AllergensFilter: React.FC<{
 
     const addNewAllergen = () => {
         const trimmed = newAllergen.trim();
+        let updatedSelectedAllergens = selectedAllergens;
+
         if (trimmed && !selectedAllergens.includes(trimmed)) {
-            setSelectedAllergens([...selectedAllergens, trimmed]);
+            updatedSelectedAllergens = [...selectedAllergens, trimmed];
+            setSelectedAllergens(updatedSelectedAllergens);
             setNewAllergen('');
         }
+
+        dispatch(filterByAllergens({ allergens: updatedSelectedAllergens }));
     };
-
-    useEffect(() => {
-        const filteredRecipes = allRecipes.filter(
-            (recipe) =>
-                !recipe.ingredients.some((ingredient) =>
-                    selectedAllergens.some((allergen) =>
-                        ingredient.title.toLowerCase().includes(allergen.toLowerCase()),
-                    ),
-                ),
-        );
-
-        dispatch(filtrateReciepts(filteredRecipes));
-    }, [selectedAllergens, allRecipes, dispatch]);
-
-    useEffect(() => {
-        if (disabled && selectedAllergens.length) {
-            dispatch(resetRecieptFilters());
-            setSelectedAllergens([]);
-            if (isOpen) {
-                toggleDropdown();
-            }
-        }
-    }, [disabled, selectedAllergens.length, dispatch, isOpen, toggleDropdown]);
 
     return (
         <Box

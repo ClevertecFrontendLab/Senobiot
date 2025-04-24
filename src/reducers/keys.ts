@@ -3,16 +3,23 @@ import { createSlice } from '@reduxjs/toolkit';
 import { navTree } from '~/configs/navigationConfig';
 
 type KeysProps = {
-    categories: string[];
+    categories: { [x: string]: string };
     meats: string[];
     sides: string[];
     allergens: string[];
 };
 
+const categories: { [key: string]: string } = {};
+navTree.forEach((e) => {
+    if (!e.skipSideMenu) {
+        categories[e.title] = e.route.slice(1);
+    }
+});
+
 const initialState: KeysProps = {
-    categories: navTree.map((e) => e.title),
-    meats: ['Картошка', 'Гречка', 'Паста', 'Спагетти', 'Рис', 'Капуста', 'Фасоль', 'Другие овощи'],
-    sides: ['Курица', 'Свинина', 'Говядина', 'Индейка', 'Утка'],
+    categories,
+    meats: ['Курица', 'Свинина', 'Говядина', 'Индейка', 'Утка'],
+    sides: ['Картошка', 'Гречка', 'Паста', 'Спагетти', 'Рис', 'Капуста', 'Фасоль', 'Другие овощи'],
     allergens: [
         'Молочные продукты',
         'Яйцо',

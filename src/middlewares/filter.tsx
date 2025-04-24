@@ -1,6 +1,6 @@
 import { Middleware } from '@reduxjs/toolkit';
 
-import { applyFilters, filterByAllergens, filtrateReciepts } from '~/reducers'; // Импортируйте ваш action creator
+import { applyFilters, filterByAllergens, filtrateReciepts } from '~/reducers';
 import { ApplicationState } from '~/store/configure-store';
 import { RecipeProps } from '~/types';
 
@@ -28,38 +28,25 @@ export const filterMiddleware: Middleware<ApplicationState> = (store) => (next) 
         const { category, meat, side } = action.payload;
         const state = store.getState();
         const allRecipes: RecipeProps[] = state.reciepts.filtrated; // бкркм пофилтрованые аллергенами
-
+        console.log(category, meat, side);
         const filteredRecipes = allRecipes.filter((recipe) => {
             let include = false;
 
             if (category && category.length > 0) {
-                if (recipe.category.some((e) => category.includes(e))) {
-                    include = true;
-                }
+                include = recipe.category.some((e) => category.includes(e));
+            }
+            if (category && category.length > 0) {
+                include = recipe.category?.some((e) => category.includes(e)) || false;
             }
 
-            if (recipe.meat) {
-                if (meat && meat.length > 0) {
-                    if (meat.includes(recipe.meat)) {
-                        include = true;
-                    }
-                } else {
-                    include = false;
-                }
-            } else {
-                include = false;
+            // Проверка мяса
+            if (meat && meat.length > 0) {
+                include = include && !!(recipe.meat && meat.includes(recipe.meat));
             }
 
-            if (recipe.side) {
-                if (side && side.length > 0) {
-                    if (side.includes(recipe.side)) {
-                        include = true;
-                    }
-                } else {
-                    include = false;
-                }
-            } else {
-                include = false;
+            // Проверка гарнира
+            if (side && side.length > 0) {
+                include = include && !!(recipe.side && side.includes(recipe.side));
             }
 
             return include;
