@@ -31,10 +31,7 @@ export const AllergensFilter: React.FC<{
     const dispatch = useDispatch();
     const allRecipes = useSelector(getAllReciepts);
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([
-        // 'Рыба',
-        // 'Клубника (ягоды)',
-    ]);
+    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const [newAllergen, setNewAllergen] = useState<string>('');
 
     const toggleDropdown = useCallback(() => {

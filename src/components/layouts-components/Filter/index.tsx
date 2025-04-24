@@ -13,7 +13,7 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
     AllergensFilter,
@@ -23,14 +23,17 @@ import {
 } from '~/components/shared-components';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
-import { getCategories, getGarnishes, getMeats } from '~/selectors';
+import { applyFilters } from '~/reducers';
+import { getCategories, getMeats, getSides } from '~/selectors';
+import { ComposeFiltersPayloadType } from '~/types';
 
 import FilterTag from './FilterTag';
 import FilterTitle from './FilterTitle';
 
 export const RecipeFilter: React.FC = () => {
+    const dispatch = useDispatch();
     const meats = useSelector(getMeats);
-    const garnishes = useSelector(getGarnishes);
+    const sides = useSelector(getSides);
     const categories = useSelector(getCategories);
     const authors = ['Сергей Разумов'];
 
@@ -40,7 +43,7 @@ export const RecipeFilter: React.FC = () => {
     const [isAuthorsOpen, setIsAuthorsOpen] = useState(false);
 
     const [selectedMeats, setSelectedMeats] = useState<string[]>([]);
-    const [selectedGarnishes, setSelectedGarnishes] = useState<string[]>([]);
+    const [selectedSides, setSelectedSides] = useState<string[]>([]);
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -71,9 +74,9 @@ export const RecipeFilter: React.FC = () => {
         );
     };
 
-    const toggleGarnishSelection = (garnish: string) => {
-        setSelectedGarnishes((prev) =>
-            prev.includes(garnish) ? prev.filter((item) => item !== garnish) : [...prev, garnish],
+    const toggleSideSelection = (side: string) => {
+        setSelectedSides((prev) =>
+            prev.includes(side) ? prev.filter((item) => item !== side) : [...prev, side],
         );
     };
 
@@ -87,11 +90,23 @@ export const RecipeFilter: React.FC = () => {
         setSelectedAuthors([]);
     };
 
+    const searchReciepts = () => {
+        const appliedFilters: ComposeFiltersPayloadType = {
+            category: selectedCategories,
+            author: selectedAuthors,
+            meat: selectedMeats,
+            side: selectedSides,
+        };
+
+        dispatch(applyFilters(appliedFilters));
+        closeDrawer();
+    };
+
     const clearFilters = () => {
         setSelectedAuthors([]);
         setSelectedCategories([]);
         setSelectedMeats([]);
-        setSelectedGarnishes([]);
+        setSelectedSides([]);
         setIsExcludeAllergens(false);
         if (isCategoryOpen) {
             toggleCategoriesDropdown();
@@ -194,18 +209,18 @@ export const RecipeFilter: React.FC = () => {
                             ))}
                         </Box>
 
-                        {/* garnish */}
+                        {/* side */}
                         <Box mt={4} w='100%'>
                             <FilterTitle title='Тип гарнира' />
-                            {garnishes.map((garnish, index) => (
+                            {sides.map((side, index) => (
                                 <CheckBoxLime
                                     labelColor='#000'
                                     px={0}
                                     key={index}
                                     index={0}
-                                    item={garnish}
-                                    isChecked={selectedGarnishes.includes(garnish)}
-                                    toggleItem={() => toggleGarnishSelection(garnish)}
+                                    item={side}
+                                    isChecked={selectedSides.includes(side)}
+                                    toggleItem={() => toggleSideSelection(side)}
                                 />
                             ))}
                         </Box>
@@ -230,25 +245,32 @@ export const RecipeFilter: React.FC = () => {
                         </Box>
                     </VStack>
                     <HStack w='100%' wrap='wrap'>
-                        {selectedCategories.map((category) => (
+                        {selectedCategories.map((category, index) => (
                             <FilterTag
+                                key={index}
                                 item={category}
                                 onClick={() => toggleCategorySelection(category)}
                             />
                         ))}
-                        {selectedAuthors.map((author) => (
+                        {selectedAuthors.map((author, index) => (
                             <FilterTag
+                                key={index}
                                 item={author}
                                 onClick={() => toggleAuthorSelection(author)}
                             />
                         ))}
-                        {selectedMeats.map((meat) => (
-                            <FilterTag item={meat} onClick={() => toggleMeatSelection(meat)} />
-                        ))}
-                        {selectedGarnishes.map((garnish) => (
+                        {selectedMeats.map((meat, index) => (
                             <FilterTag
-                                item={garnish}
-                                onClick={() => toggleGarnishSelection(garnish)}
+                                key={index}
+                                item={meat}
+                                onClick={() => toggleMeatSelection(meat)}
+                            />
+                        ))}
+                        {selectedSides.map((side, index) => (
+                            <FilterTag
+                                key={index}
+                                item={side}
+                                onClick={() => toggleSideSelection(side)}
                             />
                         ))}
                     </HStack>
@@ -268,11 +290,11 @@ export const RecipeFilter: React.FC = () => {
                             !selectedCategories.length &&
                             !selectedAuthors.length &&
                             !selectedMeats.length &&
-                            !selectedGarnishes.length
+                            !selectedSides.length
                         }
                         bg='#000'
                         color='#fff'
-                        onClick={closeDrawer}
+                        onClick={searchReciepts}
                         px={6}
                         _hover={{ bg: '#000' }}
                     >

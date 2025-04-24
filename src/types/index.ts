@@ -43,3 +43,10 @@ export type CategorySectionProps = {
     noHeaderButton?: boolean;
     mb?: string | number;
 };
+
+export type ComposeFiltersPayloadType = {
+    category?: string[];
+    author?: string[];
+    meat?: string[];
+    side?: string[];
+};

@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import { filterMiddleware } from '~/middlewares/filter';
 import { apiSlice } from '~/query/create-api';
 import { keysReducer } from '~/reducers/keys';
 import { recieptsReducer } from '~/reducers/reciepts';
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 export type ApplicationState = ReturnType<typeof rootReducer>;
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(apiSlice.middleware).concat(filterMiddleware),
     devTools: !isProduction,
 });
