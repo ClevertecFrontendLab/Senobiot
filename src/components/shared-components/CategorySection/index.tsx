@@ -1,9 +1,10 @@
 import { Flex } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 
 import { getLocation } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
+import { setEmptySearch } from '~/reducers';
 import { getActiveSearch } from '~/selectors';
 import { CategorySectionProps } from '~/types';
 import { searchByTitle } from '~/utils';
@@ -26,12 +27,18 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     noButtonIcon,
 }) => {
     const activeSeacrh = useSelector(getActiveSearch);
+    const dispatch = useDispatch();
     const location = getLocation(useLocation().pathname);
     let categoryCards = data
         .filter((e) => e.category.includes(location.categoryName!))
         .filter((e) => e.subcategory.includes(location.subcategoryName!));
     if (activeSeacrh) {
         categoryCards = searchByTitle(categoryCards, activeSeacrh);
+
+        if (!categoryCards?.length) {
+            dispatch(setEmptySearch(true));
+            return;
+        }
     }
 
     return (

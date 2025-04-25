@@ -11,6 +11,7 @@ type RecieptsFilterReducerProps = {
     allergens: string[] | null;
     activeFilters: ComposeFiltersPayloadType | null;
     activeSearch?: string | null;
+    isEmptySearch?: boolean | null;
 };
 
 const initialState: RecieptsFilterReducerProps = {
@@ -20,6 +21,7 @@ const initialState: RecieptsFilterReducerProps = {
     allergens: null,
     activeFilters: null,
     activeSearch: null,
+    isEmptySearch: null,
 };
 
 const reciepts = createSlice({
@@ -34,6 +36,7 @@ const reciepts = createSlice({
         },
         searchReciepts(state, action: PayloadAction<string>) {
             state.activeSearch = action.payload;
+            state.isEmptySearch = false;
         },
         filtrateReciepts(state, action: PayloadAction<RecipeProps[]>) {
             console.log('filtrateReciepts');
@@ -50,6 +53,10 @@ const reciepts = createSlice({
         },
         resetSearch(state) {
             state.activeSearch = null;
+            state.isEmptySearch = null;
+        },
+        setEmptySearch(state, action: PayloadAction<boolean | null>) {
+            state.isEmptySearch = action.payload;
         },
     },
 });
@@ -63,5 +70,6 @@ export const {
     resetRecieptsFilters,
     resetRecieptsAllergens,
     resetSearch,
+    setEmptySearch,
 } = reciepts.actions;
 export const { reducer: recieptsReducer } = reciepts;

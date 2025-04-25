@@ -9,7 +9,7 @@ import {
     InputRightElement,
 } from '@chakra-ui/react';
 import React, { ChangeEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
     AllergensFilter,
@@ -21,12 +21,14 @@ import { routeFinder } from '~/configs/navigationConfig'; // когда буде
 import { BORDERS, WIDTHS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
 import { resetSearch, searchReciepts } from '~/reducers';
+import { isEmptySearch } from '~/selectors';
 import { usePathnames } from '~/utils';
 
 export const SearchBar: React.FC = () => {
     const { openDrawer } = useDrawer();
     const pathnames = usePathnames();
     const dispatch = useDispatch();
+    const isBadRequest = useSelector(isEmptySearch);
     const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]); // когда будет апи всё это выпилить
     const title = activeCategory?.subTitle || activeCategory?.title; // когда будет апи всё это выпилить
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
@@ -34,6 +36,15 @@ export const SearchBar: React.FC = () => {
     const styles = { base: '2xl', xl: '5xl' };
     const [inputValue, setInputValue] = useState('');
     const isEnabled = inputValue.trim().length >= 3;
+    const inputStyles = {
+        border:
+            isBadRequest === false
+                ? '1px solid green'
+                : isBadRequest
+                  ? '1px solid red'
+                  : BORDERS.main,
+        boxShadow: 'none',
+    };
 
     const handleExcludeAllergens = () => {
         if (isExcludeAllergens && selectedAllergens.length) {
@@ -75,6 +86,7 @@ export const SearchBar: React.FC = () => {
             {activeCategory?.description && (
                 <Flex maxW={{ xl: 696 }} m='0 auto' mt={{ base: 4, xl: 3 }} textAlign='center'>
                     <TextRegular
+                        regTextAlign='center'
                         regTextNoOfLines={4}
                         regText={activeCategory.description}
                         regTextColor='blackAlpha.600'
@@ -85,7 +97,7 @@ export const SearchBar: React.FC = () => {
                 m='0 auto'
                 mt={{ base: 4, xl: 8 }}
                 mb={{ base: 8, '2xl': 14 }}
-                w={{ base: 328, md: 448, xl: 518 }}
+                w={{ base: 284, md: 448, xl: 518 }}
                 maxW={{ base: 328, md: 448, xl: 518 }}
                 direction='column'
             >
@@ -123,12 +135,23 @@ export const SearchBar: React.FC = () => {
                             onKeyDown={handleKeyPress}
                             borderRadius={6}
                             display='flex'
-                            border={BORDERS.main}
+                            boxShadow={0}
+                            border={
+                                isBadRequest === false
+                                    ? '1px solid green'
+                                    : isBadRequest
+                                      ? '1px solid red'
+                                      : BORDERS.main
+                            }
                             pl={3}
+                            _hover={inputStyles}
+                            _focus={inputStyles}
+                            _active={inputStyles}
+                            outline='none'
                             placeholder='Название или ингредиент...'
                             size={{ base: 'sm', xl: 'lg' }}
                             _placeholder={{ color: '#134B00' }} //тему можно применить только через приватное сво-во
-                            maxWidth='auto'
+                            // maxWidth='auto'
                         />
                         <InputRightElement display='flex'>
                             <IconButton
