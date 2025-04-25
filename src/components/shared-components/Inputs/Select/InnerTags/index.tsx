@@ -1,4 +1,4 @@
-import { Box, Flex, Tag, TagCloseButton, TagLabel, Text } from '@chakra-ui/react';
+import { Box, Flex, ResponsiveValue, Tag, TagCloseButton, TagLabel, Text } from '@chakra-ui/react';
 import { MouseEventHandler } from 'react';
 
 import { BORDERS } from '~/constants/styles';
@@ -15,6 +15,8 @@ export const SelectInnerTags: React.FC<{
     toggleTag?: MouseEventHandler<HTMLButtonElement>;
     onReset?: React.MouseEventHandler<HTMLButtonElement>;
     dataTestAllergenTag?: string;
+    dataTestId?: string;
+    width?: ResponsiveValue<string>;
 }> = ({
     options,
     isOpen = false,
@@ -25,8 +27,12 @@ export const SelectInnerTags: React.FC<{
     noTagCloseButton = false,
     placeholder = 'Выберите из списка...',
     dataTestAllergenTag,
+    width,
+    dataTestId,
 }) => (
     <Box
+        data-test-id={dataTestId}
+        w={width}
         p={2}
         pr={10}
         border='1px solid'

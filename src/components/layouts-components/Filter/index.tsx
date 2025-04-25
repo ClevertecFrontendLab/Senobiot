@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     AllergensFilter,
     CheckBoxLime,
+    SelectInnerTags,
     SelectRegular,
     SwitchToggler,
 } from '~/components/shared-components';
@@ -151,15 +152,27 @@ export const RecipeFilter: React.FC = () => {
                 >
                     <VStack w='100%' gap={4} pr={{ base: 2.5 }}>
                         {/* Категория */}
-                        <VStack w='100%'>
-                            <SelectRegular
+                        <VStack w='100%' position='relative'>
+                            <SelectInnerTags
+                                dataTestId='filter-menu-button-категория'
+                                dataTestAllergenTag='filter-tag'
+                                options={selectedCategories}
+                                toggleDropdown={toggleCategoriesDropdown}
+                                isOpen={isCategoryOpen}
+                                onReset={resetCategories}
+                                noTagCloseButton={true}
+                                placeholder='Категория'
+                                noResetButton={!selectedCategories.length}
+                                width='100%'
+                            />
+                            {/* <SelectRegular
                                 dataTestId='filter-menu-button-категория'
                                 noResetButton={!selectedCategories.length}
                                 placeholder='Категория'
                                 isOpen={isCategoryOpen}
                                 toggleDropdown={toggleCategoriesDropdown}
                                 onReset={resetCategories}
-                            />
+                            /> */}
                             {isCategoryOpen && (
                                 <VStack
                                     align='start'
@@ -271,14 +284,14 @@ export const RecipeFilter: React.FC = () => {
                         </Box>
                     </VStack>
                     <HStack w='100%' wrap='wrap'>
-                        {selectedCategories.map((category, index) => (
+                        {/* {selectedCategories.map((category, index) => (
                             <FilterTag
                                 testId={true}
                                 key={index}
                                 item={category}
                                 onClick={() => toggleCategorySelection(category)}
                             />
-                        ))}
+                        ))} */}
                         {selectedAuthors.map((author, index) => (
                             <FilterTag
                                 testId={true}
