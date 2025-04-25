@@ -7,7 +7,7 @@ type SliderCardProps = {
     description?: string;
     categories?: string[];
     image?: string;
-    activeSearсh?: string | null;
+    activeSearch?: string | null;
 };
 
 const SliderCard: React.FC<SliderCardProps> = ({
@@ -15,7 +15,7 @@ const SliderCard: React.FC<SliderCardProps> = ({
     description,
     categories,
     image,
-    activeSearсh,
+    activeSearch,
 }) => {
     const hiddenElements = useBreakpointValue({
         base: true,
@@ -61,7 +61,7 @@ const SliderCard: React.FC<SliderCardProps> = ({
             noDescription={hiddenElements}
             categorySx={categoryResponsivePosition}
             bookmarkMaxHeight={{ base: 'unset', xl: 6 }}
-            titleTextHighlight={activeSearсh}
+            titleTextHighlight={activeSearch}
         />
     );
 };

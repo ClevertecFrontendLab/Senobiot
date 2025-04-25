@@ -9,7 +9,7 @@ import { CategorySectionProps } from '~/types';
 export const JuciestSection: React.FC<CategorySectionProps> = ({
     data,
     categoryTitle = '',
-    activeSearсh,
+    activeSearch,
 }) => {
     const juciestData = [...data].sort((a, b) => b.likes - a.likes);
 
@@ -42,7 +42,7 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({
                             coockingButtonAs={Link}
                             coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
                             coockingButtonDataId={index}
-                            titleTextHighlight={activeSearсh}
+                            titleTextHighlight={activeSearch}
                         />
                     );
                 })}

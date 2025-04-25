@@ -33,7 +33,6 @@ import FilterTag from './FilterTag';
 import FilterTitle from './FilterTitle';
 
 export const RecipeFilter: React.FC = () => {
-    console.log('init drawer');
     const dispatch = useDispatch();
     const meats = useSelector(getMeats);
     const sidesMap = useSelector(getSides);
@@ -138,11 +137,35 @@ export const RecipeFilter: React.FC = () => {
                 pr={{ base: 1.5, xl: 2 }}
                 data-test-id='filter-drawer'
             >
-                <DrawerCloseButton data-test-id='close-filter-drawer' top={5} right={7}>
+                <DrawerCloseButton
+                    data-test-id='close-filter-drawer'
+                    top={{ base: 5, xl: 8 }}
+                    right={{ base: 3, xl: 5 }}
+                >
                     <Image src='/icons/close-filter-icon.svg'></Image>
                 </DrawerCloseButton>
-                <DrawerHeader>Фильтр</DrawerHeader>
+                <DrawerHeader p={0} mb={8}>
+                    Фильтр
+                </DrawerHeader>
                 <DrawerBody
+                    sx={{
+                        '&::-webkit-scrollbar': {
+                            width: 2,
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            background: 'blackAlpha.50',
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            background: 'blackAlpha.300',
+                            borderRadius: 8,
+                        },
+                        '&::-webkit-scrollbar-thumb:hover': {
+                            background: 'lime.500',
+                        },
+                        '&:hover': {
+                            boxShadow: SHADOWS.sideMunu,
+                        },
+                    }}
                     width='100%'
                     display='flex'
                     flexDirection='column'
@@ -155,7 +178,7 @@ export const RecipeFilter: React.FC = () => {
                         <VStack w='100%' position='relative'>
                             <SelectInnerTags
                                 dataTestId='filter-menu-button-категория'
-                                dataTestAllergenTag='filter-tag'
+                                // dataTestAllergenTag='filter-tag'
                                 options={selectedCategories}
                                 toggleDropdown={toggleCategoriesDropdown}
                                 isOpen={isCategoryOpen}
@@ -273,7 +296,7 @@ export const RecipeFilter: React.FC = () => {
                                     isChecked={isExcludeAllergens}
                                 />
                                 <AllergensFilter
-                                    dataTestAllergenTag='filter-tag'
+                                    // dataTestAllergenTag='filter-tag'
                                     dataTestCheckBoKeykey='allergen-'
                                     dataTestIdToggler='allergens-menu-button-filter'
                                     selectedAllergens={selectedAllergens}
@@ -284,14 +307,14 @@ export const RecipeFilter: React.FC = () => {
                         </Box>
                     </VStack>
                     <HStack w='100%' wrap='wrap'>
-                        {/* {selectedCategories.map((category, index) => (
+                        {selectedCategories.map((category, index) => (
                             <FilterTag
                                 testId={true}
                                 key={index}
                                 item={category}
                                 onClick={() => toggleCategorySelection(category)}
                             />
-                        ))} */}
+                        ))}
                         {selectedAuthors.map((author, index) => (
                             <FilterTag
                                 testId={true}
@@ -316,10 +339,20 @@ export const RecipeFilter: React.FC = () => {
                                 onClick={() => toggleSideSelection(side)}
                             />
                         ))}
+                        {selectedAllergens.map((side, index) => (
+                            <FilterTag
+                                testId={true}
+                                key={index}
+                                item={side}
+                                onClick={() => toggleSideSelection(side)}
+                            />
+                        ))}
                     </HStack>
                 </DrawerBody>
                 <DrawerFooter display='flex' p='32px 14px 0 0' w='100%'>
                     <Button
+                        fontSize='14px'
+                        fontWeight={600}
                         variant='outline'
                         mr={2}
                         onClick={clearFilters}
@@ -330,6 +363,8 @@ export const RecipeFilter: React.FC = () => {
                         Очистить фильтр
                     </Button>
                     <Button
+                        fontSize='14px'
+                        fontWeight={600}
                         pointerEvents={
                             selectedCategories.length ||
                             selectedAuthors.length ||

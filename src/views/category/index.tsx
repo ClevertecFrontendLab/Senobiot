@@ -10,6 +10,7 @@ const nexSection = navTree.find((e) => e.navKey === 'desserts-baking'); // TODO 
 
 const CategoryPage: React.FC = () => {
     const data = useSelector((state: ApplicationState) => state.reciepts.filtrated);
+    const initialData = useSelector((state: ApplicationState) => state.reciepts.initial);
 
     return (
         <PageWrapper>
@@ -18,7 +19,7 @@ const CategoryPage: React.FC = () => {
             <CategorySectionNext
                 title={nexSection?.title || ''}
                 description={nexSection?.description || ''}
-                data={data}
+                data={initialData}
             />
         </PageWrapper>
     );

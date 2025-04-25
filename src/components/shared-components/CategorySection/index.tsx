@@ -26,20 +26,23 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     noNavMenu = false,
     noButtonIcon,
 }) => {
-    const activeSeacrh = useSelector(getActiveSearch);
+    const activeSearch = useSelector(getActiveSearch);
     const dispatch = useDispatch();
     const location = getLocation(useLocation().pathname);
     let categoryCards = data
         .filter((e) => e.category.includes(location.categoryName!))
         .filter((e) => e.subcategory.includes(location.subcategoryName!));
-    if (activeSeacrh) {
-        categoryCards = searchByTitle(categoryCards, activeSeacrh);
+
+    if (activeSearch) {
+        categoryCards = searchByTitle(categoryCards, activeSearch);
 
         if (!categoryCards?.length) {
             dispatch(setEmptySearch(true));
             return;
         }
     }
+
+    if (!categoryCards.length) return;
 
     return (
         <Flex justifyContent='space-between' mb={mb} direction='column'>
@@ -65,7 +68,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                         <CategoryCard
                             cardDataTestId={`food-card-${index}`}
                             key={index}
-                            titleTextHighlight={activeSeacrh}
+                            titleTextHighlight={activeSearch}
                             title={title}
                             description={description}
                             img={image}

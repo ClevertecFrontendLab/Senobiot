@@ -19,12 +19,14 @@ import { JuciestSection } from './juciest';
 const nexSection = navTree.find((e) => e.navKey === 'vegan-cuisine'); // TODO remove after true api
 
 const HomePage: React.FC = () => {
+    console.log('HomePage');
     const dispatch = useDispatch();
+    const initialData = useSelector((state: ApplicationState) => state.reciepts.initial);
     let data = useSelector((state: ApplicationState) => state.reciepts.filtrated);
-    const activeSearсh = useSelector(getActiveSearch);
-    if (activeSearсh) {
-        data = searchByTitle(data, activeSearсh);
-        if (data?.length) {
+    const activeSearch = useSelector(getActiveSearch);
+    if (activeSearch) {
+        data = searchByTitle(data, activeSearch);
+        if (!data?.length) {
             dispatch(setEmptySearch(true));
         } else {
             dispatch(setEmptySearch(false));
@@ -40,11 +42,11 @@ const HomePage: React.FC = () => {
                 ) : (
                     ''
                 )}
-                {data?.length ? <Slider activeSearсh={activeSearсh} slides={data} /> : ''}
+                {data?.length ? <Slider activeSearch={activeSearch} slides={data} /> : ''}
             </Flex>
             {data?.length ? (
                 <JuciestSection
-                    activeSearсh={activeSearсh}
+                    activeSearch={activeSearch}
                     data={data}
                     categoryTitle='Самое сочное'
                 />
@@ -55,7 +57,7 @@ const HomePage: React.FC = () => {
             <CategorySectionNext
                 title={nexSection?.title || ''}
                 description={nexSection?.description || ''}
-                data={data}
+                data={initialData}
             />
         </PageWrapper>
     );
