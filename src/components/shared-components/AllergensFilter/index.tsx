@@ -9,7 +9,7 @@ import {
     TextInputCustom,
 } from '~/components/shared-components';
 import { SHADOWS } from '~/constants/styles';
-import { filterByAllergens, resetRecieptFilters } from '~/reducers';
+import { filterByAllergens, resetRecieptsAllergens } from '~/reducers';
 
 const predefinedAllergens: string[] = [
     'Молочные продукты',
@@ -47,7 +47,7 @@ export const AllergensFilter: React.FC<{
         }
 
         setSelectedAllergens(updatedSelectedAllergens);
-        dispatch(filterByAllergens({ allergens: updatedSelectedAllergens }));
+        dispatch(filterByAllergens(updatedSelectedAllergens));
     };
 
     const handleNewAllergenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +56,7 @@ export const AllergensFilter: React.FC<{
 
     const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
-        dispatch(resetRecieptFilters());
+        dispatch(resetRecieptsAllergens());
         setSelectedAllergens([]);
     };
 
@@ -70,7 +70,7 @@ export const AllergensFilter: React.FC<{
             setNewAllergen('');
         }
 
-        dispatch(filterByAllergens({ allergens: updatedSelectedAllergens }));
+        dispatch(filterByAllergens(updatedSelectedAllergens));
     };
 
     return (

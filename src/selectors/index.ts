@@ -6,3 +6,4 @@ export const getCategories = (state: ApplicationState) => state.keys.categories;
 export const getMeats = (state: ApplicationState) => state.keys.meats;
 export const getSides = (state: ApplicationState) => state.keys.sides;
 export const getAllergens = (state: ApplicationState) => state.keys.allergens;
+export const getActiveSearch = (state: ApplicationState) => state.reciepts.activeSearch;

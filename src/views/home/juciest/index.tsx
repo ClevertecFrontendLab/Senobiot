@@ -6,7 +6,11 @@ import CategoryCard from '~/components/shared-components/CategorySection/Categor
 import { PADDINGS } from '~/constants/styles';
 import { CategorySectionProps } from '~/types';
 
-export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryTitle = '' }) => {
+export const JuciestSection: React.FC<CategorySectionProps> = ({
+    data,
+    categoryTitle = '',
+    activeSearсh,
+}) => {
     const juciestData = [...data].sort((a, b) => b.likes - a.likes).slice(0, 4);
 
     return (
@@ -38,6 +42,7 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({ data, categoryT
                             coockingButtonAs={Link}
                             coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
                             coockingButtonDataId={index}
+                            titleTextHighlight={activeSearсh}
                         />
                     );
                 })}

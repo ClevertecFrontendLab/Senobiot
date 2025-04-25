@@ -20,7 +20,7 @@ import {
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, WIDTHS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
-import { resetRecieptFilters, searchReciepts } from '~/reducers';
+import { resetSearch, searchReciepts } from '~/reducers';
 import { usePathnames } from '~/utils';
 
 export const SearchBar: React.FC = () => {
@@ -47,7 +47,7 @@ export const SearchBar: React.FC = () => {
     };
 
     const handlReset = () => {
-        dispatch(resetRecieptFilters());
+        dispatch(resetSearch());
         setInputValue('');
     };
 

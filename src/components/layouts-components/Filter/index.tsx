@@ -23,7 +23,7 @@ import {
 } from '~/components/shared-components';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
-import { applyFilters, resetRecieptFilters } from '~/reducers';
+import { applyFilters, resetReciepts } from '~/reducers';
 import { getCategories, getMeats, getSides } from '~/selectors';
 import { ComposeFiltersPayloadType } from '~/types';
 
@@ -114,7 +114,7 @@ export const RecipeFilter: React.FC = () => {
         setSelectedSides([]);
         setSelectedAllergens([]);
         setIsExcludeAllergens(false);
-        dispatch(resetRecieptFilters());
+        dispatch(resetReciepts());
         if (isCategoryOpen) {
             toggleCategoriesDropdown();
         }

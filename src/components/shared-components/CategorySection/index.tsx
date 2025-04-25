@@ -1,9 +1,12 @@
 import { Flex } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 
 import { getLocation } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
+import { getActiveSearch } from '~/selectors';
 import { CategorySectionProps } from '~/types';
+import { searchByTitle } from '~/utils';
 
 import { ButtonViewMore } from '../Buttons';
 import { CategoryHeader } from '../Headers';
@@ -22,10 +25,14 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     noNavMenu = false,
     noButtonIcon,
 }) => {
+    const activeSeacrh = useSelector(getActiveSearch);
     const location = getLocation(useLocation().pathname);
-    const categoryCards = data
+    let categoryCards = data
         .filter((e) => e.category.includes(location.categoryName!))
         .filter((e) => e.subcategory.includes(location.subcategoryName!));
+    if (activeSeacrh) {
+        categoryCards = searchByTitle(categoryCards, activeSeacrh);
+    }
 
     return (
         <Flex justifyContent='space-between' mb={mb} direction='column'>
@@ -51,6 +58,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                         <CategoryCard
                             cardDataTestId={`food-card-${index}`}
                             key={index}
+                            titleTextHighlight={activeSeacrh}
                             title={title}
                             description={description}
                             img={image}

@@ -13,9 +13,10 @@ import SliderCard from './SliderCard';
 type SliderProps = {
     controlsSize?: number;
     slides: RecipeProps[];
+    activeSearсh?: string | null;
 };
 
-export const Slider: React.FC<SliderProps> = ({ slides = [] }) => (
+export const Slider: React.FC<SliderProps> = ({ slides = [], activeSearсh }) => (
     <Flex direction='column' position='relative'>
         <Swiper
             data-test-id='carousel'
@@ -58,6 +59,7 @@ export const Slider: React.FC<SliderProps> = ({ slides = [] }) => (
                                 description={description}
                                 image={image}
                                 categories={category}
+                                activeSearсh={activeSearсh}
                             />
                         </Link>
                     </SwiperSlide>

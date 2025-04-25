@@ -4,53 +4,52 @@ import mockRespone from '~/data/data.json';
 import { ComposeFiltersPayloadType, RecipeProps } from '~/types';
 const data = JSON.parse(JSON.stringify(mockRespone));
 
-type Reciepts = {
+type RecieptsFilterReducerProps = {
     initial: RecipeProps[];
     filtrated: RecipeProps[];
-    categoryInitial?: RecipeProps[];
-    categoryFiltrated?: RecipeProps[];
-    isSearchHighlighted?: boolean;
+    // searched?: RecipeProps[] | null;
+    allergens: string[] | null;
+    activeFilters: ComposeFiltersPayloadType | null;
+    activeSearch?: string | null;
 };
 
-const initialState: Reciepts = {
+const initialState: RecieptsFilterReducerProps = {
     initial: data,
     filtrated: data,
-    isSearchHighlighted: false,
+    // searched: null,
+    allergens: null,
+    activeFilters: null,
+    activeSearch: null,
 };
 
 const reciepts = createSlice({
     name: 'reciepts',
     initialState,
     reducers: {
-        filterByAllergens(state, action: PayloadAction<{ allergens: string[] }>) {
-            console.log('filterByAllergens');
-            void action;
-            return state;
+        filterByAllergens(state, action: PayloadAction<string[]>) {
+            state.allergens = action.payload;
         },
         applyFilters(state, action: PayloadAction<ComposeFiltersPayloadType>) {
-            console.log('applyFilters');
-            void action;
-            return state;
+            state.activeFilters = action.payload;
         },
         searchReciepts(state, action: PayloadAction<string>) {
-            console.log('searchReciepts');
-            void action;
-            return state;
+            state.activeSearch = action.payload;
         },
         filtrateReciepts(state, action: PayloadAction<RecipeProps[]>) {
             console.log('filtrateReciepts');
             state.filtrated = action.payload;
         },
-        filtrateCategory(state, action: PayloadAction<RecipeProps[]>) {
-            state.filtrated = action.payload;
-        },
-        resetRecieptFilters(state) {
-            console.log('resetRecieptFilters');
+        resetReciepts(state) {
             state.filtrated = state.initial;
         },
-        resetCategory(state) {
-            console.log('filtrateReciepts');
-            state.filtrated = state.initial;
+        resetRecieptsFilters(state) {
+            state.activeFilters = null;
+        },
+        resetRecieptsAllergens(state) {
+            state.allergens = null;
+        },
+        resetSearch(state) {
+            state.activeSearch = null;
         },
     },
 });
@@ -60,8 +59,9 @@ export const {
     applyFilters,
     searchReciepts,
     filtrateReciepts,
-    resetRecieptFilters,
-    filtrateCategory,
-    resetCategory,
+    resetReciepts,
+    resetRecieptsFilters,
+    resetRecieptsAllergens,
+    resetSearch,
 } = reciepts.actions;
 export const { reducer: recieptsReducer } = reciepts;

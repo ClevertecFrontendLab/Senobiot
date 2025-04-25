@@ -42,6 +42,7 @@ export type CategorySectionProps = {
     noButtonIcon?: boolean;
     noHeaderButton?: boolean;
     mb?: string | number;
+    activeSearсh?: string | null;
 };
 
 export type ComposeFiltersPayloadType = {

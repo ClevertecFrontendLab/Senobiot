@@ -2,56 +2,60 @@ import { Middleware } from '@reduxjs/toolkit';
 
 import { applyFilters, filterByAllergens, filtrateReciepts } from '~/reducers';
 import { ApplicationState } from '~/store/configure-store';
-import { RecipeProps } from '~/types';
+import { ComposeFiltersPayloadType, RecipeProps } from '~/types';
+
+const filtrateAllergens = (reciepts: RecipeProps[], allergens: string[]) =>
+    reciepts.filter(
+        (recipe) =>
+            !recipe.ingredients.some((ingredient) =>
+                allergens.some((allergen: string) =>
+                    ingredient.title.toLowerCase().includes(allergen.toLowerCase()),
+                ),
+            ),
+    );
+
+const filtratebyFilters = (reciepts: RecipeProps[], filters: ComposeFiltersPayloadType) => {
+    const { category, meat, side } = filters;
+    return reciepts.filter((recipe) => {
+        if (category && category.length > 0 && !recipe.category.some((e) => category.includes(e))) {
+            return false;
+        }
+
+        if (meat && meat.length > 0 && !(recipe.meat && meat.includes(recipe.meat))) {
+            return false;
+        }
+
+        if (side && side.length > 0 && !(recipe.side && side.includes(recipe.side))) {
+            return false;
+        }
+        return true;
+    });
+};
 
 export const filterMiddleware: Middleware<ApplicationState> = (store) => (next) => (action) => {
     if (filterByAllergens.match(action)) {
-        const { allergens } = action.payload;
         console.log(' MW filterByAllergens');
         const state = store.getState();
         const allRecipes: RecipeProps[] = state.reciepts.initial;
+        let filteredRecipes = filtrateAllergens(allRecipes, action.payload);
+        const activeFilters = state.reciepts.activeFilters;
 
-        const filteredRecipes = allRecipes.filter(
-            (recipe) =>
-                !recipe.ingredients.some((ingredient) =>
-                    allergens.some((allergen: string) =>
-                        ingredient.title.toLowerCase().includes(allergen.toLowerCase()),
-                    ),
-                ),
-        );
-
+        if (activeFilters) {
+            filteredRecipes = filtratebyFilters(filteredRecipes, activeFilters);
+        }
         store.dispatch(filtrateReciepts(filteredRecipes));
     }
 
     if (applyFilters.match(action)) {
         console.log(' MW applyFilters');
-        const { category, meat, side } = action.payload;
         const state = store.getState();
         const allRecipes: RecipeProps[] = state.reciepts.filtrated; // бкркм пофилтрованые аллергенами
-        console.log(category, meat, side);
-        const filteredRecipes = allRecipes.filter((recipe) => {
-            let include = false;
+        let filteredRecipes = filtratebyFilters(allRecipes, action.payload);
 
-            if (category && category.length > 0) {
-                include = recipe.category.some((e) => category.includes(e));
-            }
-            if (category && category.length > 0) {
-                include = recipe.category?.some((e) => category.includes(e)) || false;
-            }
-
-            // Проверка мяса
-            if (meat && meat.length > 0) {
-                include = include && !!(recipe.meat && meat.includes(recipe.meat));
-            }
-
-            // Проверка гарнира
-            if (side && side.length > 0) {
-                include = include && !!(recipe.side && side.includes(recipe.side));
-            }
-
-            return include;
-        });
-
+        const allergens = state.reciepts.allergens;
+        if (allergens) {
+            filteredRecipes = filtrateAllergens(filteredRecipes, allergens);
+        }
         store.dispatch(filtrateReciepts(filteredRecipes));
     }
 
