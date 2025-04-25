@@ -18,7 +18,7 @@ import {
     TitleText,
 } from '~/components/shared-components';
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
-import { BORDERS, WIDTHS } from '~/constants/styles';
+import { BORDERS, SHADOWS, WIDTHS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
 import { resetSearch, searchReciepts } from '~/reducers';
 import { isEmptySearch } from '~/selectors';
@@ -80,7 +80,16 @@ export const SearchBar: React.FC = () => {
         <Flex
             direction='column'
             // pt={PADDINGS.header}
-            px={{ base: 0, md: 5, xl: WIDTHS.sideMunu }}
+            px={{ base: 0, md: 4, xl: WIDTHS.sideMunu }}
+            _focusWithin={{
+                boxShadow: SHADOWS.searchBar,
+                borderRadius: '0 0 8px 8px',
+            }}
+            pb={{ base: 4, xl: 8 }}
+            w={{ base: '100vw', md: '480px', xl: 898 }}
+            mx='auto'
+            mb={{ base: 4, '2xl': 6 }}
+            ml={{ base: -4, md: 'auto' }}
         >
             <TitleText titleText={title} titleTextFz={styles} titleTextLh={styles} />
             {activeCategory?.description && (
@@ -96,7 +105,7 @@ export const SearchBar: React.FC = () => {
             <Flex
                 m='0 auto'
                 mt={{ base: 4, xl: 8 }}
-                mb={{ base: 8, '2xl': 14 }}
+                // mb={{ base: 8, '2xl': 6 }}
                 w={{ base: 284, md: 448, xl: 518 }}
                 maxW={{ base: 328, md: 448, xl: 518 }}
                 direction='column'

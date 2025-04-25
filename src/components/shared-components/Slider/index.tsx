@@ -28,9 +28,9 @@ export const Slider: React.FC<SliderProps> = ({ slides = [], activeSearch }) => 
             spaceBetween={20}
             slidesPerView={4}
             loop={true}
-            speed={300}
+            speed={200}
             breakpoints={{
-                360: {
+                320: {
                     slidesPerView: 2.1,
                     spaceBetween: 12,
                 },

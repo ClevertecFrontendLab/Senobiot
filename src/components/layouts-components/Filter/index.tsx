@@ -159,12 +159,6 @@ export const RecipeFilter: React.FC = () => {
                             background: 'blackAlpha.300',
                             borderRadius: 8,
                         },
-                        '&::-webkit-scrollbar-thumb:hover': {
-                            background: 'lime.500',
-                        },
-                        '&:hover': {
-                            boxShadow: SHADOWS.sideMunu,
-                        },
                     }}
                     width='100%'
                     display='flex'

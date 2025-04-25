@@ -36,9 +36,9 @@ const SliderCard: React.FC<SliderCardProps> = ({
     return (
         <RecieptCard
             descriptionHeight={{ xl: 16 }}
-            minWidth={{ base: 158, xl: 279 }}
+            minWidth={{ base: 'auto', xl: 279 }}
             maxWidth={{ xl: 277, '2xl': 322 }}
-            width={{ base: 158, xl: 277, '2xl': 322 }}
+            width={{ base: 'auto', xl: 277, '2xl': 322 }}
             imageHeight={{ base: 128, xl: 230 }}
             height={{ base: 220, xl: 402, '2xl': 414 }}
             text={description}

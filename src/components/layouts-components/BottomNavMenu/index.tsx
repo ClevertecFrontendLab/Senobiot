@@ -50,7 +50,7 @@ export const BottomNavMenu: React.FC = () => (
                 text={button.name}
                 iconUrl={button.iconUrl}
                 isActive={button.isActive}
-                minWidth={90}
+                minWidth='84px'
                 textColor='blackAlpha.700'
             />
         ))}

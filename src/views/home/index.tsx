@@ -19,7 +19,6 @@ import { JuciestSection } from './juciest';
 const nexSection = navTree.find((e) => e.navKey === 'vegan-cuisine'); // TODO remove after true api
 
 const HomePage: React.FC = () => {
-    console.log('HomePage');
     const dispatch = useDispatch();
     const initialData = useSelector((state: ApplicationState) => state.reciepts.initial);
     let data = useSelector((state: ApplicationState) => state.reciepts.filtrated);
