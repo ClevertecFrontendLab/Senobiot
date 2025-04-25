@@ -5,7 +5,7 @@ import { navTree } from '~/configs/navigationConfig';
 type KeysProps = {
     categories: { [x: string]: string };
     meats: string[];
-    sides: string[];
+    sides: { [key: string]: string };
     allergens: string[];
 };
 
@@ -19,7 +19,16 @@ navTree.forEach((e) => {
 const initialState: KeysProps = {
     categories,
     meats: ['Курица', 'Свинина', 'Говядина', 'Индейка', 'Утка'],
-    sides: ['Картошка', 'Гречка', 'Паста', 'Спагетти', 'Рис', 'Капуста', 'Фасоль', 'Другие овощи'],
+    sides: {
+        Картошка: 'potatoes',
+        Гречка: '',
+        Паста: '',
+        Спагетти: 'spagetty',
+        Рис: 'rice',
+        Капуста: '',
+        Фасоль: '',
+        'Другие овощи': 'other',
+    },
     allergens: [
         'Молочные продукты',
         'Яйцо',

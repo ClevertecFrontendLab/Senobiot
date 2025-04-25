@@ -28,7 +28,18 @@ export const AllergensFilter: React.FC<{
     outerTags?: boolean;
     selectedAllergens: string[];
     setSelectedAllergens: CallableFunction;
-}> = ({ disabled, outerTags = false, selectedAllergens = [], setSelectedAllergens }) => {
+    dataTestIdToggler?: string;
+    dataTestCheckBoKeykey?: string;
+    dataTestAllergenTag?: string;
+}> = ({
+    disabled,
+    outerTags = false,
+    selectedAllergens = [],
+    setSelectedAllergens,
+    dataTestIdToggler,
+    dataTestCheckBoKeykey,
+    dataTestAllergenTag,
+}) => {
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
     const [newAllergen, setNewAllergen] = useState<string>('');
@@ -75,14 +86,14 @@ export const AllergensFilter: React.FC<{
 
     return (
         <Box
-            // as='button'
+            as='button'
             width='100%'
             position='relative'
             userSelect={disabled ? 'none' : 'unset'}
             pointerEvents={disabled ? 'none' : 'auto'}
-            data-test-id='allergens-menu-button'
+            data-test-id={dataTestIdToggler}
             aria-disabled={disabled}
-            // disabled={disabled}
+            disabled={disabled}
             textAlign='left'
         >
             {outerTags ? (
@@ -95,6 +106,7 @@ export const AllergensFilter: React.FC<{
                 />
             ) : (
                 <SelectInnerTags
+                    dataTestAllergenTag={dataTestAllergenTag}
                     options={selectedAllergens}
                     toggleDropdown={toggleDropdown}
                     isOpen={isOpen}
@@ -122,7 +134,7 @@ export const AllergensFilter: React.FC<{
                                 isChecked={selectedAllergens.includes(allergen.replace(/ .*/, ''))}
                                 toggleItem={toggleAllergen}
                                 dataTestIds={index}
-                                dataTestkey='allergen-'
+                                dataTestCheckBoKeykey={dataTestCheckBoKeykey}
                             />
                         ))}
                     </VStack>

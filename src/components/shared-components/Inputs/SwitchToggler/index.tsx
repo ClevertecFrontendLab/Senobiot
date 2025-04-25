@@ -5,13 +5,14 @@ export const SwitchToggler: React.FC<{
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     isChecked: boolean;
     text?: string;
-}> = ({ onChange, text, isChecked }) => (
+    dataTestId?: string;
+}> = ({ onChange, text, isChecked, dataTestId }) => (
     <>
         <Text fontSize='md' fontWeight={500} flexShrink={0} fontFamily='Inter'>
             {text}
         </Text>
         <Switch
-            data-test-id='allergens-switcher'
+            data-test-id={dataTestId}
             pr={4}
             pl={3}
             _checked={{

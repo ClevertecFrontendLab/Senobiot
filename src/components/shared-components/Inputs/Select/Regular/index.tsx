@@ -9,14 +9,17 @@ export const SelectRegular: React.FC<{
     noResetButton?: boolean;
     toggleDropdown: MouseEventHandler<HTMLDivElement>;
     onReset?: React.MouseEventHandler<HTMLButtonElement>;
+    dataTestId?: string;
 }> = ({
     isOpen = false,
     toggleDropdown,
     onReset,
     noResetButton = false,
     placeholder = 'Выберите из списка...',
+    dataTestId,
 }) => (
     <Box
+        data-test-id={dataTestId}
         position='relative'
         w='100%'
         p={2}

@@ -11,7 +11,7 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({
     categoryTitle = '',
     activeSearсh,
 }) => {
-    const juciestData = [...data].sort((a, b) => b.likes - a.likes).slice(0, 4);
+    const juciestData = [...data].sort((a, b) => b.likes - a.likes);
 
     return (
         <Flex justifyContent='space-between' direction='column' mb={{ base: 8, xl: 10 }}>

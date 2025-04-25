@@ -4,8 +4,10 @@ import { MouseEventHandler } from 'react';
 const FilterTag: React.FC<{
     item: string;
     onClick: MouseEventHandler<HTMLButtonElement>;
-}> = ({ item, onClick }) => (
+    testId?: boolean;
+}> = ({ item, onClick, testId = false }) => (
     <Tag
+        data-test-id={testId ? 'filter-tag' : ''}
         size='lg'
         variant='solid'
         color='lime.700'

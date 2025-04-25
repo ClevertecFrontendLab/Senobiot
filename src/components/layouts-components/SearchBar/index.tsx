@@ -35,6 +35,14 @@ export const SearchBar: React.FC = () => {
     const [inputValue, setInputValue] = useState('');
     const isEnabled = inputValue.trim().length >= 3;
 
+    const handleExcludeAllergens = () => {
+        if (isExcludeAllergens && selectedAllergens.length) {
+            setSelectedAllergens([]);
+            return setIsExcludeAllergens(false);
+        }
+        setIsExcludeAllergens(true);
+    };
+
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     };
@@ -61,7 +69,7 @@ export const SearchBar: React.FC = () => {
         <Flex
             direction='column'
             // pt={PADDINGS.header}
-            px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
+            px={{ base: 0, md: 5, xl: WIDTHS.sideMunu }}
         >
             <TitleText titleText={title} titleTextFz={styles} titleTextLh={styles} />
             {activeCategory?.description && (
@@ -85,6 +93,7 @@ export const SearchBar: React.FC = () => {
                     <InputGroup display='flex' alignItems='center' mb={4}>
                         <InputLeftElement position='initial' display='flex' mr={3}>
                             <IconButton
+                                data-test-id='filter-button'
                                 onClick={openDrawer}
                                 icon={
                                     <Image
@@ -107,6 +116,7 @@ export const SearchBar: React.FC = () => {
                             />
                         </InputLeftElement>
                         <Input
+                            data-test-id='search-input'
                             position='relative'
                             value={inputValue}
                             onChange={handleInputChange}
@@ -122,8 +132,10 @@ export const SearchBar: React.FC = () => {
                         />
                         <InputRightElement display='flex'>
                             <IconButton
+                                data-test-id='search-button'
                                 onClick={handleSearch}
                                 disabled={!isEnabled}
+                                pointerEvents={isEnabled ? 'unset' : 'none'}
                                 icon={<SearchIcon w={{ base: 3.5, xl: 6 }} />}
                                 aria-label='Search'
                                 variant='ghost'
@@ -156,10 +168,13 @@ export const SearchBar: React.FC = () => {
                 >
                     <SwitchToggler
                         text=' Исключить аллергены'
-                        onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
+                        onChange={handleExcludeAllergens}
                         isChecked={isExcludeAllergens}
+                        dataTestId='allergens-switcher'
                     />
                     <AllergensFilter
+                        dataTestCheckBoKeykey='allergen-'
+                        dataTestIdToggler='allergens-menu-button'
                         selectedAllergens={selectedAllergens}
                         setSelectedAllergens={setSelectedAllergens}
                         disabled={!isExcludeAllergens}

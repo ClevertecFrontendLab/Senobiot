@@ -16,6 +16,7 @@ const filtrateAllergens = (reciepts: RecipeProps[], allergens: string[]) =>
 
 const filtratebyFilters = (reciepts: RecipeProps[], filters: ComposeFiltersPayloadType) => {
     const { category, meat, side } = filters;
+    console.log(filters);
     return reciepts.filter((recipe) => {
         if (category && category.length > 0 && !recipe.category.some((e) => category.includes(e))) {
             return false;

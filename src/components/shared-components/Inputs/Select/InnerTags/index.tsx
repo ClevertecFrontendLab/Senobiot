@@ -14,6 +14,7 @@ export const SelectInnerTags: React.FC<{
     toggleDropdown: MouseEventHandler<HTMLDivElement>;
     toggleTag?: MouseEventHandler<HTMLButtonElement>;
     onReset?: React.MouseEventHandler<HTMLButtonElement>;
+    dataTestAllergenTag?: string;
 }> = ({
     options,
     isOpen = false,
@@ -23,6 +24,7 @@ export const SelectInnerTags: React.FC<{
     noResetButton = false,
     noTagCloseButton = false,
     placeholder = 'Выберите из списка...',
+    dataTestAllergenTag,
 }) => (
     <Box
         p={2}
@@ -39,6 +41,7 @@ export const SelectInnerTags: React.FC<{
             <Flex gap={2} wrap='wrap'>
                 {options.map((option) => (
                     <Tag
+                        data-test-id={dataTestAllergenTag}
                         key={option}
                         variant='outline'
                         border={BORDERS.allergenTag}

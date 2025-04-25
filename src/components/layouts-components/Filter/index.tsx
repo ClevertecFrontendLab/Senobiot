@@ -10,6 +10,7 @@ import {
     DrawerOverlay,
     Flex,
     HStack,
+    Image,
     VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -31,11 +32,13 @@ import FilterTag from './FilterTag';
 import FilterTitle from './FilterTitle';
 
 export const RecipeFilter: React.FC = () => {
+    console.log('init drawer');
     const dispatch = useDispatch();
     const meats = useSelector(getMeats);
-    const sides = useSelector(getSides);
+    const sidesMap = useSelector(getSides);
     const categoriesMap = useSelector(getCategories);
     const categories = Object.keys(categoriesMap);
+    const sides = Object.keys(sidesMap);
 
     const authors = ['Сергей Разумов'];
 
@@ -95,15 +98,17 @@ export const RecipeFilter: React.FC = () => {
 
     const searchReciepts = () => {
         const categoryKeys = selectedCategories.map((e) => categoriesMap[e]);
+        const sideKeys = selectedSides.map((e) => sidesMap[e]);
 
         const appliedFilters: ComposeFiltersPayloadType = {
             category: categoryKeys,
             author: selectedAuthors,
             meat: selectedMeats,
-            side: selectedSides,
+            side: sideKeys,
         };
 
         dispatch(applyFilters(appliedFilters));
+        setSelectedCategories([]);
         closeDrawer();
     };
 
@@ -130,8 +135,11 @@ export const RecipeFilter: React.FC = () => {
                 minW={{ base: 344, xl: 463 }}
                 p={{ base: 4, xl: 8 }}
                 pr={{ base: 1.5, xl: 2 }}
+                data-test-id='filter-drawer'
             >
-                <DrawerCloseButton />
+                <DrawerCloseButton data-test-id='close-filter-drawer' top={5} right={7}>
+                    <Image src='/icons/close-filter-icon.svg'></Image>
+                </DrawerCloseButton>
                 <DrawerHeader>Фильтр</DrawerHeader>
                 <DrawerBody
                     width='100%'
@@ -145,6 +153,7 @@ export const RecipeFilter: React.FC = () => {
                         {/* Категория */}
                         <VStack w='100%'>
                             <SelectRegular
+                                dataTestId='filter-menu-button-категория'
                                 noResetButton={!selectedCategories.length}
                                 placeholder='Категория'
                                 isOpen={isCategoryOpen}
@@ -161,6 +170,7 @@ export const RecipeFilter: React.FC = () => {
                                 >
                                     {categories.map((category, index) => (
                                         <CheckBoxLime
+                                            dataTestCatagory={`checkbox-${category.toLowerCase()}`}
                                             key={index}
                                             index={index}
                                             item={category}
@@ -201,7 +211,7 @@ export const RecipeFilter: React.FC = () => {
                         </VStack>
 
                         {/* meat */}
-                        <Box mt={4}>
+                        <Box mt={4} w='100%'>
                             <FilterTitle title='Тип мяса' />
                             {meats.map((meat, index) => (
                                 <CheckBoxLime
@@ -221,6 +231,7 @@ export const RecipeFilter: React.FC = () => {
                             <FilterTitle title='Тип гарнира' />
                             {sides.map((side, index) => (
                                 <CheckBoxLime
+                                    dataTestCatagory={`checkbox-${side.toLowerCase()}`}
                                     labelColor='#000'
                                     px={0}
                                     key={index}
@@ -243,11 +254,15 @@ export const RecipeFilter: React.FC = () => {
                                 gap={2}
                             >
                                 <SwitchToggler
+                                    dataTestId='allergens-switcher-filter'
                                     text=' Исключить аллергены'
                                     onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
                                     isChecked={isExcludeAllergens}
                                 />
                                 <AllergensFilter
+                                    dataTestAllergenTag='filter-tag'
+                                    dataTestCheckBoKeykey='allergen-'
+                                    dataTestIdToggler='allergens-menu-button-filter'
                                     selectedAllergens={selectedAllergens}
                                     setSelectedAllergens={setSelectedAllergens}
                                     disabled={!isExcludeAllergens}
@@ -258,6 +273,7 @@ export const RecipeFilter: React.FC = () => {
                     <HStack w='100%' wrap='wrap'>
                         {selectedCategories.map((category, index) => (
                             <FilterTag
+                                testId={true}
                                 key={index}
                                 item={category}
                                 onClick={() => toggleCategorySelection(category)}
@@ -265,6 +281,7 @@ export const RecipeFilter: React.FC = () => {
                         ))}
                         {selectedAuthors.map((author, index) => (
                             <FilterTag
+                                testId={true}
                                 key={index}
                                 item={author}
                                 onClick={() => toggleAuthorSelection(author)}
@@ -272,6 +289,7 @@ export const RecipeFilter: React.FC = () => {
                         ))}
                         {selectedMeats.map((meat, index) => (
                             <FilterTag
+                                testId={true}
                                 key={index}
                                 item={meat}
                                 onClick={() => toggleMeatSelection(meat)}
@@ -279,6 +297,7 @@ export const RecipeFilter: React.FC = () => {
                         ))}
                         {selectedSides.map((side, index) => (
                             <FilterTag
+                                testId={true}
                                 key={index}
                                 item={side}
                                 onClick={() => toggleSideSelection(side)}
@@ -293,10 +312,19 @@ export const RecipeFilter: React.FC = () => {
                         onClick={clearFilters}
                         px={6}
                         border={BORDERS.main}
+                        data-test-id='clear-filter-button'
                     >
                         Очистить фильтр
                     </Button>
                     <Button
+                        pointerEvents={
+                            selectedCategories.length ||
+                            selectedAuthors.length ||
+                            selectedMeats.length ||
+                            selectedSides.length
+                                ? 'unset'
+                                : 'none'
+                        }
                         isDisabled={
                             !selectedCategories.length &&
                             !selectedAuthors.length &&
@@ -308,8 +336,9 @@ export const RecipeFilter: React.FC = () => {
                         onClick={searchReciepts}
                         px={6}
                         _hover={{ bg: '#000' }}
+                        data-test-id='find-recipe-button'
                     >
-                        Найти рецепты
+                        Найти рецепт
                     </Button>
                 </DrawerFooter>
             </DrawerContent>

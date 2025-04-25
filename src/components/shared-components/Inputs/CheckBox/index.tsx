@@ -8,7 +8,8 @@ export const CheckBoxLime: React.FC<{
     isChecked: boolean;
     toggleItem: CallableFunction;
     dataTestIds?: string | number;
-    dataTestkey?: string;
+    dataTestCheckBoKeykey?: string;
+    dataTestCatagory?: string;
     px?: number;
     labelColor?: string;
 }> = ({
@@ -17,12 +18,17 @@ export const CheckBoxLime: React.FC<{
     isChecked = false,
     toggleItem,
     dataTestIds = '',
-    dataTestkey = '',
+    dataTestCheckBoKeykey = '',
+    dataTestCatagory = '',
     px = 4,
     labelColor = 'blackAlpha.800',
 }) => (
     <Checkbox
-        data-test-id={`${dataTestkey}${dataTestIds}`}
+        data-test-id={
+            dataTestCheckBoKeykey && !dataTestCatagory
+                ? `${dataTestCheckBoKeykey}${dataTestIds}`
+                : dataTestCatagory
+        }
         px={px}
         h={8}
         w='100%'
