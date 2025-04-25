@@ -33,6 +33,10 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
         .filter((e) => e.category.includes(location.categoryName!))
         .filter((e) => e.subcategory.includes(location.subcategoryName!));
 
+    if (location.categoryName === 'the-juiciest') {
+        categoryCards = [...data].sort((a, b) => b.likes - a.likes);
+    }
+
     if (activeSearch) {
         categoryCards = searchByTitle(categoryCards, activeSearch);
 
