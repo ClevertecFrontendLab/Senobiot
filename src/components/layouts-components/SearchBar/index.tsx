@@ -1,5 +1,6 @@
 import { Image, SearchIcon } from '@chakra-ui/icons';
 import {
+    Box,
     Flex,
     IconButton,
     Input,
@@ -7,7 +8,8 @@ import {
     InputLeftElement,
     InputRightElement,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
     AllergensFilter,
@@ -18,16 +20,42 @@ import {
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, WIDTHS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
+import { resetRecieptFilters, searchReciepts } from '~/reducers';
 import { usePathnames } from '~/utils';
 
 export const SearchBar: React.FC = () => {
     const { openDrawer } = useDrawer();
     const pathnames = usePathnames();
+    const dispatch = useDispatch();
     const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]); // когда будет апи всё это выпилить
     const title = activeCategory?.subTitle || activeCategory?.title; // когда будет апи всё это выпилить
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
     const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const styles = { base: '2xl', xl: '5xl' };
+    const [inputValue, setInputValue] = useState('');
+    const isEnabled = inputValue.trim().length >= 3;
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+    };
+
+    const handleSearch = () => {
+        if (isEnabled) {
+            dispatch(searchReciepts(inputValue));
+            // setInputValue('');
+        }
+    };
+
+    const handlReset = () => {
+        dispatch(resetRecieptFilters());
+        setInputValue('');
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (isEnabled && e.key === 'Enter') {
+            handleSearch();
+        }
+    };
 
     return (
         <Flex
@@ -79,6 +107,10 @@ export const SearchBar: React.FC = () => {
                             />
                         </InputLeftElement>
                         <Input
+                            position='relative'
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            onKeyDown={handleKeyPress}
                             borderRadius={6}
                             display='flex'
                             border={BORDERS.main}
@@ -90,6 +122,8 @@ export const SearchBar: React.FC = () => {
                         />
                         <InputRightElement display='flex'>
                             <IconButton
+                                onClick={handleSearch}
+                                disabled={!isEnabled}
                                 icon={<SearchIcon w={{ base: 3.5, xl: 6 }} />}
                                 aria-label='Search'
                                 variant='ghost'
@@ -99,6 +133,19 @@ export const SearchBar: React.FC = () => {
                                 // pr={1}
                                 _hover={{ bg: 0 }}
                             />
+                            {inputValue && (
+                                <Box
+                                    top={2.5}
+                                    right={10}
+                                    position='absolute'
+                                    as='button'
+                                    onClick={handlReset}
+                                    fontSize='14px'
+                                    cursor='pointer'
+                                >
+                                    ✕
+                                </Box>
+                            )}
                         </InputRightElement>
                     </InputGroup>
                 </Flex>

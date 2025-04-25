@@ -9,11 +9,13 @@ type Reciepts = {
     filtrated: RecipeProps[];
     categoryInitial?: RecipeProps[];
     categoryFiltrated?: RecipeProps[];
+    isSearchHighlighted?: boolean;
 };
 
 const initialState: Reciepts = {
     initial: data,
     filtrated: data,
+    isSearchHighlighted: false,
 };
 
 const reciepts = createSlice({
@@ -27,6 +29,11 @@ const reciepts = createSlice({
         },
         applyFilters(state, action: PayloadAction<ComposeFiltersPayloadType>) {
             console.log('applyFilters');
+            void action;
+            return state;
+        },
+        searchReciepts(state, action: PayloadAction<string>) {
+            console.log('searchReciepts');
             void action;
             return state;
         },
@@ -51,6 +58,7 @@ const reciepts = createSlice({
 export const {
     filterByAllergens,
     applyFilters,
+    searchReciepts,
     filtrateReciepts,
     resetRecieptFilters,
     filtrateCategory,
