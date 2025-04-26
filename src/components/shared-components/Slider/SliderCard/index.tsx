@@ -5,12 +5,18 @@ import { RecieptCard } from '../..';
 type SliderCardProps = {
     title: string;
     description?: string;
-    subcategory?: string;
-    img?: string;
-    icon?: string;
+    categories?: string[];
+    image?: string;
+    activeSearch?: string | null;
 };
 
-const SliderCard: React.FC<SliderCardProps> = ({ title, description, subcategory, img, icon }) => {
+const SliderCard: React.FC<SliderCardProps> = ({
+    title,
+    description,
+    categories,
+    image,
+    activeSearch,
+}) => {
     const hiddenElements = useBreakpointValue({
         base: true,
         xl: false,
@@ -29,27 +35,34 @@ const SliderCard: React.FC<SliderCardProps> = ({ title, description, subcategory
 
     return (
         <RecieptCard
-            minWidth={{ base: 158, xl: 322 }}
+            descriptionHeight={{ xl: 16 }}
+            cardContentPadding={{ base: '8px 8px 4px', xl: 3, '2xl': '16px 24px 20px' }}
+            imageWidth='100%'
+            imageFit='cover'
+            imageHeight={{ base: 128, xl: 230 }}
+            height={{ base: 220, xl: 402, '2xl': 414 }}
+            minWidth='unset'
             text={description}
             title={title}
             titleMargin={2}
             titleTextFz={{ base: 'md', xl: 'lg', '2xl': 'xl' }}
-            titleTextLh='28px'
+            titleTextLh={{ base: '24px' }}
             titleHeading='h3'
             titleTextAlign='left'
             noButtons={true}
             position={{ base: 'relative', xl: 'static' }}
-            noDescription={hiddenElements}
-            categorySx={categoryResponsivePosition}
-            imageSrc={img}
+            imageSrc={image}
             stateIconSize={3}
             stateTextFontSize='12px'
             statTextFontWeight={600}
-            categoryText={subcategory}
-            categoryIconUrl={icon}
+            categories={categories}
             bookmarkJustify='space-between'
             titleTextNoOfLines={{ base: 2, xl: 1 }}
             cardHeaderNoOfLines={{ base: 2, xl: 1 }}
+            noDescription={hiddenElements}
+            categorySx={categoryResponsivePosition}
+            bookmarkMaxHeight={{ base: 'unset', xl: 6 }}
+            titleTextHighlight={activeSearch}
         />
     );
 };

@@ -1,38 +1,21 @@
 import { Flex } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router';
 
-import { getSubCategoryList, routeFinder } from '~/configs/navigationConfig';
+import { getLocation } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
-import { usePathnames } from '~/utils';
+import { setEmptySearch } from '~/reducers';
+import { getActiveSearch } from '~/selectors';
+import { CategorySectionProps } from '~/types';
+import { searchByTitle } from '~/utils';
 
 import { ButtonViewMore } from '../Buttons';
 import { CategoryHeader } from '../Headers';
 import CategoryMenu from './CategoryMenu';
 import CategoryCard from './CategorySectionCard';
 
-export type CategorySectionDataProps = {
-    title: string;
-    description: string;
-    img: string;
-    subcategory?: string;
-    icon?: string;
-};
-
-export type CategorySectionProps = {
-    categoryTitle: string;
-    categoryButtonText?: string;
-    noButton?: boolean;
-    data: CategorySectionDataProps[];
-    categoryHeaderMb?: string | number;
-    noHeader?: boolean;
-    noFooter?: boolean;
-    noNavMenu?: boolean;
-    noButtonIcon?: boolean;
-    noHeaderButton?: boolean;
-    mb?: string | number;
-};
-
 export const CategorySection: React.FC<CategorySectionProps> = ({
-    categoryTitle,
+    categoryTitle = '',
     categoryButtonText = '',
     data,
     categoryHeaderMb = PADDINGS.subsectionHeaderMb,
@@ -43,12 +26,30 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     noNavMenu = false,
     noButtonIcon,
 }) => {
-    const pathnames = usePathnames();
-    const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]);
-    const menuList = activeCategory?.title ? getSubCategoryList(activeCategory?.title) : []; // когда будет апи всё это выпилить
+    const activeSearch = useSelector(getActiveSearch);
+    const dispatch = useDispatch();
+    const location = getLocation(useLocation().pathname);
+    let categoryCards = data
+        .filter((e) => e.category.includes(location.categoryName!))
+        .filter((e) => e.subcategory.includes(location.subcategoryName!));
+
+    if (location.categoryName === 'the-juiciest') {
+        categoryCards = [...data].sort((a, b) => b.likes - a.likes);
+    }
+
+    if (activeSearch) {
+        categoryCards = searchByTitle(categoryCards, activeSearch);
+
+        if (!categoryCards?.length) {
+            dispatch(setEmptySearch(true));
+            return;
+        }
+    }
+
+    if (!categoryCards.length) return;
 
     return (
-        <Flex justifyContent='space-between' mb={mb} direction='column'>
+        <Flex justifyContent='space-between' mb={mb} direction='column' w='100%'>
             {!noHeader && (
                 <Flex justifyContent='space-between' mb={categoryHeaderMb}>
                     <CategoryHeader title={categoryTitle} />
@@ -57,19 +58,29 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                     )}
                 </Flex>
             )}
-            {!noNavMenu && !activeCategory?.skipSideMenu && <CategoryMenu list={menuList} />}
+            {!noNavMenu && !location?.category?.skipSideMenu && (
+                <CategoryMenu
+                    list={location.category?.submenu}
+                    activeSubcategory={location.subcategory?.route}
+                />
+            )}
             <Flex flexWrap='wrap' gap={4}>
-                {data.map((card, index) => {
-                    const { title, description, img, subcategory, icon } = card;
+                {categoryCards.map((card, index) => {
+                    const { title, description, image, category, subcategory, id } = card;
 
                     return (
                         <CategoryCard
+                            cardDataTestId={`food-card-${index}`}
                             key={index}
+                            titleTextHighlight={activeSearch}
                             title={title}
                             description={description}
-                            img={img}
-                            subcategory={subcategory}
-                            icon={icon}
+                            img={image}
+                            categories={category}
+                            bookmarkMaxHeight={6}
+                            coockingButtonAs={Link}
+                            coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
+                            coockingButtonDataId={index}
                         />
                     );
                 })}

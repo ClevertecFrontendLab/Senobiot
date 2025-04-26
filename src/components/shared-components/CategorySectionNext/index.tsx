@@ -1,24 +1,16 @@
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
-import {
-    CategoryHeader,
-    CategorySectionDataProps,
-    TextRegular,
-} from '~/components/shared-components';
+import { CategoryHeader, TextRegular } from '~/components/shared-components';
+import { RecipeProps } from '~/types';
 
-import Card from './Card';
+import CategorySectionNextCard from './Card';
 import CardMinimized from './CardMinimized';
 
 type CategorySectionNextProps = {
     title: string;
     description?: string;
-    noButton?: boolean;
-    data: CategorySectionDataProps[];
-    mb?: string | number;
-    categoryHeaderMb?: string | number;
-    noHeader?: boolean;
-    noNavMenu?: boolean;
+    data: RecipeProps[];
 };
 
 export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
@@ -26,12 +18,7 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
     description,
     data,
 }) => (
-    <Flex
-        direction='column'
-        borderTop='1px solid'
-        borderColor='blackAlpha.200'
-        // pb={{ base: PADDINGS.footer, xl: 'unset' }} // конец контента
-    >
+    <Flex direction='column' borderTop='1px solid' borderColor='blackAlpha.200'>
         <Flex
             gap={{ md: 3, xl: 4, '2xl': 6 }}
             direction={{ base: 'column', md: 'row' }}
@@ -57,16 +44,18 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
         <Flex direction={{ base: 'column', md: 'row' }} gap={{ base: 3, xl: 4, '2xl': 6 }}>
             {data.map((card, index) => {
                 if (index < 2) {
-                    const { title, description, img, subcategory } = card;
+                    const { title, description, category } = card;
                     return (
-                        <Card
+                        <CategorySectionNextCard
                             key={index}
                             title={title}
                             description={description}
-                            subcategory={subcategory}
-                            icon={img}
+                            categories={category}
                             regTextNoOfLines={{ base: 3 }}
                             height={{ md: '168px', xl: '180px', '2xl': '192px' }}
+                            bookmarkMaxHeight={6}
+                            bookmarkWrap={{ base: 'nowrap' }}
+                            bookmarksFlexDirection='column'
                         />
                     );
                 }
@@ -79,9 +68,9 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                 justifyContent='space-between'
             >
                 {data.map((card, index) => {
-                    const { title, img } = card;
+                    const { title, category } = card;
                     if (index >= 2 && index < 5) {
-                        return <CardMinimized key={index} title={title} iconUrl={img} />;
+                        return <CardMinimized key={index} title={title} iconKey={category[0]} />;
                     }
                 })}
             </Flex>

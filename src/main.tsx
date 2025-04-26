@@ -7,11 +7,15 @@ import App from '~/app/App.tsx';
 import { store } from '~/store/configure-store.ts';
 import { defaultTheme } from '~/themes';
 
+import { AppProviders } from './providers';
+
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <Provider store={store}>
             <ChakraProvider theme={defaultTheme}>
-                <App />
+                <AppProviders>
+                    <App />
+                </AppProviders>
             </ChakraProvider>
         </Provider>
     </StrictMode>,

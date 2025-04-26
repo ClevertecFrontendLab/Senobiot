@@ -2,7 +2,7 @@ import { Flex, HStack, Image, Text } from '@chakra-ui/react';
 
 export type StatItemProps = {
     statIconUrl?: string;
-    statValue?: number;
+    statValue?: number | string;
     statIconAltText?: string;
     statTextColor?: string;
     statTextFontWeight?: number;

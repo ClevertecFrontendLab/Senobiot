@@ -6,18 +6,18 @@ import { RecieptCard, RecieptCardProps } from '../..';
 export interface CategoryCardProps extends RecieptCardProps {
     title: string;
     description?: string;
-    subcategory?: string;
     img?: string;
     icon?: string;
     hiddenElements?: boolean;
+    categories: string[];
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
     title,
     description,
-    subcategory,
     img,
-    icon,
+    categories,
+    ...props
 }) => {
     const responsiveValues = useBreakpointValue({
         base: {
@@ -36,7 +36,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
 
     return (
         <RecieptCard
+            {...props}
             minWidth={{ base: 158, xl: 322 }}
+            imageHeight='auto' // тут добавил чтобы в карточках где много (светло-желтых плашек) растягивались картинки вниз
+            imageWidth={{ base: 158, xl: 322 }} // тут добавил чтобы в карточках где много (светло-желтых плашек) растягивались картинки
             text={description}
             title={title}
             titleMargin={2}
@@ -55,14 +58,14 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             stateIconSize={3}
             stateTextFontSize='12px'
             statTextFontWeight={600}
-            categoryText={subcategory}
-            categoryIconUrl={icon}
             bookmarkJustify='space-between'
             cardFlexWidth={{ md: '1 1 40%', xl: '1 1 100%', '2xl': '1 1 40%' }}
-            titleTextNoOfLines={{ base: 2, xl: 1 }}
+            cardHeaderNoOfLines={{ base: 2, xl: 1 }}
             wrap={{ base: 'nowrap' }}
             bookmarksOrder={{ base: -1 }}
             bookmarkMb={{ xl: 6 }}
+            bookmarkMaxHeight={{ base: 'unset' }} // тут количество категори в карточках (светло-желтых плашек)
+            categories={categories}
         />
     );
 };

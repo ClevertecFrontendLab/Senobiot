@@ -8,6 +8,7 @@ export type navTreeProps = {
     description?: string;
     submenu: Array<navTreeProps>;
     skipSideMenu?: boolean;
+    redirect?: string;
 };
 
 export const navTree: Array<navTreeProps> = [
@@ -18,57 +19,49 @@ export const navTree: Array<navTreeProps> = [
         subTitle: 'Приятного аппетита!',
         breadcrumb: true,
         skipSideMenu: true,
-        submenu: [
-            // {
-            //     navKey: 'juiciest',
-            //     route: '/juiciest',
-            //     title: 'Самое сочное',
-            //     skipSideMenu: true,
-            //     breadcrumb: true,
-            //     submenu: [],
-            // },
-        ],
+        submenu: [],
     },
     {
         navKey: 'juiciest',
-        route: '/juiciest',
+        route: '/the-juiciest',
         title: 'Самое сочное',
         skipSideMenu: true,
         breadcrumb: true,
         submenu: [],
     },
     {
-        navKey: 'salates',
-        route: '/salates',
+        navKey: 'salads',
+        route: '/salads',
+        redirect: '/salads/meat',
         title: 'Салаты',
         icon: '/icons/dishes-category/eggplant.svg',
         description: '',
         breadcrumb: true,
         submenu: [
             {
-                navKey: 'salates-meat',
-                route: '/salates/meat',
+                navKey: 'salads-meat',
+                route: '/salads/meat',
                 title: 'Мясные салаты',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'salates-fish',
-                route: '/salates/fish',
+                navKey: 'salads-fish',
+                route: '/salads/fish',
                 title: 'Рыбные салаты',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'salates-vegetable',
-                route: '/salates/vegetable',
+                navKey: 'salads-vegetable',
+                route: '/salads/vegetable',
                 title: 'Овощные салаты',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'salates-warm',
-                route: '/salates/warm',
+                navKey: 'salads-warm',
+                route: '/salads/warm-salads',
                 title: 'Тёплые салаты',
                 breadcrumb: true,
                 submenu: [],
@@ -78,6 +71,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'appetizers',
         route: '/appetizers',
+        redirect: '/appetizers/meat',
         title: 'Закуски',
         icon: '/icons/dishes-category/healthy-eating.svg',
         description: '',
@@ -130,6 +124,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'first-courses',
         route: '/first-courses',
+        redirect: '/first-courses/meat-soups',
         title: 'Первые блюда',
         icon: '/icons/dishes-category/pot.svg',
         description: '',
@@ -173,92 +168,93 @@ export const navTree: Array<navTreeProps> = [
         ],
     },
     {
-        navKey: 'second-courses',
-        route: '/second-courses',
+        navKey: 'second-dish',
+        route: '/second-dish',
+        redirect: '/second-dish/meat',
         title: 'Вторые блюда',
         icon: '/icons/dishes-category/frying-pan.svg',
         breadcrumb: true,
         submenu: [
             {
-                navKey: 'main-meat',
-                route: '/second-courses/meat',
+                navKey: 'meat',
+                route: '/second-dish/meat',
                 title: 'Мясные',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-fish',
-                route: '/second-courses/fish',
+                navKey: 'fish',
+                route: '/second-dish/fish',
                 title: 'Рыбные',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-vegetable',
-                route: '/second-courses/vegetable',
+                navKey: 'vegetable',
+                route: '/second-dish/vegetable',
                 title: 'Овощные',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-poultry',
-                route: '/second-courses/poultry',
+                navKey: 'poultry-dish',
+                route: '/second-dish/poultry-dish',
                 title: 'Из птицы',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-mushrooms',
-                route: '/second-courses/mushrooms',
+                navKey: 'mushrooms',
+                route: '/second-dish/mushrooms',
                 title: 'Из грибов',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-offal',
-                route: '/second-courses/offal',
+                navKey: 'offal',
+                route: '/second-dish/offal',
                 title: 'Из субпродуктов',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-steamed',
-                route: '/second-courses/steamed',
+                navKey: 'steamed',
+                route: '/second-dish/steamed',
                 title: 'На пару',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-dumplings',
-                route: '/second-courses/dumplings',
+                navKey: 'dumplings',
+                route: '/second-dish/dumplings',
                 title: 'Пельмени, вареники',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-flour-garnishes',
-                route: '/second-courses/flour-garnishes',
+                navKey: 'flour-garnishes',
+                route: '/second-dish/flour-garnishes',
                 title: 'Мучные гарниры',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-vegetable-garnishes',
-                route: '/second-courses/vegetable-garnishes',
+                navKey: 'vegetable-garnishes',
+                route: '/second-dish/vegetable-garnishes',
                 title: 'Овощные гарниры',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-pizza',
-                route: '/second-courses/pizza',
+                navKey: 'pizza',
+                route: '/second-dish/pizza',
                 title: 'Пицца',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'main-sushi',
-                route: '/second-courses/sushi',
+                navKey: 'sushi',
+                route: '/second-dish/sushi',
                 title: 'Суши',
                 breadcrumb: true,
                 submenu: [],
@@ -268,8 +264,9 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'desserts-baking',
         route: '/desserts-baking',
+        redirect: '/desserts-baking/pancakes',
         title: 'Десерты, выпечка',
-        icon: '/icons/dishes-category/salates.svg',
+        icon: '/icons/dishes-category/salads.svg',
         breadcrumb: true,
         description:
             'Без них невозможно представить себе ни современную, ни традиционную кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб — рецепты изделий из теста многообразны и невероятно популярны.',
@@ -370,6 +367,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'grilled-dishes',
         route: '/grilled-dishes',
+        redirect: '/grilled-dishes/beef',
         title: 'Блюда на гриле',
         icon: '/icons/dishes-category/washing-maschine.svg',
         breadcrumb: true,
@@ -389,8 +387,8 @@ export const navTree: Array<navTreeProps> = [
                 submenu: [],
             },
             {
-                navKey: 'grilled-poultry',
-                route: '/grilled-dishes/poultry',
+                navKey: 'grilled-poultry-dish',
+                route: '/grilled-dishes/poultry-dish',
                 title: 'Птица',
                 breadcrumb: true,
                 submenu: [],
@@ -420,7 +418,8 @@ export const navTree: Array<navTreeProps> = [
     },
     {
         navKey: 'vegan-cuisine',
-        route: '/vegan-cuisine',
+        route: '/vegan',
+        redirect: '/vegan/snacks',
         title: 'Веганская кухня',
         icon: '/icons/dishes-category/leaf.svg',
         breadcrumb: true,
@@ -428,57 +427,57 @@ export const navTree: Array<navTreeProps> = [
             'Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.',
         submenu: [
             {
-                navKey: 'vegan-appetizers',
-                route: '/vegan-cuisine/appetizers',
+                navKey: 'snacks',
+                route: '/vegan/snacks',
                 title: 'Закуски',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-first-courses',
-                route: '/vegan-cuisine/first-courses',
+                navKey: 'first-courses',
+                route: '/vegan/first-courses',
                 title: 'Первые блюда',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-second-courses',
-                route: '/vegan-cuisine/second-courses',
+                navKey: 'second-dish',
+                route: '/vegan/second-dish',
                 title: 'Вторые блюда',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-side-dishes',
-                route: '/vegan-cuisine/side-dishes',
+                navKey: 'side-dishes',
+                route: '/vegan/side-dishes',
                 title: 'Гарниры',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-desserts',
-                route: '/vegan-cuisine/desserts',
+                navKey: 'desserts',
+                route: '/vegan/desserts',
                 title: 'Десерты',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-baked-goods',
-                route: '/vegan-cuisine/baked-goods',
+                navKey: 'baked-goods',
+                route: '/vegan/baked-goods',
                 title: 'Выпечка',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-raw-dishes',
-                route: '/vegan-cuisine/raw-food-dishes',
+                navKey: 'raw-dishes',
+                route: '/vegan/raw-food-dishes',
                 title: 'Сыроедческие блюда',
                 breadcrumb: true,
                 submenu: [],
             },
             {
-                navKey: 'vegan-drinks',
-                route: '/vegan-cuisine/drinks',
+                navKey: 'drinks',
+                route: '/vegan/drinks',
                 title: 'Напитки',
                 breadcrumb: true,
                 submenu: [],
@@ -488,6 +487,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'children-dishes',
         route: '/children-dishes',
+        redirect: '/children-dishes/first-courses',
         icon: '/icons/dishes-category/child-tasty.svg',
         title: 'Детские блюда',
         breadcrumb: true,
@@ -500,8 +500,8 @@ export const navTree: Array<navTreeProps> = [
                 submenu: [],
             },
             {
-                navKey: 'children-second-courses',
-                route: '/children-dishes/second-courses',
+                navKey: 'children-second-dish',
+                route: '/children-dishes/second-dish',
                 title: 'Вторые блюда',
                 breadcrumb: true,
                 submenu: [],
@@ -553,6 +553,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'therapeutic-nutrition',
         route: '/therapeutic-nutrition',
+        redirect: '/therapeutic-nutrition/children-diet',
         title: 'Лечебное питание',
         icon: '/icons/dishes-category/pot-medical.svg',
         breadcrumb: true,
@@ -679,113 +680,114 @@ export const navTree: Array<navTreeProps> = [
         ],
     },
     {
-        navKey: 'national-dishes',
-        route: '/national-dishes',
+        navKey: 'national',
+        route: '/national',
+        redirect: '/national/american-cuisine',
         title: 'Национальные',
         icon: '/icons/dishes-category/international-food.svg',
         breadcrumb: true,
         submenu: [
             {
                 navKey: 'american-cuisine',
-                route: '/national-dishes/american-cuisine',
+                route: '/national/american-cuisine',
                 title: 'Американская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'armenian-cuisine',
-                route: '/national-dishes/armenian-cuisine',
+                route: '/national/armenian',
                 title: 'Армянская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'greek-cuisine',
-                route: '/national-dishes/greek-cuisine',
+                route: '/national/greek',
                 title: 'Греческая кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'georgian-cuisine',
-                route: '/national-dishes/georgian-cuisine',
+                route: '/national/georgian',
                 title: 'Грузинская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'italian-cuisine',
-                route: '/national-dishes/italian-cuisine',
+                route: '/national/italian',
                 title: 'Итальянская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'spanish-cuisine',
-                route: '/national-dishes/spanish-cuisine',
+                route: '/national/spanish',
                 title: 'Испанская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'chinese-cuisine',
-                route: '/national-dishes/chinese-cuisine',
+                route: '/national/chinese',
                 title: 'Китайская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'mexican-cuisine',
-                route: '/national-dishes/mexican-cuisine',
+                route: '/national/mexican',
                 title: 'Мексиканская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'pan-asian-cuisine',
-                route: '/national-dishes/pan-asian-cuisine',
+                route: '/national/pan-asian',
                 title: 'Паназиатская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'russian-cuisine',
-                route: '/national-dishes/russian-cuisine',
+                route: '/national/russian',
                 title: 'Русская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'turkish-cuisine',
-                route: '/national-dishes/turkish-cuisine',
+                route: '/national/turkish',
                 title: 'Турецкая кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'french-cuisine',
-                route: '/national-dishes/french-cuisine',
+                route: '/national/french',
                 title: 'Французская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'swedish-cuisine',
-                route: '/national-dishes/swedish-cuisine',
+                route: '/national/swedish',
                 title: 'Шведская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'japanese-cuisine',
-                route: '/national-dishes/japanese-cuisine',
+                route: '/national/japanese',
                 title: 'Японская кухня',
                 breadcrumb: true,
                 submenu: [],
             },
             {
                 navKey: 'other-cuisine',
-                route: '/national-dishes/other-cuisine',
+                route: '/national/other',
                 title: 'Другая кухня',
                 breadcrumb: true,
                 submenu: [],
@@ -795,6 +797,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'sauces',
         route: '/sauces',
+        redirect: '/sauces/meat',
         title: 'Соусы',
         icon: '/icons/dishes-category/mortar.svg',
         breadcrumb: true,
@@ -825,6 +828,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'drinks',
         route: '/drinks',
+        redirect: '/drinks/juices-fresh',
         title: 'Напитки',
         icon: '/icons/dishes-category/cup-tea.svg',
         breadcrumb: true,
@@ -897,6 +901,7 @@ export const navTree: Array<navTreeProps> = [
     {
         navKey: 'preserves',
         route: '/preserves',
+        redirect: '/preserves/meat',
         title: 'Заготовки',
         icon: '/icons/dishes-category/pasta.svg',
         breadcrumb: true,
@@ -999,5 +1004,66 @@ export const getNavBranches = (route: string) => {
         );
         result.push(subcategory);
     }
+    return result;
+};
+
+export const getCategoryByKey = (key: string) => navTree.find((cat) => cat.route === '/' + key);
+
+export const getActiveSubcatgory = (pathnames: string[]) => {
+    if (pathnames.length > 2) {
+        const category = navTree.find((cat) => cat.route === pathnames[1]);
+        if (category) {
+            const subcategory = category.submenu.find(
+                (subcat) => subcat.route === pathnames[1] + pathnames[2],
+            );
+            return subcategory || category;
+        }
+
+        return navTree[0];
+    }
+    return navTree[0];
+};
+
+type CurrentLocation = {
+    root: navTreeProps;
+    category?: navTreeProps;
+    categoryName?: string;
+    subcategory?: navTreeProps;
+    subcategoryName?: string;
+    reciepeId?: string;
+};
+
+export const getLocation = (location: string): CurrentLocation => {
+    const result: CurrentLocation = { root: navTree[0] };
+
+    const pathnamesArray = location.split('/').filter((e) => e);
+
+    if (!pathnamesArray.length) return result;
+
+    const category = navTree.find((e) => e.route === '/' + pathnamesArray[0]);
+
+    if (!category) return result;
+
+    result.category = category;
+    result.categoryName = pathnamesArray[0];
+
+    if (pathnamesArray.length === 1) return result;
+
+    const subcategory = category.submenu.find(
+        (e) => e.route === `${category.route}/${pathnamesArray[1]}`,
+    );
+
+    if (!subcategory) return result;
+
+    result.subcategory = subcategory;
+    result.subcategoryName = pathnamesArray[1];
+
+    if (pathnamesArray.length === 2) return result;
+
+    if (pathnamesArray.length === 3) {
+        result.reciepeId = pathnamesArray[2];
+        return result;
+    }
+
     return result;
 };

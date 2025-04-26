@@ -1,4 +1,4 @@
-import { Button, Image, Text } from '@chakra-ui/react';
+import { Button, Image, ResponsiveValue, Text } from '@chakra-ui/react';
 
 import { BORDERS } from '~/constants/styles';
 
@@ -13,7 +13,10 @@ export interface ButtonBookBtnProps {
     bookBtnIconUrl?: string;
     bookBtnIconAltText?: string;
     bookBtnIconsize?: string;
-    bookBtnSize?: string;
+    bookBtnSize?: ResponsiveValue<string | number>;
+    bookBtnTextDisplay?: ResponsiveValue<string>;
+    bookBtnIconMarginInlineEnd?: ResponsiveValue<number>;
+    recieptButtonsSize?: ResponsiveValue<string>;
 }
 
 export const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
@@ -26,15 +29,18 @@ export const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
     bookBtnVariant = 'outline',
     bookBtnIconUrl = '/icons/bookmarks/heart.svg',
     bookBtnIconAltText = 'Сохранить',
+    bookBtnIconMarginInlineEnd = { base: 0, xl: 2.4375 },
     bookBtnIconsize = { base: 3, xl: 3.5 },
     bookBtnSize = { base: 6, xl: 'initial' },
+    bookBtnTextDisplay = { base: 'none', xl: 'initial' },
+    recieptButtonsSize = { base: 'xs', xl: 'sm' },
 }) => (
     <Button
-        size={{ base: 'xs', xl: 'sm' }}
+        size={recieptButtonsSize}
         maxWidth={bookBtnSize}
         sx={{
             '& .chakra-button__icon': {
-                marginInlineEnd: { base: 0, xl: 2.4375 },
+                marginInlineEnd: bookBtnIconMarginInlineEnd,
             },
         }}
         bg={bookBtnBg}
@@ -45,6 +51,6 @@ export const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
         leftIcon={<Image src={bookBtnIconUrl} alt={bookBtnIconAltText} boxSize={bookBtnIconsize} />}
         variant={bookBtnVariant}
     >
-        <Text display={{ base: 'none', xl: 'initial' }}>{bookBtnText}</Text>
+        <Text display={bookBtnTextDisplay}>{bookBtnText}</Text>
     </Button>
 );

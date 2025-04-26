@@ -1,17 +1,16 @@
-import { Accordion, Flex, useTheme } from '@chakra-ui/react';
-import React from 'react';
+import { Flex, useTheme } from '@chakra-ui/react';
 
-import { navTree } from '~/configs/navigationConfig';
 import { PADDINGS, SHADOWS } from '~/constants/styles';
 
 import { Footer } from '..';
-import SideNavMenuItem from './Item';
+import { AccordionNav } from '../AccordionNavMenu';
 
 export const SideMenu: React.FC = () => {
-    const theme = useTheme(); // Chakra UI c некторыми псевдо либо через хук либо через проп __css = {{}}
+    const theme = useTheme();
 
     return (
         <Flex
+            data-test-id='nav'
             flexDirection='column'
             justifyContent='space-between'
             w='256px'
@@ -34,7 +33,7 @@ export const SideMenu: React.FC = () => {
                 justifyContent='space-between'
                 borderRadius='8px'
                 pr={1}
-                pt={6}
+                pt={8}
                 css={{
                     '&::-webkit-scrollbar': {
                         width: 8,
@@ -54,12 +53,7 @@ export const SideMenu: React.FC = () => {
                     },
                 }}
             >
-                <Accordion allowToggle>
-                    {navTree.map(
-                        (item, index) =>
-                            !item.skipSideMenu && <SideNavMenuItem {...item} key={index} />,
-                    )}
-                </Accordion>
+                <AccordionNav />
             </Flex>
             <Footer text-a />
         </Flex>

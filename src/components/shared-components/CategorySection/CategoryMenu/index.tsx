@@ -1,51 +1,79 @@
-import { Button, Flex, HStack } from '@chakra-ui/react';
-import { Link, useLocation } from 'react-router';
+import { Tab, TabList, Tabs } from '@chakra-ui/react';
+import { useEffect, useRef } from 'react';
+import { Link } from 'react-router';
 
 import { navTreeProps } from '~/configs/navigationConfig';
 import { BORDERS } from '~/constants/styles';
 
 type CategoryMenuProps = {
     list?: navTreeProps[];
+    activeSubcategory?: string;
 };
 
-const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [] }) => {
-    const { pathname } = useLocation();
+const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [], activeSubcategory }) => {
+    const activeIndex = list.findIndex((item) => item.route === activeSubcategory);
+    const selectedIndex = activeIndex !== -1 ? activeIndex : 0;
+    const tabListRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (tabListRef.current) {
+            const tabList = tabListRef.current;
+            const activeTab = tabList.children[selectedIndex] as HTMLElement;
+
+            if (activeTab) {
+                const offset =
+                    activeTab.offsetLeft - tabList.offsetWidth / 2 + activeTab.offsetWidth / 2;
+                tabList.scrollTo({ left: offset, behavior: 'smooth' });
+            }
+        }
+    }, [selectedIndex]);
 
     return (
-        <Flex
-            borderBottom={BORDERS.light}
-            mb={6}
-            overflowX='auto'
-            justifyContent='center'
-            css={{
-                scrollbarWidth: 'none',
-                '::-webkit-scrollbar': {
-                    display: 'none',
-                },
-            }}
-        >
-            <HStack align='start' spacing={0}>
+        <Tabs variant='unstyled' index={selectedIndex}>
+            <TabList
+                ref={tabListRef}
+                borderBottom={BORDERS.light}
+                mb={6}
+                display='flex'
+                overflowX='auto'
+                whiteSpace='nowrap'
+                flexWrap={{ base: 'unset', xl: 'wrap' }}
+                justifyContent={{ base: 'unset', md: 'center' }}
+                css={{
+                    scrollbarWidth: 'none',
+                    '::-webkit-scrollbar': {
+                        display: 'none',
+                    },
+                }}
+            >
                 {list.map((item, index) => (
-                    <Button
-                        to={item.route}
+                    <Tab
+                        outline='none'
                         key={index}
                         as={Link}
-                        size={{ base: 'sm', xl: 'md' }}
-                        color={item.route === pathname ? 'lime.600' : 'none'}
+                        to={item.route}
+                        fontSize={{ base: 'sm', xl: 'md' }}
                         border='none'
-                        borderBottom={item.route === pathname ? '2px solid' : 'none'}
                         borderRadius='none'
                         bg='none'
-                        _hover={{
-                            bg: 0,
-                            bgColor: 0,
+                        _selected={{
+                            color: 'lime.600',
+                            borderBottom: '2px solid',
+                            borderColor: 'lime.600',
+                            boxShadow: 'none',
                         }}
+                        _hover={{ bg: 'none' }}
+                        _focus={{
+                            outline: 'none',
+                            boxShadow: 'none',
+                        }}
+                        data-test-id={`tab-${item.navKey}-${index}`}
                     >
                         {item.title}
-                    </Button>
+                    </Tab>
                 ))}
-            </HStack>
-        </Flex>
+            </TabList>
+        </Tabs>
     );
 };
 

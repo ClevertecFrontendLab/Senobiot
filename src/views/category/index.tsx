@@ -1,33 +1,31 @@
-import { Flex } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
+import { SearchBar } from '~/components/layouts-components/SearchBar';
+import { CategorySection, CategorySectionNext } from '~/components/shared-components';
+import PageWrapper from '~/components/shared-components/PageWrapper';
 import { navTree } from '~/configs/navigationConfig';
-import { PADDINGS, WIDTHS } from '~/constants/styles';
-import { dishesList, sliderData } from '~/data';
-
-import { CategorySection, CategorySectionNext } from '../../components/shared-components';
-import { PageProps } from '../home';
+import { ApplicationState } from '~/store/configure-store';
 
 const nexSection = navTree.find((e) => e.navKey === 'desserts-baking'); // TODO remove after true api
 
-const CategoryPage: React.FC<PageProps> = ({ categoryTitle = '', categoryData = sliderData }) => (
-    <Flex
-        minH='100vh'
-        mx={PADDINGS.sectionMx}
-        px={{ base: 4, md: 5, xl: WIDTHS.sideMunu }}
-        display='column'
-    >
-        <CategorySection
-            categoryTitle={categoryTitle}
-            data={categoryData}
-            categoryButtonText='Загрузить еще'
-            noHeader={true}
-        />
-        <CategorySectionNext
-            title={nexSection?.title || ''}
-            description={nexSection?.description || ''}
-            data={dishesList}
-        />
-    </Flex>
-);
+const CategoryPage: React.FC = () => {
+    const data = useSelector((state: ApplicationState) => state.reciepts.filtrated);
+    const initialData = useSelector((state: ApplicationState) => state.reciepts.initial);
+
+    return (
+        <PageWrapper>
+            <SearchBar />
+            <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
+                <CategorySection data={data} categoryButtonText='Загрузить еще' noHeader={true} />
+                <CategorySectionNext
+                    title={nexSection?.title || ''}
+                    description={nexSection?.description || ''}
+                    data={initialData}
+                />
+            </VStack>
+        </PageWrapper>
+    );
+};
 
 export default CategoryPage;

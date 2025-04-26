@@ -1,4 +1,4 @@
-import { Flex, FlexProps, Image, ResponsiveValue } from '@chakra-ui/react';
+import { Flex, FlexProps, Image, ImageProps, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
 import { TextRegular, TextRegularProps } from '~/components/shared-components';
@@ -27,6 +27,7 @@ export interface RecieptCardProps
     cardFlexWidth?: FlexProps['flex'];
     imageBorderRadius?: string | number;
     minWidth?: FlexProps['minWidth'];
+    maxWidth?: FlexProps['maxWidth'];
     width?: FlexProps['width'];
     height?: FlexProps['height'];
     position?: FlexProps['position'];
@@ -35,8 +36,8 @@ export interface RecieptCardProps
     noButtons?: ResponsiveValue<boolean>;
     noDescription?: ResponsiveValue<boolean>;
     imageSrc?: string;
-    imageWidth?: ResponsiveValue<number>;
-    imageHeight?: ResponsiveValue<number>;
+    imageWidth?: ResponsiveValue<number | string>;
+    imageHeight?: ResponsiveValue<number | string>;
     titleMargin?: FlexProps['marginBottom'];
     descriptionMargin?: FlexProps['marginBottom'];
     subtitleOrder?: FlexProps['order'];
@@ -48,16 +49,21 @@ export interface RecieptCardProps
     gap?: FlexProps['gap'];
     cardHeaderNoOfLines?: ResponsiveValue<number>;
     descriptionHeight?: FlexProps['height'];
+    imageFit?: ImageProps['objectFit'];
+    noHoverEffect?: boolean;
+    cardDataTestId?: string;
 }
 
 export const RecieptCard: React.FC<RecieptCardProps> = ({
     cardFlexWidth,
+    maxWidth,
     minWidth = '328px',
     width = '100%',
     height,
     wrap = 'wrap',
     noImage = false,
     noButtons = false,
+    noHoverEffect = false,
     noDescription,
     imageWidth = { base: 158, xl: 346 },
     imageHeight = { base: 128, xl: 244 },
@@ -84,18 +90,22 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     gap,
     buttonsMargin = 'auto',
     descriptionHeight,
+    imageFit = 'unset',
+    cardDataTestId,
     ...rest
 }) => (
     <Flex
+        data-test-id={cardDataTestId}
         flex={cardFlexWidth}
         position={position}
         minWidth={minWidth}
+        maxWidth={maxWidth}
         w={width}
         h={height}
         wrap={wrap}
         border={cardBorder}
         cursor='pointer'
-        _hover={{ boxShadow: SHADOWS.sideMunu }}
+        _hover={!noHoverEffect ? { boxShadow: SHADOWS.sideMunu } : ''}
         transition='box-shadow 0.35s'
         borderRadius={cardBorderRadius}
         gap={gap}
@@ -107,6 +117,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
                 borderRadius={imageBorderRadius}
                 height={imageHeight}
                 width={imageWidth}
+                objectFit={imageFit}
             />
         )}
         <Flex
@@ -124,12 +135,10 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
             </Flex>
             {!noDescription && (
                 <Flex mb={descriptionMargin} order={descriptionOrder} height={descriptionHeight}>
-                    <TextRegular regText={text} />
+                    <TextRegular {...rest} regText={text} />
                 </Flex>
             )}
-            <Flex order={bookmarksOrder}>
-                <BookmarksSection {...rest} />
-            </Flex>
+            <BookmarksSection {...rest} order={bookmarksOrder} />
             <Flex order={buttonsOrder} justifyContent={buttonsJustify} mt={buttonsMargin}>
                 {!noButtons && <RecieptButtonsSection {...rest} />}
             </Flex>

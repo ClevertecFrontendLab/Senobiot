@@ -6,6 +6,7 @@ import { navTree } from '~/configs/navigationConfig';
 const AppViews: React.FC = () => (
     <Suspense fallback={<div>Загрузка...</div>}>
         <Routes>
+            <Route path=':category/:subcategory/:id' Component={lazy(() => import('./reciept'))} />
             {navTree.map((navItem) => {
                 const MainComponent =
                     navItem.route === '/'
@@ -25,6 +26,7 @@ const AppViews: React.FC = () => (
                     </React.Fragment>
                 );
             })}
+
             <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
     </Suspense>
