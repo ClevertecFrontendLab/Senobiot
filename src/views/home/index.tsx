@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SearchBar } from '~/components/layouts-components/SearchBar';
@@ -35,29 +35,31 @@ const HomePage: React.FC = () => {
     return (
         <PageWrapper>
             <SearchBar />
-            <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
+            <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
+                <Flex mb={PADDINGS.subsectionHeaderMb} direction='column' w='100%'>
+                    {data?.length ? (
+                        <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
+                    ) : (
+                        ''
+                    )}
+                    {data?.length ? <Slider activeSearch={activeSearch} slides={data} /> : ''}
+                </Flex>
                 {data?.length ? (
-                    <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
+                    <JuciestSection
+                        activeSearch={activeSearch}
+                        data={data}
+                        categoryTitle='Самое сочное'
+                    />
                 ) : (
                     ''
                 )}
-                {data?.length ? <Slider activeSearch={activeSearch} slides={data} /> : ''}
-            </Flex>
-            {data?.length ? (
-                <JuciestSection
-                    activeSearch={activeSearch}
-                    data={data}
-                    categoryTitle='Самое сочное'
+                <BlogsSection />
+                <CategorySectionNext
+                    title={nexSection?.title || ''}
+                    description={nexSection?.description || ''}
+                    data={initialData}
                 />
-            ) : (
-                ''
-            )}
-            <BlogsSection />
-            <CategorySectionNext
-                title={nexSection?.title || ''}
-                description={nexSection?.description || ''}
-                data={initialData}
-            />
+            </VStack>
         </PageWrapper>
     );
 };

@@ -18,7 +18,7 @@ import {
     TitleText,
 } from '~/components/shared-components';
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
-import { BORDERS, SHADOWS, WIDTHS } from '~/constants/styles';
+import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
 import { resetSearch, searchReciepts } from '~/reducers';
 import { isEmptySearch } from '~/selectors';
@@ -61,7 +61,6 @@ export const SearchBar: React.FC = () => {
     const handleSearch = () => {
         if (isEnabled) {
             dispatch(searchReciepts(inputValue));
-            // setInputValue('');
         }
     };
 
@@ -79,39 +78,40 @@ export const SearchBar: React.FC = () => {
     return (
         <Flex
             direction='column'
-            // pt={PADDINGS.header}
-            px={{ base: 0, md: 4, xl: WIDTHS.sideMunu }}
+            w={{ base: '100%', md: '480px', xl: 898 }}
+            mx='auto'
+            mb={{ base: 4, xl: 6 }} // for box shadow in focused search block
+            pb={{ base: 4, xl: 8 }} // for box shadow in focused search block
             _focusWithin={{
                 boxShadow: SHADOWS.searchBar,
                 borderRadius: '0 0 8px 8px',
             }}
-            pb={{ base: 4, xl: 8 }}
-            w={{ base: '100vw', md: '480px', xl: 898 }}
-            mx='auto'
-            mb={{ base: 4, '2xl': 6 }}
-            ml={{ base: -4, md: 'auto' }}
+            gap={{ base: 4, xl: 8 }}
         >
-            <TitleText titleText={title} titleTextFz={styles} titleTextLh={styles} />
-            {activeCategory?.description && (
-                <Flex maxW={{ xl: 696 }} m='0 auto' mt={{ base: 4, xl: 3 }} textAlign='center'>
-                    <TextRegular
-                        regTextAlign='center'
-                        regTextNoOfLines={4}
-                        regText={activeCategory.description}
-                        regTextColor='blackAlpha.600'
-                    />
-                </Flex>
-            )}
-            <Flex
-                m='0 auto'
-                mt={{ base: 4, xl: 8 }}
-                // mb={{ base: 8, '2xl': 6 }}
-                w={{ base: 284, md: 448, xl: 518 }}
-                maxW={{ base: 328, md: 448, xl: 518 }}
-                direction='column'
-            >
+            <Box>
+                <TitleText titleText={title} titleTextFz={styles} titleTextLh={styles} />
+                {activeCategory?.description && (
+                    <Flex
+                        maxW={{ xl: 696 }}
+                        mx='auto'
+                        mt={{ base: 4, xl: 3 }}
+                        px={{ base: 4, md: 'unset' }}
+                        textAlign='center'
+                    >
+                        <TextRegular
+                            regTextFz={{ base: '14px', xl: '16px' }}
+                            regTextAlign='center'
+                            regTextNoOfLines={4}
+                            regText={activeCategory.description}
+                            regTextColor='blackAlpha.600'
+                        />
+                    </Flex>
+                )}
+            </Box>
+
+            <Flex mx='auto' minW={{ base: 328, md: 448, xl: 518 }} direction='column'>
                 <Flex>
-                    <InputGroup display='flex' alignItems='center' mb={4}>
+                    <InputGroup display='flex' alignItems='center'>
                         <InputLeftElement position='initial' display='flex' mr={3}>
                             <IconButton
                                 data-test-id='filter-button'
@@ -194,6 +194,7 @@ export const SearchBar: React.FC = () => {
                     </InputGroup>
                 </Flex>
                 <Flex
+                    mt={{ xl: 4 }}
                     alignItems='center'
                     justifyContent='space-between'
                     display={{ base: 'none', xl: 'flex' }}

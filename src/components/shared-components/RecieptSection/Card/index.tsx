@@ -7,6 +7,7 @@ export const RecieptSectionCard: React.FC<{ reciept: RecipeProps }> = ({ reciept
 
     return (
         <RecieptCard
+            minWidth='auto'
             imageWidth={{ base: '100%', md: 232, xl: 353, '2xl': 553 }}
             imageHeight={{ base: 224, md: 'auto', xl: 410 }}
             wrap={{ base: 'wrap', md: 'nowrap' }}
@@ -15,9 +16,7 @@ export const RecieptSectionCard: React.FC<{ reciept: RecipeProps }> = ({ reciept
             text={description}
             imageSrc={image}
             categories={category}
-            bookmarkMaxHeight={12}
             bookmarkMarginTop={{ base: 4, md: 'unset' }}
-            bookmarkWrap={{ base: 'nowrap' }}
             titleTextFz={{ base: '24px', xl: '48px' }}
             titleTextLh={{ md: '32px', xl: '48px' }}
             titleTextFw={700}
@@ -28,6 +27,8 @@ export const RecieptSectionCard: React.FC<{ reciept: RecipeProps }> = ({ reciept
             bookmarkMb={8}
             bookmarksBookmarksValue={bookmarks}
             bookmarksLikesValue={likes}
+            bookmarksFlexDirection={{ base: 'column', md: 'row' }}
+            bookmarkWrap={{ base: 'nowrap', md: 'wrap' }}
             stateIconSize={3.5}
             stateTextFontSize='14px'
             bookBtnText='Оценить рецепт'

@@ -1,3 +1,4 @@
+import { VStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 import { SearchBar } from '~/components/layouts-components/SearchBar';
@@ -15,12 +16,14 @@ const CategoryPage: React.FC = () => {
     return (
         <PageWrapper>
             <SearchBar />
-            <CategorySection data={data} categoryButtonText='Загрузить еще' noHeader={true} />
-            <CategorySectionNext
-                title={nexSection?.title || ''}
-                description={nexSection?.description || ''}
-                data={initialData}
-            />
+            <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
+                <CategorySection data={data} categoryButtonText='Загрузить еще' noHeader={true} />
+                <CategorySectionNext
+                    title={nexSection?.title || ''}
+                    description={nexSection?.description || ''}
+                    data={initialData}
+                />
+            </VStack>
         </PageWrapper>
     );
 };

@@ -34,23 +34,29 @@ const RecieptPage: React.FC = () => {
 
     return (
         <PageWrapper pt={PADDINGS.pageRecieptTop}>
-            <RecieptSectionCard reciept={reciept} />
-            <VStack
-                gap={{ base: 6, xl: 8 }}
-                maxW='668px'
-                mx='auto'
-                mt={{ base: 6, xl: 8 }}
-                mb={{ base: 10, xl: 14 }}
-            >
-                <NutritionInfo nutritionValue={reciept.nutritionValue} />
-                <Ingridients ingredients={reciept.ingredients} defaultPortions={reciept.portions} />
-                <CookingSteps steps={reciept.steps} />
-                <AuthorCard authorData={authorData} />
+            <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
+                <RecieptSectionCard reciept={reciept} />
+                <VStack
+                    gap={{ base: 6, xl: 8 }}
+                    maxW='668px'
+                    mx='auto'
+                    mt={{ base: 6, xl: 8 }}
+                    mb={{ base: 10, xl: 14 }}
+                    w='100%'
+                >
+                    <NutritionInfo nutritionValue={reciept.nutritionValue} />
+                    <Ingridients
+                        ingredients={reciept.ingredients}
+                        defaultPortions={reciept.portions}
+                    />
+                    <CookingSteps steps={reciept.steps} />
+                    <AuthorCard authorData={authorData} />
+                </VStack>
+                <Flex mb={PADDINGS.subsectionHeaderMb} direction='column' w='100%'>
+                    <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
+                    <Slider slides={sliderData} />
+                </Flex>
             </VStack>
-            <Flex mb={PADDINGS.subsectionHeaderMb} direction='column'>
-                <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
-                <Slider slides={sliderData} />
-            </Flex>
         </PageWrapper>
     );
 };

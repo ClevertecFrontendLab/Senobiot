@@ -49,7 +49,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     if (!categoryCards.length) return;
 
     return (
-        <Flex justifyContent='space-between' mb={mb} direction='column'>
+        <Flex justifyContent='space-between' mb={mb} direction='column' w='100%'>
             {!noHeader && (
                 <Flex justifyContent='space-between' mb={categoryHeaderMb}>
                     <CategoryHeader title={categoryTitle} />

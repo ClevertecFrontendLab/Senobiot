@@ -11,8 +11,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ pt = PADDINGS.pageTop, childr
     <Flex
         minH='100vh'
         mx={PADDINGS.sectionMx} // на макете не учтен скроллбар
-        px={{ base: 4, md: 5, xl: 0 }}
-        display='column'
+        direction='column'
         w={{ '2xl': 1360 }}
         pt={pt}
         pb={{ base: PADDINGS.footer, xl: 'unset' }} // конец контента

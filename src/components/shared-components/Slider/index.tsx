@@ -17,7 +17,7 @@ type SliderProps = {
 };
 
 export const Slider: React.FC<SliderProps> = ({ slides = [], activeSearch }) => (
-    <Flex direction='column' position='relative'>
+    <Flex direction='column' position='relative' mr={{ base: -4, md: 0 }}>
         <Swiper
             data-test-id='carousel'
             modules={[Navigation]}

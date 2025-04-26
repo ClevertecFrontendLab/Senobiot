@@ -54,6 +54,8 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                             regTextNoOfLines={{ base: 3 }}
                             height={{ md: '168px', xl: '180px', '2xl': '192px' }}
                             bookmarkMaxHeight={6}
+                            bookmarkWrap={{ base: 'nowrap' }}
+                            bookmarksFlexDirection='column'
                         />
                     );
                 }

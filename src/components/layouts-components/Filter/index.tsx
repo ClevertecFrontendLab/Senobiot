@@ -167,7 +167,7 @@ export const RecipeFilter: React.FC = () => {
                     p={0}
                     h='100%'
                 >
-                    <VStack w='100%' gap={4} pr={{ base: 2.5 }}>
+                    <VStack w='100%' gap={4} pr={{ base: 2.5 }} mb={6}>
                         {/* Категория */}
                         <VStack w='100%' position='relative'>
                             <SelectInnerTags
