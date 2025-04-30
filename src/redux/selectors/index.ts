@@ -8,5 +8,3 @@ export const getSides = (state: ApplicationState) => state.keys.sides;
 export const getAllergens = (state: ApplicationState) => state.keys.allergens;
 export const getActiveSearch = (state: ApplicationState) => state.reciepts.activeSearch;
 export const isEmptySearch = (state: ApplicationState) => state.reciepts.isEmptySearch;
-export const getAllCategories = (state: ApplicationState) =>
-    state.categoriesApi.queries.getAllCategories?.data;

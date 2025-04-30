@@ -1,5 +1,4 @@
 import { Box, useBreakpointValue } from '@chakra-ui/react';
-import { useEffect } from 'react';
 
 import {
     BookmarkSideMenu,
@@ -14,19 +13,13 @@ import AppViews from '~/views';
 
 const AppLayout: React.FC = () => {
     const isDesktop = useBreakpointValue({ base: false, xl: true });
-    const { data: allCategories, isLoading } = useAllCategoriesQuery(undefined);
-
-    useEffect(() => {
-        if (allCategories) {
-            console.log('Данные получены:', allCategories);
-        }
-    }, [allCategories]);
+    const { isLoading } = useAllCategoriesQuery(undefined);
 
     return (
         <Box>
             {isLoading && <Loader />}
             <HeaderNavMenu />
-            {isDesktop && allCategories && <SideMenu categories={allCategories} />}
+            {isDesktop && <SideMenu />}
             <BookmarkSideMenu />
             <RecipeFilter />
             <AppViews />

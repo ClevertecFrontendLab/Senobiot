@@ -27,9 +27,9 @@ export const apiSlice = createApi({
     reducerPath: 'categoriesApi',
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     endpoints: (builder) => ({
-        allCategories: builder.query({
+        allCategories: builder.query<AllCategories[], void>({
             query: () => '/category',
-            transformResponse: (response: AllCategoriesResponse): AllCategories[] =>
+            transformResponse: (response: AllCategoriesResponse) =>
                 response
                     .map((item) => {
                         if (item.rootCategoryId) return null;
@@ -54,3 +54,4 @@ export const apiSlice = createApi({
 });
 
 export const { useAllCategoriesQuery } = apiSlice;
+export const getAllCategories = apiSlice.endpoints.allCategories.select();
