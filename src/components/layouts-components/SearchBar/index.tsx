@@ -159,8 +159,7 @@ export const SearchBar: React.FC = () => {
                             outline='none'
                             placeholder='Название или ингредиент...'
                             size={{ base: 'sm', xl: 'lg' }}
-                            _placeholder={{ color: '#134B00' }} //тему можно применить только через приватное сво-во
-                            // maxWidth='auto'
+                            _placeholder={{ color: '#134B00' }}
                         />
                         <InputRightElement display='flex'>
                             <IconButton
@@ -174,7 +173,6 @@ export const SearchBar: React.FC = () => {
                                 boxSize={{ base: 8, xl: 12 }}
                                 minW={{ base: 8, xl: 12 }}
                                 pt={{ base: 0, xl: 2 }}
-                                // pr={1}
                                 _hover={{ bg: 0 }}
                             />
                             {inputValue && (

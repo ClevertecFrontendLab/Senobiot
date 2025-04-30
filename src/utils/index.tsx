@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router';
 
-import { RecipeProps } from '~/types';
+import { AllCategories, RecipeProps } from '~/types';
 
 export const usePathnames = () => {
     const location = useLocation();
@@ -33,3 +33,17 @@ export const getHighlightedText = (
 
 export const searchByTitle = (reciepts: RecipeProps[], activeSearch: string) =>
     reciepts.filter((e) => e.title.toLowerCase().includes(activeSearch.toLowerCase()));
+
+export const getLocallySavedNavigationConfig = () => {
+    const saved = localStorage.getItem('navigationConfig');
+    if (saved) {
+        return JSON.parse(saved);
+    }
+    return saved;
+};
+
+export const saveLocallyNavigationConfig = (config: AllCategories[]) => {
+    if (!config.length) return;
+
+    localStorage.setItem('navigationConfig', JSON.stringify(config));
+};

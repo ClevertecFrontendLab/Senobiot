@@ -6,6 +6,7 @@ import { keysReducer } from '~/redux/reducers/keys';
 import { recieptsReducer } from '~/redux/reducers/reciepts';
 
 import { apiSlice } from '../query/create-api';
+import { navigationReducer } from '../reducers';
 import appReducer, { appSlice } from './app-slice';
 
 const isProduction = false;
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     [apiSlice.reducerPath]: apiSlice.reducer,
     reciepts: recieptsReducer,
     keys: keysReducer,
+    navigation: navigationReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;
