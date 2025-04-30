@@ -51,3 +51,21 @@ export type ComposeFiltersPayloadType = {
     meat?: string[];
     side?: string[];
 };
+
+export type AllCategories = {
+    category: string;
+    description?: string;
+    icon: string;
+    subCategories?: SubCategory[];
+    title: string;
+    route: string;
+    _id: string;
+};
+
+type SubCategory = {
+    category: string;
+    title: string;
+    _id: string;
+    rootCategoryId?: string;
+    route: string;
+};

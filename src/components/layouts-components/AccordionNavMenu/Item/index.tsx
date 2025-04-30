@@ -11,15 +11,14 @@ import {
 import React from 'react';
 import { Link, useLocation } from 'react-router';
 
-import { navTreeProps } from '~/configs/navigationConfig';
+import { AllCategories } from '~/types';
 
-const SideNavMenuItem: React.FC<navTreeProps> = ({
+const SideNavMenuItem: React.FC<AllCategories> = ({
+    category,
     title,
     icon = '',
-    submenu = [],
-    redirect,
+    subCategories = [],
     route,
-    navKey,
 }) => {
     const { pathname } = useLocation();
 
@@ -27,7 +26,7 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
         <AccordionItem border={0}>
             {({ isExpanded }) => (
                 <>
-                    <Link data-test-id={navKey} to={redirect || route}>
+                    <Link data-test-id={category === 'vegan' && 'vegan-cuisine'} to={route}>
                         <AccordionButton
                             bg={isExpanded ? 'lime.100' : 'white'}
                             px={2}
@@ -50,11 +49,11 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
                         </AccordionButton>
                     </Link>
                     <AccordionPanel textAlign='left' pb={4}>
-                        {submenu.map((category, index) => (
+                        {subCategories.map((category, index) => (
                             <Link
                                 to={category.route}
                                 key={index}
-                                data-test-id={`${category.navKey}${pathname === category.route ? '-active' : ''}`}
+                                data-test-id={`${category.category}${pathname === category.route ? '-active' : ''}`}
                             >
                                 <Text
                                     py={2}

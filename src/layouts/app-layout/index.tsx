@@ -1,6 +1,5 @@
 import { Box, useBreakpointValue } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import {
     BookmarkSideMenu,
@@ -10,20 +9,24 @@ import {
     RecipeFilter,
     SideMenu,
 } from '~/components/layouts-components';
-import { userLoadingSelector } from '~/store/app-slice';
+import { useAllCategoriesQuery } from '~/redux/query/create-api';
 import AppViews from '~/views';
 
 const AppLayout: React.FC = () => {
     const isDesktop = useBreakpointValue({ base: false, xl: true });
-    const isLoading = useSelector(userLoadingSelector);
-    console.log(isLoading);
-    useEffect(() => {}, []);
+    const { data: allCategories, isLoading } = useAllCategoriesQuery(undefined);
+
+    useEffect(() => {
+        if (allCategories) {
+            console.log('Данные получены:', allCategories);
+        }
+    }, [allCategories]);
 
     return (
         <Box>
             {isLoading && <Loader />}
             <HeaderNavMenu />
-            {isDesktop && <SideMenu />}
+            {isDesktop && allCategories && <SideMenu categories={allCategories} />}
             <BookmarkSideMenu />
             <RecipeFilter />
             <AppViews />

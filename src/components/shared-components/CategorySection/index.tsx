@@ -4,8 +4,8 @@ import { Link, useLocation } from 'react-router';
 
 import { getLocation } from '~/configs/navigationConfig';
 import { PADDINGS } from '~/constants/styles';
-import { setEmptySearch } from '~/reducers';
-import { getActiveSearch } from '~/selectors';
+import { setEmptySearch } from '~/redux/reducers';
+import { getActiveSearch } from '~/redux/selectors';
 import { CategorySectionProps } from '~/types';
 import { searchByTitle } from '~/utils';
 

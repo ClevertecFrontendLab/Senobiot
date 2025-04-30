@@ -1,14 +1,14 @@
 import { Accordion } from '@chakra-ui/react';
 import React from 'react';
 
-import { navTree } from '~/configs/navigationConfig';
+import { AllCategories } from '~/types';
 
 import SideNavMenuItem from './Item';
 
-export const AccordionNav: React.FC = () => (
+export const AccordionNav: React.FC<{ categories: AllCategories[] }> = ({ categories }) => (
     <Accordion allowToggle>
-        {navTree.map(
-            (item, index) => !item.skipSideMenu && <SideNavMenuItem {...item} key={index} />,
-        )}
+        {categories.map((item, index) => (
+            <SideNavMenuItem {...item} key={index} />
+        ))}
     </Accordion>
 );

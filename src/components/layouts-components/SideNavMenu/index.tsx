@@ -1,11 +1,12 @@
 import { Flex, useTheme } from '@chakra-ui/react';
 
 import { PADDINGS, SHADOWS } from '~/constants/styles';
+import { AllCategories } from '~/types';
 
 import { Footer } from '..';
 import { AccordionNav } from '../AccordionNavMenu';
 
-export const SideMenu: React.FC = () => {
+export const SideMenu: React.FC<{ categories: AllCategories[] }> = ({ categories = [] }) => {
     const theme = useTheme();
 
     return (
@@ -53,7 +54,7 @@ export const SideMenu: React.FC = () => {
                     },
                 }}
             >
-                <AccordionNav />
+                <AccordionNav categories={categories} />
             </Flex>
             <Footer text-a />
         </Flex>

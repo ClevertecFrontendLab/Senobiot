@@ -9,9 +9,9 @@ import { CategorySectionNext } from '~/components/shared-components';
 import PageWrapper from '~/components/shared-components/PageWrapper';
 import { navTree } from '~/configs/navigationConfig'; // TODO remove after true api
 import { PADDINGS } from '~/constants/styles';
-import { setEmptySearch } from '~/reducers';
-import { getActiveSearch } from '~/selectors';
-import { ApplicationState } from '~/store/configure-store';
+import { setEmptySearch } from '~/redux/reducers';
+import { getActiveSearch } from '~/redux/selectors';
+import { ApplicationState } from '~/redux/store/configure-store';
 import { searchByTitle } from '~/utils';
 
 import { JuciestSection } from './juciest';

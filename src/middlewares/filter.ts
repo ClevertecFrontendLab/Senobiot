@@ -1,7 +1,7 @@
 import { Middleware } from '@reduxjs/toolkit';
 
-import { applyFilters, filterByAllergens, filtrateReciepts } from '~/reducers';
-import { ApplicationState } from '~/store/configure-store';
+import { applyFilters, filterByAllergens, filtrateReciepts } from '~/redux/reducers';
+import { ApplicationState } from '~/redux/store/configure-store';
 import { ComposeFiltersPayloadType, RecipeProps } from '~/types';
 
 const filtrateAllergens = (reciepts: RecipeProps[], allergens: string[]) =>

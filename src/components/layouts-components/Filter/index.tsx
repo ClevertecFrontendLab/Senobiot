@@ -25,8 +25,8 @@ import {
 } from '~/components/shared-components';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
-import { applyFilters, resetReciepts } from '~/reducers';
-import { getCategories, getMeats, getSides } from '~/selectors';
+import { applyFilters, resetReciepts } from '~/redux/reducers';
+import { getCategories, getMeats, getSides } from '~/redux/selectors';
 import { ComposeFiltersPayloadType } from '~/types';
 
 import FilterTag from './FilterTag';

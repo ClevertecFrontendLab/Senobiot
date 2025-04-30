@@ -5,7 +5,7 @@ import { SearchBar } from '~/components/layouts-components/SearchBar';
 import { CategorySection, CategorySectionNext } from '~/components/shared-components';
 import PageWrapper from '~/components/shared-components/PageWrapper';
 import { navTree } from '~/configs/navigationConfig';
-import { ApplicationState } from '~/store/configure-store';
+import { ApplicationState } from '~/redux/store/configure-store';
 
 const nexSection = navTree.find((e) => e.navKey === 'desserts-baking'); // TODO remove after true api
 

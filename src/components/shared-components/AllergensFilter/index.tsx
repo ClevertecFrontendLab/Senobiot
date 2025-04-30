@@ -9,7 +9,7 @@ import {
     TextInputCustom,
 } from '~/components/shared-components';
 import { SHADOWS } from '~/constants/styles';
-import { filterByAllergens, resetRecieptsAllergens } from '~/reducers';
+import { filterByAllergens, resetRecieptsAllergens } from '~/redux/reducers';
 
 const predefinedAllergens: string[] = [
     'Молочные продукты',

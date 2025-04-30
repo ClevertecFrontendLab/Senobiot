@@ -20,8 +20,8 @@ import {
 import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
-import { resetSearch, searchReciepts } from '~/reducers';
-import { isEmptySearch } from '~/selectors';
+import { resetSearch, searchReciepts } from '~/redux/reducers';
+import { isEmptySearch } from '~/redux/selectors';
 import { usePathnames } from '~/utils';
 
 export const SearchBar: React.FC = () => {

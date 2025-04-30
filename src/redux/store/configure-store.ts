@@ -2,10 +2,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { filterMiddleware } from '~/middlewares/filter';
 // import { searchMiddleware } from '~/middlewares/search';
-import { apiSlice } from '~/query/create-api';
-import { keysReducer } from '~/reducers/keys';
-import { recieptsReducer } from '~/reducers/reciepts';
+import { keysReducer } from '~/redux/reducers/keys';
+import { recieptsReducer } from '~/redux/reducers/reciepts';
 
+import { apiSlice } from '../query/create-api';
 import appReducer, { appSlice } from './app-slice';
 
 const isProduction = false;

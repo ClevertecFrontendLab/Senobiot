@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import App from '~/app/App.tsx';
-import { store } from '~/store/configure-store.ts';
+import { store } from '~/redux/store/configure-store';
 import { defaultTheme } from '~/themes';
 
 import { AppProviders } from './providers';
