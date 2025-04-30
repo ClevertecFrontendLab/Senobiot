@@ -1,3 +1,4 @@
+export * from './Alerts';
 export * from './AllergensFilter';
 export * from './BlogsSection';
 export * from './BookmarksSection';
