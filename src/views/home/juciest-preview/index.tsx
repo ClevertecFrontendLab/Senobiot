@@ -6,16 +6,10 @@ import CategoryCard from '~/components/shared-components/CategorySection/Categor
 import { PADDINGS } from '~/constants/styles';
 import { CategorySectionProps } from '~/types';
 
-export const JuciestSection: React.FC<CategorySectionProps> = ({
-    data,
-    categoryTitle = '',
-    activeSearch,
-}) => (
-    // const juciestData = [...data].sort((a, b) => b.likes - a.likes);
-
+const JuciestPreview: React.FC<CategorySectionProps> = ({ recieptsData, activeSearch }) => (
     <Flex justifyContent='space-between' direction='column' mb={{ base: 8, xl: 10 }}>
         <Flex justifyContent='space-between'>
-            <CategoryHeader title={categoryTitle} mb={PADDINGS.subsectionHeaderMb} />
+            <CategoryHeader title='Самое сочное' mb={PADDINGS.subsectionHeaderMb} />
             <ButtonViewMore
                 display={{ base: 'none', xl: 'flex' }}
                 as={Link}
@@ -26,7 +20,7 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({
             />
         </Flex>
         <Flex flexWrap='wrap' gap={4}>
-            {data.map((card, index) => {
+            {recieptsData?.map((card, index) => {
                 const { title, description, category, subcategory, image, id, likes, bookmarks } =
                     card;
 
@@ -64,3 +58,5 @@ export const JuciestSection: React.FC<CategorySectionProps> = ({
         </Flex>
     </Flex>
 );
+
+export default JuciestPreview;

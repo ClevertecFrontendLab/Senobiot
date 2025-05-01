@@ -34,7 +34,6 @@ const navigation = createSlice({
             state.categoriesByIds = action.payload.categoriesByIds;
             state.subCategoriesByIds = action.payload.subCategoriesByIds;
             saveLocallyNavigationConfig(action.payload);
-            console.log(action.payload);
         });
     },
 });

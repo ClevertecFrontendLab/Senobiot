@@ -10,77 +10,79 @@ import {
     ServerErrorAlert,
 } from '~/components/shared-components';
 import PageWrapper from '~/components/shared-components/PageWrapper';
-import { useCategoryRecieptsQuery } from '~/redux/query/create-api';
+import { useJuciestRecieptsQuery } from '~/redux/query/create-api';
 import { getSubCategoriesByIds } from '~/redux/selectors';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { AllCategories, RecipeProps } from '~/types';
+import { RecipeProps } from '~/types';
 import { populateRecieptCategory } from '~/utils';
 
 // const nexSection = navTree.find((e) => e.navKey === 'desserts-baking'); // TODO remove after true api
 
-const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
-    const error = useSelector(userErrorSelector);
+const JuiciestPage: React.FC = () => {
+    // const activeSearch = ''; /// REMOVE!!!!!!!!!!!
+    const [juciestReciepts, setJuciestReciepts] = useState<RecipeProps[]>([]);
+    const [page, setPage] = useState<number>(1);
     const dispatch = useDispatch();
+    const categories = useSelector(getSubCategoriesByIds);
+    const error = useSelector(userErrorSelector);
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
     }, [dispatch]);
-    const [categoryReciepts, setCategoryReciepts] = useState<RecipeProps[]>([]);
-    const [page, setPage] = useState<number>(1);
-    const categories = useSelector(getSubCategoriesByIds);
 
-    // const data = useSelector((state: ApplicationState) => state.reciepts.filtrated);
-    // const initialData = useSelector((state: ApplicationState) => state.reciepts.initial);
-    const { categoryRu, apiQureryId, categoryDescription } = pageData;
+    const {
+        data: { data, meta } = {},
+        isLoading: isLoadingJuciest,
+        isError: isErrorJuciest,
+    } = useJuciestRecieptsQuery(
+        { limit: 8, page },
+        {
+            skip: !categories,
+        },
+    );
 
     const getMore = () => {
         setPage((prevPage) => prevPage + 1);
     };
 
-    const {
-        data: { data, meta } = {},
-        isLoading: isLoadingCategory,
-        isError: isErrorCategory,
-    } = useCategoryRecieptsQuery({ page, id: apiQureryId });
-
     useEffect(() => {
-        if (data && !isLoadingCategory) {
+        if (categories && !isLoadingJuciest) {
             if (data) {
                 const populatedData = data.map((e) => populateRecieptCategory(e, categories));
-                setCategoryReciepts(populatedData);
+                setJuciestReciepts((prevData) =>
+                    page === 1 ? populatedData : [...prevData, ...populatedData],
+                );
             }
-
-            if (!isErrorCategory) {
+            if (!isErrorJuciest) {
                 resetError();
             }
-        }
 
-        if (isErrorCategory) {
-            dispatch(setAppError('Error'));
+            if (isErrorJuciest) {
+                dispatch(setAppError('Error'));
+            }
         }
-    }, [data, isLoadingCategory, dispatch, isErrorCategory, categories, resetError]);
+    }, [categories, data, isLoadingJuciest, page, isErrorJuciest, dispatch, resetError]);
 
     // useEffect(() => {
-    //     if (isErrorCategory) {
+    //     if (isErrorJuciest) {
     //         dispatch(setAppError('Error'));
     //     }
-    // }, [isErrorCategory, dispatch]);
+    // }, [isErrorJuciest, dispatch]);
 
-    if (isLoadingCategory) {
+    if (isLoadingJuciest) {
         return <Loader />;
     }
 
     return (
         <PageWrapper>
             {error && <ServerErrorAlert onClose={resetError} />}
-            <SearchBar pageTitle={categoryRu} pageDescription={categoryDescription} />
+            <SearchBar pageTitle='Самое сочное' />
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
-                {!isErrorCategory && categoryReciepts?.length && (
+                {!isErrorJuciest && juciestReciepts?.length && (
                     <CategorySection
-                        categoryData={pageData}
-                        recieptsData={categoryReciepts}
+                        noFooter={meta?.totalPages === page}
+                        recieptsData={juciestReciepts}
                         categoryButtonText='Загрузить еще'
                         noHeader={true}
-                        noFooter={meta?.totalPages === page}
                         onClick={getMore}
                     />
                 )}
@@ -94,4 +96,4 @@ const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
     );
 };
 
-export default CategoryPage;
+export default JuiciestPage;

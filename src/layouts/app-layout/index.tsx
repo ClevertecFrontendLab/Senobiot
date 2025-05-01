@@ -10,17 +10,18 @@ import {
     SideMenu,
 } from '~/components/layouts-components';
 import { useAllCategoriesQuery } from '~/redux/query/create-api';
-import {
-    // setAppLoader,
-    userLoadingSelector,
-} from '~/redux/store/app-slice';
+import { userLoadingSelector } from '~/redux/store/app-slice';
 import { getLocallySavedNavigationConfig } from '~/utils';
 import AppViews from '~/views';
 
 const AppLayout: React.FC = () => {
     const isDesktop = useBreakpointValue({ base: false, xl: true });
-    const navigationConfig = getLocallySavedNavigationConfig();
-    useAllCategoriesQuery(undefined, { skip: !!navigationConfig });
+    const savedNavigationConfig = getLocallySavedNavigationConfig();
+    const { data: navigationConfig } = useAllCategoriesQuery(undefined, {
+        skip: !!savedNavigationConfig,
+    });
+    const navigationTree =
+        savedNavigationConfig?.navigationTree || navigationConfig?.navigationTree;
 
     const isLoading = useSelector(userLoadingSelector);
 
@@ -31,7 +32,7 @@ const AppLayout: React.FC = () => {
             {isDesktop && <SideMenu />}
             <BookmarkSideMenu />
             <RecipeFilter />
-            <AppViews />
+            {navigationTree && <AppViews navTree={navigationTree} />}
             <BottomNavMenu />
         </Box>
     );

@@ -11,3 +11,4 @@ export const isEmptySearch = (state: ApplicationState) => state.reciepts.isEmpty
 export const getNavigationConfig = (state: ApplicationState) => state.navigation.navigationTree;
 export const getSubCategoriesByIds = (state: ApplicationState) =>
     state.navigation.subCategoriesByIds;
+export const getCategoriesByIds = (state: ApplicationState) => state.navigation.categoriesByIds;

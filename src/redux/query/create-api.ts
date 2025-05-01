@@ -43,19 +43,29 @@ export const apiSlice = createApi({
             query: () => '/category',
             transformResponse: transformCategoriesResponse,
         }),
-        latestReciepts: builder.query<RecipeProps[], void>({
+        latestReciepts: builder.query({
             query: () => '/recipe?page=1&limit=10&sortBy=createdAt&sortOrder=desc',
             transformResponse: transformRecieptsResponse,
         }),
-        juciestReciepts: builder.query<RecipeProps[], void>({
-            query: () => '/recipe?page=1&limit=10&sortBy=likes&sortOrder=desc',
+        juciestReciepts: builder.query({
+            query: ({ limit = 8, page = 1 }) =>
+                `/recipe?page=${page}&limit=${limit}&sortBy=likes&sortOrder=desc`,
+            transformResponse: transformRecieptsResponse,
+        }),
+        categoryReciepts: builder.query({
+            query: ({ limit = 8, page = 1, id }) =>
+                `/recipe/category/${id}?page=${page}&limit=${limit}`,
             transformResponse: transformRecieptsResponse,
         }),
     }),
 });
 
-export const { useAllCategoriesQuery, useLatestRecieptsQuery, useJuciestRecieptsQuery } = apiSlice;
-// export const getAllCategories = apiSlice.endpoints.allCategories.select();
+export const {
+    useAllCategoriesQuery,
+    useLatestRecieptsQuery,
+    useJuciestRecieptsQuery,
+    useCategoryRecieptsQuery,
+} = apiSlice;
 
 function transformCategoriesResponse(response: AllCategoriesResponse) {
     const navigationTree: AllCategories[] = [];
@@ -67,33 +77,57 @@ function transformCategoriesResponse(response: AllCategoriesResponse) {
             const category = array.find((e) => e._id === item.rootCategoryId)!;
 
             subCategoriesByIds[item._id] = {
-                category: category.category,
-                categoryTitle: category?.title,
-                icon: BASE_ICON_URL + category?.icon,
-                title: item.title,
-                subcategory: item.category,
+                categoryId: category._id,
+                categoryEn: category.category,
+                categoryRu: category.title,
+                categoryIcon: BASE_ICON_URL + category?.icon,
+                categoryDescription: category.description ?? '',
+                subcategoryId: item._id,
+                subcategoryEn: item.category,
+                subcategoryRu: item.title,
+                subCategoriesList:
+                    category.subCategories?.map((e) => ({
+                        categoryEn: e.category,
+                        categoryRu: e.title,
+                        route: `/${category?.category}/${e.category}`,
+                    })) ?? [],
                 route: `/${category?.category}/${item.category}`,
-                id: item._id,
+                apiQureryId: item._id,
             };
 
             return;
         }
 
+        const subCategoriesList =
+            item.subCategories?.map((e) => ({
+                categoryEn: e.category,
+                categoryRu: e.title,
+                route: `/${item.category}/${e.category}`,
+            })) ?? [];
+
         const navigationBranch = {
-            category: item.category,
-            description: item.description,
-            icon: BASE_ICON_URL + item.icon,
-            subCategories: item.subCategories?.map((subItem) => ({
-                ...subItem,
-                route: `/${item.category}/${subItem.category}`,
-                categoryTitle: item.category,
-                subcategory: subItem.category,
-                icon: BASE_ICON_URL + item.icon,
-                id: subItem._id,
-            })),
-            title: item.title,
-            id: item._id,
-            route: `/${item.category}`,
+            categoryId: item._id,
+            categoryEn: item.category,
+            categoryRu: item.title,
+            categoryDescription: item.description ?? '',
+            categoryIcon: BASE_ICON_URL + item.icon,
+            route: `/${item.category}/${item.subCategories ? item.subCategories[0]?.category : ''}`,
+            apiQureryId: item.subCategories ? item.subCategories[0]?._id : '',
+            subCategoriesList,
+            subCategories:
+                item.subCategories?.map((subItem) => ({
+                    categoryId: item._id,
+                    categoryEn: item.category,
+                    categoryRu: item.title,
+                    categoryIcon: BASE_ICON_URL + item.icon,
+                    categoryDescription: item.description ?? '',
+                    subcategoryId: subItem._id,
+                    subcategoryEn: subItem.category,
+                    subcategoryRu: subItem.title,
+                    subCategoriesList,
+                    route: `/${item.category}/${subItem.category}`,
+                    apiQureryId: subItem._id,
+                })) ?? [],
         };
 
         navigationTree.push(navigationBranch);
@@ -108,5 +142,10 @@ function transformCategoriesResponse(response: AllCategoriesResponse) {
 }
 
 function transformRecieptsResponse(response: RecipesResponse) {
-    return response.data.map((e) => ({ ...e, image: BASE_ICON_URL + e.image, id: e._id }));
+    const updatedData = response.data.map((e) => ({
+        ...e,
+        image: BASE_ICON_URL + e.image,
+        id: e._id,
+    }));
+    return { ...response, data: updatedData };
 }

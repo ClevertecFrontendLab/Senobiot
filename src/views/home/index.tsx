@@ -1,10 +1,11 @@
 import { Flex, VStack } from '@chakra-ui/react';
 // import { useLatestRecieptsQuery } from '~/redux/query/create-api';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
-import { Slider } from '~/components/shared-components';
+import { ServerErrorAlert, Slider } from '~/components/shared-components';
 import { CategoryHeader } from '~/components/shared-components';
 import { BlogsSection } from '~/components/shared-components';
 // import { CategorySectionNext } from '~/components/shared-components';
@@ -17,7 +18,7 @@ import {
     // getActiveSearch,
     getSubCategoriesByIds,
 } from '~/redux/selectors';
-import { setAppLoader } from '~/redux/store/app-slice';
+import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { RecipeProps } from '~/types';
 // import { ApplicationState } from '~/redux/store/configure-store';
 import {
@@ -25,42 +26,76 @@ import {
     //  searchByTitle
 } from '~/utils';
 
-import { JuciestSection } from './juciest';
+import JuciestSection from './juciest-preview';
 
 // const nexSection = navTree.find((e) => e.navKey === 'vegan-cuisine'); // TODO remove after true api
 
 const HomePage: React.FC = () => {
     const activeSearch = ''; /// REMOVE!!!!!!!!!!!
     const [latestReciepts, setLatestReciepts] = useState<RecipeProps[]>([]);
-    const [juciestReciepts, seJuciestReciepts] = useState<RecipeProps[]>([]);
+    const [juciestReciepts, setJuciestReciepts] = useState<RecipeProps[]>([]);
     const dispatch = useDispatch();
-    const { data: latestData } = useLatestRecieptsQuery();
-    const { data: juciestData, isLoading } = useJuciestRecieptsQuery();
     const categories = useSelector(getSubCategoriesByIds);
+    const error = useSelector(userErrorSelector);
+    const resetError = useCallback(() => {
+        dispatch(setAppError(null));
+    }, [dispatch]);
 
-    // if (!categories) return;
+    const {
+        data: { data: latestData } = {},
+        isLoading: isLoadingLatest,
+        isError: isErrorLatest,
+    } = useLatestRecieptsQuery(undefined, { skip: !categories });
+    const {
+        data: { data: juciestData } = {},
+        isLoading: isLoadingJuciest,
+        isError: isErrorJuciest,
+    } = useJuciestRecieptsQuery(4, {
+        skip: !categories,
+    });
 
     useEffect(() => {
-        if (!isLoading) {
+        if (categories && !isLoadingLatest && !isLoadingJuciest) {
             if (latestData) {
                 const populatedData = latestData.map((e) => populateRecieptCategory(e, categories));
                 setLatestReciepts(populatedData);
-                console.log(populatedData);
             }
-
             if (juciestData) {
                 const populatedData = juciestData.map((e) =>
                     populateRecieptCategory(e, categories),
                 );
-                seJuciestReciepts(populatedData);
-                console.log(populatedData);
+                setJuciestReciepts(populatedData);
             }
 
-            dispatch(setAppLoader(false));
-        }
-    }, [categories, dispatch, juciestData, latestData, isLoading]);
+            if (!isErrorLatest && !isErrorJuciest) {
+                resetError();
+            }
 
-    if (!latestReciepts.length) return;
+            if (isErrorLatest || isErrorJuciest) {
+                dispatch(setAppError('Error'));
+            }
+        }
+    }, [
+        categories,
+        dispatch,
+        juciestData,
+        latestData,
+        isLoadingLatest,
+        isLoadingJuciest,
+        isErrorLatest,
+        isErrorJuciest,
+        resetError,
+    ]);
+
+    // useEffect(() => {
+    //     if (isErrorLatest || isErrorJuciest) {
+    //         dispatch(setAppError('Error'));
+    //     }
+    // }, [isErrorLatest, isErrorJuciest, dispatch]);
+
+    if (isLoadingLatest || isLoadingJuciest) {
+        return <Loader />;
+    }
 
     // const initialData = useSelector((state: ApplicationState) => state.reciepts.initial);
     // let data = useSelector((state: ApplicationState) => state.reciepts.filtrated);
@@ -76,20 +111,20 @@ const HomePage: React.FC = () => {
 
     return (
         <PageWrapper>
+            {error && <ServerErrorAlert onClose={resetError} />}
             <SearchBar pageTitle='Приятного аппетита!' />
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
-                <Flex mb={PADDINGS.subsectionHeaderMb} direction='column' w='100%'>
-                    <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
-                    <Slider activeSearch={activeSearch} slides={latestReciepts} />
-                </Flex>
-                {juciestReciepts?.length ? (
+                {latestReciepts?.length && (
+                    <Flex mb={PADDINGS.subsectionHeaderMb} direction='column' w='100%'>
+                        <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title='Новые рецепты' />
+                        <Slider activeSearch={activeSearch} slides={latestReciepts} />
+                    </Flex>
+                )}
+                {juciestReciepts?.length && (
                     <JuciestSection
-                        activeSearch={activeSearch}
-                        data={juciestReciepts}
-                        categoryTitle='Самое сочное'
+                        // activeSearch={activeSearch}
+                        recieptsData={juciestReciepts}
                     />
-                ) : (
-                    ''
                 )}
                 <BlogsSection />
                 {/* <CategorySectionNext

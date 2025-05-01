@@ -4,7 +4,7 @@ import { ApplicationState } from './configure-store';
 export type AppState = typeof initialState;
 
 const initialState = {
-    isLoading: true,
+    isLoading: false,
     error: '' as string | null,
 };
 export const appSlice = createSlice({
@@ -12,7 +12,9 @@ export const appSlice = createSlice({
     initialState,
     reducers: {
         setAppError(state, { payload: error }: PayloadAction<string | null>) {
-            state.error = error;
+            if (state.error !== error) {
+                state.error = error;
+            }
         },
         setAppLoader(state, { payload: isLoading }: PayloadAction<boolean>) {
             state.isLoading = isLoading;

@@ -13,10 +13,12 @@ export const ButtonViewMore: React.FC<ButtonViewMoreProps> = ({
     title,
     noButtonIcon = true,
     fz,
+    onClick,
     ...rest
 }) => (
     <Button
         {...rest}
+        onClick={onClick}
         bg='lime.300'
         color='black'
         borderRadius='6px'

@@ -34,7 +34,9 @@ export interface RecieptCardProps
     noDescription?: ResponsiveValue<boolean>;
     imageSrc?: string;
     imageWidth?: ResponsiveValue<number | string>;
+    imageMinWidth?: ResponsiveValue<number | string>;
     imageHeight?: ResponsiveValue<number | string>;
+    imageMinHeight?: ResponsiveValue<number | string>;
     titleMargin?: FlexProps['marginBottom'];
     descriptionMargin?: FlexProps['marginBottom'];
     subtitleOrder?: FlexProps['order'];
@@ -47,6 +49,7 @@ export interface RecieptCardProps
     cardHeaderNoOfLines?: ResponsiveValue<number>;
     cardHeaderHeight?: ResponsiveValue<number | string>;
     descriptionHeight?: FlexProps['height'];
+    descriptionMinHeight?: FlexProps['minHeight'];
     imageFit?: ImageProps['objectFit'];
     noHoverEffect?: boolean;
     cardDataTestId?: string;
@@ -65,6 +68,8 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     noDescription,
     imageWidth = { base: 158, xl: 346 },
     imageHeight = { base: 128, xl: 244 },
+    imageMinWidth,
+    imageMinHeight,
     imageSrc,
     title,
     text,
@@ -88,6 +93,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     gap,
     buttonsMargin = 'auto',
     descriptionHeight,
+    descriptionMinHeight,
     imageFit = 'unset',
     cardDataTestId,
     cardHeaderHeight = { base: '3em', xl: '1.5em' },
@@ -115,7 +121,9 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
                 alt={title}
                 borderRadius={imageBorderRadius}
                 height={imageHeight}
+                minH={imageMinHeight}
                 width={imageWidth}
+                minW={imageMinWidth}
                 objectFit={imageFit}
             />
         )}
@@ -133,7 +141,12 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
                 />
             </Flex>
             {!noDescription && (
-                <Flex mb={descriptionMargin} order={descriptionOrder} height={descriptionHeight}>
+                <Flex
+                    mb={descriptionMargin}
+                    order={descriptionOrder}
+                    height={descriptionHeight}
+                    minH={descriptionMinHeight}
+                >
                     <TextRegular {...rest} regText={text} />
                 </Flex>
             )}

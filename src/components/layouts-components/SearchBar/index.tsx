@@ -17,23 +17,18 @@ import {
     TextRegular,
     TitleText,
 } from '~/components/shared-components';
-// import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
 import { resetSearch, searchReciepts } from '~/redux/reducers';
 import { isEmptySearch } from '~/redux/selectors';
-// import { usePathnames } from '~/utils';
 
 export const SearchBar: React.FC<{ pageTitle: string; pageDescription?: string }> = ({
     pageTitle,
     pageDescription,
 }) => {
     const { openDrawer } = useDrawer();
-    // const pathnames = usePathnames();
     const dispatch = useDispatch();
     const isBadRequest = useSelector(isEmptySearch);
-    // const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]); // когда будет апи всё это выпилить
-    // const title = activeCategory?.subTitle || activeCategory?.title; // когда будет апи всё это выпилить
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
     const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const styles = { base: '2xl', xl: '5xl' };
@@ -83,6 +78,7 @@ export const SearchBar: React.FC<{ pageTitle: string; pageDescription?: string }
             direction='column'
             w={{ base: '100%', md: '480px', xl: 898 }}
             mx='auto'
+            px={{ base: 4, xl: '30px' }}
             mb={{ base: 4, xl: 6 }} // for box shadow in focused search block
             pb={{ base: 4, xl: 8 }} // for box shadow in focused search block
             _focusWithin={{
@@ -98,8 +94,7 @@ export const SearchBar: React.FC<{ pageTitle: string; pageDescription?: string }
                         maxW={{ xl: 696 }}
                         mx='auto'
                         mt={{ base: 4, xl: 3 }}
-                        px={{ base: 4, md: 'unset' }}
-                        textAlign='center'
+                        justifyContent='center'
                     >
                         <TextRegular
                             regTextFz={{ base: '14px', xl: '16px' }}
@@ -111,8 +106,7 @@ export const SearchBar: React.FC<{ pageTitle: string; pageDescription?: string }
                     </Flex>
                 )}
             </Box>
-
-            <Flex mx='auto' minW={{ base: 328, md: 448, xl: 518 }} direction='column'>
+            <Flex mx='auto' minW={{ base: 298, md: 448, xl: 518 }} direction='column'>
                 <Flex>
                     <InputGroup display='flex' alignItems='center'>
                         <InputLeftElement position='initial' display='flex' mr={3}>

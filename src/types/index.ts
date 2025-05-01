@@ -38,10 +38,10 @@ export type CategoriesProps = {
 };
 
 export type CategorySectionProps = {
-    categoryTitle?: string;
+    recieptsData?: RecipeProps[];
+    categoryData?: AllCategories;
     categoryButtonText?: string;
     noButton?: boolean;
-    data: RecipeProps[];
     categoryHeaderMb?: string | number;
     noHeader?: boolean;
     noFooter?: boolean;
@@ -50,6 +50,7 @@ export type CategorySectionProps = {
     noHeaderButton?: boolean;
     mb?: string | number;
     activeSearch?: string | null;
+    onClick?: () => void;
 };
 
 export type ComposeFiltersPayloadType = {
@@ -60,13 +61,35 @@ export type ComposeFiltersPayloadType = {
 };
 
 export type AllCategories = {
-    category: string;
-    description?: string;
-    icon: string;
-    subCategories?: SubCategory[];
-    title: string;
+    categoryId: string;
+    categoryEn: string;
+    categoryRu: string;
+    categoryDescription?: string;
+    categoryIcon: string;
     route: string;
-    id: string;
+    apiQureryId: string;
+    subCategories?: SubCategory[];
+    subCategoriesList: SubCategoryList[];
+};
+
+export type SubCategory = {
+    categoryId: string;
+    categoryEn: string;
+    categoryRu: string;
+    categoryIcon: string;
+    categoryDescription: string;
+    subcategoryId: string;
+    subcategoryEn: string;
+    subcategoryRu: string;
+    route: string;
+    subCategoriesList: SubCategoryList[];
+    apiQureryId: string;
+};
+
+export type SubCategoryList = {
+    categoryEn: string;
+    categoryRu: string;
+    route: string;
 };
 
 export type SubCategoriesByIds = {
@@ -75,15 +98,4 @@ export type SubCategoriesByIds = {
 
 export type CategoriesByIds = {
     [key: string]: AllCategories;
-};
-
-type SubCategory = {
-    category: string;
-    categoryTitle: string;
-    subcategory: string;
-    title: string;
-    id: string;
-    icon: string;
-    rootCategoryId?: string;
-    route: string;
 };

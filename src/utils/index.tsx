@@ -55,14 +55,14 @@ export const populateRecieptCategory = (
 ) => {
     const populatedCategories = reciept.categoriesIds
         .map((e) => ({
-            categoryTitle: categoriesIds[e].categoryTitle,
-            categoryIconUrl: categoriesIds[e].icon,
+            categoryTitle: categoriesIds[e].categoryRu,
+            categoryIconUrl: categoriesIds[e].categoryIcon,
         }))
         .filter(
             (obj, index, array) =>
                 array.findIndex((item) => item.categoryTitle === obj.categoryTitle) === index,
         );
-    const populatedSubCategories = reciept.categoriesIds.map((e) => categoriesIds[e].subcategory);
+    const populatedSubCategories = reciept.categoriesIds.map((e) => categoriesIds[e].subcategoryRu);
 
     return { ...reciept, category: populatedCategories, subcategory: populatedSubCategories };
 };

@@ -1,17 +1,13 @@
 import { Tab, TabList, Tabs } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
-import { navTreeProps } from '~/configs/navigationConfig';
 import { BORDERS } from '~/constants/styles';
+import { SubCategoryList } from '~/types';
 
-type CategoryMenuProps = {
-    list?: navTreeProps[];
-    activeSubcategory?: string;
-};
-
-const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [], activeSubcategory }) => {
-    const activeIndex = list.findIndex((item) => item.route === activeSubcategory);
+const CategoryMenu: React.FC<{ list: SubCategoryList[] }> = ({ list }) => {
+    const { pathname } = useLocation();
+    const activeIndex = list.findIndex((item) => item.route === pathname);
     const selectedIndex = activeIndex !== -1 ? activeIndex : 0;
     const tabListRef = useRef<HTMLDivElement>(null);
 
@@ -67,9 +63,9 @@ const CategoryMenu: React.FC<CategoryMenuProps> = ({ list = [], activeSubcategor
                             outline: 'none',
                             boxShadow: 'none',
                         }}
-                        data-test-id={`tab-${item.navKey}-${index}`}
+                        data-test-id={`tab-${item.categoryEn}-${index}`}
                     >
-                        {item.title}
+                        {item.categoryRu}
                     </Tab>
                 ))}
             </TabList>
