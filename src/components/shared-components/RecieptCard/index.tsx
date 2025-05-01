@@ -2,10 +2,7 @@ import { Flex, FlexProps, Image, ImageProps, ResponsiveValue } from '@chakra-ui/
 import React from 'react';
 
 import { TextRegular, TextRegularProps } from '~/components/shared-components';
-import {
-    BookmarksSection,
-    BookmarksSectionProps,
-} from '~/components/shared-components/BookmarksSection';
+import { BookmarksSection, BookmarksSectionProps } from '~/components/shared-components';
 import { TitleTextProps } from '~/components/shared-components/Text/Title';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 
@@ -48,6 +45,7 @@ export interface RecieptCardProps
     buttonsJustify?: FlexProps['justifyContent'];
     gap?: FlexProps['gap'];
     cardHeaderNoOfLines?: ResponsiveValue<number>;
+    cardHeaderHeight?: ResponsiveValue<number | string>;
     descriptionHeight?: FlexProps['height'];
     imageFit?: ImageProps['objectFit'];
     noHoverEffect?: boolean;
@@ -92,6 +90,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     descriptionHeight,
     imageFit = 'unset',
     cardDataTestId,
+    cardHeaderHeight = { base: '3em', xl: '1.5em' },
     ...rest
 }) => (
     <Flex
@@ -126,7 +125,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
             textAlign={cardContentTextAlign}
             width='100%'
         >
-            <Flex mb={titleMargin} order={subtitleOrder}>
+            <Flex mb={titleMargin} order={subtitleOrder} h={cardHeaderHeight}>
                 <SubtitleText
                     {...rest}
                     titleText={title}

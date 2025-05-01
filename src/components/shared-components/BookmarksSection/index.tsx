@@ -1,5 +1,7 @@
 import { Flex, FlexProps, HStack, ResponsiveValue, SystemStyleObject } from '@chakra-ui/react';
 
+import { CategoriesProps } from '~/types';
+
 import { ButtonCategory, ButtonCategoryProps } from '../Buttons';
 import { StatItem, StatItemProps } from '../StatItem';
 
@@ -14,7 +16,7 @@ export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProp
     bookmarkStatGap?: ResponsiveValue<number>;
     bookmarkMb?: ResponsiveValue<number | string>;
     bookmarkMarginTop?: ResponsiveValue<number | string>;
-    categories?: string[];
+    categories?: CategoriesProps[];
     categorySx?: SystemStyleObject;
     order?: FlexProps['order'];
     bookmarkMaxHeight?: FlexProps['maxHeight'];
@@ -69,7 +71,8 @@ export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
                         key={index}
                         {...props}
                         categoryBg={categoryBg}
-                        categoryKey={e}
+                        categoryTitle={e.categoryTitle}
+                        categoryIconUrl={e.categoryIconUrl}
                     />
                 ))}
             </Flex>

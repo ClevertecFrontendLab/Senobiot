@@ -1,8 +1,10 @@
 export type RecipeProps = {
+    _id: string;
     id: string;
     title: string;
     description: string;
-    category: string[];
+    category: CategoriesProps[];
+    categoriesIds: string[];
     subcategory: string[];
     image: string;
     bookmarks: number;
@@ -28,6 +30,11 @@ export type RecipeProps = {
     }[];
     meat?: string;
     side: string;
+};
+
+export type CategoriesProps = {
+    categoryTitle: string;
+    categoryIconUrl: string;
 };
 
 export type CategorySectionProps = {
@@ -59,13 +66,24 @@ export type AllCategories = {
     subCategories?: SubCategory[];
     title: string;
     route: string;
-    _id: string;
+    id: string;
+};
+
+export type SubCategoriesByIds = {
+    [key: string]: SubCategory;
+};
+
+export type CategoriesByIds = {
+    [key: string]: AllCategories;
 };
 
 type SubCategory = {
     category: string;
+    categoryTitle: string;
+    subcategory: string;
     title: string;
-    _id: string;
+    id: string;
+    icon: string;
     rootCategoryId?: string;
     route: string;
 };

@@ -17,20 +17,23 @@ import {
     TextRegular,
     TitleText,
 } from '~/components/shared-components';
-import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
+// import { routeFinder } from '~/configs/navigationConfig'; // когда будет апи всё это выпилить
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
 import { resetSearch, searchReciepts } from '~/redux/reducers';
 import { isEmptySearch } from '~/redux/selectors';
-import { usePathnames } from '~/utils';
+// import { usePathnames } from '~/utils';
 
-export const SearchBar: React.FC = () => {
+export const SearchBar: React.FC<{ pageTitle: string; pageDescription?: string }> = ({
+    pageTitle,
+    pageDescription,
+}) => {
     const { openDrawer } = useDrawer();
-    const pathnames = usePathnames();
+    // const pathnames = usePathnames();
     const dispatch = useDispatch();
     const isBadRequest = useSelector(isEmptySearch);
-    const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]); // когда будет апи всё это выпилить
-    const title = activeCategory?.subTitle || activeCategory?.title; // когда будет апи всё это выпилить
+    // const activeCategory = routeFinder(pathnames.length > 1 ? pathnames[1] : pathnames[0]); // когда будет апи всё это выпилить
+    // const title = activeCategory?.subTitle || activeCategory?.title; // когда будет апи всё это выпилить
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
     const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const styles = { base: '2xl', xl: '5xl' };
@@ -89,8 +92,8 @@ export const SearchBar: React.FC = () => {
             gap={{ base: 4, xl: 8 }}
         >
             <Box>
-                <TitleText titleText={title} titleTextFz={styles} titleTextLh={styles} />
-                {activeCategory?.description && (
+                <TitleText titleText={pageTitle} titleTextFz={styles} titleTextLh={styles} />
+                {pageDescription && (
                     <Flex
                         maxW={{ xl: 696 }}
                         mx='auto'
@@ -102,7 +105,7 @@ export const SearchBar: React.FC = () => {
                             regTextFz={{ base: '14px', xl: '16px' }}
                             regTextAlign='center'
                             regTextNoOfLines={4}
-                            regText={activeCategory.description}
+                            regText={pageDescription}
                             regTextColor='blackAlpha.600'
                         />
                     </Flex>

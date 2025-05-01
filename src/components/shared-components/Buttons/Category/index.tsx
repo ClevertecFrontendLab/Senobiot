@@ -1,10 +1,10 @@
 import { Button, Image, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
-import { getCategoryByKey } from '~/configs/navigationConfig';
+// import { getCategoryByKey } from '~/configs/navigationConfig';
 
 export type ButtonCategoryProps = {
-    categoryKey?: string;
+    categoryTitle?: string;
     categoryIconUrl?: string;
     categoryColor?: string;
     categoryBg?: string;
@@ -17,7 +17,7 @@ export type ButtonCategoryProps = {
 };
 
 export const ButtonCategory: React.FC<ButtonCategoryProps> = ({
-    categoryKey,
+    // categoryKey,
     categoryColor = 'black',
     categoryBg = 'lime.300',
     categoryBorderRadius = '4px',
@@ -26,36 +26,36 @@ export const ButtonCategory: React.FC<ButtonCategoryProps> = ({
     categoryPb,
     categoryTextFz,
     categoryTextNoofLines,
-}) => {
-    if (!categoryKey) return;
-    const categoryProps = getCategoryByKey(categoryKey);
+    categoryIconUrl,
+    categoryTitle,
+}) => (
+    // if (!categoryKey) return;
+    // const categoryProps = getCategoryByKey(categoryKey);
 
-    if (!categoryProps) return;
-    const { icon, title } = categoryProps;
+    // if (!categoryProps) return;
+    // const { icon, title } = categoryProps;
 
-    return (
-        <Button
-            flexShrink={0}
-            textAlign='left'
-            pb={categoryPb}
-            noOfLines={categoryTextNoofLines}
-            size='xs'
-            bg={categoryBg}
-            color={categoryColor}
-            borderRadius={categoryBorderRadius}
-            px={categoryPx}
-            py={categoryPy}
-            fontWeight={400}
-            fontSize={categoryTextFz}
-            leftIcon={<Image src={icon} alt={`${title} icon`} boxSize={4} />}
-            _hover={{
-                bg: categoryBg,
-            }}
-            _active={{
-                bg: categoryBg,
-            }}
-        >
-            {title}
-        </Button>
-    );
-};
+    <Button
+        flexShrink={0}
+        textAlign='left'
+        pb={categoryPb}
+        noOfLines={categoryTextNoofLines}
+        size='xs'
+        bg={categoryBg}
+        color={categoryColor}
+        borderRadius={categoryBorderRadius}
+        px={categoryPx}
+        py={categoryPy}
+        fontWeight={400}
+        fontSize={categoryTextFz}
+        leftIcon={<Image src={categoryIconUrl} alt={`${categoryTitle} icon`} boxSize={4} />}
+        _hover={{
+            bg: categoryBg,
+        }}
+        _active={{
+            bg: categoryBg,
+        }}
+    >
+        {categoryTitle}
+    </Button>
+);

@@ -1,6 +1,8 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
+import { CategoriesProps } from '~/types';
+
 import { RecieptCard, RecieptCardProps } from '../..';
 
 export interface CategoryCardProps extends RecieptCardProps {
@@ -9,7 +11,7 @@ export interface CategoryCardProps extends RecieptCardProps {
     img?: string;
     icon?: string;
     hiddenElements?: boolean;
-    categories: string[];
+    categories: CategoriesProps[];
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({

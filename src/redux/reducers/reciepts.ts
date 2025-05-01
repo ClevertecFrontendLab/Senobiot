@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import mockRespone from '~/data/data.json';
 import { ComposeFiltersPayloadType, RecipeProps } from '~/types';
+// import { apiSlice } from '../query/create-api';
 const data = JSON.parse(JSON.stringify(mockRespone));
 
 type RecieptsFilterReducerProps = {
@@ -12,6 +13,7 @@ type RecieptsFilterReducerProps = {
     activeFilters: ComposeFiltersPayloadType | null;
     activeSearch?: string | null;
     isEmptySearch?: boolean | null;
+    latest?: RecipeProps[];
 };
 
 const initialState: RecieptsFilterReducerProps = {
@@ -59,6 +61,12 @@ const reciepts = createSlice({
             state.isEmptySearch = action.payload;
         },
     },
+    // extraReducers: (builder) => {
+    //     builder.addMatcher(apiSlice.endpoints.latestReciepts.matchFulfilled, (state, action) => {
+    //         state.latest = action?.payload;
+    //         console.log(action?.payload);
+    //     });
+    // },
 });
 
 export const {

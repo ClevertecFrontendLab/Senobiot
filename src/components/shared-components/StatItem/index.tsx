@@ -15,7 +15,7 @@ export type StatItemProps = {
 
 export const StatItem: React.FC<StatItemProps> = ({
     statIconUrl,
-    statValue = 85,
+    statValue,
     statTextColor = 'lime.600',
     statTextFontWeight = 700,
     stateIconSize = 8,
@@ -34,7 +34,7 @@ export const StatItem: React.FC<StatItemProps> = ({
                 fontWeight={statTextFontWeight}
                 lineHeight={stateTextLh}
             >
-                {statValue}
+                {statValue === undefined ? '-' : statValue}
             </Text>
         </HStack>
     </Flex>

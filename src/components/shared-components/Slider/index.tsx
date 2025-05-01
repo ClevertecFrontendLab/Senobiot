@@ -49,7 +49,8 @@ export const Slider: React.FC<SliderProps> = ({ slides = [], activeSearch }) => 
             }}
         >
             {slides.map((slide, index) => {
-                const { title, description, image, category, subcategory, id } = slide;
+                const { title, description, image, category, subcategory, id, likes, bookmarks } =
+                    slide;
 
                 return (
                     <SwiperSlide key={index} data-test-id={`carousel-card-${index}`}>
@@ -60,6 +61,8 @@ export const Slider: React.FC<SliderProps> = ({ slides = [], activeSearch }) => 
                                 image={image}
                                 categories={category}
                                 activeSearch={activeSearch}
+                                likesAmount={likes}
+                                bookmarksAmount={bookmarks}
                             />
                         </Link>
                     </SwiperSlide>
