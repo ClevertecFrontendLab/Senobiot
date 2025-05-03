@@ -1,13 +1,15 @@
 import { Tab, TabList, Tabs } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router';
+import { Link } from 'react-router';
 
 import { BORDERS } from '~/constants/styles';
 import { SubCategoryList } from '~/types';
 
-const CategoryMenu: React.FC<{ list: SubCategoryList[] }> = ({ list }) => {
-    const { pathname } = useLocation();
-    const activeIndex = list.findIndex((item) => item.route === pathname);
+const CategoryMenu: React.FC<{ list: SubCategoryList[]; activeSubcategory?: string }> = ({
+    list,
+    activeSubcategory,
+}) => {
+    const activeIndex = list.findIndex((item) => item.categoryEn === activeSubcategory);
     const selectedIndex = activeIndex !== -1 ? activeIndex : 0;
     const tabListRef = useRef<HTMLDivElement>(null);
 
@@ -33,8 +35,8 @@ const CategoryMenu: React.FC<{ list: SubCategoryList[] }> = ({ list }) => {
                 display='flex'
                 overflowX='auto'
                 whiteSpace='nowrap'
-                flexWrap={{ base: 'unset', xl: 'wrap' }}
-                justifyContent={{ base: 'unset', xl: 'center' }}
+                flexWrap={{ base: 'unset', md: 'wrap' }}
+                justifyContent={{ base: 'unset', md: 'center' }}
                 css={{
                     scrollbarWidth: 'none',
                     '::-webkit-scrollbar': {

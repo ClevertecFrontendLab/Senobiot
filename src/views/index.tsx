@@ -1,41 +1,19 @@
 import React, { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 
-import { PAGE_TITLES } from '~/constants';
-import { AllCategories } from '~/types';
+import { NavigationConfig } from '~/types';
 
 const CategoryComponent = lazy(() => import('./category'));
-const juciestPageData = {
-    categoryEn: 'The juiciest',
-    categoryRu: PAGE_TITLES.juiciest,
-    route: '/the-juiciest',
-};
 
-const AppViews: React.FC<{ navTree: AllCategories[] }> = ({ navTree }) => (
+const AppViews: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => (
     <Suspense fallback={<div>Загрузка...</div>}>
         <Routes>
             <Route path=':category/:subcategory/:id' Component={lazy(() => import('./reciept'))} />
             <Route path='/' Component={lazy(() => import('./home'))} />
             <Route
-                path='/the-juiciest'
-                element={<CategoryComponent pageData={juciestPageData} />}
+                path='/:category/:subcategory?'
+                element={<CategoryComponent navigationConfig={navigationConfig} />}
             />
-
-            {navTree.map((navItem, index) => (
-                <React.Fragment key={index}>
-                    <Route
-                        path={navItem.route}
-                        element={<CategoryComponent pageData={navItem} />}
-                    />
-                    {navItem.subCategories?.map((subNavItem, idx) => (
-                        <Route
-                            key={idx}
-                            path={subNavItem.route}
-                            element={<CategoryComponent pageData={subNavItem} />}
-                        />
-                    ))}
-                </React.Fragment>
-            ))}
             <Route path='/not-found' Component={lazy(() => import('./404'))} />
             <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>

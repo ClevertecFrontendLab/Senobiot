@@ -1,6 +1,7 @@
 import { VStack } from '@chakra-ui/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
@@ -10,26 +11,36 @@ import {
     PageWrapper,
     ServerErrorAlert,
 } from '~/components/shared-components';
-import { PAGE_TITLES } from '~/constants';
+import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { useCategoryRecieptsQuery, useJuciestRecieptsQuery } from '~/redux/query/create-api';
-import { getCategoriesByIds, getSubCategoriesByIds } from '~/redux/selectors';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { AllCategories, RecipeProps } from '~/types';
+import { NavigationConfig, RecipeProps } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
-const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
-    const { categoryRu, apiQureryId, categoryDescription, categoryId } = pageData;
+const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
+    const { category, subcategory } = useParams<{ category: string; subcategory: string }>();
+
+    const { subCategoriesByIds, categoriesByIds, navigationTree } = navigationConfig;
+    const currentCategory = navigationTree.find((e) => e.categoryEn === category);
+    const currentSubCategory = currentCategory?.subCategories?.find(
+        (e) => e.subcategoryEn === subcategory,
+    );
+
+    const { categoryRu, categoryDescription, categoryId } = currentCategory || {};
+    const { apiQureryId } = currentSubCategory || {};
+
     const error = useSelector(userErrorSelector);
     const dispatch = useDispatch();
-    const subCategories = useSelector(getSubCategoriesByIds);
-    const categories = useSelector(getCategoriesByIds);
+
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
     }, [dispatch]);
+
     const randomCategory = useMemo(
-        () => getRandomCategory(categories, categoryId),
-        [categories, categoryId],
+        () => getRandomCategory(categoriesByIds, categoryId),
+        [categoriesByIds, categoryId],
     );
+
     const [categoryReciepts, setCategoryReciepts] = useState<RecipeProps[]>([]);
     const [page, setPage] = useState<number>(1);
     const [randomCategoryData, setRandomCategoryData] = useState<{
@@ -40,22 +51,15 @@ const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
     const getMore = () => {
         setPage((prevPage) => prevPage + 1);
     };
-    //   const isJuiciestPage: boolean = categoryRu === PAGE_TITLES.juiciest;
-    //     const {
-    //         data: { data: categoryData, meta } = {},
-    //         isLoading: isLoadingCategory,
-    //         isError: isErrorCategory,
-    //     } = !isJuiciestPage ? useCategoryRecieptsQuery({ page, id: apiQureryId }) : useJuciestRecieptsQuery(
-    //         { limit: 8, page },
-    //         { skip: !categories },
-    //     );
 
-    const isJuiciestPage: boolean = categoryRu === PAGE_TITLES.juiciest;
+    const isJuiciestPage: boolean = category === EXCLUDED_ROUTES.juiciest;
+
     const categoryQuery = useCategoryRecieptsQuery(
         { page, id: apiQureryId },
         { skip: isJuiciestPage },
     );
     const juiciestQuery = useJuciestRecieptsQuery({ limit: 8, page }, { skip: !isJuiciestPage });
+
     const categoryData = isJuiciestPage ? juiciestQuery.data?.data : categoryQuery.data?.data;
     const isLoadingCategory = isJuiciestPage ? juiciestQuery.isLoading : categoryQuery.isLoading;
     const isErrorCategory = isJuiciestPage ? juiciestQuery.isError : categoryQuery.isError;
@@ -65,13 +69,13 @@ const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
         data: { data: randomCategoryReciepts } = {},
         isLoading: isLoadingRandom,
         isError: isErrorRandom,
-    } = useCategoryRecieptsQuery({ id: randomCategory.apiQureryId }, { skip: !subCategories });
+    } = useCategoryRecieptsQuery({ id: randomCategory.apiQureryId }, { skip: !subCategoriesByIds });
 
     useEffect(() => {
-        if (subCategories && !isLoadingCategory && !isLoadingRandom) {
+        if (subCategoriesByIds && !isLoadingCategory && !isLoadingRandom) {
             if (categoryData?.length) {
                 const populatedData = categoryData.map((e) =>
-                    populateRecieptCategory(e, subCategories),
+                    populateRecieptCategory(e, subCategoriesByIds),
                 );
                 setCategoryReciepts((prevData) =>
                     page === 1 ? populatedData : [...prevData, ...populatedData],
@@ -83,7 +87,7 @@ const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
                     const { categoryRu, categoryDescription } = randomCategory;
 
                     const populatedData = randomCategoryReciepts.map((e) =>
-                        populateRecieptCategory(e, subCategories),
+                        populateRecieptCategory(e, subCategoriesByIds),
                     );
 
                     setRandomCategoryData({
@@ -109,9 +113,10 @@ const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
         isLoadingRandom,
         isErrorCategory,
         isErrorRandom,
-        categories,
+        category,
+        subcategory,
+        subCategoriesByIds,
         page,
-        subCategories,
         dispatch,
         resetError,
     ]);
@@ -127,11 +132,15 @@ const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
     return (
         <PageWrapper>
             {error && <ServerErrorAlert onClose={resetError} />}
-            <SearchBar pageTitle={categoryRu} pageDescription={categoryDescription} />
+            <SearchBar
+                pageTitle={(!isJuiciestPage ? categoryRu : PAGE_TITLES.juiciest) || ''}
+                pageDescription={categoryDescription}
+            />
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
                 {!isErrorCategory && categoryReciepts?.length && (
                     <CategorySection
-                        categoryData={pageData}
+                        activeSubcategory={subcategory}
+                        categoryData={currentCategory}
                         recieptsData={categoryReciepts}
                         categoryButtonText='Загрузить еще'
                         noHeader={true}

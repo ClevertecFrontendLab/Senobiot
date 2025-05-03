@@ -4,3 +4,7 @@ export const PAGE_TITLES = {
     juiciest: 'Самое сочное',
     notFound: 'Упс! Такой страницы нет',
 } as const;
+
+export const EXCLUDED_ROUTES = {
+    juiciest: 'the-juiciest',
+} as const;

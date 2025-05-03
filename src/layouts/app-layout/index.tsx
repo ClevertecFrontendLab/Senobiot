@@ -20,8 +20,7 @@ const AppLayout: React.FC = () => {
     const { data: navigationConfig } = useAllCategoriesQuery(undefined, {
         skip: !!savedNavigationConfig,
     });
-    const navigationTree =
-        savedNavigationConfig?.navigationTree || navigationConfig?.navigationTree;
+    const navigation = savedNavigationConfig || navigationConfig;
 
     const isLoading = useSelector(userLoadingSelector);
 
@@ -32,7 +31,9 @@ const AppLayout: React.FC = () => {
             {isDesktop && <SideMenu />}
             <BookmarkSideMenu />
             <RecipeFilter />
-            {navigationTree && <AppViews navTree={navigationTree} />}
+            {navigation && (
+                <AppViews navigationConfig={savedNavigationConfig || navigationConfig} />
+            )}
             <BottomNavMenu />
         </Box>
     );

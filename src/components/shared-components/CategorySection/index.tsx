@@ -11,6 +11,7 @@ import CategoryMenu from './CategoryMenu';
 import CategoryCard from './CategorySectionCard';
 
 export const CategorySection: React.FC<CategorySectionProps> = ({
+    activeSubcategory,
     categoryData,
     recieptsData,
     categoryButtonText = '',
@@ -45,7 +46,9 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
 
     return (
         <Flex justifyContent='space-between' mb={mb} direction='column' w='100%'>
-            {!noNavMenu && subCategoriesList?.length && <CategoryMenu list={subCategoriesList} />}
+            {!noNavMenu && subCategoriesList?.length && (
+                <CategoryMenu list={subCategoriesList} activeSubcategory={activeSubcategory} />
+            )}
             <Flex flexWrap='wrap' gap={4}>
                 {recieptsData?.map((card, index) => {
                     const { title, description, image, category, id } = card;

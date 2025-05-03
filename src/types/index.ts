@@ -39,6 +39,7 @@ export type CategoriesProps = {
 };
 
 export type CategorySectionProps = {
+    activeSubcategory?: string;
     recieptsData?: RecipeProps[];
     categoryData?: AllCategories;
     categoryButtonText?: string;
@@ -99,4 +100,10 @@ export type SubCategoriesByIds = {
 
 export type CategoriesByIds = {
     [key: string]: AllCategories;
+};
+
+export type NavigationConfig = {
+    categoriesByIds: CategoriesByIds;
+    navigationTree: AllCategories[];
+    subCategoriesByIds: SubCategoriesByIds;
 };
