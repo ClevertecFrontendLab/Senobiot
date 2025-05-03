@@ -23,10 +23,10 @@ export const StatItem: React.FC<StatItemProps> = ({
     statIconAltText = 'heart',
     stateTextLh,
     statAlign = 'center',
-    statGap = 2,
+    statGap = 1.5,
 }) => (
     <Flex alignItems={statAlign}>
-        <HStack spacing={statGap}>
+        <HStack spacing={statGap} w='max-content'>
             <Image src={statIconUrl} alt={statIconAltText} boxSize={stateIconSize} />
             <Text
                 fontSize={stateTextFontSize}

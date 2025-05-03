@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router';
 
 import { NavigationReducerProps } from '~/redux';
-import { RecipeProps, SubCategoriesByIds } from '~/types';
+import { CategoriesByIds, RecipeProps, SubCategoriesByIds } from '~/types';
 
 export const usePathnames = () => {
     const location = useLocation();
@@ -65,4 +65,10 @@ export const populateRecieptCategory = (
     const populatedSubCategories = reciept.categoriesIds.map((e) => categoriesIds[e].subcategoryRu);
 
     return { ...reciept, category: populatedCategories, subcategory: populatedSubCategories };
+};
+
+export const getRandomCategory = (categories: CategoriesByIds, exceptId: string = '') => {
+    const ids = Object.keys(categories).filter((id) => id !== exceptId);
+    const randomCategoryId = ids[Math.floor(Math.random() * ids.length)];
+    return categories[randomCategoryId];
 };

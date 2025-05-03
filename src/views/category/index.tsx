@@ -1,69 +1,124 @@
 import { VStack } from '@chakra-ui/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
 import {
     CategorySection,
-    // CategorySectionNext,
+    CategorySectionNext,
     ServerErrorAlert,
 } from '~/components/shared-components';
 import PageWrapper from '~/components/shared-components/PageWrapper';
-import { useCategoryRecieptsQuery } from '~/redux/query/create-api';
-import { getSubCategoriesByIds } from '~/redux/selectors';
+import { PAGE_TITLES } from '~/constants';
+import { useCategoryRecieptsQuery, useJuciestRecieptsQuery } from '~/redux/query/create-api';
+import { getCategoriesByIds, getSubCategoriesByIds } from '~/redux/selectors';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { AllCategories, RecipeProps } from '~/types';
-import { populateRecieptCategory } from '~/utils';
-
-// const nexSection = navTree.find((e) => e.navKey === 'desserts-baking'); // TODO remove after true api
+import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
+    const { categoryRu, apiQureryId, categoryDescription, categoryId } = pageData;
     const error = useSelector(userErrorSelector);
     const dispatch = useDispatch();
+    const subCategories = useSelector(getSubCategoriesByIds);
+    const categories = useSelector(getCategoriesByIds);
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
     }, [dispatch]);
+    const randomCategory = useMemo(
+        () => getRandomCategory(categories, categoryId),
+        [categories, categoryId],
+    );
     const [categoryReciepts, setCategoryReciepts] = useState<RecipeProps[]>([]);
     const [page, setPage] = useState<number>(1);
-    const categories = useSelector(getSubCategoriesByIds);
-
-    // const data = useSelector((state: ApplicationState) => state.reciepts.filtrated);
-    // const initialData = useSelector((state: ApplicationState) => state.reciepts.initial);
-    const { categoryRu, apiQureryId, categoryDescription } = pageData;
+    const [randomCategoryData, setRandomCategoryData] = useState<{
+        category: { title: string; description?: string };
+        reciepts?: RecipeProps[];
+    }>({ category: { title: '', description: '' }, reciepts: [] });
 
     const getMore = () => {
         setPage((prevPage) => prevPage + 1);
     };
+    //   const isJuiciestPage: boolean = categoryRu === PAGE_TITLES.juiciest;
+    //     const {
+    //         data: { data: categoryData, meta } = {},
+    //         isLoading: isLoadingCategory,
+    //         isError: isErrorCategory,
+    //     } = !isJuiciestPage ? useCategoryRecieptsQuery({ page, id: apiQureryId }) : useJuciestRecieptsQuery(
+    //         { limit: 8, page },
+    //         { skip: !categories },
+    //     );
+
+    const isJuiciestPage: boolean = categoryRu === PAGE_TITLES.juiciest;
+    const categoryQuery = useCategoryRecieptsQuery(
+        { page, id: apiQureryId },
+        { skip: isJuiciestPage },
+    );
+    const juiciestQuery = useJuciestRecieptsQuery({ limit: 8, page }, { skip: !isJuiciestPage });
+    const categoryData = isJuiciestPage ? juiciestQuery.data?.data : categoryQuery.data?.data;
+    const isLoadingCategory = isJuiciestPage ? juiciestQuery.isLoading : categoryQuery.isLoading;
+    const isErrorCategory = isJuiciestPage ? juiciestQuery.isError : categoryQuery.isError;
+    const meta = isJuiciestPage ? juiciestQuery.data?.meta : categoryQuery.data?.meta;
 
     const {
-        data: { data, meta } = {},
-        isLoading: isLoadingCategory,
-        isError: isErrorCategory,
-    } = useCategoryRecieptsQuery({ page, id: apiQureryId });
+        data: { data: randomCategoryReciepts } = {},
+        isLoading: isLoadingRandom,
+        isError: isErrorRandom,
+    } = useCategoryRecieptsQuery({ id: randomCategory.apiQureryId }, { skip: !subCategories });
 
     useEffect(() => {
-        if (data && !isLoadingCategory) {
-            if (data) {
-                const populatedData = data.map((e) => populateRecieptCategory(e, categories));
-                setCategoryReciepts(populatedData);
+        if (subCategories && !isLoadingCategory && !isLoadingRandom) {
+            if (categoryData?.length) {
+                const populatedData = categoryData.map((e) =>
+                    populateRecieptCategory(e, subCategories),
+                );
+                setCategoryReciepts((prevData) =>
+                    page === 1 ? populatedData : [...prevData, ...populatedData],
+                );
             }
 
-            if (!isErrorCategory) {
-                resetError();
+            if (randomCategory) {
+                if (randomCategoryReciepts?.length) {
+                    const { categoryRu, categoryDescription } = randomCategory;
+
+                    const populatedData = randomCategoryReciepts.map((e) =>
+                        populateRecieptCategory(e, subCategories),
+                    );
+
+                    setRandomCategoryData({
+                        category: { title: categoryRu, description: categoryDescription },
+                        reciepts: populatedData,
+                    });
+                }
             }
         }
 
-        if (isErrorCategory) {
+        if (!isErrorCategory && !isErrorRandom) {
+            resetError();
+        }
+
+        if (isErrorCategory || isErrorRandom) {
             dispatch(setAppError('Error'));
         }
-    }, [data, isLoadingCategory, dispatch, isErrorCategory, categories, resetError]);
+    }, [
+        categoryData,
+        randomCategory,
+        randomCategoryReciepts,
+        isLoadingCategory,
+        isLoadingRandom,
+        isErrorCategory,
+        isErrorRandom,
+        categories,
+        page,
+        subCategories,
+        dispatch,
+        resetError,
+    ]);
 
-    // useEffect(() => {
-    //     if (isErrorCategory) {
-    //         dispatch(setAppError('Error'));
-    //     }
-    // }, [isErrorCategory, dispatch]);
+    useEffect(() => {
+        setPage(1);
+    }, [categoryId]);
 
     if (isLoadingCategory) {
         return <Loader />;
@@ -84,11 +139,13 @@ const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
                         onClick={getMore}
                     />
                 )}
-                {/* <CategorySectionNext
-                    title={nexSection?.title || ''}
-                    description={nexSection?.description || ''}
-                    data={initialData}
-                /> */}
+                {randomCategoryData.reciepts?.length && (
+                    <CategorySectionNext
+                        title={randomCategoryData.category.title}
+                        description={randomCategoryData.category.description}
+                        data={randomCategoryData.reciepts}
+                    />
+                )}
             </VStack>
         </PageWrapper>
     );

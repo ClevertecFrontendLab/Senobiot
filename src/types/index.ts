@@ -61,15 +61,15 @@ export type ComposeFiltersPayloadType = {
 };
 
 export type AllCategories = {
-    categoryId: string;
+    categoryId?: string;
     categoryEn: string;
     categoryRu: string;
     categoryDescription?: string;
-    categoryIcon: string;
+    categoryIcon?: string;
     route: string;
-    apiQureryId: string;
+    apiQureryId?: string;
     subCategories?: SubCategory[];
-    subCategoriesList: SubCategoryList[];
+    subCategoriesList?: SubCategoryList[];
 };
 
 export type SubCategory = {

@@ -2,19 +2,17 @@ import { Flex, Image } from '@chakra-ui/react';
 import React from 'react';
 
 import { ButtonOutlined, SubtitleText } from '~/components/shared-components';
-import { getCategoryByKey } from '~/configs/navigationConfig';
 import { BORDERS } from '~/constants/styles';
 
 interface NextSectionCardMinimized {
     title: string;
     buttonText?: string;
     iconUrl?: string;
-    iconKey?: string;
 }
 
 const NextSectionCardMinimized: React.FC<NextSectionCardMinimized> = ({
     title,
-    iconKey,
+    iconUrl,
     buttonText = 'Готовить',
 }) => (
     <Flex
@@ -28,7 +26,7 @@ const NextSectionCardMinimized: React.FC<NextSectionCardMinimized> = ({
         flexGrow={1}
     >
         <Flex flex='0 0 24px'>
-            {iconKey && <Image boxSize={6} src={getCategoryByKey(iconKey)?.icon || ''}></Image>}
+            <Image boxSize={6} src={iconUrl}></Image>
         </Flex>
         <Flex flex='1 1 100%' justifyContent='flex-start' textAlign='left'>
             <SubtitleText

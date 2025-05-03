@@ -18,7 +18,7 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
     description,
     data,
 }) => (
-    <Flex direction='column' borderTop='1px solid' borderColor='blackAlpha.200'>
+    <Flex w='100%' direction='column' borderTop='1px solid' borderColor='blackAlpha.200'>
         <Flex
             gap={{ md: 3, xl: 4, '2xl': 6 }}
             direction={{ base: 'column', md: 'row' }}
@@ -56,6 +56,8 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                             bookmarkMaxHeight={6}
                             bookmarkWrap={{ base: 'nowrap' }}
                             bookmarksFlexDirection='column'
+                            descriptionMinHeight='60px'
+                            cardHeaderHeight='unset'
                         />
                     );
                 }
@@ -70,7 +72,13 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                 {data.map((card, index) => {
                     const { title, category } = card;
                     if (index >= 2 && index < 5) {
-                        return <CardMinimized key={index} title={title} iconKey={category[0]} />;
+                        return (
+                            <CardMinimized
+                                key={index}
+                                title={title}
+                                iconUrl={category[0].categoryIconUrl}
+                            />
+                        );
                     }
                 })}
             </Flex>
