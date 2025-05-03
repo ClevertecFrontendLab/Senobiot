@@ -7,9 +7,9 @@ import { SearchBar } from '~/components/layouts-components/SearchBar';
 import {
     CategorySection,
     CategorySectionNext,
+    PageWrapper,
     ServerErrorAlert,
 } from '~/components/shared-components';
-import PageWrapper from '~/components/shared-components/PageWrapper';
 import { PAGE_TITLES } from '~/constants';
 import { useCategoryRecieptsQuery, useJuciestRecieptsQuery } from '~/redux/query/create-api';
 import { getCategoriesByIds, getSubCategoriesByIds } from '~/redux/selectors';
@@ -35,7 +35,7 @@ const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
     const [randomCategoryData, setRandomCategoryData] = useState<{
         category: { title: string; description?: string };
         reciepts?: RecipeProps[];
-    }>({ category: { title: '', description: '' }, reciepts: [] });
+    }>();
 
     const getMore = () => {
         setPage((prevPage) => prevPage + 1);
@@ -139,7 +139,7 @@ const CategoryPage: React.FC<{ pageData: AllCategories }> = ({ pageData }) => {
                         onClick={getMore}
                     />
                 )}
-                {randomCategoryData.reciepts?.length && (
+                {randomCategoryData?.reciepts?.length && (
                     <CategorySectionNext
                         title={randomCategoryData.category.title}
                         description={randomCategoryData.category.description}

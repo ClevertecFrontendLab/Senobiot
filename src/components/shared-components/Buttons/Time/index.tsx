@@ -31,6 +31,6 @@ export const ButtonTimeBtn: React.FC<ButtonTimeBtnProps> = ({
         }
         variant='link'
     >
-        <Text>{timeBtnText}</Text>
+        <Text>{timeBtnText} минут</Text>
     </Button>
 );

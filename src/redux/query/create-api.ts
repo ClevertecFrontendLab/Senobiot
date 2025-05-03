@@ -57,6 +57,10 @@ export const apiSlice = createApi({
                 `/recipe/category/${id}?page=${page}&limit=${limit}`,
             transformResponse: transformRecieptsResponse,
         }),
+        reciept: builder.query<RecipeProps, string>({
+            query: (id) => `/recipe/${id}`,
+            transformResponse: transformRecieptResponse,
+        }),
     }),
 });
 
@@ -65,6 +69,7 @@ export const {
     useLatestRecieptsQuery,
     useJuciestRecieptsQuery,
     useCategoryRecieptsQuery,
+    useRecieptQuery,
 } = apiSlice;
 
 function transformCategoriesResponse(response: AllCategoriesResponse) {
@@ -148,4 +153,13 @@ function transformRecieptsResponse(response: RecipesResponse) {
         id: e._id,
     }));
     return { ...response, data: updatedData };
+}
+
+function transformRecieptResponse(response: RecipeProps) {
+    const updatedSteps = response.steps.map((e) => ({
+        ...e,
+        image: e.image ? BASE_ICON_URL + e.image : '',
+    }));
+
+    return { ...response, image: BASE_ICON_URL + response.image, steps: updatedSteps };
 }

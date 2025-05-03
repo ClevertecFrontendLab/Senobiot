@@ -53,16 +53,25 @@ export const populateRecieptCategory = (
     reciept: RecipeProps,
     categoriesIds: SubCategoriesByIds,
 ) => {
-    const populatedCategories = reciept.categoriesIds
-        .map((e) => ({
-            categoryTitle: categoriesIds[e].categoryRu,
-            categoryIconUrl: categoriesIds[e].categoryIcon,
-        }))
-        .filter(
-            (obj, index, array) =>
-                array.findIndex((item) => item.categoryTitle === obj.categoryTitle) === index,
-        );
-    const populatedSubCategories = reciept.categoriesIds.map((e) => categoriesIds[e].subcategoryRu);
+    const populatedCategories = reciept.categoriesIds.reduce(
+        (acc, id) => {
+            const category = categoriesIds[id];
+            if (!category) return acc;
+
+            if (!acc.some((item) => item.categoryTitle === category.categoryRu)) {
+                acc.push({
+                    categoryTitle: category.categoryRu,
+                    categoryIconUrl: category.categoryIcon,
+                });
+            }
+            return acc;
+        },
+        [] as { categoryTitle: string; categoryIconUrl: string }[],
+    );
+
+    const populatedSubCategories = reciept.categoriesIds.map(
+        (e) => categoriesIds[e]?.subcategoryRu,
+    );
 
     return { ...reciept, category: populatedCategories, subcategory: populatedSubCategories };
 };

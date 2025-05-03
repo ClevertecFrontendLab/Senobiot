@@ -14,7 +14,8 @@ export type RecipeProps = {
     portions: number;
     nutritionValue: {
         calories: number;
-        proteins: number;
+        proteins?: number;
+        protein?: number;
         fats: number;
         carbohydrates: number;
     };

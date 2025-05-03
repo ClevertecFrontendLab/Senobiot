@@ -7,7 +7,7 @@ type PageWrapperProps = {
     children: React.ReactNode;
 };
 
-const PageWrapper: React.FC<PageWrapperProps> = ({ pt = PADDINGS.pageTop, children }) => (
+export const PageWrapper: React.FC<PageWrapperProps> = ({ pt = PADDINGS.pageTop, children }) => (
     <Flex
         minH='100vh'
         mx={PADDINGS.sectionMx} // на макете не учтен скроллбар
@@ -19,5 +19,3 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ pt = PADDINGS.pageTop, childr
         {children}
     </Flex>
 );
-
-export default PageWrapper;

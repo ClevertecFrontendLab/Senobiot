@@ -17,7 +17,11 @@ export const NutritionInfo: React.FC<{ nutritionValue: RecipeProps['nutritionVal
                 value={nutritionValue.calories}
                 measures='ККАЛ'
             />
-            <NutritionInfoItem name='белки' value={nutritionValue.proteins} measures='ГРАММ' />
+            <NutritionInfoItem
+                name='белки'
+                value={nutritionValue.proteins || nutritionValue.protein || 0}
+                measures='ГРАММ'
+            />
             <NutritionInfoItem name='жиры' value={nutritionValue.fats} measures='ГРАММ' />
             <NutritionInfoItem
                 name='углеводы'

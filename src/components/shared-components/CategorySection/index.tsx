@@ -48,7 +48,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             {!noNavMenu && subCategoriesList?.length && <CategoryMenu list={subCategoriesList} />}
             <Flex flexWrap='wrap' gap={4}>
                 {recieptsData?.map((card, index) => {
-                    const { title, description, image, category, subcategory, id } = card;
+                    const { title, description, image, category, id } = card;
 
                     return (
                         <CategoryCard
@@ -61,7 +61,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                             categories={category}
                             bookmarkMaxHeight={6}
                             coockingButtonAs={Link}
-                            coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
+                            coockingButtonRoute={id}
                             coockingButtonDataId={index}
                         />
                     );

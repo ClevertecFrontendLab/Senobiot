@@ -5,11 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
-import { ServerErrorAlert, Slider } from '~/components/shared-components';
+import { PageWrapper, ServerErrorAlert, Slider } from '~/components/shared-components';
 import { CategoryHeader } from '~/components/shared-components';
 import { BlogsSection } from '~/components/shared-components';
 import { CategorySectionNext } from '~/components/shared-components';
-import PageWrapper from '~/components/shared-components/PageWrapper';
 import { PAGE_TITLES } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 import {
@@ -37,9 +36,9 @@ const HomePage: React.FC = () => {
         category: { title: string; description?: string };
         reciepts?: RecipeProps[];
     }>({ category: { title: '', description: '' }, reciepts: [] });
-    const dispatch = useDispatch();
     const subCategories = useSelector(getSubCategoriesByIds);
     const categories = useSelector(getCategoriesByIds);
+    const dispatch = useDispatch();
     const error = useSelector(userErrorSelector);
     const resetError = useCallback(() => {
         dispatch(setAppError(null));

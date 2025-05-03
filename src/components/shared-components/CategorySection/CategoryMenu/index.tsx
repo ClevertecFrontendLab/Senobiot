@@ -13,13 +13,13 @@ const CategoryMenu: React.FC<{ list: SubCategoryList[] }> = ({ list }) => {
 
     useEffect(() => {
         if (tabListRef.current) {
-            const tabList = tabListRef.current;
-            const activeTab = tabList.children[selectedIndex] as HTMLElement;
-
+            const activeTab = tabListRef.current.children[selectedIndex] as HTMLElement;
             if (activeTab) {
-                const offset =
-                    activeTab.offsetLeft - tabList.offsetWidth / 2 + activeTab.offsetWidth / 2;
-                tabList.scrollTo({ left: offset, behavior: 'smooth' });
+                activeTab.scrollIntoView({
+                    behavior: 'smooth',
+                    inline: 'center',
+                    block: 'nearest',
+                });
             }
         }
     }, [selectedIndex]);
@@ -34,7 +34,7 @@ const CategoryMenu: React.FC<{ list: SubCategoryList[] }> = ({ list }) => {
                 overflowX='auto'
                 whiteSpace='nowrap'
                 flexWrap={{ base: 'unset', xl: 'wrap' }}
-                justifyContent={{ base: 'unset', md: 'center' }}
+                justifyContent={{ base: 'unset', xl: 'center' }}
                 css={{
                     scrollbarWidth: 'none',
                     '::-webkit-scrollbar': {

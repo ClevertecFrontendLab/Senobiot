@@ -10,6 +10,7 @@ const juciestPageData = {
     categoryRu: PAGE_TITLES.juiciest,
     route: '/the-juiciest',
 };
+
 const AppViews: React.FC<{ navTree: AllCategories[] }> = ({ navTree }) => (
     <Suspense fallback={<div>Загрузка...</div>}>
         <Routes>
@@ -35,8 +36,8 @@ const AppViews: React.FC<{ navTree: AllCategories[] }> = ({ navTree }) => (
                     ))}
                 </React.Fragment>
             ))}
-
-            <Route path='*' element={<Navigate to='/' replace />} />
+            <Route path='/not-found' Component={lazy(() => import('./404'))} />
+            <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>
     </Suspense>
 );

@@ -47,6 +47,7 @@ export const RecieptSectionCard: React.FC<{ reciept: RecipeProps }> = ({ reciept
                 md: '0 0 0 16px',
                 xl: '0 0 0 24px',
             }}
+            cardHeaderHeight='unset'
             regTextNoOfLines={{ md: 2, xl: 3 }}
             recieptButtonsSectionDirection={{ base: 'column', md: 'row' }}
             timeBtnMarginBottom={{ base: 3, md: 'unset' }}
