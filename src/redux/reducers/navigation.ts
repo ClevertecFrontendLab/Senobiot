@@ -1,42 +1,38 @@
-import {
-    createSlice,
-    // PayloadAction
-} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { AllCategories, CategoriesByIds, SubCategoriesByIds } from '~/types';
+import { CurrentLocationState, NavigationConfig } from '~/types';
 import { getLocallySavedNavigationConfig, saveLocallyNavigationConfig } from '~/utils';
 
 import { apiSlice } from '../query/create-api';
 
 export type NavigationReducerProps = {
-    navigationTree: AllCategories[];
-    categoriesByIds: CategoriesByIds;
-    subCategoriesByIds: SubCategoriesByIds;
+    navigationConfig: NavigationConfig;
+    currentLocationState: CurrentLocationState;
 };
 
 const initialState: NavigationReducerProps = {
-    navigationTree: getLocallySavedNavigationConfig()?.navigationTree,
-    categoriesByIds: getLocallySavedNavigationConfig()?.categoriesByIds,
-    subCategoriesByIds: getLocallySavedNavigationConfig()?.subCategoriesByIds,
+    navigationConfig: getLocallySavedNavigationConfig(),
+    currentLocationState: { area: { label: 'Главная', route: '/' } },
 };
 
 const navigation = createSlice({
     name: 'navigation',
     initialState,
     reducers: {
-        // setNavigationConfig(state, action: PayloadAction<AllCategories[]>) {
-        //     state.config = action.payload;
-        // },
+        setCurrentLocation(state, action: PayloadAction<CurrentLocationState>) {
+            state.currentLocationState = {
+                ...initialState.currentLocationState,
+                ...action.payload,
+            };
+        },
     },
     extraReducers: (builder) => {
         builder.addMatcher(apiSlice.endpoints.allCategories.matchFulfilled, (state, action) => {
-            state.navigationTree = action.payload.navigationTree;
-            state.categoriesByIds = action.payload.categoriesByIds;
-            state.subCategoriesByIds = action.payload.subCategoriesByIds;
+            state.navigationConfig = action.payload;
             saveLocallyNavigationConfig(action.payload);
         });
     },
 });
 
-// export const { setNavigationConfig } = navigation.actions;
+export const { setCurrentLocation } = navigation.actions;
 export const { reducer: navigationReducer } = navigation;

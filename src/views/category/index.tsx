@@ -12,6 +12,7 @@ import {
     ServerErrorAlert,
 } from '~/components/shared-components';
 import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
+import { setCurrentLocation } from '~/redux';
 import { useCategoryRecieptsQuery, useJuciestRecieptsQuery } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { NavigationConfig, RecipeProps } from '~/types';
@@ -80,6 +81,34 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                 setCategoryReciepts((prevData) =>
                     page === 1 ? populatedData : [...prevData, ...populatedData],
                 );
+
+                if (isJuiciestPage) {
+                    dispatch(
+                        setCurrentLocation({
+                            category: { label: PAGE_TITLES.juiciest },
+                        }),
+                    );
+                }
+
+                if (currentCategory) {
+                    const currentSubcategory = currentCategory?.subCategories?.find(
+                        (e) => e.subcategoryEn === subcategory,
+                    );
+                    if (currentSubcategory) {
+                        dispatch(
+                            setCurrentLocation({
+                                category: {
+                                    label: currentCategory.categoryRu,
+                                    route: currentCategory.route,
+                                },
+                                subcategory: {
+                                    label: currentSubcategory?.subcategoryRu,
+                                    route: currentSubcategory.route,
+                                },
+                            }),
+                        );
+                    }
+                }
             }
 
             if (randomCategory) {
@@ -107,8 +136,10 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         }
     }, [
         categoryData,
+        currentCategory,
         randomCategory,
         randomCategoryReciepts,
+        isJuiciestPage,
         isLoadingCategory,
         isLoadingRandom,
         isErrorCategory,

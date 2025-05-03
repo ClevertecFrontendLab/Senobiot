@@ -1,25 +1,17 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
-import { Link, useLocation } from 'react-router';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router';
 
-import { getNavBranches } from '~/configs/navigationConfig';
-import mockRespone from '~/data/data.json';
-import { RecipeProps } from '~/types';
+import { getcurrentLocationState } from '~/redux/selectors';
 
 const BreadCrump: React.FC<{
     onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }> = ({ onClick }) => {
-    const { pathname } = useLocation();
-    const pathes = getNavBranches(pathname);
-    const pahnames = pathname.split('/');
+    const location = useSelector(getcurrentLocationState);
 
-    if (pahnames.length === 4) {
-        const data = JSON.parse(JSON.stringify(mockRespone));
-        const recieptName = data.find((e: RecipeProps) => e.id === pahnames[3]);
-        if (recieptName) {
-            pathes.push(recieptName);
-        }
-    }
+    const breadcrumbs = Object.entries(location);
+
     return (
         <Breadcrumb
             alignItems='center'
@@ -32,20 +24,22 @@ const BreadCrump: React.FC<{
                 },
             }}
         >
-            {pathes.map((path, index) => {
-                const isLast = index === pathes.length - 1;
+            {breadcrumbs?.map((item, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                const { label, route } = item[1];
+
                 return (
                     <BreadcrumbItem key={index}>
                         {isLast ? (
-                            <span style={{ color: 'black' }}>{path?.title}</span>
+                            <span style={{ color: 'black' }}>{label}</span>
                         ) : (
                             <BreadcrumbLink
                                 onClick={onClick}
                                 as={Link}
-                                to={path?.redirect || path?.route}
+                                to={route}
                                 color='blackAlpha.700'
                             >
-                                {path?.title}
+                                {label}
                             </BreadcrumbLink>
                         )}
                     </BreadcrumbItem>

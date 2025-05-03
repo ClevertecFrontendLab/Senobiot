@@ -16,10 +16,10 @@ import {
 } from '~/components/shared-components';
 import { AuthorCard } from '~/components/shared-components/Authors';
 import { PADDINGS } from '~/constants/styles';
+import { setCurrentLocation } from '~/redux';
 import { useLatestRecieptsQuery, useRecieptQuery } from '~/redux/query/create-api';
-import { getSubCategoriesByIds } from '~/redux/selectors';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { RecipeProps } from '~/types';
+import { LocationParams, NavigationConfig, RecipeProps } from '~/types';
 import { populateRecieptCategory } from '~/utils';
 
 //непонятно где автором брать в рецепта нет
@@ -31,10 +31,11 @@ const authorData = {
     subscribers: 125,
 };
 
-const RecieptPage: React.FC = () => {
-    const { id } = useParams();
+const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
+    const { id, category, subcategory } = useParams<LocationParams>();
+    const { subCategoriesByIds, navigationTree } = navigationConfig;
     const navigate = useNavigate();
-    const subCategories = useSelector(getSubCategoriesByIds);
+
     const [reciept, setReciept] = useState<RecipeProps>();
     const [latestReciepts, setLatestReciepts] = useState<RecipeProps[]>([]);
     const dispatch = useDispatch();
@@ -51,17 +52,41 @@ const RecieptPage: React.FC = () => {
         data: { data: latestData } = {},
         isLoading: isLoadingLatest,
         isError: isErrorLatest,
-    } = useLatestRecieptsQuery(undefined, { skip: !subCategories });
+    } = useLatestRecieptsQuery(undefined, { skip: !subCategoriesByIds });
 
     useEffect(() => {
-        if (subCategories) {
+        if (subCategoriesByIds) {
             if (recieptData && !isLoadingReciept) {
-                const populatedData = populateRecieptCategory(recieptData, subCategories);
+                const populatedData = populateRecieptCategory(recieptData, subCategoriesByIds);
                 setReciept(populatedData);
+
+                const currentCategory = navigationTree.find((e) => e.categoryEn === category);
+
+                if (currentCategory) {
+                    const currentSubcategory = currentCategory?.subCategories?.find(
+                        (e) => e.subcategoryEn === subcategory,
+                    );
+                    if (currentSubcategory) {
+                        dispatch(
+                            setCurrentLocation({
+                                category: {
+                                    label: currentCategory.categoryRu,
+                                    route: currentCategory.route,
+                                },
+                                subcategory: {
+                                    label: currentSubcategory?.subcategoryRu,
+                                    route: currentSubcategory.route,
+                                },
+                                reciept: { label: populatedData.title },
+                            }),
+                        );
+                    }
+                }
             }
+
             if (latestData && !isLoadingLatest) {
                 const populatedData = latestData.map((e) =>
-                    populateRecieptCategory(e, subCategories),
+                    populateRecieptCategory(e, subCategoriesByIds),
                 );
                 setLatestReciepts(populatedData);
             }
@@ -76,13 +101,16 @@ const RecieptPage: React.FC = () => {
             dispatch(setAppError('Error'));
         }
     }, [
+        category,
+        subcategory,
+        navigationTree,
         recieptData,
         latestData,
         isLoadingReciept,
         isLoadingLatest,
         isRecieptEror,
         isErrorLatest,
-        subCategories,
+        subCategoriesByIds,
         navigate,
         dispatch,
     ]);

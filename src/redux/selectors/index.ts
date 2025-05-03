@@ -8,7 +8,11 @@ export const getSides = (state: ApplicationState) => state.keys.sides;
 export const getAllergens = (state: ApplicationState) => state.keys.allergens;
 export const getActiveSearch = (state: ApplicationState) => state.reciepts.activeSearch;
 export const isEmptySearch = (state: ApplicationState) => state.reciepts.isEmptySearch;
-export const getNavigationConfig = (state: ApplicationState) => state.navigation.navigationTree;
+export const getNavigationConfig = (state: ApplicationState) =>
+    state.navigation.navigationConfig.navigationTree;
 export const getSubCategoriesByIds = (state: ApplicationState) =>
-    state.navigation.subCategoriesByIds;
-export const getCategoriesByIds = (state: ApplicationState) => state.navigation.categoriesByIds;
+    state.navigation.navigationConfig.subCategoriesByIds;
+export const getCategoriesByIds = (state: ApplicationState) =>
+    state.navigation.navigationConfig.categoriesByIds;
+export const getcurrentLocationState = (state: ApplicationState) =>
+    state.navigation.currentLocationState;

@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router';
 
-import { NavigationReducerProps } from '~/redux';
-import { CategoriesByIds, RecipeProps, SubCategoriesByIds } from '~/types';
+import { CategoriesByIds, NavigationConfig, RecipeProps, SubCategoriesByIds } from '~/types';
 
 export const usePathnames = () => {
     const location = useLocation();
@@ -43,7 +42,7 @@ export const getLocallySavedNavigationConfig = () => {
     return saved;
 };
 
-export const saveLocallyNavigationConfig = (config: NavigationReducerProps) => {
+export const saveLocallyNavigationConfig = (config: NavigationConfig) => {
     if (!config.navigationTree.length) return;
 
     localStorage.setItem('navigationConfig', JSON.stringify(config));
@@ -62,11 +61,12 @@ export const populateRecieptCategory = (
                 acc.push({
                     categoryTitle: category.categoryRu,
                     categoryIconUrl: category.categoryIcon,
+                    route: category.route,
                 });
             }
             return acc;
         },
-        [] as { categoryTitle: string; categoryIconUrl: string }[],
+        [] as { categoryTitle: string; categoryIconUrl: string; route: string }[],
     );
 
     const populatedSubCategories = reciept.categoriesIds.map(

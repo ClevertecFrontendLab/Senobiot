@@ -11,6 +11,7 @@ import { BlogsSection } from '~/components/shared-components';
 import { CategorySectionNext } from '~/components/shared-components';
 import { PAGE_TITLES } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
+import { setCurrentLocation } from '~/redux';
 import {
     useCategoryRecieptsQuery,
     useJuciestRecieptsQuery,
@@ -76,6 +77,7 @@ const HomePage: React.FC = () => {
                     populateRecieptCategory(e, subCategories),
                 );
                 setLatestReciepts(populatedData);
+                dispatch(setCurrentLocation({}));
             }
 
             if (juciestData) {
