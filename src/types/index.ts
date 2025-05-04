@@ -53,6 +53,7 @@ export type CategorySectionProps = {
     mb?: string | number;
     activeSearch?: string | null;
     onClick?: () => void;
+    markdownText?: string;
 };
 
 export type ComposeFiltersPayloadType = {
@@ -133,3 +134,9 @@ export type Filters = {
     garnish?: string;
     subcategoriesIds?: string;
 };
+
+export enum SEARCH_STATE {
+    SUCCESS = 'success',
+    EMPTY = 'empty',
+    ERROR = 'error-search',
+}

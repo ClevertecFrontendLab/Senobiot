@@ -16,7 +16,7 @@ import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
 import { useCategoryRecieptsQuery } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { AllCategories, NavigationConfig, RecipeProps } from '~/types';
+import { AllCategories, NavigationConfig, RecipeProps, SEARCH_STATE } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
@@ -45,6 +45,8 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         subcategoriesIds: string;
     } | null>(null);
 
+    const [markdownText, setMarkdownText] = useState<string | undefined>();
+    const [searchResultState, setSearchResultState] = useState<SEARCH_STATE>();
     const [categoryReciepts, setCategoryReciepts] = useState<RecipeProps[]>([]);
     const [page, setPage] = useState<number>(1);
     const [randomCategoryData, setRandomCategoryData] = useState<{
@@ -62,6 +64,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         data: { data: categoryData, meta } = {},
         isLoading: isLoadingCategory,
         isError: isErrorCategory,
+        isFetching,
     } = useCategoryRecieptsQuery({
         ...filters,
         allergens: filters.allergens?.join(','),
@@ -116,6 +119,19 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                         );
                     }
                 }
+
+                if (filters.searchString) {
+                    setSearchResultState(SEARCH_STATE.SUCCESS);
+                    setMarkdownText(filters.searchString);
+                } else if (searchResultState) {
+                    setSearchResultState(undefined);
+                    setMarkdownText(undefined);
+                }
+            } else {
+                if (filters.searchString) {
+                    setSearchResultState(SEARCH_STATE.EMPTY);
+                    setMarkdownText(undefined);
+                }
             }
 
             if (randomCategory) {
@@ -141,6 +157,10 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         }
 
         if (isErrorCategory || isErrorRandom) {
+            if (filters.searchString) {
+                setSearchResultState(SEARCH_STATE.ERROR);
+                setMarkdownText(undefined);
+            }
             dispatch(setAppError('Error'));
         }
     }, [
@@ -154,6 +174,8 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         isErrorCategory,
         isErrorRandom,
         category,
+        searchResultState,
+        filters.searchString,
         subcategory,
         subCategoriesByIds,
         page,
@@ -175,8 +197,11 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
 
     return (
         <PageWrapper>
+            {!filters.searchString && isFetching && <Loader />}
             {error && <ServerErrorAlert onClose={resetError} />}
             <SearchBar
+                searchResultState={searchResultState}
+                isLoading={!!filters.searchString && isFetching}
                 pageTitle={(!isJuiciest ? categoryRu : PAGE_TITLES.juiciest) || ''}
                 pageDescription={categoryDescription}
             />
@@ -190,6 +215,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                         noHeader={true}
                         noFooter={!!meta?.totalPages && page >= meta.totalPages}
                         onClick={getMore}
+                        markdownText={markdownText}
                     />
                 )}
                 {randomCategoryData?.reciepts?.length && (

@@ -14,7 +14,7 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
     AllergensFilter,
@@ -25,15 +25,12 @@ import {
 } from '~/components/shared-components';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
-import { applyFilters, resetReciepts } from '~/redux/reducers';
 import { getCategories, getMeats, getSides } from '~/redux/selectors';
-import { ComposeFiltersPayloadType } from '~/types';
 
 import FilterTag from './FilterTag';
 import FilterTitle from './FilterTitle';
 
 export const RecipeFilter: React.FC = () => {
-    const dispatch = useDispatch();
     const meats = useSelector(getMeats);
     const sidesMap = useSelector(getSides);
     const categoriesMap = useSelector(getCategories);
@@ -42,14 +39,13 @@ export const RecipeFilter: React.FC = () => {
 
     const authors = ['Сергей Разумов'];
 
-    const { isOpen, closeDrawer } = useFilters();
+    const { isOpen, closeDrawer, setFilters, filters } = useFilters();
 
-    const [isCategoryOpen, setIsCategoryOpen] = useState(false); // Возможно стоит декомпозировать всё
+    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isAuthorsOpen, setIsAuthorsOpen] = useState(false);
 
     const [selectedMeats, setSelectedMeats] = useState<string[]>([]);
     const [selectedSides, setSelectedSides] = useState<string[]>([]);
-    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -97,29 +93,31 @@ export const RecipeFilter: React.FC = () => {
     };
 
     const searchReciepts = () => {
-        const categoryKeys = selectedCategories.map((e) => categoriesMap[e]);
+        // const categoryKeys = selectedCategories.map((e) => categoriesMap[e]);
         const sideKeys = selectedSides.map((e) => sidesMap[e]);
 
-        const appliedFilters: ComposeFiltersPayloadType = {
-            category: categoryKeys,
-            author: selectedAuthors,
-            meat: selectedMeats,
-            side: sideKeys,
-        };
+        setFilters({
+            ...filters,
+            meat: selectedMeats.join(','),
+            garnish: sideKeys.join(','),
+            // subcategoriesIds: categoryKeys,
+            // author: selectedAuthors,
+            // side: sideKeys,
+        });
 
-        dispatch(applyFilters(appliedFilters));
-        setSelectedCategories([]);
+        // dispatch(applyFilters(appliedFilters));
+        // setSelectedCategories([]);
         closeDrawer();
     };
 
     const clearFilters = () => {
+        setFilters({});
         setSelectedAuthors([]);
         setSelectedCategories([]);
         setSelectedMeats([]);
         setSelectedSides([]);
-        setSelectedAllergens([]);
         setIsExcludeAllergens(false);
-        dispatch(resetReciepts());
+
         if (isCategoryOpen) {
             toggleCategoriesDropdown();
         }
@@ -275,14 +273,7 @@ export const RecipeFilter: React.FC = () => {
 
                         {/* Allergens */}
                         <Box w='100%'>
-                            <Flex
-                                w='100%'
-                                alignItems='center'
-                                // justifyContent='space-between'
-                                // display={{ base: 'none', xl: 'flex' }}
-                                wrap='wrap'
-                                gap={2}
-                            >
+                            <Flex w='100%' alignItems='center' wrap='wrap' gap={2}>
                                 <SwitchToggler
                                     dataTestId='allergens-switcher-filter'
                                     text=' Исключить аллергены'
@@ -331,7 +322,7 @@ export const RecipeFilter: React.FC = () => {
                                 onClick={() => toggleSideSelection(side)}
                             />
                         ))}
-                        {selectedAllergens.map((side, index) => (
+                        {filters.allergens?.map((side, index) => (
                             <FilterTag
                                 testId={true}
                                 key={index}

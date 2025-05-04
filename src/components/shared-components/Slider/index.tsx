@@ -13,10 +13,10 @@ import SliderCard from './SliderCard';
 type SliderProps = {
     controlsSize?: number;
     slides: RecipeProps[];
-    activeSearch?: string | null;
+    markdownText?: string | null;
 };
 
-export const Slider: React.FC<SliderProps> = ({ slides = [], activeSearch }) => (
+export const Slider: React.FC<SliderProps> = ({ slides = [], markdownText }) => (
     <Flex direction='column' position='relative' mr={{ base: -4, md: 0 }}>
         <Swiper
             data-test-id='carousel'
@@ -60,7 +60,7 @@ export const Slider: React.FC<SliderProps> = ({ slides = [], activeSearch }) => 
                                 description={description}
                                 image={image}
                                 categories={category}
-                                activeSearch={activeSearch}
+                                activeSearch={markdownText}
                                 likesAmount={likes}
                                 bookmarksAmount={bookmarks}
                             />

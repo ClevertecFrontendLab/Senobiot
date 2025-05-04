@@ -14,14 +14,13 @@ import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
 import { useCategoryRecieptsQuery } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { AllCategories, NavigationConfig, RecipeProps } from '~/types';
+import { AllCategories, NavigationConfig, RecipeProps, SEARCH_STATE } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 import JuciestSection from './juciest-preview';
 
 const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
     const { subCategoriesByIds, categoriesByIds } = navigationConfig;
-    const activeSearch = ''; /// REMOVE!!!!!!!!!!!
 
     const { filters } = useFilters();
     const [latestReciepts, setLatestReciepts] = useState<RecipeProps[]>([]);
@@ -34,6 +33,8 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         category: { title: string; description?: string };
         reciepts?: RecipeProps[];
     }>({ category: { title: '', description: '' }, reciepts: [] });
+    const [markdownText, setMarkdownText] = useState<string | undefined>();
+    const [searchResultState, setSearchResultState] = useState<SEARCH_STATE>();
 
     const dispatch = useDispatch();
     const error = useSelector(userErrorSelector);
@@ -45,6 +46,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         data: { data: latestData } = {},
         isLoading: isLoadingLatest,
         isError: isErrorLatest,
+        isFetching: isFetchingLatest,
     } = useCategoryRecieptsQuery({
         ...filters,
         allergens: filters.allergens?.join(','),
@@ -56,6 +58,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         data: { data: juciestData } = {},
         isLoading: isLoadingJuciest,
         isError: isErrorJuciest,
+        isFetching: isFetchingJuiciest,
     } = useCategoryRecieptsQuery({
         ...filters,
         allergens: filters.allergens?.join(','),
@@ -108,11 +111,30 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
                 }
             }
 
+            if (latestData?.length || juciestData?.length) {
+                if (filters.searchString) {
+                    setSearchResultState(SEARCH_STATE.SUCCESS);
+                    setMarkdownText(filters.searchString);
+                } else if (searchResultState) {
+                    setSearchResultState(undefined);
+                    setMarkdownText(undefined);
+                }
+            } else {
+                if (filters.searchString) {
+                    setSearchResultState(SEARCH_STATE.EMPTY);
+                    setMarkdownText(undefined);
+                }
+            }
+
             if (!isErrorLatest && !isErrorJuciest && !isLoadingRandom && error) {
                 resetError();
             }
 
             if (isErrorLatest || isErrorJuciest || isErrorRandom) {
+                if (filters.searchString) {
+                    setSearchResultState(SEARCH_STATE.ERROR);
+                    setMarkdownText(undefined);
+                }
                 dispatch(setAppError('Error'));
             }
         }
@@ -127,6 +149,8 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         isErrorLatest,
         isErrorJuciest,
         isErrorRandom,
+        searchResultState,
+        filters.searchString,
         subCategoriesByIds,
         error,
         dispatch,
@@ -146,8 +170,13 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
 
     return (
         <PageWrapper>
+            {!filters.searchString && (isFetchingLatest || isFetchingJuiciest) && <Loader />}
             {error && <ServerErrorAlert onClose={resetError} />}
-            <SearchBar pageTitle={PAGE_TITLES.home} />
+            <SearchBar
+                searchResultState={searchResultState}
+                isLoading={!!filters.searchString && (isFetchingLatest || isFetchingJuiciest)}
+                pageTitle={PAGE_TITLES.home}
+            />
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
                 {latestReciepts?.length && (
                     <Flex mb={PADDINGS.subsectionHeaderMb} direction='column' w='100%'>
@@ -155,14 +184,11 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
                             mb={PADDINGS.subsectionHeaderMb}
                             title={PAGE_TITLES.slider}
                         />
-                        <Slider activeSearch={activeSearch} slides={latestReciepts} />
+                        <Slider markdownText={markdownText} slides={latestReciepts} />
                     </Flex>
                 )}
                 {juciestReciepts?.length && (
-                    <JuciestSection
-                        // activeSearch={activeSearch}
-                        recieptsData={juciestReciepts}
-                    />
+                    <JuciestSection markdownText={markdownText} recieptsData={juciestReciepts} />
                 )}
                 <BlogsSection />
                 {randomCategoryData.reciepts?.length && (

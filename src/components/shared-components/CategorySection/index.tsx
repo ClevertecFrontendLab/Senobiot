@@ -20,6 +20,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     noFooter = false,
     noNavMenu = false,
     onClick,
+    markdownText,
 }) => {
     const { subCategoriesList } = categoryData || {};
     // const activeSearch = useSelector(getActiveSearch);
@@ -57,7 +58,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                         <CategoryCard
                             cardDataTestId={`food-card-${index}`}
                             key={index}
-                            // titleTextHighlight={activeSearch}
+                            titleTextHighlight={markdownText}
                             title={title}
                             description={description}
                             img={image}

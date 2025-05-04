@@ -18,31 +18,36 @@ import {
 } from '~/components/shared-components';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
+import { SEARCH_STATE } from '~/types';
+
+import { SearchLoader } from '../Loader';
 
 export const SearchBar: React.FC<{
     pageTitle: string;
     pageDescription?: string;
-    isBadRequest?: boolean;
-}> = ({ pageTitle, pageDescription, isBadRequest }) => {
+    isLoading: boolean;
+    searchResultState?: SEARCH_STATE;
+}> = ({ pageTitle, pageDescription, isLoading = false, searchResultState }) => {
     const { openDrawer, filters, setFilters } = useFilters();
-    // const isBadRequest = useSelector(isEmptySearch);
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
     const styles = { base: '2xl', xl: '5xl' };
     const [inputValue, setInputValue] = useState('');
     const isEnabled = inputValue.trim().length >= 3;
     const inputStyles = {
         border:
-            isBadRequest === false
+            searchResultState === SEARCH_STATE.SUCCESS
                 ? '1px solid green'
-                : isBadRequest
+                : searchResultState === SEARCH_STATE.EMPTY
                   ? '1px solid red'
                   : BORDERS.main,
         boxShadow: 'none',
     };
 
     const handleExcludeAllergens = () => {
-        if (isExcludeAllergens && filters.allergens?.length) {
-            setFilters({ ...filters, allergens: [] });
+        if (isExcludeAllergens) {
+            if (filters.allergens?.length) {
+                setFilters({ ...filters, allergens: [] });
+            }
             return setIsExcludeAllergens(false);
         }
         setIsExcludeAllergens(true);
@@ -68,6 +73,15 @@ export const SearchBar: React.FC<{
             handleSearch();
         }
     };
+
+    // useEffect(() => {
+    //     if (inputValue &&
+    //         ((searchResultState === SEARCH_STATE.EMPTY) ||
+    //             (searchResultState === SEARCH_STATE.ERROR))) {
+    //         setFilters({ ...filters, searchString: '' });
+    //         setInputValue('');
+    //     }
+    // }, [searchResultState])
 
     return (
         <Flex
@@ -102,107 +116,111 @@ export const SearchBar: React.FC<{
                     </Flex>
                 )}
             </Box>
-            <Flex mx='auto' minW={{ base: 298, md: 448, xl: 518 }} direction='column'>
-                <Flex>
-                    <InputGroup display='flex' alignItems='center'>
-                        <InputLeftElement position='initial' display='flex' mr={3}>
-                            <IconButton
-                                data-test-id='filter-button'
-                                onClick={openDrawer}
-                                icon={
-                                    <Image
-                                        src='/icons/filter.svg'
-                                        alt='filter'
-                                        w={{ base: 3.5, xl: 6 }}
-                                    />
+            {!isLoading ? (
+                <Flex mx='auto' minW={{ base: 298, md: 448, xl: 518 }} direction='column'>
+                    <Flex>
+                        <InputGroup display='flex' alignItems='center'>
+                            <InputLeftElement position='initial' display='flex' mr={3}>
+                                <IconButton
+                                    data-test-id='filter-button'
+                                    onClick={openDrawer}
+                                    icon={
+                                        <Image
+                                            src='/icons/filter.svg'
+                                            alt='filter'
+                                            w={{ base: 3.5, xl: 6 }}
+                                        />
+                                    }
+                                    aria-label='Filter'
+                                    variant='ghost'
+                                    border={BORDERS.main}
+                                    boxSize={{ base: 8, xl: 12 }}
+                                    minW={{ base: 8, xl: 12 }}
+                                    _hover={{ bg: 'lime.50' }}
+                                    sx={{
+                                        '& .chakra-button__icon': {
+                                            marginInlineEnd: '0',
+                                        },
+                                    }}
+                                />
+                            </InputLeftElement>
+                            <Input
+                                data-test-id='search-input'
+                                position='relative'
+                                value={inputValue}
+                                onChange={handleInputChange}
+                                onKeyDown={handleKeyPress}
+                                borderRadius={6}
+                                display='flex'
+                                boxShadow={0}
+                                border={
+                                    searchResultState === SEARCH_STATE.SUCCESS
+                                        ? '1px solid green'
+                                        : searchResultState === SEARCH_STATE.EMPTY
+                                          ? '1px solid red'
+                                          : BORDERS.main
                                 }
-                                aria-label='Filter'
-                                variant='ghost'
-                                border={BORDERS.main}
-                                boxSize={{ base: 8, xl: 12 }}
-                                minW={{ base: 8, xl: 12 }}
-                                _hover={{ bg: 'lime.50' }}
-                                sx={{
-                                    '& .chakra-button__icon': {
-                                        marginInlineEnd: '0',
-                                    },
-                                }}
+                                pl={3}
+                                _hover={inputStyles}
+                                _focus={inputStyles}
+                                _active={inputStyles}
+                                outline='none'
+                                placeholder='Название или ингредиент...'
+                                size={{ base: 'sm', xl: 'lg' }}
+                                _placeholder={{ color: '#134B00' }}
                             />
-                        </InputLeftElement>
-                        <Input
-                            data-test-id='search-input'
-                            position='relative'
-                            value={inputValue}
-                            onChange={handleInputChange}
-                            onKeyDown={handleKeyPress}
-                            borderRadius={6}
-                            display='flex'
-                            boxShadow={0}
-                            border={
-                                isBadRequest === false
-                                    ? '1px solid green'
-                                    : isBadRequest
-                                      ? '1px solid red'
-                                      : BORDERS.main
-                            }
-                            pl={3}
-                            _hover={inputStyles}
-                            _focus={inputStyles}
-                            _active={inputStyles}
-                            outline='none'
-                            placeholder='Название или ингредиент...'
-                            size={{ base: 'sm', xl: 'lg' }}
-                            _placeholder={{ color: '#134B00' }}
+                            <InputRightElement display='flex'>
+                                <IconButton
+                                    data-test-id='search-button'
+                                    onClick={handleSearch}
+                                    disabled={!isEnabled}
+                                    pointerEvents={isEnabled ? 'unset' : 'none'}
+                                    icon={<SearchIcon w={{ base: 3.5, xl: 6 }} />}
+                                    aria-label='Search'
+                                    variant='ghost'
+                                    boxSize={{ base: 8, xl: 12 }}
+                                    minW={{ base: 8, xl: 12 }}
+                                    pt={{ base: 0, xl: 2 }}
+                                    _hover={{ bg: 0 }}
+                                />
+                                {inputValue && (
+                                    <Box
+                                        top={3}
+                                        right={10}
+                                        position='absolute'
+                                        as='button'
+                                        onClick={handlReset}
+                                        fontSize='14px'
+                                        cursor='pointer'
+                                    >
+                                        ✕
+                                    </Box>
+                                )}
+                            </InputRightElement>
+                        </InputGroup>
+                    </Flex>
+                    <Flex
+                        mt={{ xl: 4 }}
+                        alignItems='center'
+                        justifyContent='space-between'
+                        display={{ base: 'none', xl: 'flex' }}
+                    >
+                        <SwitchToggler
+                            text=' Исключить аллергены'
+                            onChange={handleExcludeAllergens}
+                            isChecked={isExcludeAllergens}
+                            dataTestId='allergens-switcher'
                         />
-                        <InputRightElement display='flex'>
-                            <IconButton
-                                data-test-id='search-button'
-                                onClick={handleSearch}
-                                disabled={!isEnabled}
-                                pointerEvents={isEnabled ? 'unset' : 'none'}
-                                icon={<SearchIcon w={{ base: 3.5, xl: 6 }} />}
-                                aria-label='Search'
-                                variant='ghost'
-                                boxSize={{ base: 8, xl: 12 }}
-                                minW={{ base: 8, xl: 12 }}
-                                pt={{ base: 0, xl: 2 }}
-                                _hover={{ bg: 0 }}
-                            />
-                            {inputValue && (
-                                <Box
-                                    top={2.5}
-                                    right={10}
-                                    position='absolute'
-                                    as='button'
-                                    onClick={handlReset}
-                                    fontSize='14px'
-                                    cursor='pointer'
-                                >
-                                    ✕
-                                </Box>
-                            )}
-                        </InputRightElement>
-                    </InputGroup>
+                        <AllergensFilter
+                            dataTestCheckBoKeykey='allergen-'
+                            dataTestIdToggler='allergens-menu-button'
+                            disabled={!isExcludeAllergens}
+                        />
+                    </Flex>
                 </Flex>
-                <Flex
-                    mt={{ xl: 4 }}
-                    alignItems='center'
-                    justifyContent='space-between'
-                    display={{ base: 'none', xl: 'flex' }}
-                >
-                    <SwitchToggler
-                        text=' Исключить аллергены'
-                        onChange={handleExcludeAllergens}
-                        isChecked={isExcludeAllergens}
-                        dataTestId='allergens-switcher'
-                    />
-                    <AllergensFilter
-                        dataTestCheckBoKeykey='allergen-'
-                        dataTestIdToggler='allergens-menu-button'
-                        disabled={!isExcludeAllergens}
-                    />
-                </Flex>
-            </Flex>
+            ) : (
+                <SearchLoader />
+            )}
         </Flex>
     );
 };

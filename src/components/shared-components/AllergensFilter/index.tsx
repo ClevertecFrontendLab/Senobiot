@@ -111,7 +111,7 @@ export const AllergensFilter: React.FC<{
                     noTagCloseButton={true}
                 />
             )}
-            {isOpen && (
+            {isOpen && !disabled && (
                 <Box
                     data-test-id='allergens-menu'
                     mt={2}

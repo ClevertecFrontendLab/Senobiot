@@ -18,7 +18,7 @@ import { AuthorCard } from '~/components/shared-components/Authors';
 import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 import { setCurrentLocation } from '~/redux';
-import { useLatestRecieptsQuery, useRecieptQuery } from '~/redux/query/create-api';
+import { useCategoryRecieptsQuery, useRecieptQuery } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { LocationParams, NavigationConfig, RecipeProps } from '~/types';
 import { populateRecieptCategory } from '~/utils';
@@ -53,7 +53,10 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
         data: { data: latestData } = {},
         isLoading: isLoadingLatest,
         isError: isErrorLatest,
-    } = useLatestRecieptsQuery(undefined, { skip: !subCategoriesByIds });
+    } = useCategoryRecieptsQuery({
+        limit: 10,
+        isLatest: true,
+    });
 
     useEffect(() => {
         if (subCategoriesByIds) {
