@@ -6,7 +6,7 @@ import { BORDERS } from '~/constants/styles';
 import { ExpandButton, ResetButton } from '../SelectActionButons';
 
 export const SelectInnerTags: React.FC<{
-    options: string[];
+    options?: string[];
     placeholder?: string;
     isOpen?: boolean;
     noResetButton?: boolean;
@@ -18,7 +18,7 @@ export const SelectInnerTags: React.FC<{
     dataTestId?: string;
     width?: ResponsiveValue<string>;
 }> = ({
-    options,
+    options = [],
     isOpen = false,
     toggleDropdown,
     toggleTag,
@@ -36,14 +36,14 @@ export const SelectInnerTags: React.FC<{
         p={2}
         pr={10}
         border='1px solid'
-        borderColor={isOpen || options.length ? 'lime.400' : '#ccc'}
+        borderColor={isOpen || options?.length ? 'lime.400' : '#ccc'}
         borderRadius='md'
         cursor='pointer'
         _focus={{ borderColor: 'lime.400' }}
         _hover={{ borderColor: 'lime.400' }}
         onClick={toggleDropdown}
     >
-        {options.length > 0 ? (
+        {options?.length > 0 ? (
             <Flex gap={2} wrap='wrap'>
                 {options.map((option) => (
                     <Tag

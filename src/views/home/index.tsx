@@ -10,10 +10,11 @@ import { BlogsSection } from '~/components/shared-components';
 import { CategorySectionNext } from '~/components/shared-components';
 import { PAGE_TITLES } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
+import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
 import { useCategoryRecieptsQuery } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { AllCategories, Filters, NavigationConfig, RecipeProps } from '~/types';
+import { AllCategories, NavigationConfig, RecipeProps } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 import JuciestSection from './juciest-preview';
@@ -22,7 +23,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     const { subCategoriesByIds, categoriesByIds } = navigationConfig;
     const activeSearch = ''; /// REMOVE!!!!!!!!!!!
 
-    const [filters, setFilters] = useState<Filters>({});
+    const { filters } = useFilters();
     const [latestReciepts, setLatestReciepts] = useState<RecipeProps[]>([]);
     const [juciestReciepts, setJuciestReciepts] = useState<RecipeProps[]>([]);
     const [randomCategory, setRandomCategory] = useState<{
@@ -46,6 +47,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         isError: isErrorLatest,
     } = useCategoryRecieptsQuery({
         ...filters,
+        allergens: filters.allergens?.join(','),
         limit: 10,
         isLatest: true,
     });
@@ -56,6 +58,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         isError: isErrorJuciest,
     } = useCategoryRecieptsQuery({
         ...filters,
+        allergens: filters.allergens?.join(','),
         limit: 4,
         isJuiciest: true,
     });
@@ -144,7 +147,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     return (
         <PageWrapper>
             {error && <ServerErrorAlert onClose={resetError} />}
-            <SearchBar setFilters={setFilters} pageTitle={PAGE_TITLES.home} />
+            <SearchBar pageTitle={PAGE_TITLES.home} />
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
                 {latestReciepts?.length && (
                     <Flex mb={PADDINGS.subsectionHeaderMb} direction='column' w='100%'>

@@ -127,7 +127,7 @@ export type CurrentLocationState = {
 };
 
 export type Filters = {
-    allergens?: string;
+    allergens?: string[];
     searchString?: string;
     meat?: string;
     garnish?: string;

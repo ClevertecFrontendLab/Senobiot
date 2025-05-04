@@ -8,7 +8,7 @@ import {
     InputLeftElement,
     InputRightElement,
 } from '@chakra-ui/react';
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import {
     AllergensFilter,
@@ -17,19 +17,16 @@ import {
     TitleText,
 } from '~/components/shared-components';
 import { BORDERS, SHADOWS } from '~/constants/styles';
-import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
-import { Filters } from '~/types';
+import { useFilters } from '~/providers/Filters/useFilters';
 
 export const SearchBar: React.FC<{
     pageTitle: string;
     pageDescription?: string;
-    setFilters: Dispatch<SetStateAction<Filters>>;
     isBadRequest?: boolean;
-}> = ({ pageTitle, pageDescription, setFilters, isBadRequest }) => {
-    const { openDrawer } = useDrawer();
+}> = ({ pageTitle, pageDescription, isBadRequest }) => {
+    const { openDrawer, filters, setFilters } = useFilters();
     // const isBadRequest = useSelector(isEmptySearch);
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
-    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const styles = { base: '2xl', xl: '5xl' };
     const [inputValue, setInputValue] = useState('');
     const isEnabled = inputValue.trim().length >= 3;
@@ -44,8 +41,8 @@ export const SearchBar: React.FC<{
     };
 
     const handleExcludeAllergens = () => {
-        if (isExcludeAllergens && selectedAllergens.length) {
-            setSelectedAllergens([]);
+        if (isExcludeAllergens && filters.allergens?.length) {
+            setFilters({ ...filters, allergens: [] });
             return setIsExcludeAllergens(false);
         }
         setIsExcludeAllergens(true);
@@ -57,19 +54,12 @@ export const SearchBar: React.FC<{
 
     const handleSearch = () => {
         if (isEnabled) {
-            setFilters({ searchString: inputValue, allergens: selectedAllergens.join(',') });
-            // dispatch(searchReciepts(inputValue));
+            setFilters({ ...filters, searchString: inputValue });
         }
     };
 
-    const handleSetAllergens = (allergens: string[]) => {
-        setSelectedAllergens(allergens);
-        setFilters({ allergens: allergens.join(',') });
-    };
-
     const handlReset = () => {
-        // dispatch(resetSearch());
-        setFilters({ searchString: '', allergens: selectedAllergens.join(',') });
+        setFilters({ ...filters, searchString: '' });
         setInputValue('');
     };
 
@@ -209,8 +199,6 @@ export const SearchBar: React.FC<{
                     <AllergensFilter
                         dataTestCheckBoKeykey='allergen-'
                         dataTestIdToggler='allergens-menu-button'
-                        selectedAllergens={selectedAllergens}
-                        setSelectedAllergens={handleSetAllergens}
                         disabled={!isExcludeAllergens}
                     />
                 </Flex>

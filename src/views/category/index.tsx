@@ -12,13 +12,16 @@ import {
     ServerErrorAlert,
 } from '~/components/shared-components';
 import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
+import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
 import { useCategoryRecieptsQuery } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { AllCategories, Filters, NavigationConfig, RecipeProps } from '~/types';
+import { AllCategories, NavigationConfig, RecipeProps } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
+    const { filters } = useFilters();
+
     const { category, subcategory } = useParams<{ category: string; subcategory: string }>();
 
     const { subCategoriesByIds, categoriesByIds, navigationTree } = navigationConfig;
@@ -41,7 +44,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         randomCategory: AllCategories;
         subcategoriesIds: string;
     } | null>(null);
-    const [filters, setFilters] = useState<Filters>({});
+
     const [categoryReciepts, setCategoryReciepts] = useState<RecipeProps[]>([]);
     const [page, setPage] = useState<number>(1);
     const [randomCategoryData, setRandomCategoryData] = useState<{
@@ -61,6 +64,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         isError: isErrorCategory,
     } = useCategoryRecieptsQuery({
         ...filters,
+        allergens: filters.allergens?.join(','),
         page,
         subcategoriesIds: apiQureryId,
         isJuiciest,
@@ -173,7 +177,6 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         <PageWrapper>
             {error && <ServerErrorAlert onClose={resetError} />}
             <SearchBar
-                setFilters={setFilters}
                 pageTitle={(!isJuiciest ? categoryRu : PAGE_TITLES.juiciest) || ''}
                 pageDescription={categoryDescription}
             />

@@ -24,7 +24,7 @@ import {
     SwitchToggler,
 } from '~/components/shared-components';
 import { BORDERS, SHADOWS } from '~/constants/styles';
-import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
+import { useFilters } from '~/providers/Filters/useFilters';
 import { applyFilters, resetReciepts } from '~/redux/reducers';
 import { getCategories, getMeats, getSides } from '~/redux/selectors';
 import { ComposeFiltersPayloadType } from '~/types';
@@ -42,7 +42,7 @@ export const RecipeFilter: React.FC = () => {
 
     const authors = ['Сергей Разумов'];
 
-    const { isOpen, closeDrawer } = useDrawer();
+    const { isOpen, closeDrawer } = useFilters();
 
     const [isCategoryOpen, setIsCategoryOpen] = useState(false); // Возможно стоит декомпозировать всё
     const [isAuthorsOpen, setIsAuthorsOpen] = useState(false);
@@ -293,8 +293,6 @@ export const RecipeFilter: React.FC = () => {
                                     // dataTestAllergenTag='filter-tag'
                                     dataTestCheckBoKeykey='allergen-'
                                     dataTestIdToggler='allergens-menu-button-filter'
-                                    selectedAllergens={selectedAllergens}
-                                    setSelectedAllergens={setSelectedAllergens}
                                     disabled={!isExcludeAllergens}
                                 />
                             </Flex>
