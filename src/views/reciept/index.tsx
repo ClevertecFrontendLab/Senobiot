@@ -15,6 +15,7 @@ import {
     Slider,
 } from '~/components/shared-components';
 import { AuthorCard } from '~/components/shared-components/Authors';
+import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 import { setCurrentLocation } from '~/redux';
 import { useLatestRecieptsQuery, useRecieptQuery } from '~/redux/query/create-api';
@@ -81,6 +82,16 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
                             }),
                         );
                     }
+                } else if (category === EXCLUDED_ROUTES.juiciest) {
+                    dispatch(
+                        setCurrentLocation({
+                            category: {
+                                label: PAGE_TITLES.juiciest,
+                                route: `/${EXCLUDED_ROUTES.juiciest}`,
+                            },
+                            reciept: { label: populatedData.title },
+                        }),
+                    );
                 }
             }
 

@@ -51,7 +51,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             )}
             <Flex flexWrap='wrap' gap={4}>
                 {recieptsData?.map((card, index) => {
-                    const { title, description, image, category, id } = card;
+                    const { title, description, image, category, id, likes, bookmarks } = card;
 
                     return (
                         <CategoryCard
@@ -66,6 +66,8 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                             coockingButtonAs={Link}
                             coockingButtonRoute={id}
                             coockingButtonDataId={index}
+                            bookmarksLikesValue={likes}
+                            bookmarksBookmarksValue={bookmarks}
                         />
                     );
                 })}

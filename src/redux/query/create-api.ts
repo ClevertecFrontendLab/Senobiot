@@ -43,18 +43,26 @@ export const apiSlice = createApi({
             query: () => '/category',
             transformResponse: transformCategoriesResponse,
         }),
-        latestReciepts: builder.query({
-            query: () => '/recipe?page=1&limit=10&sortBy=createdAt&sortOrder=desc',
-            transformResponse: transformRecieptsResponse,
-        }),
-        juciestReciepts: builder.query({
-            query: ({ limit = 8, page = 1 }) =>
-                `/recipe?page=${page}&limit=${limit}&sortBy=likes&sortOrder=desc`,
-            transformResponse: transformRecieptsResponse,
-        }),
         categoryReciepts: builder.query({
-            query: ({ limit = 8, page = 1, id }) =>
-                `/recipe/category/${id}?page=${page}&limit=${limit}`,
+            query: ({
+                limit = 8,
+                page = 1,
+                allergens = '',
+                searchString = '',
+                meat = '',
+                garnish = '',
+                subcategoriesIds = '',
+                isJuiciest = false,
+                isLatest = false,
+            }) =>
+                `/recipe?page=${page}&limit=${limit}` +
+                (allergens ? `&allergens=${allergens.trim()}` : '') +
+                (searchString ? `&searchString=${searchString.trim()}` : '') +
+                (meat ? `&meat=${meat.trim()}` : '') +
+                (garnish ? `&garnish=${garnish.trim()}` : '') +
+                (subcategoriesIds ? `&subcategoriesIds=${subcategoriesIds.trim()}` : '') +
+                (isJuiciest ? `&sortBy=likes&sortOrder=desc` : '') +
+                (isLatest ? `&sortBy=createdAt&sortOrder=desc` : ''),
             transformResponse: transformRecieptsResponse,
         }),
         reciept: builder.query<RecipeProps, string>({
@@ -64,13 +72,7 @@ export const apiSlice = createApi({
     }),
 });
 
-export const {
-    useAllCategoriesQuery,
-    useLatestRecieptsQuery,
-    useJuciestRecieptsQuery,
-    useCategoryRecieptsQuery,
-    useRecieptQuery,
-} = apiSlice;
+export const { useAllCategoriesQuery, useCategoryRecieptsQuery, useRecieptQuery } = apiSlice;
 
 function transformCategoriesResponse(response: AllCategoriesResponse) {
     const navigationTree: AllCategories[] = [];

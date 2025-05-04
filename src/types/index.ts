@@ -125,3 +125,11 @@ export type CurrentLocationState = {
     subcategory?: { label: string; route?: string };
     reciept?: { label: string; route?: string };
 };
+
+export type Filters = {
+    allergens?: string;
+    searchString?: string;
+    meat?: string;
+    garnish?: string;
+    subcategoriesIds?: string;
+};

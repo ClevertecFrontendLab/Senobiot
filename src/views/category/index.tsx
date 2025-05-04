@@ -1,5 +1,5 @@
 import { VStack } from '@chakra-ui/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -13,9 +13,9 @@ import {
 } from '~/components/shared-components';
 import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { setCurrentLocation } from '~/redux';
-import { useCategoryRecieptsQuery, useJuciestRecieptsQuery } from '~/redux/query/create-api';
+import { useCategoryRecieptsQuery } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { NavigationConfig, RecipeProps } from '~/types';
+import { AllCategories, Filters, NavigationConfig, RecipeProps } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
@@ -37,11 +37,11 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         dispatch(setAppError(null));
     }, [dispatch]);
 
-    const randomCategory = useMemo(
-        () => getRandomCategory(categoriesByIds, categoryId),
-        [categoriesByIds, categoryId],
-    );
-
+    const [randomCategory, setRandomCategory] = useState<{
+        randomCategory: AllCategories;
+        subcategoriesIds: string;
+    } | null>(null);
+    const [filters, setFilters] = useState<Filters>({});
     const [categoryReciepts, setCategoryReciepts] = useState<RecipeProps[]>([]);
     const [page, setPage] = useState<number>(1);
     const [randomCategoryData, setRandomCategoryData] = useState<{
@@ -53,24 +53,27 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         setPage((prevPage) => prevPage + 1);
     };
 
-    const isJuiciestPage: boolean = category === EXCLUDED_ROUTES.juiciest;
+    const isJuiciest: boolean = category === EXCLUDED_ROUTES.juiciest;
 
-    const categoryQuery = useCategoryRecieptsQuery(
-        { page, id: apiQureryId },
-        { skip: isJuiciestPage },
-    );
-    const juiciestQuery = useJuciestRecieptsQuery({ limit: 8, page }, { skip: !isJuiciestPage });
-
-    const categoryData = isJuiciestPage ? juiciestQuery.data?.data : categoryQuery.data?.data;
-    const isLoadingCategory = isJuiciestPage ? juiciestQuery.isLoading : categoryQuery.isLoading;
-    const isErrorCategory = isJuiciestPage ? juiciestQuery.isError : categoryQuery.isError;
-    const meta = isJuiciestPage ? juiciestQuery.data?.meta : categoryQuery.data?.meta;
+    const {
+        data: { data: categoryData, meta } = {},
+        isLoading: isLoadingCategory,
+        isError: isErrorCategory,
+    } = useCategoryRecieptsQuery({
+        ...filters,
+        page,
+        subcategoriesIds: apiQureryId,
+        isJuiciest,
+    });
 
     const {
         data: { data: randomCategoryReciepts } = {},
         isLoading: isLoadingRandom,
         isError: isErrorRandom,
-    } = useCategoryRecieptsQuery({ id: randomCategory.apiQureryId }, { skip: !subCategoriesByIds });
+    } = useCategoryRecieptsQuery(
+        { subcategoriesIds: randomCategory?.subcategoriesIds },
+        { skip: !randomCategory },
+    );
 
     useEffect(() => {
         if (subCategoriesByIds && !isLoadingCategory && !isLoadingRandom) {
@@ -82,7 +85,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                     page === 1 ? populatedData : [...prevData, ...populatedData],
                 );
 
-                if (isJuiciestPage) {
+                if (isJuiciest) {
                     dispatch(
                         setCurrentLocation({
                             category: { label: PAGE_TITLES.juiciest },
@@ -113,7 +116,9 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
 
             if (randomCategory) {
                 if (randomCategoryReciepts?.length) {
-                    const { categoryRu, categoryDescription } = randomCategory;
+                    const {
+                        randomCategory: { categoryRu, categoryDescription },
+                    } = randomCategory;
 
                     const populatedData = randomCategoryReciepts.map((e) =>
                         populateRecieptCategory(e, subCategoriesByIds),
@@ -139,7 +144,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         currentCategory,
         randomCategory,
         randomCategoryReciepts,
-        isJuiciestPage,
+        isJuiciest,
         isLoadingCategory,
         isLoadingRandom,
         isErrorCategory,
@@ -153,8 +158,12 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
     ]);
 
     useEffect(() => {
+        const randomCategory = getRandomCategory(categoriesByIds, categoryId);
+        const subcategoriesIds =
+            randomCategory?.subCategories?.map((e) => e.apiQureryId).join(',') || '';
+        setRandomCategory({ randomCategory, subcategoriesIds });
         setPage(1);
-    }, [categoryId]);
+    }, [categoryId, categoriesByIds]);
 
     if (isLoadingCategory) {
         return <Loader />;
@@ -164,7 +173,8 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         <PageWrapper>
             {error && <ServerErrorAlert onClose={resetError} />}
             <SearchBar
-                pageTitle={(!isJuiciestPage ? categoryRu : PAGE_TITLES.juiciest) || ''}
+                setFilters={setFilters}
+                pageTitle={(!isJuiciest ? categoryRu : PAGE_TITLES.juiciest) || ''}
                 pageDescription={categoryDescription}
             />
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
@@ -175,7 +185,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                         recieptsData={categoryReciepts}
                         categoryButtonText='Загрузить еще'
                         noHeader={true}
-                        noFooter={meta?.totalPages === page}
+                        noFooter={!!meta?.totalPages && page >= meta.totalPages}
                         onClick={getMore}
                     />
                 )}
