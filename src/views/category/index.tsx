@@ -162,18 +162,6 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                 }
             }
         }
-
-        if (!isErrorCategory && !isErrorRandom) {
-            resetError();
-        }
-
-        if (isErrorCategory || isErrorRandom) {
-            if (filters.searchString) {
-                setSearchResultState(SEARCH_STATE.ERROR);
-                setMarkdownText(undefined);
-            }
-            dispatch(setAppError('Error'));
-        }
     }, [
         categoryData,
         currentCategory,
@@ -182,8 +170,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         isJuiciest,
         isLoadingCategory,
         isLoadingRandom,
-        isErrorCategory,
-        isErrorRandom,
+
         category,
         searchResultState,
         filters.searchString,
@@ -206,6 +193,18 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
     useEffect(() => {
         setPage(1);
     }, [apiQureryId]);
+
+    useEffect(() => {
+        if (isErrorCategory || isErrorRandom) {
+            if (filters.searchString) {
+                setSearchResultState(SEARCH_STATE.ERROR);
+                setMarkdownText(undefined);
+                dispatch(setAppError(true));
+            } else {
+                dispatch(setAppError(true));
+            }
+        }
+    }, [isErrorCategory, isErrorRandom]);
 
     if (isLoadingCategory) {
         return <Loader />;

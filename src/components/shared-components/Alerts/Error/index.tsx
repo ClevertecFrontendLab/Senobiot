@@ -10,9 +10,10 @@ interface ServerErrorAlertProps {
 export const ServerErrorAlert: React.FC<ServerErrorAlertProps> = ({
     onClose,
     title = 'Ошибка сервера',
-    body = 'Попробуйте немного позже',
+    body = 'Попробуйте поискать снова попозже',
 }) => (
     <Alert
+        data-test-id='error-notification'
         fontFamily='Inter'
         bg='red.500'
         status='error'
@@ -35,6 +36,7 @@ export const ServerErrorAlert: React.FC<ServerErrorAlertProps> = ({
         </Box>
         {onClose && (
             <CloseButton
+                data-test-id='close-alert-button'
                 position='absolute'
                 right='8px'
                 top='8px'

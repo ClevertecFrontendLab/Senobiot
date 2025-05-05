@@ -5,16 +5,14 @@ export type AppState = typeof initialState;
 
 const initialState = {
     isLoading: true,
-    error: '' as string | null,
+    error: null as string | null | boolean,
 };
 export const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
-        setAppError(state, { payload: error }: PayloadAction<string | null>) {
-            if (state.error !== error) {
-                state.error = error;
-            }
+        setAppError(state, { payload: error }: PayloadAction<string | null | boolean>) {
+            state.error = error;
         },
         setAppLoader(state, { payload: isLoading }: PayloadAction<boolean>) {
             state.isLoading = isLoading;

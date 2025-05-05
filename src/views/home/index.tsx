@@ -83,17 +83,6 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         { skip: !randomCategory },
     );
 
-    // const {
-    //     data: { data: randomCategoryReciepts } = {},
-    //     isLoading: isLoadingRandom,
-    //     isError: isErrorRandom,
-    // } = useCategoryRecieptsQuery(
-    //     {
-    //         subcategoriesIds: randomCategory?.subcategoriesIds,
-    //     },
-    //     { skip: !randomCategory },
-    // );
-
     useEffect(() => {
         if (subCategoriesByIds && !isLoadingLatest && !isLoadingJuciest && !isLoadingRandom) {
             if (latestData) {
@@ -142,18 +131,6 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
                     setMarkdownText(undefined);
                 }
             }
-
-            if (!isErrorLatest && !isErrorJuciest && !isLoadingRandom && error) {
-                resetError();
-            }
-
-            if (isErrorLatest || isErrorJuciest || isErrorRandom) {
-                if (filters.searchString) {
-                    setSearchResultState(SEARCH_STATE.ERROR);
-                    setMarkdownText(undefined);
-                }
-                dispatch(setAppError('Error'));
-            }
         }
     }, [
         juciestData,
@@ -163,13 +140,13 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         isLoadingLatest,
         isLoadingJuciest,
         isLoadingRandom,
-        isErrorLatest,
-        isErrorJuciest,
-        isErrorRandom,
+        // isErrorLatest,
+        // isErrorJuciest,
+        // isErrorRandom,
         searchResultState,
         filters.searchString,
         subCategoriesByIds,
-        error,
+        // error,
         dispatch,
         resetError,
     ]);
@@ -180,6 +157,18 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
             randomCategory?.subCategories?.map((e) => e.apiQureryId).join(',') || '';
         setRandomCategory({ randomCategory, subcategoriesIds });
     }, [categoriesByIds]);
+
+    useEffect(() => {
+        if (isErrorLatest || isErrorJuciest || isErrorRandom) {
+            if (filters.searchString) {
+                setSearchResultState(SEARCH_STATE.ERROR);
+                setMarkdownText(undefined);
+                dispatch(setAppError(true));
+            } else {
+                dispatch(setAppError(true));
+            }
+        }
+    }, [isErrorLatest, isErrorJuciest, isErrorRandom]);
 
     if (isLoadingLatest || isLoadingJuciest) {
         return <Loader />;
