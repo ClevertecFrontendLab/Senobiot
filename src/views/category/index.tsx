@@ -1,5 +1,5 @@
 import { VStack } from '@chakra-ui/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -14,20 +14,27 @@ import {
 import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
-import { useCategoryRecieptsQuery } from '~/redux/query/create-api';
+import {
+    useCategoryRecieptsQuery,
+    // useRecipeByCategoryQuery
+} from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { AllCategories, NavigationConfig, RecipeProps, SEARCH_STATE } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
     const { filters } = useFilters();
-
     const { category, subcategory } = useParams<{ category: string; subcategory: string }>();
-
     const { subCategoriesByIds, categoriesByIds, navigationTree } = navigationConfig;
-    const currentCategory = navigationTree.find((e) => e.categoryEn === category);
-    const currentSubCategory = currentCategory?.subCategories?.find(
-        (e) => e.subcategoryEn === subcategory,
+
+    const currentCategory = useMemo(
+        () => navigationTree.find((e) => e.categoryEn === category),
+        [category, navigationTree],
+    );
+
+    const currentSubCategory = useMemo(
+        () => currentCategory?.subCategories?.find((e) => e.subcategoryEn === subcategory),
+        [currentCategory, subcategory],
     );
 
     const { categoryRu, categoryDescription, categoryId } = currentCategory || {};
@@ -60,6 +67,9 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
 
     const isJuiciest: boolean = category === EXCLUDED_ROUTES.juiciest;
 
+    // const { data } = useRecipeByCategoryQuery({ id: apiQureryId }, { skip: isJuiciest });
+    // const { data } = useCategoryByIdQuery(categoryId || '', { skip: isJuiciest });
+
     const {
         data: { data: categoryData, meta } = {},
         isLoading: isLoadingCategory,
@@ -83,11 +93,12 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
     );
 
     useEffect(() => {
-        if (subCategoriesByIds && !isLoadingCategory && !isLoadingRandom) {
+        if (!isLoadingCategory && !isLoadingRandom && !isFetching) {
             if (categoryData?.length) {
                 const populatedData = categoryData.map((e) =>
                     populateRecieptCategory(e, subCategoriesByIds),
                 );
+
                 setCategoryReciepts((prevData) =>
                     page === 1 ? populatedData : [...prevData, ...populatedData],
                 );
@@ -177,8 +188,9 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         searchResultState,
         filters.searchString,
         subcategory,
-        subCategoriesByIds,
         page,
+        isFetching,
+        subCategoriesByIds,
         dispatch,
         resetError,
     ]);
@@ -187,9 +199,13 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         const randomCategory = getRandomCategory(categoriesByIds, categoryId);
         const subcategoriesIds =
             randomCategory?.subCategories?.map((e) => e.apiQureryId).join(',') || '';
+
         setRandomCategory({ randomCategory, subcategoriesIds });
-        setPage(1);
     }, [categoryId, categoriesByIds]);
+
+    useEffect(() => {
+        setPage(1);
+    }, [apiQureryId]);
 
     if (isLoadingCategory) {
         return <Loader />;
@@ -211,7 +227,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                         activeSubcategory={subcategory}
                         categoryData={currentCategory}
                         recieptsData={categoryReciepts}
-                        categoryButtonText='Загрузить еще'
+                        categoryButtonText={isFetching ? 'Загрузка' : 'Загрузить еще'}
                         noHeader={true}
                         noFooter={!!meta?.totalPages && page >= meta.totalPages}
                         onClick={getMore}

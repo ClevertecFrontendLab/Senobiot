@@ -43,6 +43,9 @@ export const apiSlice = createApi({
             query: () => '/category',
             transformResponse: transformCategoriesResponse,
         }),
+        categoryById: builder.query({
+            query: (id: string) => `/category/${id}`,
+        }),
         categoryReciepts: builder.query({
             query: ({
                 limit = 8,
@@ -69,10 +72,21 @@ export const apiSlice = createApi({
             query: (id) => `/recipe/${id}`,
             transformResponse: transformRecieptResponse,
         }),
+        recipeByCategory: builder.query({
+            query: ({ id = '', limit = 8, page = 1 }) =>
+                `/recipe/category/${id}?page=${page}&limit=${limit}`,
+            transformResponse: transformRecieptsResponse,
+        }),
     }),
 });
 
-export const { useAllCategoriesQuery, useCategoryRecieptsQuery, useRecieptQuery } = apiSlice;
+export const {
+    useAllCategoriesQuery,
+    useCategoryByIdQuery,
+    useCategoryRecieptsQuery,
+    useRecieptQuery,
+    useRecipeByCategoryQuery,
+} = apiSlice;
 
 function transformCategoriesResponse(response: AllCategoriesResponse) {
     const navigationTree: AllCategories[] = [];
@@ -149,9 +163,10 @@ function transformCategoriesResponse(response: AllCategoriesResponse) {
 }
 
 function transformRecieptsResponse(response: RecipesResponse) {
-    const updatedData = response.data.map((e) => ({
+    const updatedData = response.data.flat().map((e) => ({
+        // ИНОГДА КРИВОЙ ОТВЕТ ОТ АПИ СО ВЛОЖЕННЫМИ МАССИВМИ В МАССИВЫ В МАССИВЫ  МОГУТ ПАДАТЬ ТЕСТЫ!!!!
         ...e,
-        image: BASE_ICON_URL + e.image,
+        image: e.image ? BASE_ICON_URL + e.image : '',
         id: e._id,
     }));
     return { ...response, data: updatedData };

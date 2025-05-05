@@ -75,7 +75,11 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             </Flex>
             {!noFooter && (
                 <Flex justifyContent='center' mt={categoryHeaderMb}>
-                    <ButtonViewMore title={categoryButtonText} onClick={onClick} />
+                    <ButtonViewMore
+                        data-test-id='load-more-button'
+                        title={categoryButtonText}
+                        onClick={onClick}
+                    />
                 </Flex>
             )}
         </Flex>

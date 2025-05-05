@@ -23,7 +23,13 @@ export const Loader: React.FC = () => (
             justifyContent='center'
             alignItems='center'
         >
-            <Spinner thickness='2.5px' speed='0.65s' color='#000' size={{ base: 'md', md: 'lg' }} />
+            <Spinner
+                data-test-id='app-loader'
+                thickness='2.5px'
+                speed='0.65s'
+                color='#000'
+                size={{ base: 'md', md: 'lg' }}
+            />
         </Flex>
     </Box>
 );
@@ -38,6 +44,12 @@ export const SearchLoader: React.FC = () => (
         justifyContent='center'
         alignItems='center'
     >
-        <Spinner thickness='2.5px' speed='0.65s' color='#000' size={{ base: 'md', md: 'lg' }} />
+        <Spinner
+            data-test-id='loader-search-block'
+            thickness='2.5px'
+            speed='0.65s'
+            color='#000'
+            size={{ base: 'md', md: 'lg' }}
+        />
     </Flex>
 );

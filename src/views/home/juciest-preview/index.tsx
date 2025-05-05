@@ -11,7 +11,7 @@ const JuciestPreview: React.FC<CategorySectionProps> = ({ recieptsData, activeSe
         <Flex justifyContent='space-between'>
             <CategoryHeader title='Самое сочное' mb={PADDINGS.subsectionHeaderMb} />
             <ButtonViewMore
-                display={{ base: 'none', xl: 'flex' }}
+                display={{ base: 'none', md: 'flex' }}
                 as={Link}
                 to='/the-juiciest'
                 data-test-id='juiciest-link'
@@ -45,7 +45,7 @@ const JuciestPreview: React.FC<CategorySectionProps> = ({ recieptsData, activeSe
         </Flex>
         <Flex
             justifyContent='center'
-            display={{ base: 'flex', xl: 'none' }}
+            display={{ base: 'flex', md: 'none' }}
             mt={{ base: 3, xl: 0 }}
         >
             <ButtonViewMore

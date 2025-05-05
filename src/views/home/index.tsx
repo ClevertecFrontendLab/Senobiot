@@ -12,7 +12,11 @@ import { PAGE_TITLES } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
-import { useCategoryRecieptsQuery } from '~/redux/query/create-api';
+import {
+    //  useCategoryByIdQuery,
+    useCategoryRecieptsQuery,
+    useRecipeByCategoryQuery,
+} from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { AllCategories, NavigationConfig, RecipeProps, SEARCH_STATE } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
@@ -42,6 +46,10 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         dispatch(setAppError(null));
     }, [dispatch]);
 
+    // const { data } = useRecipeByCategoryQuery(apiQureryId || '', { skip: isJuiciest });
+    // const { data } = useCategoryByIdQuery(categoryId || '', { skip: isJuiciest });
+    // console.log(data);
+
     const {
         data: { data: latestData } = {},
         isLoading: isLoadingLatest,
@@ -70,12 +78,21 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         data: { data: randomCategoryReciepts } = {},
         isLoading: isLoadingRandom,
         isError: isErrorRandom,
-    } = useCategoryRecieptsQuery(
-        {
-            subcategoriesIds: randomCategory?.subcategoriesIds,
-        },
+    } = useRecipeByCategoryQuery(
+        { id: randomCategory?.randomCategory.apiQureryId || '', limit: 5 },
         { skip: !randomCategory },
     );
+
+    // const {
+    //     data: { data: randomCategoryReciepts } = {},
+    //     isLoading: isLoadingRandom,
+    //     isError: isErrorRandom,
+    // } = useCategoryRecieptsQuery(
+    //     {
+    //         subcategoriesIds: randomCategory?.subcategoriesIds,
+    //     },
+    //     { skip: !randomCategory },
+    // );
 
     useEffect(() => {
         if (subCategoriesByIds && !isLoadingLatest && !isLoadingJuciest && !isLoadingRandom) {
