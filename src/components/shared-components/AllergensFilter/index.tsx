@@ -44,20 +44,34 @@ export const AllergensFilter: React.FC<{
 
     const toggleAllergen = (allergen: string) => {
         const allergenValue = allergen.replace(/ .*/, '');
-        let updatedSelectedAllergens: string[] = [];
+        let updatedSelectedAllergens: string[];
 
-        if (filters.allergens) {
-            if (filters.allergens?.includes(allergenValue)) {
-                updatedSelectedAllergens = filters.allergens?.filter(
-                    (item) => item !== allergenValue,
-                );
-            } else {
-                updatedSelectedAllergens = [...filters.allergens, allergenValue];
-            }
+        if (filters.allergens && filters.allergens.includes(allergenValue)) {
+            updatedSelectedAllergens = filters.allergens.filter((item) => item !== allergenValue);
+        } else {
+            updatedSelectedAllergens = [...(filters.allergens || []), allergenValue];
         }
 
         setFilters({ ...filters, allergens: updatedSelectedAllergens });
     };
+
+    // const toggleAllergen = (allergen: string) => {
+    //     const allergenValue = allergen.replace(/ .*/, '');
+    //     let updatedSelectedAllergens: string[] = [];
+    //     console.log(`allergenValue ${allergenValue}`);
+    //     if (filters.allergens) {
+    //         if (filters.allergens?.includes(allergenValue)) {
+    //             updatedSelectedAllergens = filters.allergens?.filter(
+    //                 (item) => item !== allergenValue,
+    //             );
+    //         }
+    //     } else {
+    //         updatedSelectedAllergens = [allergenValue];
+    //     }
+
+    //     setFilters({ ...filters, allergens: updatedSelectedAllergens });
+    //     console.log(filters);
+    // };
 
     const handleNewAllergenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewAllergen(e.target.value);
@@ -70,14 +84,20 @@ export const AllergensFilter: React.FC<{
 
     const addNewAllergen = () => {
         const trimmed = newAllergen.trim();
+
+        if (!trimmed) return;
+
         let updatedSelectedAllergens = filters.allergens;
         const currentAllergens = filters.allergens;
         if (currentAllergens) {
-            if (trimmed && !currentAllergens.includes(trimmed)) {
+            if (!currentAllergens.includes(trimmed)) {
                 updatedSelectedAllergens = [...currentAllergens, trimmed];
                 setFilters({ ...filters, allergens: updatedSelectedAllergens });
                 setNewAllergen('');
             }
+        } else {
+            setFilters({ ...filters, allergens: [trimmed] });
+            setNewAllergen('');
         }
     };
 

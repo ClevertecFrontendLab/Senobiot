@@ -82,6 +82,10 @@ export const RecipeFilter: React.FC = () => {
         );
     };
 
+    const toggleAllergensSelection = (allergen: string) => {
+        setFilters({ ...filters, allergens: filters.allergens?.filter((e) => e !== allergen) });
+    };
+
     const resetCategories = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setSelectedCategories([]);
@@ -106,7 +110,7 @@ export const RecipeFilter: React.FC = () => {
         });
 
         // dispatch(applyFilters(appliedFilters));
-        // setSelectedCategories([]);
+        setSelectedCategories([]);
         closeDrawer();
     };
 
@@ -322,12 +326,12 @@ export const RecipeFilter: React.FC = () => {
                                 onClick={() => toggleSideSelection(side)}
                             />
                         ))}
-                        {filters.allergens?.map((side, index) => (
+                        {filters.allergens?.map((allergen, index) => (
                             <FilterTag
                                 testId={true}
                                 key={index}
-                                item={side}
-                                onClick={() => toggleSideSelection(side)}
+                                item={allergen}
+                                onClick={() => toggleAllergensSelection(allergen)}
                             />
                         ))}
                     </HStack>

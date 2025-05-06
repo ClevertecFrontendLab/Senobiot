@@ -96,7 +96,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     descriptionMinHeight,
     imageFit = 'unset',
     cardDataTestId,
-    cardHeaderHeight = { base: '3em', xl: '1.5em' },
+    cardHeaderHeight = { base: '3.5em', xl: '1.5em' },
     ...rest
 }) => (
     <Flex
