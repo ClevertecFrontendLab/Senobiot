@@ -18,6 +18,7 @@ const NotFoundPage: React.FC = () => (
         >
             <Image src='/404.png' mb={4}></Image>
             <SubtitleText
+                titleHeading='h1'
                 titleTextFw={700}
                 titleTextFz='24px'
                 titleTextLh='32px'
@@ -25,7 +26,11 @@ const NotFoundPage: React.FC = () => (
             />
             <Text>
                 Можете поискать другой рецепт{' '}
-                <Link to='/' style={{ textDecoration: 'underline' }}>
+                <Link
+                    data-test-id='error-page-go-home'
+                    to='/'
+                    style={{ textDecoration: 'underline' }}
+                >
                     здесь.
                 </Link>
             </Text>

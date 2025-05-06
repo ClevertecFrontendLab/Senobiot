@@ -88,6 +88,7 @@ export const HeaderNavMenu: React.FC = () => {
                             alignItems='flex-start'
                         >
                             <TitleText
+                                titleHeading='h3'
                                 titleTextFz='18px'
                                 titleTextFw={500}
                                 titleTextLh='28px'

@@ -56,6 +56,7 @@ export type CategorySectionProps = {
     activeSearch?: string | null;
     onClick?: () => void;
     markdownText?: string;
+    recieptsByCategory?: RecipeProps[];
 };
 
 export type ComposeFiltersPayloadType = {

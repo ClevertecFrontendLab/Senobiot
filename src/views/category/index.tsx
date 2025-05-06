@@ -1,7 +1,7 @@
 import { VStack } from '@chakra-ui/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 
 import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
@@ -14,11 +14,7 @@ import {
 import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
-import {
-    useCategoryRecieptsQuery,
-    // useRecipeByCategoryQuery,
-    // useRecipeByCategoryQuery
-} from '~/redux/query/create-api';
+import { useCategoryRecieptsQuery, useRecipeByCategoryQuery } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { AllCategories, NavigationConfig, RecipeProps, SEARCH_STATE } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
@@ -37,6 +33,8 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         () => currentCategory?.subCategories?.find((e) => e.subcategoryEn === subcategory),
         [currentCategory, subcategory],
     );
+
+    const isJuiciest: boolean = category === EXCLUDED_ROUTES.juiciest;
 
     const { categoryRu, categoryDescription, categoryId } = currentCategory || {};
     const { apiQureryId } = currentSubCategory || {};
@@ -66,9 +64,10 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         setPage((prevPage) => prevPage + 1);
     };
 
-    const isJuiciest: boolean = category === EXCLUDED_ROUTES.juiciest;
-
-    // const { data } = useRecipeByCategoryQuery({ id: apiQureryId }, { skip: isJuiciest });
+    const { data: { data: recieptsByCategory } = {} } = useRecipeByCategoryQuery(
+        { id: apiQureryId },
+        { skip: isJuiciest },
+    );
 
     // const { data } = useCategoryByIdQuery(categoryId || '', { skip: isJuiciest });
 
@@ -208,6 +207,10 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         }
     }, [isErrorCategory, isErrorRandom, dispatch, filters.searchString]);
 
+    if (!currentCategory && !isJuiciest) {
+        return <Navigate to='/not-found' replace />;
+    }
+
     if (isLoadingCategory) {
         return <Loader />;
     }
@@ -233,6 +236,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                         noFooter={!!meta?.totalPages && page >= meta.totalPages}
                         onClick={getMore}
                         markdownText={markdownText}
+                        recieptsByCategory={recieptsByCategory}
                     />
                 )}
                 {randomCategoryData?.reciepts?.length && (
