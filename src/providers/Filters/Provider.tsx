@@ -5,11 +5,11 @@ import { Filters } from '~/types';
 
 import { FiltersContext, FiltersContextProps } from './Context';
 
-interface DrawerFiltersProviderProps {
+type DrawerFiltersProviderProps = {
     children: ReactNode;
     filters: Filters;
     setFilters: Dispatch<SetStateAction<Filters>>;
-}
+};
 
 export const FiltersProvider: React.FC<DrawerFiltersProviderProps> = ({
     children,

@@ -23,6 +23,7 @@ import {
     SelectRegular,
     SwitchToggler,
 } from '~/components/shared-components';
+import { TEST_IDS } from '~/constants';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { getCategories, getMeats, getSides } from '~/redux/selectors';
@@ -97,19 +98,14 @@ export const RecipeFilter: React.FC = () => {
     };
 
     const searchReciepts = () => {
-        // const categoryKeys = selectedCategories.map((e) => categoriesMap[e]);
         const sideKeys = selectedSides.map((e) => sidesMap[e]);
 
         setFilters({
             ...filters,
             meat: selectedMeats.join(','),
             garnish: sideKeys.join(','),
-            // subcategoriesIds: categoryKeys,
-            // author: selectedAuthors,
-            // side: sideKeys,
         });
 
-        // dispatch(applyFilters(appliedFilters));
         setSelectedCategories([]);
         closeDrawer();
     };
@@ -137,10 +133,10 @@ export const RecipeFilter: React.FC = () => {
                 minW={{ base: 344, xl: 463 }}
                 p={{ base: 4, xl: 8 }}
                 pr={{ base: 1.5, xl: 2 }}
-                data-test-id='filter-drawer'
+                data-test-id={TEST_IDS.filters}
             >
                 <DrawerCloseButton
-                    data-test-id='close-filter-drawer'
+                    data-test-id={TEST_IDS.filtersCloseButton}
                     top={{ base: 5, xl: 8 }}
                     right={{ base: 3, xl: 5 }}
                 >
@@ -345,7 +341,7 @@ export const RecipeFilter: React.FC = () => {
                         onClick={clearFilters}
                         px={6}
                         border={BORDERS.main}
-                        data-test-id='clear-filter-button'
+                        data-test-id={TEST_IDS.filtersClearButton}
                     >
                         Очистить фильтр
                     </Button>
@@ -371,7 +367,7 @@ export const RecipeFilter: React.FC = () => {
                         onClick={searchReciepts}
                         px={6}
                         _hover={{ bg: '#000' }}
-                        data-test-id='find-recipe-button'
+                        data-test-id={TEST_IDS.filtersFindButton}
                     >
                         Найти рецепт
                     </Button>

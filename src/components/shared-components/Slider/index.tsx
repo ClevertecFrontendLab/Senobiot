@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { TEST_IDS } from '~/constants';
 import { RecipeProps } from '~/types';
 
 import { SliderLeftButton, SliderRightButton } from './Buttons';
@@ -57,7 +58,7 @@ export const Slider: React.FC<SliderProps> = ({ slides = [], markdownText }) => 
                     const { title, description, image, category, id, likes, bookmarks } = slide;
 
                     return (
-                        <SwiperSlide key={index} data-test-id={`carousel-card-${index}`}>
+                        <SwiperSlide key={index} data-test-id={`${TEST_IDS.carouselCard}-${index}`}>
                             <Link to={`${category[0].route}/${id}`}>
                                 <SliderCard
                                     title={title}
@@ -79,7 +80,7 @@ export const Slider: React.FC<SliderProps> = ({ slides = [], markdownText }) => 
                 left={-2}
                 zIndex={8}
                 className='slider-left-button'
-                data-test-id='carousel-back'
+                data-test-id={TEST_IDS.carouselButtonLeft}
             >
                 <SliderLeftButton />
             </Flex>
@@ -89,7 +90,7 @@ export const Slider: React.FC<SliderProps> = ({ slides = [], markdownText }) => 
                 top='40%'
                 right={{ xl: -1, '2xl': -2 }}
                 zIndex={8}
-                data-test-id='carousel-forward'
+                data-test-id={TEST_IDS.carouselButtonRight}
             >
                 <SliderRightButton />
             </Flex>

@@ -1,5 +1,6 @@
 import { Flex, useTheme } from '@chakra-ui/react';
 
+import { TEST_IDS } from '~/constants';
 import { PADDINGS, SHADOWS, WIDTHS } from '~/constants/styles';
 
 import { Footer } from '..';
@@ -14,8 +15,7 @@ export const BurgerNavMenu: React.FC<{
 
     return (
         <Flex
-            data-test-id='nav'
-            // ml='auto'
+            data-test-id={TEST_IDS.navigationMenu}
             ml='auto'
             flexDirection='column'
             justifyContent='space-between'

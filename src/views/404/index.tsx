@@ -2,7 +2,7 @@ import { Image, Text, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
 import { PageWrapper, SubtitleText } from '~/components/shared-components';
-import { PAGE_TITLES } from '~/constants';
+import { PAGE_TITLES, TEST_IDS } from '~/constants';
 
 const NotFoundPage: React.FC = () => (
     <PageWrapper>
@@ -27,7 +27,7 @@ const NotFoundPage: React.FC = () => (
             <Text>
                 Можете поискать другой рецепт{' '}
                 <Link
-                    data-test-id='error-page-go-home'
+                    data-test-id={TEST_IDS.homeLink}
                     to='/'
                     style={{ textDecoration: 'underline' }}
                 >

@@ -3,11 +3,11 @@ import React from 'react';
 
 import { BORDERS } from '~/constants/styles';
 
-interface NutritionInfoItemProps {
+type NutritionInfoItemProps = {
     name: string;
     value: number;
     measures: string;
-}
+};
 
 const NutritionInfoItem: React.FC<NutritionInfoItemProps> = ({ name, value, measures }) => (
     <Flex

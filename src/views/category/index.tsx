@@ -69,8 +69,6 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         { skip: isJuiciest },
     );
 
-    // const { data } = useCategoryByIdQuery(categoryId || '', { skip: isJuiciest });
-
     const {
         data: { data: categoryData, meta } = {},
         isLoading: isLoadingCategory,
@@ -171,7 +169,6 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         isJuiciest,
         isLoadingCategory,
         isLoadingRandom,
-
         category,
         searchResultState,
         filters.searchString,
@@ -205,7 +202,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                 dispatch(setAppError(true));
             }
         }
-    }, [isErrorCategory, isErrorRandom, dispatch, filters.searchString]);
+    }, [isErrorCategory, isErrorRandom, filters.searchString, dispatch]);
 
     if (!currentCategory && !isJuiciest) {
         return <Navigate to='/not-found' replace />;

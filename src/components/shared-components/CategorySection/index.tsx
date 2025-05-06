@@ -1,9 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
+import { TEST_IDS } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
-// import { setEmptySearch } from '~/redux/reducers';
-// import { getActiveSearch } from '~/redux/selectors';
 import { CategorySectionProps } from '~/types';
 
 import { ButtonViewMore } from '../Buttons';
@@ -55,7 +54,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             {!noFooter && (
                 <Flex justifyContent='center' mt={categoryHeaderMb}>
                     <ButtonViewMore
-                        data-test-id='load-more-button'
+                        data-test-id={TEST_IDS.buttonViewMore}
                         title={categoryButtonText}
                         onClick={onClick}
                     />

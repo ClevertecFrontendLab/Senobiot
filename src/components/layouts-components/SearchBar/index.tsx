@@ -17,6 +17,7 @@ import {
     TextRegular,
     TitleText,
 } from '~/components/shared-components';
+import { TEST_IDS } from '~/constants';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { SEARCH_STATE } from '~/types';
@@ -124,7 +125,7 @@ export const SearchBar: React.FC<{
                         <InputGroup display='flex' alignItems='center'>
                             <InputLeftElement position='initial' display='flex' mr={3}>
                                 <IconButton
-                                    data-test-id='filter-button'
+                                    data-test-id={TEST_IDS.filtersOpenButton}
                                     onClick={openDrawer}
                                     icon={
                                         <Image
@@ -147,7 +148,7 @@ export const SearchBar: React.FC<{
                                 />
                             </InputLeftElement>
                             <Input
-                                data-test-id='search-input'
+                                data-test-id={TEST_IDS.searchInput}
                                 position='relative'
                                 value={inputValue}
                                 onChange={handleInputChange}
@@ -173,7 +174,7 @@ export const SearchBar: React.FC<{
                             />
                             <InputRightElement display='flex'>
                                 <IconButton
-                                    data-test-id='search-button'
+                                    data-test-id={TEST_IDS.searchButton}
                                     onClick={handleSearch}
                                     disabled={!isEnabled}
                                     pointerEvents={isEnabled ? 'unset' : 'none'}

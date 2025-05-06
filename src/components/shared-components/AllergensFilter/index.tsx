@@ -7,6 +7,7 @@ import {
     SelectOuterTags,
     TextInputCustom,
 } from '~/components/shared-components';
+import { TEST_IDS } from '~/constants';
 import { SHADOWS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
 
@@ -133,7 +134,7 @@ export const AllergensFilter: React.FC<{
             )}
             {isOpen && !disabled && (
                 <Box
-                    data-test-id='allergens-menu'
+                    data-test-id={TEST_IDS.allergens}
                     mt={2}
                     borderRadius='4px'
                     bg='white'

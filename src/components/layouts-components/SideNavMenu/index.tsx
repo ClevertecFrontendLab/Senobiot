@@ -1,5 +1,6 @@
 import { Flex, useBreakpointValue, useTheme } from '@chakra-ui/react';
 
+import { TEST_IDS } from '~/constants';
 import { PADDINGS, SHADOWS } from '~/constants/styles';
 
 import { Footer } from '..';
@@ -12,7 +13,7 @@ export const SideMenu: React.FC = () => {
     if (isDesktop) {
         return (
             <Flex
-                data-test-id='nav'
+                data-test-id={TEST_IDS.navigationMenu}
                 flexDirection='column'
                 justifyContent='space-between'
                 w='256px'

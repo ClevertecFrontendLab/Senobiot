@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 import { ButtonViewMore, CategoryHeader } from '~/components/shared-components';
 import CategoryCard from '~/components/shared-components/CategorySection/CategorySectionCard';
+import { TEST_IDS } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 import { CategorySectionProps } from '~/types';
 
@@ -14,7 +15,7 @@ const JuciestPreview: React.FC<CategorySectionProps> = ({ recieptsData, activeSe
                 display={{ base: 'none', md: 'flex' }}
                 as={Link}
                 to='/the-juiciest'
-                data-test-id='juiciest-link'
+                data-test-id={TEST_IDS.juciestLink}
                 title='Вся подборка'
                 noButtonIcon={false}
             />
@@ -50,7 +51,7 @@ const JuciestPreview: React.FC<CategorySectionProps> = ({ recieptsData, activeSe
         >
             <ButtonViewMore
                 noButtonIcon={false}
-                data-test-id='juiciest-link-mobile'
+                data-test-id={TEST_IDS.juciestLinkMobile}
                 title='Вся подборка'
                 as={Link}
                 to='/the-juiciest'

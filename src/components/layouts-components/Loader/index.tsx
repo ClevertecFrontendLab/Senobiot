@@ -1,6 +1,8 @@
 import { Box, Flex, Spinner } from '@chakra-ui/react';
 import React from 'react';
 
+import { TEST_IDS } from '~/constants';
+
 export const Loader: React.FC = () => (
     <Box
         backdropFilter='blur(2px)'
@@ -24,7 +26,7 @@ export const Loader: React.FC = () => (
             alignItems='center'
         >
             <Spinner
-                data-test-id='app-loader'
+                data-test-id={TEST_IDS.spinner}
                 thickness='2.5px'
                 speed='0.65s'
                 color='#000'
@@ -45,7 +47,7 @@ export const SearchLoader: React.FC = () => (
         alignItems='center'
     >
         <Spinner
-            data-test-id='loader-search-block'
+            data-test-id={TEST_IDS.minispinner}
             thickness='2.5px'
             speed='0.65s'
             color='#000'

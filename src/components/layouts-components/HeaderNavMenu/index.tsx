@@ -23,6 +23,7 @@ import React from 'react';
 
 import { TextRegular, TitleText } from '~/components/shared-components';
 import { ProfileNotification } from '~/components/shared-components';
+import { TEST_IDS } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 
 import { BurgerNavMenu } from '../BurgerNavMenu';
@@ -60,7 +61,7 @@ export const HeaderNavMenu: React.FC = () => {
             zIndex={10}
             justifyContent='space-between'
             alignItems='center'
-            data-test-id='header'
+            data-test-id={TEST_IDS.header}
         >
             <HStack>
                 <Logo />
@@ -128,7 +129,7 @@ export const HeaderNavMenu: React.FC = () => {
                         _hover={{
                             background: 'none',
                         }}
-                        data-test-id='hamburger-icon'
+                        data-test-id={TEST_IDS.hamburgerIcon}
                     />
                 )}
                 {isOpen && (
@@ -160,7 +161,7 @@ export const HeaderNavMenu: React.FC = () => {
                                     <Logo />
                                     <DrawerCloseButton
                                         position='static'
-                                        data-test-id='close-icon'
+                                        data-test-id={TEST_IDS.hamburgerCloseButton}
                                     />
                                 </Flex>
                             </DrawerHeader>

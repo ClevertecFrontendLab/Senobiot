@@ -3,12 +3,9 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 
 import { BORDERS } from '~/constants/styles';
-import { SubCategoryList } from '~/types';
+import { CategoryMenuProps } from '~/types';
 
-const CategoryMenu: React.FC<{ list: SubCategoryList[]; activeSubcategory?: string }> = ({
-    list,
-    activeSubcategory,
-}) => {
+const CategoryMenu: React.FC<CategoryMenuProps> = ({ list, activeSubcategory }) => {
     const activeIndex = list.findIndex((item) => item.categoryEn === activeSubcategory);
     const selectedIndex = activeIndex !== -1 ? activeIndex : 0;
     const tabListRef = useRef<HTMLDivElement>(null);

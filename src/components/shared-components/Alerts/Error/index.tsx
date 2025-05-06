@@ -1,11 +1,8 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from '@chakra-ui/react';
 import React from 'react';
 
-interface ServerErrorAlertProps {
-    onClose?: () => void;
-    title?: string;
-    body?: string;
-}
+import { TEST_IDS } from '~/constants';
+import { ServerErrorAlertProps } from '~/types';
 
 export const ServerErrorAlert: React.FC<ServerErrorAlertProps> = ({
     onClose,
@@ -13,7 +10,7 @@ export const ServerErrorAlert: React.FC<ServerErrorAlertProps> = ({
     body = 'Попробуйте поискать снова попозже',
 }) => (
     <Alert
-        data-test-id='error-notification'
+        data-test-id={TEST_IDS.alert}
         fontFamily='Inter'
         bg='red.500'
         status='error'
@@ -36,7 +33,7 @@ export const ServerErrorAlert: React.FC<ServerErrorAlertProps> = ({
         </Box>
         {onClose && (
             <CloseButton
-                data-test-id='close-alert-button'
+                data-test-id={TEST_IDS.alertCloseButton}
                 position='absolute'
                 right='8px'
                 top='8px'

@@ -13,25 +13,31 @@ export type RecipeProps = {
     date: string;
     time: string;
     portions: number;
-    nutritionValue: {
-        calories: number;
-        proteins?: number;
-        protein?: number;
-        fats: number;
-        carbohydrates: number;
-    };
-    ingredients: {
-        title: string;
-        count: string | number;
-        measureUnit: string;
-    }[];
-    steps: {
-        stepNumber: number;
-        description: string;
-        image: string;
-    }[];
-    meat?: string;
+    nutritionValue: NutritionValue;
+    ingredients: Ingredients[];
+    steps: CoockingSteps[];
     side: string;
+    meat?: string;
+};
+
+type NutritionValue = {
+    calories: number;
+    fats: number;
+    carbohydrates: number;
+    proteins?: number;
+    protein?: number;
+};
+
+type Ingredients = {
+    title: string;
+    count: string | number;
+    measureUnit: string;
+};
+
+type CoockingSteps = {
+    stepNumber: number;
+    description: string;
+    image: string;
 };
 
 export type CategoriesProps = {
@@ -67,12 +73,12 @@ export type ComposeFiltersPayloadType = {
 };
 
 export type AllCategories = {
-    categoryId?: string;
     categoryEn: string;
     categoryRu: string;
+    route: string;
     categoryDescription?: string;
     categoryIcon?: string;
-    route: string;
+    categoryId?: string;
     apiQureryId?: string;
     subCategories?: SubCategory[];
     subCategoriesList?: SubCategoryList[];
@@ -143,3 +149,18 @@ export enum SEARCH_STATE {
     EMPTY = 'empty',
     ERROR = 'error-search',
 }
+
+export type CategoryMenuProps = {
+    list: SubCategoryList[];
+    activeSubcategory?: string;
+};
+
+export type SearchInputProps = {
+    onSearch: (searchText: string) => void;
+};
+
+export type ServerErrorAlertProps = {
+    onClose?: () => void;
+    title?: string;
+    body?: string;
+};

@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
+import { TEST_IDS } from '~/constants';
 import { RecipeProps } from '~/types';
 
 import IngridientItem from './Item';
@@ -45,11 +46,11 @@ export const Ingridients: React.FC<{
                     <NumberInputField fontSize='16px' />
                     <NumberInputStepper>
                         <NumberIncrementStepper
-                            data-test-id='increment-stepper'
+                            data-test-id={TEST_IDS.portionsIncrement}
                             onClick={() => setPortions((prev) => prev + 1)}
                         />
                         <NumberDecrementStepper
-                            data-test-id='decrement-stepper'
+                            data-test-id={TEST_IDS.poritonsDecrement}
                             onClick={() => setPortions((prev) => Math.max(prev - 1, 1))}
                         />
                     </NumberInputStepper>

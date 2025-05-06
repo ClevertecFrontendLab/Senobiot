@@ -4,11 +4,11 @@ import React from 'react';
 import { ButtonOutlined, SubtitleText } from '~/components/shared-components';
 import { BORDERS } from '~/constants/styles';
 
-interface NextSectionCardMinimized {
+type NextSectionCardMinimized = {
     title: string;
     buttonText?: string;
     iconUrl?: string;
-}
+};
 
 const NextSectionCardMinimized: React.FC<NextSectionCardMinimized> = ({
     title,

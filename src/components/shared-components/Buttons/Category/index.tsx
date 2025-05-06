@@ -1,8 +1,6 @@
 import { Button, Image, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 
-// import { getCategoryByKey } from '~/configs/navigationConfig';
-
 export type ButtonCategoryProps = {
     categoryTitle?: string;
     categoryIconUrl?: string;
@@ -17,7 +15,6 @@ export type ButtonCategoryProps = {
 };
 
 export const ButtonCategory: React.FC<ButtonCategoryProps> = ({
-    // categoryKey,
     categoryColor = 'black',
     categoryBg = 'lime.300',
     categoryBorderRadius = '4px',
@@ -29,12 +26,6 @@ export const ButtonCategory: React.FC<ButtonCategoryProps> = ({
     categoryIconUrl,
     categoryTitle,
 }) => (
-    // if (!categoryKey) return;
-    // const categoryProps = getCategoryByKey(categoryKey);
-
-    // if (!categoryProps) return;
-    // const { icon, title } = categoryProps;
-
     <Button
         flexShrink={0}
         textAlign='left'

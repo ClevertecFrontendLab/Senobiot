@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 
+import { TEST_IDS } from '~/constants';
 import { getcurrentLocationState } from '~/redux/selectors';
 
 const BreadCrump: React.FC<{
@@ -17,7 +18,7 @@ const BreadCrump: React.FC<{
             alignItems='center'
             separator={<ChevronRightIcon color='gray.500' />}
             fontSize='md'
-            data-test-id='breadcrumbs'
+            data-test-id={TEST_IDS.breadcrumbs}
             sx={{
                 '& ol': {
                     flexWrap: 'wrap',
