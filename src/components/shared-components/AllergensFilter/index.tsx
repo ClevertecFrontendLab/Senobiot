@@ -83,14 +83,14 @@ export const AllergensFilter: React.FC<{
 
     return (
         <Box
-            // as='button'
+            as='button'
             width='100%'
             position='relative'
             userSelect={disabled ? 'none' : 'unset'}
             pointerEvents={disabled ? 'none' : 'auto'}
             data-test-id={dataTestIdToggler}
             aria-disabled={disabled}
-            // disabled={disabled}
+            disabled={disabled}
             textAlign='left'
         >
             {outerTags ? (

@@ -7,6 +7,7 @@ import {
     InputGroup,
     InputLeftElement,
     InputRightElement,
+    useBreakpointValue,
 } from '@chakra-ui/react';
 import React, { ChangeEvent, useState } from 'react';
 
@@ -32,7 +33,8 @@ export const SearchBar: React.FC<{
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
     const styles = { base: '2xl', xl: '5xl' };
     const [inputValue, setInputValue] = useState('');
-    const isEnabled = inputValue.trim().length >= 3;
+    const isEnabled = inputValue.trim().length >= 3 || filters.allergens;
+    const isAllergensTogglerVisible = useBreakpointValue({ base: false, xl: true });
     const inputStyles = {
         border:
             searchResultState === SEARCH_STATE.SUCCESS
@@ -199,24 +201,26 @@ export const SearchBar: React.FC<{
                             </InputRightElement>
                         </InputGroup>
                     </Flex>
-                    <Flex
-                        mt={{ xl: 4 }}
-                        alignItems='center'
-                        justifyContent='space-between'
-                        display={{ base: 'none', xl: 'flex' }}
-                    >
-                        <SwitchToggler
-                            text=' Исключить аллергены'
-                            onChange={handleExcludeAllergens}
-                            isChecked={isExcludeAllergens}
-                            dataTestId='allergens-switcher'
-                        />
-                        <AllergensFilter
-                            dataTestCheckBoKeykey='allergen-'
-                            dataTestIdToggler='allergens-menu-button'
-                            disabled={!isExcludeAllergens}
-                        />
-                    </Flex>
+                    {isAllergensTogglerVisible && (
+                        <Flex
+                            mt={{ xl: 4 }}
+                            alignItems='center'
+                            justifyContent='space-between'
+                            // display={{ base: 'none', xl: 'flex' }}
+                        >
+                            <SwitchToggler
+                                text=' Исключить аллергены'
+                                onChange={handleExcludeAllergens}
+                                isChecked={isExcludeAllergens}
+                                dataTestId='allergens-switcher'
+                            />
+                            <AllergensFilter
+                                dataTestCheckBoKeykey='allergen-'
+                                dataTestIdToggler='allergens-menu-button'
+                                disabled={!isExcludeAllergens}
+                            />
+                        </Flex>
+                    )}
                 </Flex>
             ) : (
                 <SearchLoader />
