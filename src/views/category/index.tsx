@@ -14,7 +14,7 @@ import {
 import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
-import { useRequests } from '~/redux/query/utils';
+import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import {
     NavigationConfig,
@@ -73,7 +73,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         randomCategoryReciepts,
         isLoadingRandom,
         isErrorRandom,
-    } = useRequests({ randomCategory, isJuiciest, apiQureryId, page });
+    } = useRecipeRequests({ randomCategory, isJuiciest, apiQureryId, page });
 
     useEffect(() => {
         if (!isLoadingCategory && !isLoadingRandom && !isFetching) {

@@ -18,12 +18,11 @@ import { AuthorCard } from '~/components/shared-components/Authors';
 import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 import { setCurrentLocation } from '~/redux';
-import { useCategoryRecieptsQuery, useRecieptQuery } from '~/redux/query/create-api';
+import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { LocationParams, NavigationConfig, RecipeProps } from '~/types';
 import { populateRecieptCategory } from '~/utils';
 
-//непонятно где автором брать в рецепта нет
 const authorData = {
     id: 1,
     name: 'Сергей Разумов',
@@ -44,19 +43,15 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
     }, [dispatch]);
+
     const {
-        data: recieptData,
-        isLoading: isLoadingReciept,
-        isError: isRecieptEror,
-    } = useRecieptQuery(id || '', { skip: !id });
-    const {
-        data: { data: latestData } = {},
-        isLoading: isLoadingLatest,
-        isError: isErrorLatest,
-    } = useCategoryRecieptsQuery({
-        limit: 10,
-        isLatest: true,
-    });
+        latestData,
+        recieptData,
+        isLoadingReciept,
+        isErrorReciept,
+        isErrorLatest,
+        isLoadingLatest,
+    } = useRecipeRequests({ recieptId: id, isJuiciest: true });
 
     useEffect(() => {
         if (subCategoriesByIds) {
@@ -106,7 +101,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
             }
         }
 
-        if (isRecieptEror) {
+        if (isErrorReciept) {
             navigate(-1);
             dispatch(setAppError('Error'));
         }
@@ -122,7 +117,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
         latestData,
         isLoadingReciept,
         isLoadingLatest,
-        isRecieptEror,
+        isErrorReciept,
         isErrorLatest,
         subCategoriesByIds,
         navigate,

@@ -5,6 +5,8 @@ import { RecipeProps } from '~/types';
 
 import { ApiEndpoints } from './constants/api';
 import {
+    buildRecieptsQuery,
+    QueryParams,
     transformCategoriesResponse,
     transformRecieptResponse,
     transformRecieptsResponse,
@@ -24,25 +26,7 @@ export const apiSlice = createApi({
             query: (id: string) => `/category/${id}`,
         }),
         categoryReciepts: builder.query({
-            query: ({
-                limit = API_QUERY_PARAMS.defaultRequestAmount,
-                page = API_QUERY_PARAMS.defaultPage,
-                allergens = '',
-                searchString = '',
-                meat = '',
-                garnish = '',
-                subcategoriesIds = '',
-                isJuiciest = false,
-                isLatest = false,
-            }) =>
-                `/recipe?page=${page}&limit=${limit}` +
-                (allergens ? `&allergens=${allergens.trim()}` : '') +
-                (searchString ? `&searchString=${searchString.trim()}` : '') +
-                (meat ? `&meat=${meat.trim()}` : '') +
-                (garnish ? `&garnish=${garnish.trim()}` : '') +
-                (subcategoriesIds ? `&subcategoriesIds=${subcategoriesIds.trim()}` : '') +
-                (isJuiciest ? `&sortBy=likes&sortOrder=desc` : '') +
-                (isLatest ? `&sortBy=createdAt&sortOrder=desc` : ''),
+            query: (params: QueryParams) => buildRecieptsQuery(params),
             transformResponse: transformRecieptsResponse,
         }),
         reciept: builder.query<RecipeProps, string>({

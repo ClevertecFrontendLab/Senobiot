@@ -9,7 +9,7 @@ import {
 } from '~/types';
 
 import { ApiEndpoints } from '../constants/api';
-import { useCategoryRecieptsQuery, useRecipeByCategoryQuery } from '../create-api';
+import { useCategoryRecieptsQuery, useRecieptQuery, useRecipeByCategoryQuery } from '../create-api';
 
 type AllCategoriesResponse = {
     category: string;
@@ -156,19 +156,21 @@ export function transformRecieptResponse(response: RecipeProps) {
     return { ...response, image: BASE_ICON_URL + response.image, steps: updatedSteps };
 }
 
-type useRequestsProps = {
+type useReciepeRequestsProps = {
     randomCategory?: RandomCategoryStateProps;
     isJuiciest?: boolean;
     apiQureryId?: string;
     page?: number;
+    recieptId?: string;
 };
 
-export const useRequests = ({
+export const useRecipeRequests = ({
     randomCategory,
     apiQureryId,
     isJuiciest,
     page,
-}: useRequestsProps) => {
+    recieptId,
+}: useReciepeRequestsProps) => {
     const { filters } = useFilters();
 
     const {
@@ -225,10 +227,17 @@ export const useRequests = ({
         isJuiciest,
     });
 
+    const {
+        data: recieptData,
+        isLoading: isLoadingReciept,
+        isError: isErrorReciept,
+    } = useRecieptQuery(recieptId || '', { skip: !recieptId });
+
     return {
         latestData,
         juciestData,
         randomCategoryReciepts,
+        recieptData,
         recieptsByCategory,
         categoryData,
         meta,
@@ -236,12 +245,59 @@ export const useRequests = ({
         isLoadingJuciest,
         isLoadingRandom,
         isLoadingCategory,
+        isLoadingReciept,
         isErrorLatest,
         isErrorJuciest,
         isErrorRandom,
         isErrorCategory,
+        isErrorReciept,
         isFetchingLatest,
         isFetchingJuiciest,
         isFetching,
     };
+};
+
+export type QueryParams = {
+    limit?: number;
+    page?: number;
+    allergens?: string;
+    searchString?: string;
+    meat?: string;
+    garnish?: string;
+    subcategoriesIds?: string;
+    isJuiciest?: boolean;
+    isLatest?: boolean;
+};
+
+export const buildRecieptsQuery = ({
+    limit = API_QUERY_PARAMS.defaultRequestAmount,
+    page = API_QUERY_PARAMS.defaultPage,
+    allergens = '',
+    searchString = '',
+    meat = '',
+    garnish = '',
+    subcategoriesIds = '',
+    isJuiciest = false,
+    isLatest = false,
+}: QueryParams): string => {
+    const params = new URLSearchParams({
+        page: page.toString(),
+        limit: limit.toString(),
+    });
+
+    if (allergens.trim()) params.append('allergens', allergens.trim());
+    if (searchString.trim()) params.append('searchString', searchString.trim());
+    if (meat.trim()) params.append('meat', meat.trim());
+    if (garnish.trim()) params.append('garnish', garnish.trim());
+    if (subcategoriesIds.trim()) params.append('subcategoriesIds', subcategoriesIds.trim());
+    if (isJuiciest) {
+        params.append('sortBy', 'likes');
+        params.append('sortOrder', 'desc');
+    }
+    if (isLatest) {
+        params.append('sortBy', 'createdAt');
+        params.append('sortOrder', 'desc');
+    }
+
+    return `/recipe?${params.toString()}`;
 };
