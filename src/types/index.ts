@@ -152,6 +152,16 @@ export enum SEARCH_STATE {
     ERROR = 'error-search',
 }
 
+export type RandomCategoryStateProps = {
+    randomCategory: AllCategories;
+    subcategoriesIds: string;
+} | null;
+
+export type RandomCategoryataStateProps = {
+    category: { title: string; description?: string };
+    reciepts?: RecipeProps[];
+};
+
 export type CategoryMenuProps = {
     list: SubCategoryList[];
     activeSubcategory?: string;

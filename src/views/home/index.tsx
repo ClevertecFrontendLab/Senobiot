@@ -12,13 +12,15 @@ import { PAGE_TITLES } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
-import {
-    //  useCategoryByIdQuery,
-    useCategoryRecieptsQuery,
-    useRecipeByCategoryQuery,
-} from '~/redux/query/create-api';
+import { useRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { AllCategories, NavigationConfig, RecipeProps, SEARCH_STATE } from '~/types';
+import {
+    NavigationConfig,
+    RandomCategoryataStateProps,
+    RandomCategoryStateProps,
+    RecipeProps,
+    SEARCH_STATE,
+} from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 import JuciestSection from './juciest-preview';
@@ -29,14 +31,11 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     const { filters } = useFilters();
     const [latestReciepts, setLatestReciepts] = useState<RecipeProps[]>([]);
     const [juciestReciepts, setJuciestReciepts] = useState<RecipeProps[]>([]);
-    const [randomCategory, setRandomCategory] = useState<{
-        randomCategory: AllCategories;
-        subcategoriesIds: string;
-    } | null>(null);
-    const [randomCategoryData, setRandomCategoryData] = useState<{
-        category: { title: string; description?: string };
-        reciepts?: RecipeProps[];
-    }>({ category: { title: '', description: '' }, reciepts: [] });
+    const [randomCategory, setRandomCategory] = useState<RandomCategoryStateProps>(null);
+    const [randomCategoryData, setRandomCategoryData] = useState<RandomCategoryataStateProps>({
+        category: { title: '', description: '' },
+        reciepts: [],
+    });
     const [markdownText, setMarkdownText] = useState<string | undefined>();
     const [searchResultState, setSearchResultState] = useState<SEARCH_STATE>();
 
@@ -46,42 +45,19 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         dispatch(setAppError(null));
     }, [dispatch]);
 
-    // const { data } = useRecipeByCategoryQuery(apiQureryId || '', { skip: isJuiciest });
-    // const { data } = useCategoryByIdQuery(categoryId || '', { skip: isJuiciest });
-    // console.log(data);
-
     const {
-        data: { data: latestData } = {},
-        isLoading: isLoadingLatest,
-        isError: isErrorLatest,
-        isFetching: isFetchingLatest,
-    } = useCategoryRecieptsQuery({
-        ...filters,
-        allergens: filters.allergens?.join(','),
-        limit: 10,
-        isLatest: true,
-    });
-
-    const {
-        data: { data: juciestData } = {},
-        isLoading: isLoadingJuciest,
-        isError: isErrorJuciest,
-        isFetching: isFetchingJuiciest,
-    } = useCategoryRecieptsQuery({
-        ...filters,
-        allergens: filters.allergens?.join(','),
-        limit: 4,
-        isJuiciest: true,
-    });
-
-    const {
-        data: { data: randomCategoryReciepts } = {},
-        isLoading: isLoadingRandom,
-        isError: isErrorRandom,
-    } = useRecipeByCategoryQuery(
-        { id: randomCategory?.randomCategory.apiQureryId || '', limit: 5 },
-        { skip: !randomCategory },
-    );
+        latestData,
+        juciestData,
+        randomCategoryReciepts,
+        isLoadingLatest,
+        isLoadingJuciest,
+        isLoadingRandom,
+        isErrorLatest,
+        isErrorJuciest,
+        isErrorRandom,
+        isFetchingLatest,
+        isFetchingJuiciest,
+    } = useRequests({ randomCategory, isJuiciest: true });
 
     useEffect(() => {
         if (subCategoriesByIds && !isLoadingLatest && !isLoadingJuciest && !isLoadingRandom) {
@@ -140,13 +116,9 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         isLoadingLatest,
         isLoadingJuciest,
         isLoadingRandom,
-        // isErrorLatest,
-        // isErrorJuciest,
-        // isErrorRandom,
         searchResultState,
         filters.searchString,
         subCategoriesByIds,
-        // error,
         dispatch,
         resetError,
     ]);

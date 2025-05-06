@@ -57,7 +57,7 @@ export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
     >
         {!noCategory && (
             <Flex
-                maxH={bookmarkMaxHeight} // скрывает категории которые не влазят в одну строку если их несколько по умолчанию 6 * 4 = 24px
+                maxH={bookmarkMaxHeight}
                 overflow='hidden'
                 wrap={bookmarkWrap}
                 flexDirection={bookmarksFlexDirection}

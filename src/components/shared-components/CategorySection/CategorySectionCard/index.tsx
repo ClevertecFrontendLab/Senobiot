@@ -40,8 +40,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         <RecieptCard
             {...props}
             minWidth={{ base: 158, xl: 322 }}
-            imageHeight='auto' // тут добавил чтобы в карточках где много (светло-желтых плашек) растягивались картинки вниз
-            imageWidth={{ base: 158, xl: 322 }} // тут добавил чтобы в карточках где много (светло-желтых плашек) растягивались картинки
+            imageHeight='auto'
+            imageWidth={{ base: 158, xl: 322 }}
             imageMinWidth={{ base: 158, xl: 322 }}
             imageMinHeight={{ base: 128, xl: 244 }}
             text={description}

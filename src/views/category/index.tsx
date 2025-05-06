@@ -14,9 +14,15 @@ import {
 import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
-import { useCategoryRecieptsQuery, useRecipeByCategoryQuery } from '~/redux/query/create-api';
+import { useRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { AllCategories, NavigationConfig, RecipeProps, SEARCH_STATE } from '~/types';
+import {
+    NavigationConfig,
+    RandomCategoryataStateProps,
+    RandomCategoryStateProps,
+    RecipeProps,
+    SEARCH_STATE,
+} from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
@@ -46,50 +52,28 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         dispatch(setAppError(null));
     }, [dispatch]);
 
-    const [randomCategory, setRandomCategory] = useState<{
-        randomCategory: AllCategories;
-        subcategoriesIds: string;
-    } | null>(null);
-
+    const [randomCategory, setRandomCategory] = useState<RandomCategoryStateProps>(null);
     const [markdownText, setMarkdownText] = useState<string | undefined>();
     const [searchResultState, setSearchResultState] = useState<SEARCH_STATE>();
     const [categoryReciepts, setCategoryReciepts] = useState<RecipeProps[]>([]);
     const [page, setPage] = useState<number>(1);
-    const [randomCategoryData, setRandomCategoryData] = useState<{
-        category: { title: string; description?: string };
-        reciepts?: RecipeProps[];
-    }>();
+    const [randomCategoryData, setRandomCategoryData] = useState<RandomCategoryataStateProps>();
 
     const getMore = () => {
         setPage((prevPage) => prevPage + 1);
     };
 
-    const { data: { data: recieptsByCategory } = {} } = useRecipeByCategoryQuery(
-        { id: apiQureryId },
-        { skip: isJuiciest },
-    );
-
     const {
-        data: { data: categoryData, meta } = {},
-        isLoading: isLoadingCategory,
-        isError: isErrorCategory,
+        recieptsByCategory,
+        categoryData,
+        meta,
+        isLoadingCategory,
+        isErrorCategory,
         isFetching,
-    } = useCategoryRecieptsQuery({
-        ...filters,
-        allergens: filters.allergens?.join(','),
-        page,
-        subcategoriesIds: apiQureryId,
-        isJuiciest,
-    });
-
-    const {
-        data: { data: randomCategoryReciepts } = {},
-        isLoading: isLoadingRandom,
-        isError: isErrorRandom,
-    } = useCategoryRecieptsQuery(
-        { subcategoriesIds: randomCategory?.subcategoriesIds },
-        { skip: !randomCategory },
-    );
+        randomCategoryReciepts,
+        isLoadingRandom,
+        isErrorRandom,
+    } = useRequests({ randomCategory, isJuiciest, apiQureryId, page });
 
     useEffect(() => {
         if (!isLoadingCategory && !isLoadingRandom && !isFetching) {

@@ -50,21 +50,13 @@ export const AllergensFilter: React.FC<AllergensFilterProps> = ({
 
     const addNewAllergen = () => {
         const trimmed = newAllergen.trim();
-
         if (!trimmed) return;
 
-        let updatedSelectedAllergens = filters.allergens;
-        const currentAllergens = filters.allergens;
-        if (currentAllergens) {
-            if (!currentAllergens.includes(trimmed)) {
-                updatedSelectedAllergens = [...currentAllergens, trimmed];
-                setFilters({ ...filters, allergens: updatedSelectedAllergens });
-                setNewAllergen('');
-            }
-        } else {
-            setFilters({ ...filters, allergens: [trimmed] });
-            setNewAllergen('');
-        }
+        const currentAllergens = filters.allergens ?? [];
+        if (currentAllergens.includes(trimmed)) return;
+
+        setFilters({ ...filters, allergens: [...currentAllergens, trimmed] });
+        setNewAllergen('');
     };
 
     return (
