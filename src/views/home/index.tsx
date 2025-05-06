@@ -168,7 +168,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
                 dispatch(setAppError(true));
             }
         }
-    }, [isErrorLatest, isErrorJuciest, isErrorRandom]);
+    }, [isErrorLatest, isErrorJuciest, isErrorRandom, dispatch, filters.searchString]);
 
     if (isLoadingLatest || isLoadingJuciest) {
         return <Loader />;

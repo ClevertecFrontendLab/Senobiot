@@ -9,7 +9,7 @@ export type BlogType = {
     quote: string;
 };
 
-export const blogsData: BlogType[] = [
+const blogsData: BlogType[] = [
     {
         id: 1,
         name: 'Елена Высоцкая',

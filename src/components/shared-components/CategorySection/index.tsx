@@ -23,27 +23,6 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     markdownText,
 }) => {
     const { subCategoriesList } = categoryData || {};
-    // const activeSearch = useSelector(getActiveSearch);
-    // const dispatch = useDispatch();
-    // const location = getLocation(useLocation().pathname);
-    // let categoryCards = data
-    //     .filter((e) => e.category.includes(location.categoryName!))
-    //     .filter((e) => e.subcategory.includes(location.subcategoryName!));
-
-    // if (location.categoryName === 'the-juiciest') {
-    //     categoryCards = [...data].sort((a, b) => b.likes - a.likes);
-    // }
-
-    // if (activeSearch) {
-    //     categoryCards = searchByTitle(categoryCards, activeSearch);
-
-    //     if (!categoryCards?.length) {
-    //         dispatch(setEmptySearch(true));
-    //         return;
-    //     }
-    // }
-
-    // if (!categoryCards.length) return;
 
     return (
         <Flex justifyContent='space-between' mb={mb} direction='column' w='100%'>

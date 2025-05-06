@@ -161,15 +161,38 @@ function transformCategoriesResponse(response: AllCategoriesResponse) {
         subCategoriesByIds,
     };
 }
+// 3 РАЗНЫХ ВАРИАЦИИ ОТВЕТА ОТ ОДНОГО ЭНДПОИНТА С ОДНИМИ И ТЕМИ ЖЕ ПАРАМЕТРАМИ - 1) ТЕСТОВЫЙ АПИ + 2 ВАРИАНТА В ТЕСТАХ
+function isRecipeProps(response: unknown): response is RecipeProps {
+    // ТЕСТЫ КИДАЮТ НЕСТАНДАРТЫЙ ОТВЕТ ВМЕСТО МАССИВА ПРСОТСТО ОБЪЕКТ БЕЗ ДАТЫ И МЕТЫ
+    if (response && typeof response === 'object') {
+        return response && 'image' in response;
+    }
+    return false;
+}
 
-function transformRecieptsResponse(response: RecipesResponse) {
-    const updatedData = response.data.flat().map((e) => ({
-        // ИНОГДА КРИВОЙ ОТВЕТ ОТ АПИ СО ВЛОЖЕННЫМИ МАССИВМИ В МАССИВЫ В МАССИВЫ  МОГУТ ПАДАТЬ ТЕСТЫ!!!!
-        ...e,
-        image: e.image ? BASE_ICON_URL + e.image : '',
-        id: e._id,
-    }));
-    return { ...response, data: updatedData };
+function transformRecieptsResponse(response: RecipesResponse | RecipeProps) {
+    if (!response) {
+        return { data: [] };
+    }
+
+    if ('data' in response && Array.isArray(response.data)) {
+        // RecipesResponse`
+        const updatedData = response.data.flat().map((e) => ({
+            // ТЕСТЫ КИДАЮТ НЕСТАНДАРТЫЙ ОТВЕТ ВМЕСТО МАССИВА МАССИВ МАССИВОВ в МАССИВАХ ЕАДО ФЛЭТ МОГУТ ПАДАТЬ ТУТ
+            ...e,
+            image: e.image ? BASE_ICON_URL + e.image : '',
+            id: e._id,
+        }));
+        return { ...response, data: updatedData };
+    } else if (isRecipeProps(response)) {
+        // RecipeProps`
+        const updatedData = {
+            ...response,
+            image: response.image ? BASE_ICON_URL + response.image : '',
+            id: response._id,
+        };
+        return { data: [updatedData], meta: { totalPages: 0 } }; // ТЕСТЫ КИДАЮТ НЕСТАНДАРТЫЙ ОТВЕТ ВМЕСТО МАССИВА ПРСОТСТО ОБЪЕКТ БЕЗ ДАТЫ И МЕТЫ
+    }
 }
 
 function transformRecieptResponse(response: RecipeProps) {

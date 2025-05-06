@@ -16,6 +16,7 @@ import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
 import {
     useCategoryRecieptsQuery,
+    // useRecipeByCategoryQuery,
     // useRecipeByCategoryQuery
 } from '~/redux/query/create-api';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
@@ -68,6 +69,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
     const isJuiciest: boolean = category === EXCLUDED_ROUTES.juiciest;
 
     // const { data } = useRecipeByCategoryQuery({ id: apiQureryId }, { skip: isJuiciest });
+
     // const { data } = useCategoryByIdQuery(categoryId || '', { skip: isJuiciest });
 
     const {
@@ -204,7 +206,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                 dispatch(setAppError(true));
             }
         }
-    }, [isErrorCategory, isErrorRandom]);
+    }, [isErrorCategory, isErrorRandom, dispatch, filters.searchString]);
 
     if (isLoadingCategory) {
         return <Loader />;

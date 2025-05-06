@@ -50,13 +50,14 @@ const SideNavMenuItem: React.FC<AllCategories> = ({
                     </Link>
                     <AccordionPanel textAlign='left' pb={4}>
                         {subCategories.map((subcategory, index) => {
-                            const isActive = pathname === subcategory.route;
+                            const { subcategoryEn, route } = subcategory;
+                            const isActive = pathname === route;
 
                             return (
                                 <Link
                                     to={subcategory.route}
                                     key={index}
-                                    data-test-id={`${categoryEn}${isActive ? '-active' : ''}`}
+                                    data-test-id={`${subcategoryEn}${isActive ? '-active' : ''}`}
                                 >
                                     <Text
                                         py={2}

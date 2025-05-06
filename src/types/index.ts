@@ -6,6 +6,7 @@ export type RecipeProps = {
     category: CategoriesProps[];
     categoriesIds: string[];
     subcategory: string[];
+    createdAt: string;
     image: string;
     bookmarks: number;
     likes: number;
@@ -36,6 +37,7 @@ export type RecipeProps = {
 export type CategoriesProps = {
     categoryTitle: string;
     categoryIconUrl: string;
+    route: string;
 };
 
 export type CategorySectionProps = {
