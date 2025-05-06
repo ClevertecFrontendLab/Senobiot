@@ -1,13 +1,9 @@
 import { Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
-import { MouseEventHandler } from 'react';
 
 import { TEST_IDS } from '~/constants';
+import { FilterTagProps } from '~/types';
 
-const FilterTag: React.FC<{
-    item: string;
-    onClick: MouseEventHandler<HTMLButtonElement>;
-    testId?: boolean;
-}> = ({ item, onClick, testId = false }) => (
+const FilterTag: React.FC<FilterTagProps> = ({ item, onClick, testId = false }) => (
     <Tag
         data-test-id={testId ? TEST_IDS.filtersTag : ''}
         size='lg'

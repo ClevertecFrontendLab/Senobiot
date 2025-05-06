@@ -5,7 +5,7 @@ import { BORDERS } from '~/constants/styles';
 
 import { ExpandButton, ResetButton } from '../SelectActionButons';
 
-export const SelectInnerTags: React.FC<{
+type SelectInnerTagsProps = {
     options?: string[];
     placeholder?: string;
     isOpen?: boolean;
@@ -17,7 +17,9 @@ export const SelectInnerTags: React.FC<{
     dataTestAllergenTag?: string;
     dataTestId?: string;
     width?: ResponsiveValue<string>;
-}> = ({
+};
+
+export const SelectInnerTags: React.FC<SelectInnerTagsProps> = ({
     options = [],
     isOpen = false,
     toggleDropdown,

@@ -1,12 +1,19 @@
 import { Switch, Text } from '@chakra-ui/react';
 import { ChangeEvent } from 'react';
 
-export const SwitchToggler: React.FC<{
+type SwitchTogglerProps = {
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     isChecked: boolean;
     text?: string;
     dataTestId?: string;
-}> = ({ onChange, text, isChecked, dataTestId }) => (
+};
+
+export const SwitchToggler: React.FC<SwitchTogglerProps> = ({
+    onChange,
+    text,
+    isChecked,
+    dataTestId,
+}) => (
     <>
         <Text fontSize='md' fontWeight={500} flexShrink={0} fontFamily='Inter'>
             {text}

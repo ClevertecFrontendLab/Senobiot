@@ -20,16 +20,16 @@ import {
 import { TEST_IDS } from '~/constants';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
-import { SEARCH_STATE } from '~/types';
+import { SEARCH_STATE, SearchBarProps } from '~/types';
 
 import { SearchLoader } from '../Loader';
 
-export const SearchBar: React.FC<{
-    pageTitle: string;
-    pageDescription?: string;
-    isLoading: boolean;
-    searchResultState?: SEARCH_STATE;
-}> = ({ pageTitle, pageDescription, isLoading = false, searchResultState }) => {
+export const SearchBar: React.FC<SearchBarProps> = ({
+    pageTitle,
+    pageDescription,
+    isLoading = false,
+    searchResultState,
+}) => {
     const { openDrawer, filters, setFilters } = useFilters();
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
     const styles = { base: '2xl', xl: '5xl' };

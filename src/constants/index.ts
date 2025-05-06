@@ -40,3 +40,15 @@ export const TEST_IDS = {
     juciestLink: 'juiciest-link',
     juciestLinkMobile: 'juiciest-link-mobile',
 } as const;
+
+export const predefinedAllergens: string[] = [
+    'Молочные продукты',
+    'Яйцо',
+    'Рыба',
+    'Моллюски',
+    'Орехи',
+    'Томат (помидор)',
+    'Цитрусовые',
+    'Клубника (ягоды)',
+    'Шоколад',
+] as const;

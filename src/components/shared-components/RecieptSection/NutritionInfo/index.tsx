@@ -1,14 +1,12 @@
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
-import { RecipeProps } from '~/types';
+import { NutritionValue } from '~/types';
 
 import { TextRegular } from '../..';
 import NutritionInfoItem from './NutritionInfoItem';
 
-export const NutritionInfo: React.FC<{ nutritionValue: RecipeProps['nutritionValue'] }> = ({
-    nutritionValue,
-}) => (
+export const NutritionInfo: React.FC<{ nutritionValue: NutritionValue }> = ({ nutritionValue }) => (
     <Flex gap={3} direction='column' w='100%'>
         <TextRegular regText='* Калорийность на 1 порцию' regTextColor='blackAlpha.800' />
         <Flex direction={{ base: 'column', md: 'row' }} gap={3}>

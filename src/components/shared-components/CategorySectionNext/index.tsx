@@ -2,16 +2,10 @@ import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import { CategoryHeader, TextRegular } from '~/components/shared-components';
-import { RecipeProps } from '~/types';
+import { CategorySectionNextProps } from '~/types';
 
 import CategorySectionNextCard from './Card';
 import CardMinimized from './CardMinimized';
-
-type CategorySectionNextProps = {
-    title: string;
-    description?: string;
-    data: RecipeProps[];
-};
 
 export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
     title,

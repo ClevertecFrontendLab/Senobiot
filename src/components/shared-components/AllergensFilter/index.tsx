@@ -7,29 +7,12 @@ import {
     SelectOuterTags,
     TextInputCustom,
 } from '~/components/shared-components';
-import { TEST_IDS } from '~/constants';
+import { predefinedAllergens, TEST_IDS } from '~/constants';
 import { SHADOWS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
+import { AllergensFilterProps } from '~/types';
 
-const predefinedAllergens: string[] = [
-    'Молочные продукты',
-    'Яйцо',
-    'Рыба',
-    'Моллюски',
-    'Орехи',
-    'Томат (помидор)',
-    'Цитрусовые',
-    'Клубника (ягоды)',
-    'Шоколад',
-];
-
-export const AllergensFilter: React.FC<{
-    disabled: boolean;
-    outerTags?: boolean;
-    dataTestIdToggler?: string;
-    dataTestCheckBoKeykey?: string;
-    dataTestAllergenTag?: string;
-}> = ({
+export const AllergensFilter: React.FC<AllergensFilterProps> = ({
     disabled,
     outerTags = false,
     dataTestIdToggler,
@@ -55,24 +38,6 @@ export const AllergensFilter: React.FC<{
 
         setFilters({ ...filters, allergens: updatedSelectedAllergens });
     };
-
-    // const toggleAllergen = (allergen: string) => {
-    //     const allergenValue = allergen.replace(/ .*/, '');
-    //     let updatedSelectedAllergens: string[] = [];
-    //     console.log(`allergenValue ${allergenValue}`);
-    //     if (filters.allergens) {
-    //         if (filters.allergens?.includes(allergenValue)) {
-    //             updatedSelectedAllergens = filters.allergens?.filter(
-    //                 (item) => item !== allergenValue,
-    //             );
-    //         }
-    //     } else {
-    //         updatedSelectedAllergens = [allergenValue];
-    //     }
-
-    //     setFilters({ ...filters, allergens: updatedSelectedAllergens });
-    //     console.log(filters);
-    // };
 
     const handleNewAllergenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewAllergen(e.target.value);

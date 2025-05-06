@@ -1,3 +1,5 @@
+import { MouseEventHandler } from 'react';
+
 export type RecipeProps = {
     _id: string;
     id: string;
@@ -20,7 +22,7 @@ export type RecipeProps = {
     meat?: string;
 };
 
-type NutritionValue = {
+export type NutritionValue = {
     calories: number;
     fats: number;
     carbohydrates: number;
@@ -28,13 +30,13 @@ type NutritionValue = {
     protein?: number;
 };
 
-type Ingredients = {
+export type Ingredients = {
     title: string;
     count: string | number;
     measureUnit: string;
 };
 
-type CoockingSteps = {
+export type CoockingSteps = {
     stepNumber: number;
     description: string;
     image: string;
@@ -163,4 +165,71 @@ export type ServerErrorAlertProps = {
     onClose?: () => void;
     title?: string;
     body?: string;
+};
+
+export type BurgerNavMenuProps = {
+    breadCrumbsClickHandler: React.MouseEventHandler<HTMLAnchorElement>;
+    menuClickHandler: React.MouseEventHandler<HTMLDivElement>;
+};
+
+export type FilterTagProps = {
+    item: string;
+    onClick: MouseEventHandler<HTMLButtonElement>;
+    testId?: boolean;
+};
+
+export type FooterProps = { noExitButton?: boolean; p?: string };
+
+export type SearchBarProps = {
+    pageTitle: string;
+    isLoading: boolean;
+    pageDescription?: string;
+    searchResultState?: SEARCH_STATE;
+};
+
+export type AllergensFilterProps = {
+    disabled: boolean;
+    outerTags?: boolean;
+    dataTestIdToggler?: string;
+    dataTestCheckBoKeykey?: string;
+    dataTestAllergenTag?: string;
+};
+
+export type AuthorCardProps = {
+    name: string;
+    email: string;
+    profilePic?: string;
+    subscribers?: string | number;
+};
+
+export type BlogProps = {
+    id: number;
+    name: string;
+    email: string;
+    profilePic: string;
+    quote: string;
+};
+
+export type NextSectionCardMinimizedProps = {
+    title: string;
+    buttonText?: string;
+    iconUrl?: string;
+};
+
+export type CategorySectionNextProps = {
+    title: string;
+    description?: string;
+    data: RecipeProps[];
+};
+
+export type CheckBoxLimeProps = {
+    index: number;
+    item: string;
+    isChecked: boolean;
+    toggleItem: CallableFunction;
+    dataTestIds?: string | number;
+    dataTestCheckBoKeykey?: string;
+    dataTestCatagory?: string;
+    px?: number;
+    labelColor?: string;
 };

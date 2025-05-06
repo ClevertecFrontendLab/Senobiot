@@ -1,15 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 
-export type BlogType = {
-    id: number;
-    name: string;
-    email: string;
-    profilePic: string;
-    quote: string;
-};
-
-const blogsData: BlogType[] = [
+const blogsData: BlogProps[] = [
     {
         id: 1,
         name: 'Елена Высоцкая',
@@ -32,6 +24,8 @@ const blogsData: BlogType[] = [
         quote: 'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время...',
     },
 ];
+
+import { BlogProps } from '~/types';
 
 import { ButtonViewMore } from '../';
 import { TitleText } from '../Text';

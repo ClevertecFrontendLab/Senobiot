@@ -7,7 +7,7 @@ import { Loader } from '~/components/layouts-components';
 import {
     CategoryHeader,
     CookingSteps,
-    Ingridients,
+    IngridientsSection,
     NutritionInfo,
     PageWrapper,
     RecieptSectionCard,
@@ -148,7 +148,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
                         w='100%'
                     >
                         <NutritionInfo nutritionValue={reciept.nutritionValue} />
-                        <Ingridients
+                        <IngridientsSection
                             ingredients={reciept.ingredients}
                             defaultPortions={reciept.portions}
                         />

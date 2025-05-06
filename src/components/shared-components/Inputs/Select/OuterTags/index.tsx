@@ -5,7 +5,7 @@ import { BORDERS } from '~/constants/styles';
 
 import { ExpandButton, ResetButton } from '../SelectActionButons';
 
-export const SelectOuterTags: React.FC<{
+type SelectOuterTagsProps = {
     options: string[];
     placeholder?: string;
     isOpen?: boolean;
@@ -14,7 +14,9 @@ export const SelectOuterTags: React.FC<{
     toggleDropdown: MouseEventHandler<HTMLDivElement>;
     toggleTag?: MouseEventHandler<HTMLButtonElement>;
     onReset?: React.MouseEventHandler<HTMLButtonElement>;
-}> = ({
+};
+
+export const SelectOuterTags: React.FC<SelectOuterTagsProps> = ({
     options,
     isOpen = false,
     toggleDropdown,

@@ -1,18 +1,9 @@
 import { Checkbox } from '@chakra-ui/react';
 
 import { BORDERS } from '~/constants/styles';
+import { CheckBoxLimeProps } from '~/types';
 
-export const CheckBoxLime: React.FC<{
-    index: number;
-    item: string;
-    isChecked: boolean;
-    toggleItem: CallableFunction;
-    dataTestIds?: string | number;
-    dataTestCheckBoKeykey?: string;
-    dataTestCatagory?: string;
-    px?: number;
-    labelColor?: string;
-}> = ({
+export const CheckBoxLime: React.FC<CheckBoxLimeProps> = ({
     index,
     item,
     isChecked = false,

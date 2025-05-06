@@ -11,14 +11,19 @@ import {
 import React, { useState } from 'react';
 
 import { TEST_IDS } from '~/constants';
-import { RecipeProps } from '~/types';
+import { Ingredients } from '~/types';
 
 import IngridientItem from './Item';
 
-export const Ingridients: React.FC<{
-    ingredients: RecipeProps['ingredients'];
+type IngridientsProps = {
+    ingredients: Ingredients[];
     defaultPortions: number;
-}> = ({ ingredients, defaultPortions }) => {
+};
+
+export const IngridientsSection: React.FC<IngridientsProps> = ({
+    ingredients,
+    defaultPortions,
+}) => {
     const [portions, setPortions] = useState<number>(defaultPortions);
 
     return (

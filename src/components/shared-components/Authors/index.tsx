@@ -1,14 +1,9 @@
 import { Avatar, Flex, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
 
-import { StatItem, SubscribeButton, TextRegular } from '..';
+import { AuthorCardProps } from '~/types';
 
-export type AuthorCardProps = {
-    name: string;
-    email: string;
-    profilePic?: string;
-    subscribers?: string | number;
-};
+import { StatItem, SubscribeButton, TextRegular } from '..';
 
 export const AuthorCard: React.FC<{ authorData: AuthorCardProps }> = ({
     authorData: { name, email, profilePic, subscribers },
