@@ -1,6 +1,8 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 import { useMemo } from 'react';
 
+import { CategoriesProps } from '~/types';
+
 import { RecieptCard, RecieptCardProps } from '../..';
 
 export interface CategoryCardProps extends RecieptCardProps {
@@ -9,7 +11,7 @@ export interface CategoryCardProps extends RecieptCardProps {
     img?: string;
     icon?: string;
     hiddenElements?: boolean;
-    categories: string[];
+    categories: CategoriesProps[];
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
@@ -38,8 +40,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         <RecieptCard
             {...props}
             minWidth={{ base: 158, xl: 322 }}
-            imageHeight='auto' // тут добавил чтобы в карточках где много (светло-желтых плашек) растягивались картинки вниз
-            imageWidth={{ base: 158, xl: 322 }} // тут добавил чтобы в карточках где много (светло-желтых плашек) растягивались картинки
+            imageHeight='auto'
+            imageWidth={{ base: 158, xl: 322 }}
+            imageMinWidth={{ base: 158, xl: 322 }}
+            imageMinHeight={{ base: 128, xl: 244 }}
             text={description}
             title={title}
             titleMargin={2}
@@ -66,6 +70,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             bookmarkMb={{ xl: 6 }}
             bookmarkMaxHeight={{ base: 'unset' }} // тут количество категори в карточках (светло-желтых плашек)
             categories={categories}
+            minHeight={{ base: '3.5em' }}
+            regTextNoOfLines={3}
         />
     );
 };

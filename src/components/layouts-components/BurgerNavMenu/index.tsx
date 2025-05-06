@@ -1,21 +1,22 @@
 import { Flex, useTheme } from '@chakra-ui/react';
 
+import { TEST_IDS } from '~/constants';
 import { PADDINGS, SHADOWS, WIDTHS } from '~/constants/styles';
+import { BurgerNavMenuProps } from '~/types';
 
 import { Footer } from '..';
 import { AccordionNav } from '../AccordionNavMenu';
 import BreadCrump from '../HeaderNavMenu/BreadCrump';
 
-export const BurgerNavMenu: React.FC<{
-    breadCrumbsClickHandler: React.MouseEventHandler<HTMLAnchorElement>;
-    menuClickHandler: React.MouseEventHandler<HTMLDivElement>;
-}> = ({ breadCrumbsClickHandler, menuClickHandler }) => {
+export const BurgerNavMenu: React.FC<BurgerNavMenuProps> = ({
+    breadCrumbsClickHandler,
+    menuClickHandler,
+}) => {
     const theme = useTheme();
 
     return (
         <Flex
-            data-test-id='nav'
-            // ml='auto'
+            data-test-id={TEST_IDS.navigationMenu}
             ml='auto'
             flexDirection='column'
             justifyContent='space-between'

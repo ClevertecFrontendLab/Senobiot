@@ -2,10 +2,7 @@ import { Flex, FlexProps, Image, ImageProps, ResponsiveValue } from '@chakra-ui/
 import React from 'react';
 
 import { TextRegular, TextRegularProps } from '~/components/shared-components';
-import {
-    BookmarksSection,
-    BookmarksSectionProps,
-} from '~/components/shared-components/BookmarksSection';
+import { BookmarksSection, BookmarksSectionProps } from '~/components/shared-components';
 import { TitleTextProps } from '~/components/shared-components/Text/Title';
 import { BORDERS, SHADOWS } from '~/constants/styles';
 
@@ -18,26 +15,34 @@ export interface RecieptCardProps
         TitleTextProps,
         RecieptButtonsSectionProps,
         FlexProps {
+    // Main container
     title: string;
     text?: string;
+    noImage?: boolean;
+    noButtons?: ResponsiveValue<boolean>;
+    noDescription?: ResponsiveValue<boolean>;
+    cardDataTestId?: string;
     cardBorder?: FlexProps['border'];
     cardBorderRadius?: FlexProps['borderRadius'];
     cardContentPadding?: FlexProps['padding'];
     cardContentTextAlign?: FlexProps['textAlign'];
     cardFlexWidth?: FlexProps['flex'];
-    imageBorderRadius?: string | number;
     minWidth?: FlexProps['minWidth'];
     maxWidth?: FlexProps['maxWidth'];
     width?: FlexProps['width'];
     height?: FlexProps['height'];
     position?: FlexProps['position'];
-    wrap?: FlexProps['wrap'];
-    noImage?: boolean;
-    noButtons?: ResponsiveValue<boolean>;
-    noDescription?: ResponsiveValue<boolean>;
+
+    // Image
     imageSrc?: string;
-    imageWidth?: ResponsiveValue<number | string>;
-    imageHeight?: ResponsiveValue<number | string>;
+    imageWidth?: ImageProps['width'];
+    imageMinWidth?: ImageProps['minWidth'];
+    imageHeight?: ImageProps['height'];
+    imageMinHeight?: ImageProps['minHeight'];
+    imageBorderRadius?: ImageProps['borderRadius'];
+    imageFit?: ImageProps['objectFit'];
+
+    // Typo
     titleMargin?: FlexProps['marginBottom'];
     descriptionMargin?: FlexProps['marginBottom'];
     subtitleOrder?: FlexProps['order'];
@@ -46,12 +51,17 @@ export interface RecieptCardProps
     buttonsOrder?: FlexProps['order'];
     buttonsMargin?: FlexProps['marginTop'];
     buttonsJustify?: FlexProps['justifyContent'];
-    gap?: FlexProps['gap'];
+
+    // Header
     cardHeaderNoOfLines?: ResponsiveValue<number>;
+    cardHeaderHeight?: FlexProps['height'];
+
+    // Description
     descriptionHeight?: FlexProps['height'];
-    imageFit?: ImageProps['objectFit'];
+    descriptionMinHeight?: FlexProps['minHeight'];
+
+    // Effects
     noHoverEffect?: boolean;
-    cardDataTestId?: string;
 }
 
 export const RecieptCard: React.FC<RecieptCardProps> = ({
@@ -67,6 +77,8 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     noDescription,
     imageWidth = { base: 158, xl: 346 },
     imageHeight = { base: 128, xl: 244 },
+    imageMinWidth,
+    imageMinHeight,
     imageSrc,
     title,
     text,
@@ -90,8 +102,10 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
     gap,
     buttonsMargin = 'auto',
     descriptionHeight,
+    descriptionMinHeight,
     imageFit = 'unset',
     cardDataTestId,
+    cardHeaderHeight = { base: '3.5em', xl: '1.5em' },
     ...rest
 }) => (
     <Flex
@@ -116,7 +130,9 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
                 alt={title}
                 borderRadius={imageBorderRadius}
                 height={imageHeight}
+                minH={imageMinHeight}
                 width={imageWidth}
+                minW={imageMinWidth}
                 objectFit={imageFit}
             />
         )}
@@ -126,7 +142,7 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
             textAlign={cardContentTextAlign}
             width='100%'
         >
-            <Flex mb={titleMargin} order={subtitleOrder}>
+            <Flex mb={titleMargin} order={subtitleOrder} h={cardHeaderHeight}>
                 <SubtitleText
                     {...rest}
                     titleText={title}
@@ -134,7 +150,12 @@ export const RecieptCard: React.FC<RecieptCardProps> = ({
                 />
             </Flex>
             {!noDescription && (
-                <Flex mb={descriptionMargin} order={descriptionOrder} height={descriptionHeight}>
+                <Flex
+                    mb={descriptionMargin}
+                    order={descriptionOrder}
+                    height={descriptionHeight}
+                    minH={descriptionMinHeight}
+                >
                     <TextRegular {...rest} regText={text} />
                 </Flex>
             )}

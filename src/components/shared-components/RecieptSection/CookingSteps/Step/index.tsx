@@ -2,13 +2,18 @@ import { Button, HStack, Image, VStack } from '@chakra-ui/react';
 
 import { TextRegular } from '~/components/shared-components/Text';
 import { BORDERS } from '~/constants/styles';
+import { CoockingSteps } from '~/types';
 
-const CookingStep: React.FC<{
-    stepNumber: number;
-    description: string;
-    image?: string;
+export type CookingStepsProps = CoockingSteps & {
     isLastStep: boolean;
-}> = ({ stepNumber, description, image, isLastStep = false }) => (
+};
+
+const CookingStep: React.FC<CookingStepsProps> = ({
+    stepNumber,
+    description,
+    image = '',
+    isLastStep = false,
+}) => (
     <HStack w='100%' alignItems='flex-start' border={BORDERS.light} borderRadius='8px'>
         {image && (
             <Image

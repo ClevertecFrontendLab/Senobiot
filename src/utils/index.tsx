@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router';
 
-import { RecipeProps } from '~/types';
+import { CategoriesByIds, NavigationConfig, RecipeProps, SubCategoriesByIds } from '~/types';
 
 export const usePathnames = () => {
     const location = useLocation();
@@ -33,3 +33,51 @@ export const getHighlightedText = (
 
 export const searchByTitle = (reciepts: RecipeProps[], activeSearch: string) =>
     reciepts.filter((e) => e.title.toLowerCase().includes(activeSearch.toLowerCase()));
+
+export const getLocallySavedNavigationConfig = () => {
+    const saved = localStorage.getItem('navigationConfig');
+    if (saved) {
+        return JSON.parse(saved);
+    }
+    return saved;
+};
+
+export const saveLocallyNavigationConfig = (config: NavigationConfig) => {
+    if (!config.navigationTree.length) return;
+
+    localStorage.setItem('navigationConfig', JSON.stringify(config));
+};
+
+export const populateRecieptCategory = (
+    reciept: RecipeProps,
+    categoriesIds: SubCategoriesByIds,
+) => {
+    const populatedCategories = reciept.categoriesIds.reduce(
+        (acc, id) => {
+            const category = categoriesIds[id];
+            if (!category) return acc;
+
+            if (!acc.some((item) => item.categoryTitle === category.categoryRu)) {
+                acc.push({
+                    categoryTitle: category.categoryRu,
+                    categoryIconUrl: category.categoryIcon,
+                    route: category.route,
+                });
+            }
+            return acc;
+        },
+        [] as { categoryTitle: string; categoryIconUrl: string; route: string }[],
+    );
+
+    const populatedSubCategories = reciept.categoriesIds.map(
+        (e) => categoriesIds[e]?.subcategoryRu,
+    );
+
+    return { ...reciept, category: populatedCategories, subcategory: populatedSubCategories };
+};
+
+export const getRandomCategory = (categories: CategoriesByIds, exceptId: string = '') => {
+    const ids = Object.keys(categories).filter((id) => id !== exceptId);
+    const randomCategoryId = ids[Math.floor(Math.random() * ids.length)];
+    return categories[randomCategoryId];
+};

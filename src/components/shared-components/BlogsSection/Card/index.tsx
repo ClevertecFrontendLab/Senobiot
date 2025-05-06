@@ -2,11 +2,11 @@ import { Avatar, Flex, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
 
 import { BORDERS } from '~/constants/styles';
-import { BlogType } from '~/data';
+import { BlogProps } from '~/types';
 
 import { TextRegular } from '../../Text';
 
-const BlogCard: React.FC<BlogType> = ({ name, email, profilePic, quote }) => (
+const BlogCard: React.FC<BlogProps> = ({ name, email, profilePic, quote }) => (
     <Flex
         border={BORDERS.light}
         borderRadius='8px'

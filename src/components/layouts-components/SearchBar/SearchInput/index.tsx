@@ -2,10 +2,7 @@ import { Input } from '@chakra-ui/react';
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 
 import { BORDERS } from '~/constants/styles';
-
-interface SearchInputProps {
-    onSearch: (searchText: string) => void;
-}
+import { SearchInputProps } from '~/types';
 
 const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
     const [inputValue, setInputValue] = useState('');

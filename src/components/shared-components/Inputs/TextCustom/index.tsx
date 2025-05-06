@@ -1,7 +1,7 @@
 import { Flex, Image, Input } from '@chakra-ui/react';
 import { ChangeEventHandler } from 'react';
 
-export const TextInputCustom: React.FC<{
+type TextInputCustomProps = {
     item: string;
     itemChange: ChangeEventHandler<HTMLInputElement>;
     addItem: (
@@ -9,7 +9,15 @@ export const TextInputCustom: React.FC<{
     ) => void;
     dataTestInputId?: string;
     dataTestButtonId?: string;
-}> = ({ item, itemChange, addItem, dataTestInputId, dataTestButtonId }) => (
+};
+
+export const TextInputCustom: React.FC<TextInputCustomProps> = ({
+    item,
+    itemChange,
+    addItem,
+    dataTestInputId,
+    dataTestButtonId,
+}) => (
     <Flex pt={2} pl={2} alignItems='center'>
         <Input
             data-test-id={dataTestInputId}

@@ -15,7 +15,7 @@ export type StatItemProps = {
 
 export const StatItem: React.FC<StatItemProps> = ({
     statIconUrl,
-    statValue = 85,
+    statValue,
     statTextColor = 'lime.600',
     statTextFontWeight = 700,
     stateIconSize = 8,
@@ -23,10 +23,10 @@ export const StatItem: React.FC<StatItemProps> = ({
     statIconAltText = 'heart',
     stateTextLh,
     statAlign = 'center',
-    statGap = 2,
+    statGap = 1.5,
 }) => (
     <Flex alignItems={statAlign}>
-        <HStack spacing={statGap}>
+        <HStack spacing={statGap} w='max-content'>
             <Image src={statIconUrl} alt={statIconAltText} boxSize={stateIconSize} />
             <Text
                 fontSize={stateTextFontSize}
@@ -34,7 +34,7 @@ export const StatItem: React.FC<StatItemProps> = ({
                 fontWeight={statTextFontWeight}
                 lineHeight={stateTextLh}
             >
-                {statValue}
+                {statValue === undefined ? '-' : statValue}
             </Text>
         </HStack>
     </Flex>

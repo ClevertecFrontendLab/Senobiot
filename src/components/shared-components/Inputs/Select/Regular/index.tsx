@@ -3,14 +3,16 @@ import { MouseEventHandler } from 'react';
 
 import { ExpandButton, ResetButton } from '../SelectActionButons';
 
-export const SelectRegular: React.FC<{
+type SelectRegularProps = {
     placeholder?: string;
     isOpen?: boolean;
     noResetButton?: boolean;
     toggleDropdown: MouseEventHandler<HTMLDivElement>;
     onReset?: React.MouseEventHandler<HTMLButtonElement>;
     dataTestId?: string;
-}> = ({
+};
+
+export const SelectRegular: React.FC<SelectRegularProps> = ({
     isOpen = false,
     toggleDropdown,
     onReset,

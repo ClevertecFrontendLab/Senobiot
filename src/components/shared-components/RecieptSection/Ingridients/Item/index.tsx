@@ -1,14 +1,20 @@
 import { Flex } from '@chakra-ui/react';
 
 import { TextRegular } from '~/components/shared-components/Text';
+import { Ingredients } from '~/types';
 
-const IngridientItem: React.FC<{
-    title: string;
-    count: string | number;
-    measureUnit: string;
+type IngridientItemProps = Ingredients & {
     isGrayed: boolean;
     index: number;
-}> = ({ title, count, isGrayed, measureUnit, index }) => (
+};
+
+const IngridientItem: React.FC<IngridientItemProps> = ({
+    title,
+    count,
+    isGrayed,
+    measureUnit,
+    index,
+}) => (
     <Flex
         justifyContent='space-between'
         w='100%'

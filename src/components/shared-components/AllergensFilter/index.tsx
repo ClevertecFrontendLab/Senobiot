@@ -1,6 +1,5 @@
 import { Box, Flex, VStack } from '@chakra-ui/react';
 import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import {
     CheckBoxLime,
@@ -8,39 +7,19 @@ import {
     SelectOuterTags,
     TextInputCustom,
 } from '~/components/shared-components';
+import { predefinedAllergens, TEST_IDS } from '~/constants';
 import { SHADOWS } from '~/constants/styles';
-import { filterByAllergens, resetRecieptsAllergens } from '~/reducers';
+import { useFilters } from '~/providers/Filters/useFilters';
+import { AllergensFilterProps } from '~/types';
 
-const predefinedAllergens: string[] = [
-    'Молочные продукты',
-    'Яйцо',
-    'Рыба',
-    'Моллюски',
-    'Орехи',
-    'Томат (помидор)',
-    'Цитрусовые',
-    'Клубника (ягоды)',
-    'Шоколад',
-];
-
-export const AllergensFilter: React.FC<{
-    disabled: boolean;
-    outerTags?: boolean;
-    selectedAllergens: string[];
-    setSelectedAllergens: CallableFunction;
-    dataTestIdToggler?: string;
-    dataTestCheckBoKeykey?: string;
-    dataTestAllergenTag?: string;
-}> = ({
+export const AllergensFilter: React.FC<AllergensFilterProps> = ({
     disabled,
     outerTags = false,
-    selectedAllergens = [],
-    setSelectedAllergens,
     dataTestIdToggler,
     dataTestCheckBoKeykey,
     dataTestAllergenTag,
 }) => {
-    const dispatch = useDispatch();
+    const { filters, setFilters } = useFilters();
     const [isOpen, setIsOpen] = useState(false);
     const [newAllergen, setNewAllergen] = useState<string>('');
     const toggleDropdown = useCallback(() => {
@@ -51,14 +30,13 @@ export const AllergensFilter: React.FC<{
         const allergenValue = allergen.replace(/ .*/, '');
         let updatedSelectedAllergens: string[];
 
-        if (selectedAllergens.includes(allergenValue)) {
-            updatedSelectedAllergens = selectedAllergens.filter((item) => item !== allergenValue);
+        if (filters.allergens && filters.allergens.includes(allergenValue)) {
+            updatedSelectedAllergens = filters.allergens.filter((item) => item !== allergenValue);
         } else {
-            updatedSelectedAllergens = [...selectedAllergens, allergenValue];
+            updatedSelectedAllergens = [...(filters.allergens || []), allergenValue];
         }
 
-        setSelectedAllergens(updatedSelectedAllergens);
-        dispatch(filterByAllergens(updatedSelectedAllergens));
+        setFilters({ ...filters, allergens: updatedSelectedAllergens });
     };
 
     const handleNewAllergenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,21 +45,18 @@ export const AllergensFilter: React.FC<{
 
     const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
-        dispatch(resetRecieptsAllergens());
-        setSelectedAllergens([]);
+        setFilters({ ...filters, allergens: [] });
     };
 
     const addNewAllergen = () => {
         const trimmed = newAllergen.trim();
-        let updatedSelectedAllergens = selectedAllergens;
+        if (!trimmed) return;
 
-        if (trimmed && !selectedAllergens.includes(trimmed)) {
-            updatedSelectedAllergens = [...selectedAllergens, trimmed];
-            setSelectedAllergens(updatedSelectedAllergens);
-            setNewAllergen('');
-        }
+        const currentAllergens = filters.allergens ?? [];
+        if (currentAllergens.includes(trimmed)) return;
 
-        dispatch(filterByAllergens(updatedSelectedAllergens));
+        setFilters({ ...filters, allergens: [...currentAllergens, trimmed] });
+        setNewAllergen('');
     };
 
     return (
@@ -98,7 +73,7 @@ export const AllergensFilter: React.FC<{
         >
             {outerTags ? (
                 <SelectOuterTags
-                    options={selectedAllergens}
+                    options={filters.allergens || []}
                     toggleDropdown={toggleDropdown}
                     isOpen={isOpen}
                     onReset={handleReset}
@@ -107,16 +82,16 @@ export const AllergensFilter: React.FC<{
             ) : (
                 <SelectInnerTags
                     dataTestAllergenTag={dataTestAllergenTag}
-                    options={selectedAllergens}
+                    options={filters.allergens}
                     toggleDropdown={toggleDropdown}
                     isOpen={isOpen}
                     onReset={handleReset}
                     noTagCloseButton={true}
                 />
             )}
-            {isOpen && (
+            {isOpen && !disabled && (
                 <Box
-                    data-test-id='allergens-menu'
+                    data-test-id={TEST_IDS.allergens}
                     mt={2}
                     borderRadius='4px'
                     bg='white'
@@ -131,7 +106,10 @@ export const AllergensFilter: React.FC<{
                                 key={index}
                                 index={index}
                                 item={allergen}
-                                isChecked={selectedAllergens.includes(allergen.replace(/ .*/, ''))}
+                                isChecked={
+                                    filters.allergens?.includes(allergen.replace(/ .*/, '')) ||
+                                    false
+                                }
                                 toggleItem={toggleAllergen}
                                 dataTestIds={index}
                                 dataTestCheckBoKeykey={dataTestCheckBoKeykey}

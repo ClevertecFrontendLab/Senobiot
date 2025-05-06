@@ -2,7 +2,7 @@ import { Button, Image, ResponsiveValue, Text } from '@chakra-ui/react';
 
 import { BORDERS } from '~/constants/styles';
 
-export interface ButtonBookBtnProps {
+export type ButtonBookBtnProps = {
     bookBtnText?: string;
     bookBtnTextcolor?: string;
     bookBtnBorderColor?: string;
@@ -17,7 +17,7 @@ export interface ButtonBookBtnProps {
     bookBtnTextDisplay?: ResponsiveValue<string>;
     bookBtnIconMarginInlineEnd?: ResponsiveValue<number>;
     recieptButtonsSize?: ResponsiveValue<string>;
-}
+};
 
 export const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
     bookBtnText = 'Сохранить',

@@ -1,33 +1,26 @@
 import React, { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 
-import { navTree } from '~/configs/navigationConfig';
+import { NavigationConfig } from '~/types';
 
-const AppViews: React.FC = () => (
+const CategoryComponent = lazy(() => import('./category'));
+const RecieptComponent = lazy(() => import('./reciept'));
+const HomeComponent = lazy(() => import('./home'));
+
+const AppViews: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => (
     <Suspense fallback={<div>Загрузка...</div>}>
         <Routes>
-            <Route path=':category/:subcategory/:id' Component={lazy(() => import('./reciept'))} />
-            {navTree.map((navItem) => {
-                const MainComponent =
-                    navItem.route === '/'
-                        ? lazy(() => import('./home'))
-                        : lazy(() => import('./category'));
-
-                return (
-                    <React.Fragment key={navItem.navKey}>
-                        <Route path={navItem.route} Component={MainComponent} />
-                        {navItem.submenu?.map((subNavItem) => (
-                            <Route
-                                key={subNavItem.navKey}
-                                path={subNavItem.route}
-                                Component={lazy(() => import('./category'))}
-                            />
-                        ))}
-                    </React.Fragment>
-                );
-            })}
-
-            <Route path='*' element={<Navigate to='/' replace />} />
+            <Route
+                path=':category/:subcategory/:id'
+                element={<RecieptComponent navigationConfig={navigationConfig} />}
+            />
+            <Route path='/' element={<HomeComponent navigationConfig={navigationConfig} />} />
+            <Route
+                path='/:category/:subcategory?'
+                element={<CategoryComponent navigationConfig={navigationConfig} />}
+            />
+            <Route path='/not-found' Component={lazy(() => import('./404'))} />
+            <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>
     </Suspense>
 );

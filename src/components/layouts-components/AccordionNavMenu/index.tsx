@@ -1,14 +1,19 @@
 import { Accordion } from '@chakra-ui/react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { navTree } from '~/configs/navigationConfig';
+import { getNavigationConfig } from '~/redux/selectors';
 
 import SideNavMenuItem from './Item';
 
-export const AccordionNav: React.FC = () => (
-    <Accordion allowToggle>
-        {navTree.map(
-            (item, index) => !item.skipSideMenu && <SideNavMenuItem {...item} key={index} />,
-        )}
-    </Accordion>
-);
+export const AccordionNav: React.FC = () => {
+    const categories = useSelector(getNavigationConfig);
+
+    return (
+        <Accordion allowToggle>
+            {categories.map((item, index) => (
+                <SideNavMenuItem {...item} key={index} />
+            ))}
+        </Accordion>
+    );
+};

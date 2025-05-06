@@ -11,15 +11,14 @@ import {
 import React from 'react';
 import { Link, useLocation } from 'react-router';
 
-import { navTreeProps } from '~/configs/navigationConfig';
+import { AllCategories } from '~/types';
 
-const SideNavMenuItem: React.FC<navTreeProps> = ({
-    title,
-    icon = '',
-    submenu = [],
-    redirect,
+const SideNavMenuItem: React.FC<AllCategories> = ({
+    categoryRu,
+    categoryEn,
+    categoryIcon = '',
+    subCategories = [],
     route,
-    navKey,
 }) => {
     const { pathname } = useLocation();
 
@@ -27,7 +26,7 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
         <AccordionItem border={0}>
             {({ isExpanded }) => (
                 <>
-                    <Link data-test-id={navKey} to={redirect || route}>
+                    <Link data-test-id={categoryEn === 'vegan' && 'vegan-cuisine'} to={route}>
                         <AccordionButton
                             bg={isExpanded ? 'lime.100' : 'white'}
                             px={2}
@@ -40,9 +39,9 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
                         >
                             <Box flex='1' textAlign='left'>
                                 <HStack display='flex' alignItems='start' pl={1}>
-                                    <Image src={icon} alt={title} boxSize='24px' />
+                                    <Image src={categoryIcon} alt={categoryRu} boxSize='24px' />
                                     <Text cursor='pointer' pl={2}>
-                                        {title}
+                                        {categoryRu}
                                     </Text>
                                 </HStack>
                             </Box>
@@ -50,37 +49,42 @@ const SideNavMenuItem: React.FC<navTreeProps> = ({
                         </AccordionButton>
                     </Link>
                     <AccordionPanel textAlign='left' pb={4}>
-                        {submenu.map((category, index) => (
-                            <Link
-                                to={category.route}
-                                key={index}
-                                data-test-id={`${category.navKey}${pathname === category.route ? '-active' : ''}`}
-                            >
-                                <Text
-                                    py={2}
-                                    ml={5}
-                                    textStyle='xs'
-                                    pl={4}
-                                    position='relative'
-                                    _hover={{
-                                        bg: 'lime.50',
-                                    }}
-                                    sx={{
-                                        '&::before': {
-                                            content: '""',
-                                            height: 'calc(100% - 12px )',
-                                            width: pathname === category.route ? '8px' : '1px',
-                                            position: 'absolute',
-                                            top: '6px',
-                                            left: pathname === category.route ? '-8px' : 0,
-                                            background: 'lime.300',
-                                        },
-                                    }}
+                        {subCategories.map((subcategory, index) => {
+                            const { subcategoryEn, route } = subcategory;
+                            const isActive = pathname === route;
+
+                            return (
+                                <Link
+                                    to={subcategory.route}
+                                    key={index}
+                                    data-test-id={`${subcategoryEn}${isActive ? '-active' : ''}`}
                                 >
-                                    {category.title}
-                                </Text>
-                            </Link>
-                        ))}
+                                    <Text
+                                        py={2}
+                                        ml={5}
+                                        textStyle='xs'
+                                        pl={4}
+                                        position='relative'
+                                        _hover={{
+                                            bg: 'lime.50',
+                                        }}
+                                        sx={{
+                                            '&::before': {
+                                                content: '""',
+                                                height: 'calc(100% - 12px )',
+                                                width: isActive ? '8px' : '1px',
+                                                position: 'absolute',
+                                                top: '6px',
+                                                left: isActive ? '-8px' : 0,
+                                                background: 'lime.300',
+                                            },
+                                        }}
+                                    >
+                                        {subcategory.subcategoryRu}
+                                    </Text>
+                                </Link>
+                            );
+                        })}
                     </AccordionPanel>
                 </>
             )}

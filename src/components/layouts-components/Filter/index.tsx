@@ -14,7 +14,7 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
     AllergensFilter,
@@ -23,17 +23,15 @@ import {
     SelectRegular,
     SwitchToggler,
 } from '~/components/shared-components';
+import { TEST_IDS } from '~/constants';
 import { BORDERS, SHADOWS } from '~/constants/styles';
-import { useDrawer } from '~/providers/DrawerFilters/useDrawer';
-import { applyFilters, resetReciepts } from '~/reducers';
-import { getCategories, getMeats, getSides } from '~/selectors';
-import { ComposeFiltersPayloadType } from '~/types';
+import { useFilters } from '~/providers/Filters/useFilters';
+import { getCategories, getMeats, getSides } from '~/redux/selectors';
 
 import FilterTag from './FilterTag';
 import FilterTitle from './FilterTitle';
 
 export const RecipeFilter: React.FC = () => {
-    const dispatch = useDispatch();
     const meats = useSelector(getMeats);
     const sidesMap = useSelector(getSides);
     const categoriesMap = useSelector(getCategories);
@@ -42,14 +40,13 @@ export const RecipeFilter: React.FC = () => {
 
     const authors = ['Сергей Разумов'];
 
-    const { isOpen, closeDrawer } = useDrawer();
+    const { isOpen, closeDrawer, setFilters, filters } = useFilters();
 
-    const [isCategoryOpen, setIsCategoryOpen] = useState(false); // Возможно стоит декомпозировать всё
+    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isAuthorsOpen, setIsAuthorsOpen] = useState(false);
 
     const [selectedMeats, setSelectedMeats] = useState<string[]>([]);
     const [selectedSides, setSelectedSides] = useState<string[]>([]);
-    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -86,6 +83,10 @@ export const RecipeFilter: React.FC = () => {
         );
     };
 
+    const toggleAllergensSelection = (allergen: string) => {
+        setFilters({ ...filters, allergens: filters.allergens?.filter((e) => e !== allergen) });
+    };
+
     const resetCategories = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setSelectedCategories([]);
@@ -97,29 +98,26 @@ export const RecipeFilter: React.FC = () => {
     };
 
     const searchReciepts = () => {
-        const categoryKeys = selectedCategories.map((e) => categoriesMap[e]);
         const sideKeys = selectedSides.map((e) => sidesMap[e]);
 
-        const appliedFilters: ComposeFiltersPayloadType = {
-            category: categoryKeys,
-            author: selectedAuthors,
-            meat: selectedMeats,
-            side: sideKeys,
-        };
+        setFilters({
+            ...filters,
+            meat: selectedMeats.join(','),
+            garnish: sideKeys.join(','),
+        });
 
-        dispatch(applyFilters(appliedFilters));
         setSelectedCategories([]);
         closeDrawer();
     };
 
     const clearFilters = () => {
+        setFilters({});
         setSelectedAuthors([]);
         setSelectedCategories([]);
         setSelectedMeats([]);
         setSelectedSides([]);
-        setSelectedAllergens([]);
         setIsExcludeAllergens(false);
-        dispatch(resetReciepts());
+
         if (isCategoryOpen) {
             toggleCategoriesDropdown();
         }
@@ -135,10 +133,10 @@ export const RecipeFilter: React.FC = () => {
                 minW={{ base: 344, xl: 463 }}
                 p={{ base: 4, xl: 8 }}
                 pr={{ base: 1.5, xl: 2 }}
-                data-test-id='filter-drawer'
+                data-test-id={TEST_IDS.filters}
             >
                 <DrawerCloseButton
-                    data-test-id='close-filter-drawer'
+                    data-test-id={TEST_IDS.filtersCloseButton}
                     top={{ base: 5, xl: 8 }}
                     right={{ base: 3, xl: 5 }}
                 >
@@ -275,14 +273,7 @@ export const RecipeFilter: React.FC = () => {
 
                         {/* Allergens */}
                         <Box w='100%'>
-                            <Flex
-                                w='100%'
-                                alignItems='center'
-                                // justifyContent='space-between'
-                                // display={{ base: 'none', xl: 'flex' }}
-                                wrap='wrap'
-                                gap={2}
-                            >
+                            <Flex w='100%' alignItems='center' wrap='wrap' gap={2}>
                                 <SwitchToggler
                                     dataTestId='allergens-switcher-filter'
                                     text=' Исключить аллергены'
@@ -293,8 +284,6 @@ export const RecipeFilter: React.FC = () => {
                                     // dataTestAllergenTag='filter-tag'
                                     dataTestCheckBoKeykey='allergen-'
                                     dataTestIdToggler='allergens-menu-button-filter'
-                                    selectedAllergens={selectedAllergens}
-                                    setSelectedAllergens={setSelectedAllergens}
                                     disabled={!isExcludeAllergens}
                                 />
                             </Flex>
@@ -333,12 +322,12 @@ export const RecipeFilter: React.FC = () => {
                                 onClick={() => toggleSideSelection(side)}
                             />
                         ))}
-                        {selectedAllergens.map((side, index) => (
+                        {filters.allergens?.map((allergen, index) => (
                             <FilterTag
                                 testId={true}
                                 key={index}
-                                item={side}
-                                onClick={() => toggleSideSelection(side)}
+                                item={allergen}
+                                onClick={() => toggleAllergensSelection(allergen)}
                             />
                         ))}
                     </HStack>
@@ -352,7 +341,7 @@ export const RecipeFilter: React.FC = () => {
                         onClick={clearFilters}
                         px={6}
                         border={BORDERS.main}
-                        data-test-id='clear-filter-button'
+                        data-test-id={TEST_IDS.filtersClearButton}
                     >
                         Очистить фильтр
                     </Button>
@@ -378,7 +367,7 @@ export const RecipeFilter: React.FC = () => {
                         onClick={searchReciepts}
                         px={6}
                         _hover={{ bg: '#000' }}
-                        data-test-id='find-recipe-button'
+                        data-test-id={TEST_IDS.filtersFindButton}
                     >
                         Найти рецепт
                     </Button>

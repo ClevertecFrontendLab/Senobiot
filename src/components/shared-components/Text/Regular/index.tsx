@@ -1,6 +1,8 @@
 import { ResponsiveValue, Text, TextProps } from '@chakra-ui/react';
 import React from 'react';
 
+import { TEST_IDS } from '~/constants';
+
 export type TextRegularProps = {
     regText?: string | number;
     regTextFz?: ResponsiveValue<string>;
@@ -25,7 +27,7 @@ export const TextRegular: React.FC<TextRegularProps> = ({
     regTextDataId,
 }) => (
     <Text
-        data-test-id={`ingredient-quantity-${regTextDataId}`}
+        data-test-id={`${TEST_IDS.ingridientQuantity}-${regTextDataId}`}
         textAlign={regTextAlign}
         fontSize={regTextFz}
         fontWeight={regTextFw}

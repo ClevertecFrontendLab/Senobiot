@@ -1,13 +1,17 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 
+import { CategoriesProps } from '~/types';
+
 import { RecieptCard } from '../..';
 
 type SliderCardProps = {
     title: string;
     description?: string;
-    categories?: string[];
+    categories?: CategoriesProps[];
     image?: string;
     activeSearch?: string | null;
+    likesAmount?: number;
+    bookmarksAmount?: number;
 };
 
 const SliderCard: React.FC<SliderCardProps> = ({
@@ -16,6 +20,8 @@ const SliderCard: React.FC<SliderCardProps> = ({
     categories,
     image,
     activeSearch,
+    likesAmount,
+    bookmarksAmount,
 }) => {
     const hiddenElements = useBreakpointValue({
         base: true,
@@ -63,6 +69,8 @@ const SliderCard: React.FC<SliderCardProps> = ({
             categorySx={categoryResponsivePosition}
             bookmarkMaxHeight={{ base: 'unset', xl: 6 }}
             titleTextHighlight={activeSearch}
+            bookmarksBookmarksValue={bookmarksAmount}
+            bookmarksLikesValue={likesAmount}
         />
     );
 };

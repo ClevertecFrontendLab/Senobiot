@@ -1,10 +1,10 @@
 import { Button, Image, ResponsiveValue, Text } from '@chakra-ui/react';
 
-export interface ButtonTimeBtnProps {
+export type ButtonTimeBtnProps = {
     timeBtnText?: string;
     timeBtnIconsize?: string | number;
     timeBtnMarginBottom?: ResponsiveValue<string | number>;
-}
+};
 
 export const ButtonTimeBtn: React.FC<ButtonTimeBtnProps> = ({
     timeBtnText = '0 минут',
@@ -31,6 +31,6 @@ export const ButtonTimeBtn: React.FC<ButtonTimeBtnProps> = ({
         }
         variant='link'
     >
-        <Text>{timeBtnText}</Text>
+        <Text>{timeBtnText} минут</Text>
     </Button>
 );

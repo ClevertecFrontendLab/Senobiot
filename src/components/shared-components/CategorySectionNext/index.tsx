@@ -2,23 +2,17 @@ import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import { CategoryHeader, TextRegular } from '~/components/shared-components';
-import { RecipeProps } from '~/types';
+import { CategorySectionNextProps } from '~/types';
 
 import CategorySectionNextCard from './Card';
 import CardMinimized from './CardMinimized';
-
-type CategorySectionNextProps = {
-    title: string;
-    description?: string;
-    data: RecipeProps[];
-};
 
 export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
     title,
     description,
     data,
 }) => (
-    <Flex direction='column' borderTop='1px solid' borderColor='blackAlpha.200'>
+    <Flex w='100%' direction='column' borderTop='1px solid' borderColor='blackAlpha.200'>
         <Flex
             gap={{ md: 3, xl: 4, '2xl': 6 }}
             direction={{ base: 'column', md: 'row' }}
@@ -56,6 +50,8 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                             bookmarkMaxHeight={6}
                             bookmarkWrap={{ base: 'nowrap' }}
                             bookmarksFlexDirection='column'
+                            descriptionMinHeight='60px'
+                            cardHeaderHeight='unset'
                         />
                     );
                 }
@@ -70,7 +66,13 @@ export const CategorySectionNext: React.FC<CategorySectionNextProps> = ({
                 {data.map((card, index) => {
                     const { title, category } = card;
                     if (index >= 2 && index < 5) {
-                        return <CardMinimized key={index} title={title} iconKey={category[0]} />;
+                        return (
+                            <CardMinimized
+                                key={index}
+                                title={title}
+                                iconUrl={category[0].categoryIconUrl}
+                            />
+                        );
                     }
                 })}
             </Flex>

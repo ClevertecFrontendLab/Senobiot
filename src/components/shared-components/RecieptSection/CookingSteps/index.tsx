@@ -1,12 +1,12 @@
 import { Flex, VStack } from '@chakra-ui/react';
 import React from 'react';
 
-import { RecipeProps } from '~/types';
+import { CoockingSteps } from '~/types';
 
 import { SubtitleText } from '../..';
 import CookingStep from './Step';
 
-export const CookingSteps: React.FC<{ steps: RecipeProps['steps'] }> = ({ steps }) => (
+export const CookingSteps: React.FC<{ steps: CoockingSteps[] }> = ({ steps }) => (
     <Flex gap={5} direction='column' w='100%'>
         <SubtitleText
             titleTextLh={{ base: '32px', xl: '48px' }}
