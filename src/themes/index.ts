@@ -1,6 +1,23 @@
 import { extendTheme } from '@chakra-ui/react';
 
 export const defaultTheme = extendTheme({
+    styles: {
+        global: {
+            '::-webkit-scrollbar': {
+                width: 2,
+            },
+            '::-webkit-scrollbar-track': {
+                background: 'rgba(0, 0, 0, 0.04)',
+            },
+            '::-webkit-scrollbar-thumb': {
+                background: 'rgba(0, 0, 0, 0.16)',
+                borderRadius: '8px',
+            },
+            '::-webkit-scrollbar-thumb:hover': {
+                background: 'lime.50',
+            },
+        },
+    },
     colors: {
         lime: {
             50: '#FFFFD3',

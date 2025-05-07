@@ -10,35 +10,38 @@ export const EXCLUDED_ROUTES = {
 } as const;
 
 export const TEST_IDS = {
-    buttonViewMore: 'load-more-button',
+    alert: 'error-notification',
+    alertCloseButton: 'close-alert-button',
     allergens: 'allergens-menu',
-    spinner: 'app-loader',
-    minispinner: 'loader-search-block',
-    header: 'header',
-    footer: 'footer',
-    navigationMenu: 'nav',
-    hamburgerIcon: 'hamburger-icon',
-    hamburgerCloseButton: 'close-icon',
+    allergensSwitcher: 'allergens-switcher',
+    allergensInputToggler: 'allergens-menu-button',
+    buttonViewMore: 'load-more-button',
     breadcrumbs: 'breadcrumbs',
+    carouselCard: 'carousel-card',
+    carouselButtonLeft: 'carousel-back',
+    carouselButtonRight: 'carousel-forward',
     filters: 'filter-drawer',
     filtersOpenButton: 'filter-button',
     filtersCloseButton: 'close-filter-drawer',
     filtersClearButton: 'clear-filter-button',
     filtersFindButton: 'find-recipe-button',
+    filtersCategoryInput: 'filter-menu-button-категория',
     filtersTag: 'filter-tag',
-    searchInput: 'search-input',
-    searchButton: 'search-button',
-    alert: 'error-notification',
-    alertCloseButton: 'close-alert-button',
-    portionsIncrement: 'increment-stepper',
-    poritonsDecrement: 'decrement-stepper',
-    carouselCard: 'carousel-card',
-    carouselButtonLeft: 'carousel-back',
-    carouselButtonRight: 'carousel-forward',
-    ingridientQuantity: 'ingredient-quantity',
+    footer: 'footer',
+    hamburgerIcon: 'hamburger-icon',
+    hamburgerCloseButton: 'close-icon',
+    header: 'header',
     homeLink: 'error-page-go-home',
+    ingridientQuantity: 'ingredient-quantity',
     juciestLink: 'juiciest-link',
     juciestLinkMobile: 'juiciest-link-mobile',
+    spinner: 'app-loader',
+    minispinner: 'loader-search-block',
+    navigationMenu: 'nav',
+    portionsIncrement: 'increment-stepper',
+    poritonsDecrement: 'decrement-stepper',
+    searchInput: 'search-input',
+    searchButton: 'search-button',
 } as const;
 
 export const predefinedAllergens: string[] = [
@@ -66,6 +69,35 @@ export const INSCRIPTIONS = {
         title: { default: 'Ошибка сервера' },
         body: { default: 'Попробуйте поискать снова попозже' },
     },
+    footer: {
+        title: 'Версия программы 03.25',
+        copyright: 'Все права защищены, ученический файл, \n©Клевер Технолоджи, 2025',
+    },
+} as const;
+
+export const PLACEHOLDERS = {
+    allergens: 'Выберите из списка...',
+    filters: {
+        category: 'Категория',
+        author: 'Поиск по автору',
+    },
+    search: 'Название или ингредиент...',
+} as const;
+
+export const TITLES = {
+    filters: {
+        meat: 'Тип мяса',
+        garnish: 'Тип гарнира',
+        exludeAllergens: 'Исключить аллергены',
+    },
+} as const;
+
+export const BUTTONS_TEXT = {
+    filters: {
+        clear: 'Очистить фильтр',
+        apply: 'Найти рецепт',
+    },
+    footer: 'Выйти',
 } as const;
 
 export const BOTTOM_MENU_CONIG = [

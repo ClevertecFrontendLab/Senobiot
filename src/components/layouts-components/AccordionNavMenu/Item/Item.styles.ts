@@ -2,6 +2,7 @@ import { SystemStyleObject } from '@chakra-ui/react';
 
 export const getButtonStyles = (isExpanded: boolean): SystemStyleObject => ({
     bg: isExpanded ? 'lime.100' : 'white',
+    maxW: { base: '314px', xl: '230px' },
     px: 2,
     height: 12,
     fontWeight: isExpanded ? 700 : 500,

@@ -25,19 +25,6 @@ export const sideMenuStyles = {
     borderRadius: '8px',
     pt: 8,
     pr: 1,
-    '&::-webkit-scrollbar': {
-        width: 2,
-    },
-    '&::-webkit-scrollbar-track': {
-        background: 'blackAlpha.50',
-    },
-    '&::-webkit-scrollbar-thumb': {
-        background: 'blackAlpha.300',
-        borderRadius: '8px',
-    },
-    '&::-webkit-scrollbar-thumb:hover': {
-        background: 'lime.50',
-    },
     '&:hover': {
         boxShadow: SHADOWS.sideMunu,
     },
