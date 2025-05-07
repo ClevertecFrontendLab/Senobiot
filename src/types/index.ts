@@ -157,9 +157,9 @@ export type RandomCategoryStateProps = {
     subcategoriesIds: string;
 } | null;
 
-export type RandomCategoryataStateProps = {
+export type RelevantCategoryStateProps = {
     category: { title: string; description?: string };
-    reciepts?: RecipeProps[];
+    reciepts: RecipeProps[];
 };
 
 export type CategoryMenuProps = {

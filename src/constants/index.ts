@@ -59,7 +59,7 @@ export const predefinedAllergens: string[] = [
 export const API_QUERY_PARAMS = {
     defaultPage: 1,
     defaultRequestAmount: 8,
-    juciestHomePageBlockAmount: 4,
+    juiciestHomePageBlockAmount: 4,
     randomSectionAmount: 5,
     sliderDefaultAmount: 10,
 } as const;

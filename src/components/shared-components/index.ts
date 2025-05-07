@@ -7,6 +7,7 @@ export * from './CategorySection';
 export * from './CategorySectionNext';
 export * from './Headers';
 export * from './Inputs';
+export * from './PageSections';
 export * from './PageWrapper';
 export * from './ProfileNotification';
 export * from './RecieptCard';

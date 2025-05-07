@@ -34,6 +34,7 @@ export const inputStyles = {
 };
 
 export const tagStyles = {
+    bg: 0,
     variant: 'outline',
     border: BORDERS.allergenTag,
     color: 'lime.600',

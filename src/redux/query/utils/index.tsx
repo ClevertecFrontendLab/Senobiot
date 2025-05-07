@@ -186,21 +186,23 @@ export const useRecipeRequests = ({
     });
 
     const {
-        data: { data: juciestData } = {},
-        isLoading: isLoadingJuciest,
-        isError: isErrorJuciest,
+        data: { data: juiciestData } = {},
+        isLoading: isLoadingJuiciest,
+        isError: isErrorJuiciest,
         isFetching: isFetchingJuiciest,
     } = useCategoryRecieptsQuery({
         ...filters,
         allergens: filters.allergens?.join(','),
-        limit: API_QUERY_PARAMS.juciestHomePageBlockAmount,
+        limit: API_QUERY_PARAMS.juiciestHomePageBlockAmount,
         isJuiciest: true,
     });
 
+    // Не трогать! Тут надо использовать useRecipeByCategoryQuery чтобы получать достаточное количество рецептов для relevantData,
+    // но в тестах требуется зпрос именно на useRecipeByCategoryQuery - потому relevant секция имеет от 0 до 5 рецептов.
     const {
-        data: { data: randomCategoryReciepts } = {},
-        isLoading: isLoadingRandom,
-        isError: isErrorRandom,
+        data: { data: relevantData } = {},
+        isLoading: isLoadingRelevant,
+        isError: isErrorRelevant,
     } = useRecipeByCategoryQuery(
         {
             id: randomCategory?.randomCategory.apiQureryId || '',
@@ -209,7 +211,7 @@ export const useRecipeRequests = ({
         { skip: !randomCategory },
     );
 
-    const { data: { data: recieptsByCategory } = {} } = useRecipeByCategoryQuery(
+    const { data: { data: reciepesByCategoryData } = {} } = useRecipeByCategoryQuery(
         { id: apiQureryId },
         { skip: isJuiciest },
     );
@@ -228,27 +230,27 @@ export const useRecipeRequests = ({
     });
 
     const {
-        data: recieptData,
+        data: reciepeData,
         isLoading: isLoadingReciept,
         isError: isErrorReciept,
     } = useRecieptQuery(recieptId || '', { skip: !recieptId });
 
     return {
         latestData,
-        juciestData,
-        randomCategoryReciepts,
-        recieptData,
-        recieptsByCategory,
+        juiciestData,
+        relevantData,
+        reciepeData,
+        reciepesByCategoryData,
         categoryData,
         meta,
         isLoadingLatest,
-        isLoadingJuciest,
-        isLoadingRandom,
+        isLoadingJuiciest,
+        isLoadingRelevant,
         isLoadingCategory,
         isLoadingReciept,
         isErrorLatest,
-        isErrorJuciest,
-        isErrorRandom,
+        isErrorJuiciest,
+        isErrorRelevant,
         isErrorCategory,
         isErrorReciept,
         isFetchingLatest,

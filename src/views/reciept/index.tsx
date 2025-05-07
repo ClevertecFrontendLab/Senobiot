@@ -46,7 +46,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
 
     const {
         latestData,
-        recieptData,
+        reciepeData,
         isLoadingReciept,
         isErrorReciept,
         isErrorLatest,
@@ -55,8 +55,8 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
 
     useEffect(() => {
         if (subCategoriesByIds) {
-            if (recieptData && !isLoadingReciept) {
-                const populatedData = populateRecieptCategory(recieptData, subCategoriesByIds);
+            if (reciepeData && !isLoadingReciept) {
+                const populatedData = populateRecieptCategory(reciepeData, subCategoriesByIds);
                 setReciept(populatedData);
 
                 const currentCategory = navigationTree.find((e) => e.categoryEn === category);
@@ -113,7 +113,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
         category,
         subcategory,
         navigationTree,
-        recieptData,
+        reciepeData,
         latestData,
         isLoadingReciept,
         isLoadingLatest,

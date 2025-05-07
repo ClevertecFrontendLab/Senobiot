@@ -1,43 +1,42 @@
-import { Flex, VStack } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
-import { PageWrapper, ServerErrorAlert, Slider } from '~/components/shared-components';
-import { CategoryHeader } from '~/components/shared-components';
+import {
+    JuiciestRecipesSection,
+    LatestRecipesSection,
+    PageWrapper,
+    RelevantKitchenSection,
+    ServerErrorAlert,
+} from '~/components/shared-components';
 import { BlogsSection } from '~/components/shared-components';
-import { CategorySectionNext } from '~/components/shared-components';
 import { PAGE_TITLES } from '~/constants';
-import { PADDINGS } from '~/constants/styles';
+import { useSearchState } from '~/hooks';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
 import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import {
     NavigationConfig,
-    RandomCategoryataStateProps,
     RandomCategoryStateProps,
     RecipeProps,
-    SEARCH_STATE,
+    RelevantCategoryStateProps,
 } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
-
-import JuciestSection from './juciest-preview';
 
 const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
     const { subCategoriesByIds, categoriesByIds } = navigationConfig;
 
     const { filters } = useFilters();
-    const [latestReciepts, setLatestReciepts] = useState<RecipeProps[]>([]);
-    const [juciestReciepts, setJuciestReciepts] = useState<RecipeProps[]>([]);
+    const [latestRecipes, setLatestReciepes] = useState<RecipeProps[]>([]);
+    const [juiciestRecipes, setJuciestReciepts] = useState<RecipeProps[]>([]);
     const [randomCategory, setRandomCategory] = useState<RandomCategoryStateProps>(null);
-    const [randomCategoryData, setRandomCategoryData] = useState<RandomCategoryataStateProps>({
+    const [relevantReciepts, setRelevantReciepts] = useState<RelevantCategoryStateProps>({
         category: { title: '', description: '' },
         reciepts: [],
     });
-    const [markdownText, setMarkdownText] = useState<string | undefined>();
-    const [searchResultState, setSearchResultState] = useState<SEARCH_STATE>();
 
     const dispatch = useDispatch();
     const error = useSelector(userErrorSelector);
@@ -47,75 +46,69 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
 
     const {
         latestData,
-        juciestData,
-        randomCategoryReciepts,
+        juiciestData,
+        relevantData,
         isLoadingLatest,
-        isLoadingJuciest,
-        isLoadingRandom,
+        isLoadingJuiciest,
+        isLoadingRelevant,
         isErrorLatest,
-        isErrorJuciest,
-        isErrorRandom,
+        isErrorJuiciest,
+        isErrorRelevant,
         isFetchingLatest,
         isFetchingJuiciest,
     } = useRecipeRequests({ randomCategory, isJuiciest: true });
 
+    const isError = isErrorLatest || isErrorJuiciest || isErrorRelevant;
+
+    const { searchResultState, markdownText } = useSearchState({
+        searchString: filters.searchString,
+        latestRecipes,
+        juiciestRecipes,
+        isError,
+    });
+
     useEffect(() => {
-        if (subCategoriesByIds && !isLoadingLatest && !isLoadingJuciest && !isLoadingRandom) {
+        if (subCategoriesByIds && !isLoadingLatest && !isLoadingJuiciest && !isLoadingRelevant) {
             if (latestData) {
                 const populatedData = latestData.map((e) =>
                     populateRecieptCategory(e, subCategoriesByIds),
                 );
-                setLatestReciepts(populatedData);
+                setLatestReciepes(populatedData);
                 dispatch(setCurrentLocation({}));
             }
 
-            if (juciestData) {
-                const populatedData = juciestData.map((e) =>
+            if (juiciestData) {
+                const populatedData = juiciestData.map((e) =>
                     populateRecieptCategory(e, subCategoriesByIds),
                 );
                 setJuciestReciepts(populatedData);
             }
 
             if (randomCategory) {
-                if (randomCategoryReciepts?.length) {
+                if (relevantData?.length) {
                     const {
                         randomCategory: { categoryRu, categoryDescription },
                     } = randomCategory;
 
-                    const populatedData = randomCategoryReciepts.map((e) =>
+                    const populatedData = relevantData.map((e) =>
                         populateRecieptCategory(e, subCategoriesByIds),
                     );
 
-                    setRandomCategoryData({
+                    setRelevantReciepts({
                         category: { title: categoryRu, description: categoryDescription },
                         reciepts: populatedData,
                     });
                 }
             }
-
-            if (latestData?.length || juciestData?.length) {
-                if (filters.searchString) {
-                    setSearchResultState(SEARCH_STATE.SUCCESS);
-                    setMarkdownText(filters.searchString);
-                } else if (searchResultState) {
-                    setSearchResultState(undefined);
-                    setMarkdownText(undefined);
-                }
-            } else {
-                if (filters.searchString) {
-                    setSearchResultState(SEARCH_STATE.EMPTY);
-                    setMarkdownText(undefined);
-                }
-            }
         }
     }, [
-        juciestData,
+        juiciestData,
         latestData,
-        randomCategoryReciepts,
+        relevantData,
         randomCategory,
         isLoadingLatest,
-        isLoadingJuciest,
-        isLoadingRandom,
+        isLoadingJuiciest,
+        isLoadingRelevant,
         searchResultState,
         filters.searchString,
         subCategoriesByIds,
@@ -131,18 +124,12 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     }, [categoriesByIds]);
 
     useEffect(() => {
-        if (isErrorLatest || isErrorJuciest || isErrorRandom) {
-            if (filters.searchString) {
-                setSearchResultState(SEARCH_STATE.ERROR);
-                setMarkdownText(undefined);
-                dispatch(setAppError(true));
-            } else {
-                dispatch(setAppError(true));
-            }
+        if (isErrorLatest || isErrorJuiciest || isErrorRelevant) {
+            dispatch(setAppError(true));
         }
-    }, [isErrorLatest, isErrorJuciest, isErrorRandom, dispatch, filters.searchString]);
+    }, [isErrorLatest, isErrorJuiciest, isErrorRelevant, dispatch]);
 
-    if (isLoadingLatest || isLoadingJuciest) {
+    if (isLoadingLatest || isLoadingJuiciest) {
         return <Loader />;
     }
 
@@ -150,32 +137,21 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
         <PageWrapper>
             {!filters.searchString && (isFetchingLatest || isFetchingJuiciest) && <Loader />}
             {error && <ServerErrorAlert onClose={resetError} />}
+
             <SearchBar
                 searchResultState={searchResultState}
                 isLoading={!!filters.searchString && (isFetchingLatest || isFetchingJuiciest)}
                 pageTitle={PAGE_TITLES.home}
             />
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
-                {latestReciepts?.length && (
-                    <Flex mb={PADDINGS.subsectionHeaderMb} direction='column' w='100%'>
-                        <CategoryHeader
-                            mb={PADDINGS.subsectionHeaderMb}
-                            title={PAGE_TITLES.slider}
-                        />
-                        <Slider markdownText={markdownText} slides={latestReciepts} />
-                    </Flex>
-                )}
-                {juciestReciepts?.length && (
-                    <JuciestSection markdownText={markdownText} recieptsData={juciestReciepts} />
-                )}
+                <LatestRecipesSection recipes={latestRecipes} markdownText={markdownText} />
+                <JuiciestRecipesSection recipes={juiciestRecipes} markdownText={markdownText} />
                 <BlogsSection />
-                {randomCategoryData.reciepts?.length && (
-                    <CategorySectionNext
-                        title={randomCategoryData.category.title}
-                        description={randomCategoryData.category.description}
-                        data={randomCategoryData.reciepts}
-                    />
-                )}
+                <RelevantKitchenSection
+                    title={relevantReciepts.category.title}
+                    description={relevantReciepts.category.description}
+                    data={relevantReciepts.reciepts}
+                />
             </VStack>
         </PageWrapper>
     );
