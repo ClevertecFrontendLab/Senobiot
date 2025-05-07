@@ -32,7 +32,7 @@ const BreadCrump: React.FC<{
                 return (
                     <BreadcrumbItem key={index}>
                         {isLast ? (
-                            <span style={{ color: 'black' }}>{label}</span>
+                            <span>{label}</span>
                         ) : (
                             <BreadcrumbLink
                                 onClick={onClick}

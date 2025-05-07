@@ -60,3 +60,37 @@ export const API_QUERY_PARAMS = {
     randomSectionAmount: 5,
     sliderDefaultAmount: 10,
 } as const;
+
+export const INSCRIPTIONS = {
+    alert: {
+        title: { default: 'Ошибка сервера' },
+        body: { default: 'Попробуйте поискать снова попозже' },
+    },
+} as const;
+
+export const BOTTOM_MENU_CONIG = [
+    {
+        name: 'Главная',
+        iconUrl: '/icons/bottom-menu/home.svg',
+        route: '',
+        isActive: true,
+    },
+    {
+        name: 'Поиск',
+        iconUrl: '/icons/bottom-menu/lense.svg',
+        route: '',
+        isActive: false,
+    },
+    {
+        name: 'Записать',
+        iconUrl: '/icons/bottom-menu/pen.svg',
+        route: '',
+        isActive: false,
+    },
+    {
+        name: 'Мой профиль',
+        iconUrl: '/avatars/avatar-4.png',
+        route: '',
+        isActive: false,
+    },
+] as const;

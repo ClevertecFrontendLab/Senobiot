@@ -77,15 +77,6 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         }
     };
 
-    // useEffect(() => {
-    //     if (inputValue &&
-    //         ((searchResultState === SEARCH_STATE.EMPTY) ||
-    //             (searchResultState === SEARCH_STATE.ERROR))) {
-    //         setFilters({ ...filters, searchString: '' });
-    //         setInputValue('');
-    //     }
-    // }, [searchResultState])
-
     return (
         <Flex
             direction='column'
@@ -93,7 +84,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             mx='auto'
             px={{ base: 4, xl: '30px' }}
             mb={{ base: 4, xl: 6 }} // for box shadow in focused search block
-            pb={{ base: 4, xl: 8 }} // for box shadow in focused search block
+            pb={{ base: 4, xl: 8 }}
             _focusWithin={{
                 boxShadow: SHADOWS.searchBar,
                 borderRadius: '0 0 8px 8px',
@@ -188,11 +179,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                                 />
                                 {inputValue && (
                                     <Box
+                                        onClick={handlReset}
                                         top={3}
                                         right={10}
                                         position='absolute'
                                         as='button'
-                                        onClick={handlReset}
                                         fontSize='14px'
                                         cursor='pointer'
                                     >
@@ -203,12 +194,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                         </InputGroup>
                     </Flex>
                     {isAllergensTogglerVisible && (
-                        <Flex
-                            mt={{ xl: 4 }}
-                            alignItems='center'
-                            justifyContent='space-between'
-                            // display={{ base: 'none', xl: 'flex' }}
-                        >
+                        <Flex mt={{ xl: 4 }} alignItems='center' justifyContent='space-between'>
                             <SwitchToggler
                                 text=' Исключить аллергены'
                                 onChange={handleExcludeAllergens}

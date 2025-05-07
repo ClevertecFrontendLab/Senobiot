@@ -1,6 +1,12 @@
 import { useLocation } from 'react-router';
 
-import { CategoriesByIds, NavigationConfig, RecipeProps, SubCategoriesByIds } from '~/types';
+import {
+    AllCategories,
+    CategoriesByIds,
+    NavigationConfig,
+    RecipeProps,
+    SubCategoriesByIds,
+} from '~/types';
 
 export const usePathnames = () => {
     const location = useLocation();
@@ -81,3 +87,14 @@ export const getRandomCategory = (categories: CategoriesByIds, exceptId: string 
     const randomCategoryId = ids[Math.floor(Math.random() * ids.length)];
     return categories[randomCategoryId];
 };
+
+export const categoryTitleSlicer = (category: AllCategories[]) =>
+    category.map((e) => ({
+        ...e,
+        categoryRu:
+            e.categoryRu === 'Десерты и выпечка'
+                ? 'Десерты, выпечка'
+                : e.categoryRu === 'Домашние заготовки'
+                  ? 'Заготовки'
+                  : e.categoryRu,
+    }));

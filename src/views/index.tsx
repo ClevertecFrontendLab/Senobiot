@@ -6,6 +6,7 @@ import { NavigationConfig } from '~/types';
 const CategoryComponent = lazy(() => import('./category'));
 const RecieptComponent = lazy(() => import('./reciept'));
 const HomeComponent = lazy(() => import('./home'));
+const ErrorComponent = lazy(() => import('./404'));
 
 const AppViews: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => (
     <Suspense fallback={<div>Загрузка...</div>}>
@@ -19,7 +20,7 @@ const AppViews: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
                 path='/:category/:subcategory?'
                 element={<CategoryComponent navigationConfig={navigationConfig} />}
             />
-            <Route path='/not-found' Component={lazy(() => import('./404'))} />
+            <Route path='/not-found' element={<ErrorComponent />} />
             <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>
     </Suspense>

@@ -1,6 +1,5 @@
 import {
     AccordionButton,
-    AccordionIcon,
     AccordionItem,
     AccordionPanel,
     Box,
@@ -12,6 +11,8 @@ import React from 'react';
 import { Link, useLocation } from 'react-router';
 
 import { AllCategories } from '~/types';
+
+import { buttonInnerWrapper, getButtonStyles, getSubCategoryButtonStyles } from './Item.styles';
 
 const SideNavMenuItem: React.FC<AllCategories> = ({
     categoryRu,
@@ -27,28 +28,16 @@ const SideNavMenuItem: React.FC<AllCategories> = ({
             {({ isExpanded }) => (
                 <>
                     <Link data-test-id={categoryEn === 'vegan' && 'vegan-cuisine'} to={route}>
-                        <AccordionButton
-                            bg={isExpanded ? 'lime.100' : 'white'}
-                            px={2}
-                            height={12}
-                            fontWeight={500}
-                            fontSize={16}
-                            _hover={{
-                                bg: isExpanded ? 'lime.100' : 'lime.50',
-                            }}
-                        >
+                        <AccordionButton sx={getButtonStyles(isExpanded)}>
                             <Box flex='1' textAlign='left'>
-                                <HStack display='flex' alignItems='start' pl={1}>
+                                <HStack sx={buttonInnerWrapper}>
                                     <Image src={categoryIcon} alt={categoryRu} boxSize='24px' />
-                                    <Text cursor='pointer' pl={2}>
-                                        {categoryRu}
-                                    </Text>
+                                    <Text cursor='pointer'>{categoryRu}</Text>
                                 </HStack>
                             </Box>
-                            <AccordionIcon />
                         </AccordionButton>
                     </Link>
-                    <AccordionPanel textAlign='left' pb={4}>
+                    <AccordionPanel textAlign='left' pb={0} pr={0}>
                         {subCategories.map((subcategory, index) => {
                             const { subcategoryEn, route } = subcategory;
                             const isActive = pathname === route;
@@ -59,27 +48,7 @@ const SideNavMenuItem: React.FC<AllCategories> = ({
                                     key={index}
                                     data-test-id={`${subcategoryEn}${isActive ? '-active' : ''}`}
                                 >
-                                    <Text
-                                        py={2}
-                                        ml={5}
-                                        textStyle='xs'
-                                        pl={4}
-                                        position='relative'
-                                        _hover={{
-                                            bg: 'lime.50',
-                                        }}
-                                        sx={{
-                                            '&::before': {
-                                                content: '""',
-                                                height: 'calc(100% - 12px )',
-                                                width: isActive ? '8px' : '1px',
-                                                position: 'absolute',
-                                                top: '6px',
-                                                left: isActive ? '-8px' : 0,
-                                                background: 'lime.300',
-                                            },
-                                        }}
-                                    >
+                                    <Text sx={getSubCategoryButtonStyles(isActive)}>
                                         {subcategory.subcategoryRu}
                                     </Text>
                                 </Link>

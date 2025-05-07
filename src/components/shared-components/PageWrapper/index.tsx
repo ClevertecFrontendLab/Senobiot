@@ -10,11 +10,11 @@ type PageWrapperProps = {
 export const PageWrapper: React.FC<PageWrapperProps> = ({ pt = PADDINGS.pageTop, children }) => (
     <Flex
         minH='100vh'
-        mx={PADDINGS.sectionMx} // на макете не учтен скроллбар
+        mx={PADDINGS.sectionMx}
         direction='column'
         w={{ '2xl': 1360 }}
         pt={pt}
-        pb={{ base: PADDINGS.footer, xl: 'unset' }} // конец контента
+        pb={{ base: PADDINGS.footer, xl: 'unset' }}
     >
         {children}
     </Flex>
