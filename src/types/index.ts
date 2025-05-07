@@ -152,13 +152,9 @@ export enum SEARCH_STATE {
     ERROR = 'error-search',
 }
 
-export type RandomCategoryStateProps = {
-    randomCategory: AllCategories;
-    subcategoriesIds: string;
-} | null;
-
 export type RelevantCategoryStateProps = {
-    category: { title: string; description?: string };
+    title: string;
+    description: string;
     reciepts: RecipeProps[];
 };
 
@@ -242,4 +238,16 @@ export type CheckBoxLimeProps = {
     dataTestCatagory?: string;
     px?: number;
     labelColor?: string;
+};
+
+export type RecipesResponse = {
+    data: RecipeProps[];
+    meta: MetaData;
+};
+
+type MetaData = {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
 };

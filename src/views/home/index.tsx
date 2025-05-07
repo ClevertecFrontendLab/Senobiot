@@ -18,31 +18,23 @@ import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
 import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import {
-    NavigationConfig,
-    RandomCategoryStateProps,
-    RecipeProps,
-    RelevantCategoryStateProps,
-} from '~/types';
+import { AllCategories, NavigationConfig, RecipeProps, RelevantCategoryStateProps } from '~/types';
 import { getRandomCategory, populateRecieptCategory } from '~/utils';
 
 const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
     const { subCategoriesByIds, categoriesByIds } = navigationConfig;
 
     const { filters } = useFilters();
-    const [latestRecipes, setLatestReciepes] = useState<RecipeProps[]>([]);
-    const [juiciestRecipes, setJuciestReciepts] = useState<RecipeProps[]>([]);
-    const [randomCategory, setRandomCategory] = useState<RandomCategoryStateProps>(null);
-    const [relevantReciepts, setRelevantReciepts] = useState<RelevantCategoryStateProps>({
-        category: { title: '', description: '' },
-        reciepts: [],
-    });
-
     const dispatch = useDispatch();
     const error = useSelector(userErrorSelector);
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
     }, [dispatch]);
+
+    const [randomCategory, setRandomCategory] = useState<AllCategories>();
+    const [latestRecipes, setLatestReciepes] = useState<RecipeProps[]>([]);
+    const [juiciestRecipes, setJuciestReciepts] = useState<RecipeProps[]>([]);
+    const [relevantRecipes, setRelevantRecipes] = useState<RelevantCategoryStateProps>();
 
     const {
         latestData,
@@ -68,59 +60,42 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     });
 
     useEffect(() => {
-        if (subCategoriesByIds && !isLoadingLatest && !isLoadingJuiciest && !isLoadingRelevant) {
-            if (latestData) {
-                const populatedData = latestData.map((e) =>
-                    populateRecieptCategory(e, subCategoriesByIds),
-                );
-                setLatestReciepes(populatedData);
-                dispatch(setCurrentLocation({}));
-            }
-
-            if (juiciestData) {
-                const populatedData = juiciestData.map((e) =>
-                    populateRecieptCategory(e, subCategoriesByIds),
-                );
-                setJuciestReciepts(populatedData);
-            }
-
-            if (randomCategory) {
-                if (relevantData?.length) {
-                    const {
-                        randomCategory: { categoryRu, categoryDescription },
-                    } = randomCategory;
-
-                    const populatedData = relevantData.map((e) =>
-                        populateRecieptCategory(e, subCategoriesByIds),
-                    );
-
-                    setRelevantReciepts({
-                        category: { title: categoryRu, description: categoryDescription },
-                        reciepts: populatedData,
-                    });
-                }
-            }
+        if (subCategoriesByIds && !isLoadingLatest && latestData) {
+            const populatedData = latestData.map((e) =>
+                populateRecieptCategory(e, subCategoriesByIds),
+            );
+            setLatestReciepes(populatedData);
         }
-    }, [
-        juiciestData,
-        latestData,
-        relevantData,
-        randomCategory,
-        isLoadingLatest,
-        isLoadingJuiciest,
-        isLoadingRelevant,
-        searchResultState,
-        filters.searchString,
-        subCategoriesByIds,
-        dispatch,
-        resetError,
-    ]);
+    }, [latestData, subCategoriesByIds, isLoadingLatest, dispatch]);
+
+    useEffect(() => {
+        if (subCategoriesByIds && !isLoadingJuiciest && juiciestData) {
+            const populatedData = juiciestData.map((e) =>
+                populateRecieptCategory(e, subCategoriesByIds),
+            );
+            setJuciestReciepts(populatedData);
+        }
+    }, [juiciestData, subCategoriesByIds, isLoadingJuiciest]);
+
+    useEffect(() => {
+        if (subCategoriesByIds && !isLoadingRelevant && randomCategory && relevantData?.length) {
+            const { categoryRu, categoryDescription } = randomCategory;
+
+            const populatedData = relevantData.map((e) =>
+                populateRecieptCategory(e, subCategoriesByIds),
+            );
+
+            setRelevantRecipes({
+                title: categoryRu,
+                description: categoryDescription || '',
+                reciepts: populatedData,
+            });
+        }
+    }, [randomCategory, relevantData, subCategoriesByIds, isLoadingRelevant]);
 
     useEffect(() => {
         const randomCategory = getRandomCategory(categoriesByIds);
-        const subcategoriesIds =
-            randomCategory?.subCategories?.map((e) => e.apiQureryId).join(',') || '';
-        setRandomCategory({ randomCategory, subcategoriesIds });
+        setRandomCategory(randomCategory);
     }, [categoriesByIds]);
 
     useEffect(() => {
@@ -128,6 +103,10 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
             dispatch(setAppError(true));
         }
     }, [isErrorLatest, isErrorJuiciest, isErrorRelevant, dispatch]);
+
+    useEffect(() => {
+        dispatch(setCurrentLocation({}));
+    }, [dispatch]);
 
     if (isLoadingLatest || isLoadingJuiciest) {
         return <Loader />;
@@ -148,9 +127,9 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
                 <JuiciestRecipesSection recipes={juiciestRecipes} markdownText={markdownText} />
                 <BlogsSection />
                 <RelevantKitchenSection
-                    title={relevantReciepts.category.title}
-                    description={relevantReciepts.category.description}
-                    data={relevantReciepts.reciepts}
+                    title={relevantRecipes?.title}
+                    description={relevantRecipes?.description}
+                    data={relevantRecipes?.reciepts}
                 />
             </VStack>
         </PageWrapper>

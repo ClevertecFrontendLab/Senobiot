@@ -44,7 +44,7 @@ export const icon = {
 
 export const getInputStyles = (state: SEARCH_STATE | undefined) => {
     const sx = {
-        boxShadow: 0,
+        boxShadow: 'none',
         border:
             state === SEARCH_STATE.SUCCESS
                 ? '1px solid green'
@@ -60,7 +60,8 @@ export const getInputStyles = (state: SEARCH_STATE | undefined) => {
         _hover: sx,
         _focus: sx,
         _active: sx,
-        size: { base: 'sm', xl: 'lg' },
+        fontSize: { base: '14px', xl: '18px' },
+        h: { base: 8, xl: 12 },
         _placeholder: { color: 'lime.800' },
     };
 };

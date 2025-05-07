@@ -8,9 +8,9 @@ import CategorySectionNextCard from '../../CategorySectionNext/Card';
 import CardMinimized from '../../CategorySectionNext/CardMinimized';
 
 type RelevantKitchenSectionProps = {
-    title: string;
+    title?: string;
     description?: string;
-    data: RecipeProps[];
+    data?: RecipeProps[];
 };
 
 export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
@@ -32,7 +32,7 @@ export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
                 <CategoryHeader
                     alignItems='center'
                     titleTextAlign='left'
-                    title={title}
+                    title={title || ''}
                     flex={{ base: '1 0 100%', md: '1 0 33.33%', '2xl': `0 0 668px` }}
                     mb={{ base: 3, xl: 0 }}
                 />

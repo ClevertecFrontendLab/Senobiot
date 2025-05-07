@@ -1,12 +1,6 @@
 import { API_QUERY_PARAMS } from '~/constants';
 import { useFilters } from '~/providers/Filters/useFilters';
-import {
-    AllCategories,
-    CategoriesByIds,
-    RandomCategoryStateProps,
-    RecipeProps,
-    SubCategoriesByIds,
-} from '~/types';
+import { AllCategories, CategoriesByIds, RecipeProps, SubCategoriesByIds } from '~/types';
 
 import { ApiEndpoints } from '../constants/api';
 import { useCategoryRecieptsQuery, useRecieptQuery, useRecipeByCategoryQuery } from '../create-api';
@@ -157,7 +151,7 @@ export function transformRecieptResponse(response: RecipeProps) {
 }
 
 type useReciepeRequestsProps = {
-    randomCategory?: RandomCategoryStateProps;
+    randomCategory?: AllCategories;
     isJuiciest?: boolean;
     apiQureryId?: string;
     page?: number;
@@ -205,7 +199,7 @@ export const useRecipeRequests = ({
         isError: isErrorRelevant,
     } = useRecipeByCategoryQuery(
         {
-            id: randomCategory?.randomCategory.apiQureryId || '',
+            id: randomCategory?.apiQureryId || '',
             limit: API_QUERY_PARAMS.randomSectionAmount,
         },
         { skip: !randomCategory },
