@@ -18,7 +18,7 @@ type SliderProps = {
 };
 
 export const Slider: React.FC<SliderProps> = ({ slides = [], markdownText }) => {
-    const sortedSlides = slides.sort(
+    const sortedSlides = [...slides].sort(
         (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     ); // КОСЯК В ТЕСТАХ УБРАТЬ ПОТОМ
 

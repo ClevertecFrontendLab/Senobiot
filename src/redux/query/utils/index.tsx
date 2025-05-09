@@ -1,6 +1,7 @@
 import { API_QUERY_PARAMS } from '~/constants';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { AllCategories, CategoriesByIds, RecipeProps, SubCategoriesByIds } from '~/types';
+import { populateRecieptCategory } from '~/utils';
 
 import { ApiEndpoints } from '../constants/api';
 import { useCategoryRecieptsQuery, useRecieptQuery, useRecipeByCategoryQuery } from '../create-api';
@@ -116,28 +117,30 @@ export function isRecipeProps(response: unknown): response is RecipeProps {
     return false;
 }
 
-export function transformRecieptsResponse(response: RecipesResponse | RecipeProps) {
+export function transformRecieptsResponse(
+    response: RecipesResponse | RecipeProps,
+    subIds: SubCategoriesByIds,
+) {
     if (!response) {
         return { data: [] };
     }
 
     if ('data' in response && Array.isArray(response.data)) {
-        // RecipesResponse`
+        // RecipesResponse: { data: [{recipe},...] || data:[[reciepe]] }
         const updatedData = response.data.flat().map((e) => ({
-            // ТЕСТЫ КИДАЮТ НЕСТАНДАРТЫЙ ОТВЕТ ВМЕСТО МАССИВА МАССИВ МАССИВОВ в МАССИВАХ ЕАДО ФЛЭТ МОГУТ ПАДАТЬ ТУТ
-            ...e,
+            ...populateRecieptCategory(e, subIds),
             image: e.image ? BASE_ICON_URL + e.image : '',
             id: e._id,
         }));
-        return { ...response, data: updatedData };
+        return { meta: response.meta, data: updatedData };
     } else if (isRecipeProps(response)) {
-        // RecipeProps`
+        // RecipeResponse: {reciepe}
         const updatedData = {
-            ...response,
+            ...populateRecieptCategory(response, subIds),
             image: response.image ? BASE_ICON_URL + response.image : '',
             id: response._id,
         };
-        return { data: [updatedData], meta: { totalPages: 0 } }; // ТЕСТЫ КИДАЮТ НЕСТАНДАРТЫЙ ОТВЕТ ВМЕСТО МАССИВА ПРСОТСТО ОБЪЕКТ БЕЗ ДАТЫ И МЕТЫ
+        return { data: [updatedData], meta: { totalPages: 0 } };
     }
 }
 
@@ -155,7 +158,9 @@ type useReciepeRequestsProps = {
     isJuiciest?: boolean;
     apiQureryId?: string;
     page?: number;
-    recieptId?: string;
+    recipeId?: string;
+    idKeys: SubCategoriesByIds;
+    noSkipJuciciest?: boolean;
 };
 
 export const useRecipeRequests = ({
@@ -163,7 +168,9 @@ export const useRecipeRequests = ({
     apiQureryId,
     isJuiciest,
     page,
-    recieptId,
+    recipeId,
+    idKeys,
+    noSkipJuciciest = false,
 }: useReciepeRequestsProps) => {
     const { filters } = useFilters();
 
@@ -177,6 +184,7 @@ export const useRecipeRequests = ({
         allergens: filters.allergens?.join(','),
         limit: API_QUERY_PARAMS.sliderDefaultAmount,
         isLatest: true,
+        idKeys,
     });
 
     const {
@@ -184,12 +192,16 @@ export const useRecipeRequests = ({
         isLoading: isLoadingJuiciest,
         isError: isErrorJuiciest,
         isFetching: isFetchingJuiciest,
-    } = useCategoryRecieptsQuery({
-        ...filters,
-        allergens: filters.allergens?.join(','),
-        limit: API_QUERY_PARAMS.juiciestHomePageBlockAmount,
-        isJuiciest: true,
-    });
+    } = useCategoryRecieptsQuery(
+        {
+            ...filters,
+            allergens: filters.allergens?.join(','),
+            limit: API_QUERY_PARAMS.juiciestHomePageBlockAmount,
+            isJuiciest: true,
+            idKeys,
+        },
+        { skip: !noSkipJuciciest },
+    );
 
     // Не трогать! Тут надо использовать useRecipeByCategoryQuery чтобы получать достаточное количество рецептов для relevantData,
     // но в тестах требуется зпрос именно на useRecipeByCategoryQuery - потому relevant секция имеет от 0 до 5 рецептов.
@@ -201,13 +213,14 @@ export const useRecipeRequests = ({
         {
             id: randomCategory?.apiQureryId || '',
             limit: API_QUERY_PARAMS.randomSectionAmount,
+            idKeys,
         },
         { skip: !randomCategory },
     );
 
     const { data: { data: reciepesByCategoryData } = {} } = useRecipeByCategoryQuery(
-        { id: apiQureryId },
-        { skip: isJuiciest },
+        { id: apiQureryId, idKeys },
+        { skip: isJuiciest || !randomCategory },
     );
 
     const {
@@ -215,25 +228,29 @@ export const useRecipeRequests = ({
         isLoading: isLoadingCategory,
         isError: isErrorCategory,
         isFetching,
-    } = useCategoryRecieptsQuery({
-        ...filters,
-        allergens: filters.allergens?.join(','),
-        page,
-        subcategoriesIds: apiQureryId,
-        isJuiciest,
-    });
+    } = useCategoryRecieptsQuery(
+        {
+            ...filters,
+            allergens: filters.allergens?.join(','),
+            page,
+            subcategoriesIds: apiQureryId,
+            isJuiciest,
+            idKeys,
+        },
+        { skip: !randomCategory },
+    ); // Скмпаем подгрузку категории на рецепт пейдже
 
     const {
-        data: reciepeData,
-        isLoading: isLoadingReciept,
-        isError: isErrorReciept,
-    } = useRecieptQuery(recieptId || '', { skip: !recieptId });
+        data: recipeData,
+        isLoading: isLoadingRecipe,
+        isError: isErrorRecipe,
+    } = useRecieptQuery(recipeId || '', { skip: !recipeId });
 
     return {
         latestData,
         juiciestData,
         relevantData,
-        reciepeData,
+        recipeData,
         reciepesByCategoryData,
         categoryData,
         meta,
@@ -241,12 +258,12 @@ export const useRecipeRequests = ({
         isLoadingJuiciest,
         isLoadingRelevant,
         isLoadingCategory,
-        isLoadingReciept,
+        isLoadingRecipe,
         isErrorLatest,
         isErrorJuiciest,
         isErrorRelevant,
         isErrorCategory,
-        isErrorReciept,
+        isErrorRecipe,
         isFetchingLatest,
         isFetchingJuiciest,
         isFetching,
@@ -263,6 +280,7 @@ export type QueryParams = {
     subcategoriesIds?: string;
     isJuiciest?: boolean;
     isLatest?: boolean;
+    idKeys: SubCategoriesByIds;
 };
 
 export const buildRecieptsQuery = ({

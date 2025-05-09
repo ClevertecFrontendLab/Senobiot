@@ -12,7 +12,7 @@ import CategoryCard from './CategorySectionCard';
 export const CategorySection: React.FC<CategorySectionProps> = ({
     activeSubcategory,
     categoryData,
-    recieptsData,
+    categoryRecipes,
     categoryButtonText = '',
     categoryHeaderMb = PADDINGS.subsectionHeaderMb,
     mb = PADDINGS.subsectionMb,
@@ -21,6 +21,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     onClick,
     markdownText,
 }) => {
+    if (!categoryRecipes?.length) return null;
     const { subCategoriesList } = categoryData || {};
 
     return (
@@ -29,7 +30,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                 <CategoryMenu list={subCategoriesList} activeSubcategory={activeSubcategory} />
             )}
             <Flex flexWrap='wrap' gap={4}>
-                {recieptsData?.map((card, index) => {
+                {categoryRecipes?.map((card, index) => {
                     const { title, description, image, category, id, likes, bookmarks } = card;
 
                     return (

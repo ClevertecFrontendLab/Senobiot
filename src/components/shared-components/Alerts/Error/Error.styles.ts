@@ -3,12 +3,10 @@ import { SystemStyleObject } from '@chakra-ui/react';
 export const alertStyles: SystemStyleObject = {
     fontFamily: 'Inter',
     bg: 'red.500',
-    status: 'error',
-    variant: 'solid',
     borderRadius: 'md',
     position: 'fixed',
     w: { base: '328px', xl: '400px' },
-    h: '72px',
+    minH: '72px',
     left: '50%',
     transform: 'translateX(-50%)',
     bottom: { base: '100px', xl: '80px' },

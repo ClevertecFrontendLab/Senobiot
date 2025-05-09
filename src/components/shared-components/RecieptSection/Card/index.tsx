@@ -2,8 +2,10 @@ import { RecipeProps } from '~/types';
 
 import { RecieptCard } from '../../RecieptCard';
 
-export const RecieptSectionCard: React.FC<{ reciept: RecipeProps }> = ({ reciept }) => {
-    const { title, description, image, category, time, bookmarks, likes } = reciept;
+export const RecieptSectionCard: React.FC<{ recipe?: RecipeProps }> = ({ recipe }) => {
+    if (!recipe) return null;
+
+    const { title, description, image, category, time, bookmarks, likes } = recipe;
 
     return (
         <RecieptCard

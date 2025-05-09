@@ -7,43 +7,42 @@ import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
 import {
     CategorySection,
-    CategorySectionNext,
     PageWrapper,
+    RelevantKitchenSection,
     ServerErrorAlert,
 } from '~/components/shared-components';
-import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
+import { BUTTONS_TEXT, EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
+import { useSearchState } from '~/hooks';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { setCurrentLocation } from '~/redux';
 import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import {
-    NavigationConfig,
-    RandomCategoryataStateProps,
-    RandomCategoryStateProps,
-    RecipeProps,
-    SEARCH_STATE,
-} from '~/types';
-import { getRandomCategory, populateRecieptCategory } from '~/utils';
+import { NavigationConfig, RecipeProps } from '~/types';
+import { getRandomCategory } from '~/utils';
 
 const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
     const { filters } = useFilters();
     const { category, subcategory } = useParams<{ category: string; subcategory: string }>();
     const { subCategoriesByIds, categoriesByIds, navigationTree } = navigationConfig;
+    const isJuiciest: boolean = category === EXCLUDED_ROUTES.juiciest;
 
+    const idKeys = useMemo(() => subCategoriesByIds, [subCategoriesByIds]);
+    const randomCategory = useMemo(() => getRandomCategory(categoriesByIds), [categoriesByIds]);
     const currentCategory = useMemo(
         () => navigationTree.find((e) => e.categoryEn === category),
         [category, navigationTree],
     );
 
-    const currentSubCategory = useMemo(
+    const {
+        apiQureryId,
+        subcategoryRu,
+        route: subcategoryRoute,
+    } = useMemo(
         () => currentCategory?.subCategories?.find((e) => e.subcategoryEn === subcategory),
         [currentCategory, subcategory],
-    );
+    ) || {};
 
-    const isJuiciest: boolean = category === EXCLUDED_ROUTES.juiciest;
-
-    const { categoryRu, categoryDescription, categoryId } = currentCategory || {};
-    const { apiQureryId } = currentSubCategory || {};
+    const { categoryRu, categoryDescription, route: categoryRoute } = currentCategory || {};
 
     const error = useSelector(userErrorSelector);
     const dispatch = useDispatch();
@@ -52,147 +51,77 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         dispatch(setAppError(null));
     }, [dispatch]);
 
-    const [randomCategory, setRandomCategory] = useState<RandomCategoryStateProps>(null);
-    const [markdownText, setMarkdownText] = useState<string | undefined>();
-    const [searchResultState, setSearchResultState] = useState<SEARCH_STATE>();
-    const [categoryReciepts, setCategoryReciepts] = useState<RecipeProps[]>([]);
     const [page, setPage] = useState<number>(1);
-    const [randomCategoryData, setRandomCategoryData] = useState<RandomCategoryataStateProps>();
+    const [categoryRecipes, setCategoryReciepes] = useState<RecipeProps[]>([]);
 
     const getMore = () => {
         setPage((prevPage) => prevPage + 1);
     };
 
     const {
-        recieptsByCategory,
         categoryData,
+        reciepesByCategoryData,
+        relevantData,
         meta,
         isLoadingCategory,
+        isLoadingRelevant,
         isErrorCategory,
+        isErrorRelevant,
         isFetching,
-        randomCategoryReciepts,
-        isLoadingRandom,
-        isErrorRandom,
-    } = useRecipeRequests({ randomCategory, isJuiciest, apiQureryId, page });
+    } = useRecipeRequests({ randomCategory, isJuiciest, apiQureryId, page, idKeys });
 
-    useEffect(() => {
-        if (!isLoadingCategory && !isLoadingRandom && !isFetching) {
-            if (categoryData?.length) {
-                const populatedData = categoryData.map((e) =>
-                    populateRecieptCategory(e, subCategoriesByIds),
-                );
+    const isError = isErrorCategory || isErrorRelevant;
 
-                setCategoryReciepts((prevData) =>
-                    page === 1 ? populatedData : [...prevData, ...populatedData],
-                );
-
-                if (isJuiciest) {
-                    dispatch(
-                        setCurrentLocation({
-                            category: { label: PAGE_TITLES.juiciest },
-                        }),
-                    );
-                }
-
-                if (currentCategory) {
-                    const currentSubcategory = currentCategory?.subCategories?.find(
-                        (e) => e.subcategoryEn === subcategory,
-                    );
-                    if (currentSubcategory) {
-                        dispatch(
-                            setCurrentLocation({
-                                category: {
-                                    label: currentCategory.categoryRu,
-                                    route: currentCategory.route,
-                                },
-                                subcategory: {
-                                    label: currentSubcategory?.subcategoryRu,
-                                    route: currentSubcategory.route,
-                                },
-                            }),
-                        );
-                    }
-                }
-
-                if (filters.searchString) {
-                    setSearchResultState(SEARCH_STATE.SUCCESS);
-                    setMarkdownText(filters.searchString);
-                } else if (searchResultState) {
-                    setSearchResultState(undefined);
-                    setMarkdownText(undefined);
-                }
-            } else {
-                if (filters.searchString) {
-                    setSearchResultState(SEARCH_STATE.EMPTY);
-                    setMarkdownText(undefined);
-                }
-            }
-
-            if (randomCategory) {
-                if (randomCategoryReciepts?.length) {
-                    const {
-                        randomCategory: { categoryRu, categoryDescription },
-                    } = randomCategory;
-
-                    const populatedData = randomCategoryReciepts.map((e) =>
-                        populateRecieptCategory(e, subCategoriesByIds),
-                    );
-
-                    setRandomCategoryData({
-                        category: { title: categoryRu, description: categoryDescription },
-                        reciepts: populatedData,
-                    });
-                }
-            }
-        }
-    }, [
+    const { searchResultState, markdownText } = useSearchState({
+        searchString: filters.searchString,
         categoryData,
-        currentCategory,
-        randomCategory,
-        randomCategoryReciepts,
-        isJuiciest,
-        isLoadingCategory,
-        isLoadingRandom,
-        category,
-        searchResultState,
-        filters.searchString,
-        subcategory,
-        page,
-        isFetching,
-        subCategoriesByIds,
-        dispatch,
-        resetError,
-    ]);
+        relevantData,
+        isError,
+    });
 
     useEffect(() => {
-        const randomCategory = getRandomCategory(categoriesByIds, categoryId);
-        const subcategoriesIds =
-            randomCategory?.subCategories?.map((e) => e.apiQureryId).join(',') || '';
+        if (categoryData?.length) {
+            setCategoryReciepes((prevData) => [...prevData, ...categoryData]);
+        }
+    }, [categoryData]);
 
-        setRandomCategory({ randomCategory, subcategoriesIds });
-    }, [categoryId, categoriesByIds]);
+    useEffect(() => {
+        if (isErrorCategory || isErrorRelevant) {
+            dispatch(setAppError(true));
+        }
+    }, [isErrorCategory, isErrorRelevant, dispatch]);
+
+    useEffect(() => {
+        // TODO Сделать провайдер и выпилить это со всех вьюх
+        dispatch(
+            setCurrentLocation({
+                category: {
+                    label: isJuiciest ? PAGE_TITLES.juiciest : categoryRu || '',
+                    route: categoryRoute,
+                },
+                subcategory: {
+                    label: subcategoryRu || '',
+                    route: subcategoryRoute,
+                },
+            }),
+        );
+    }, [categoryRoute, categoryRu, dispatch, isJuiciest, subcategoryRoute, subcategoryRu]);
 
     useEffect(() => {
         setPage(1);
     }, [apiQureryId]);
 
     useEffect(() => {
-        if (isErrorCategory || isErrorRandom) {
-            if (filters.searchString) {
-                setSearchResultState(SEARCH_STATE.ERROR);
-                setMarkdownText(undefined);
-                dispatch(setAppError(true));
-            } else {
-                dispatch(setAppError(true));
-            }
+        if (isErrorCategory || isErrorRelevant) {
+            dispatch(setAppError(true));
         }
-    }, [isErrorCategory, isErrorRandom, filters.searchString, dispatch]);
+    }, [isErrorCategory, isErrorRelevant, dispatch]);
 
     if (!currentCategory && !isJuiciest) {
-        return <Navigate to='/not-found' replace />;
+        return <Navigate to={`/${EXCLUDED_ROUTES.notFound}`} replace />;
     }
 
-    if (isLoadingCategory) {
+    if (isLoadingCategory || isLoadingRelevant) {
         return <Loader />;
     }
 
@@ -207,26 +136,24 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                 pageDescription={categoryDescription}
             />
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
-                {!isErrorCategory && categoryReciepts?.length && (
-                    <CategorySection
-                        activeSubcategory={subcategory}
-                        categoryData={currentCategory}
-                        recieptsData={categoryReciepts}
-                        categoryButtonText={isFetching ? 'Загрузка' : 'Загрузить еще'}
-                        noHeader={true}
-                        noFooter={!!meta?.totalPages && page >= meta.totalPages}
-                        onClick={getMore}
-                        markdownText={markdownText}
-                        recieptsByCategory={recieptsByCategory}
-                    />
-                )}
-                {randomCategoryData?.reciepts?.length && (
-                    <CategorySectionNext
-                        title={randomCategoryData.category.title}
-                        description={randomCategoryData.category.description}
-                        data={randomCategoryData.reciepts}
-                    />
-                )}
+                <CategorySection
+                    activeSubcategory={subcategory}
+                    categoryData={currentCategory}
+                    categoryRecipes={categoryRecipes}
+                    categoryButtonText={
+                        isFetching ? BUTTONS_TEXT.viewMore.loading : BUTTONS_TEXT.viewMore.loaded
+                    }
+                    noHeader={true}
+                    noFooter={!!meta?.totalPages && page >= meta.totalPages}
+                    onClick={getMore}
+                    markdownText={markdownText}
+                    recieptsByCategory={reciepesByCategoryData}
+                />
+                <RelevantKitchenSection
+                    title={randomCategory.categoryRu}
+                    description={randomCategory.categoryDescription}
+                    data={relevantData}
+                />
             </VStack>
         </PageWrapper>
     );

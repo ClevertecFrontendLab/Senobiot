@@ -10,7 +10,7 @@ import { ButtonViewMore, CategoryHeader } from '../..';
 import CategoryCard from '../../CategorySection/CategorySectionCard';
 
 interface JuiciestRecipesSectionProps {
-    recipes: RecipeProps[];
+    recipes?: RecipeProps[];
     markdownText?: string;
 }
 
@@ -19,6 +19,7 @@ export const JuiciestRecipesSection: React.FC<JuiciestRecipesSectionProps> = ({
     markdownText,
 }) => {
     if (!recipes?.length) return null;
+
     return (
         <Flex justifyContent='space-between' direction='column' mb={{ base: 8, xl: 10 }}>
             <Flex justifyContent='space-between'>

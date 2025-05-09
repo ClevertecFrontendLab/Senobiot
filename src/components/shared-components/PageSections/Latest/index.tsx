@@ -8,7 +8,7 @@ import { RecipeProps } from '~/types';
 import { CategoryHeader, Slider } from '../..';
 
 interface LatestRecipesSectionProps {
-    recipes: RecipeProps[];
+    recipes?: RecipeProps[];
     markdownText?: string;
 }
 

@@ -19,7 +19,7 @@ const navigation = createSlice({
     name: 'navigation',
     initialState,
     reducers: {
-        setCurrentLocation(state, action: PayloadAction<CurrentLocationState>) {
+        setCurrentLocation(state, action: PayloadAction<CurrentLocationState | undefined>) {
             state.currentLocationState = {
                 ...initialState.currentLocationState,
                 ...action.payload,

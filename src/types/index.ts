@@ -50,7 +50,7 @@ export type CategoriesProps = {
 
 export type CategorySectionProps = {
     activeSubcategory?: string;
-    recieptsData?: RecipeProps[];
+    categoryRecipes?: RecipeProps[];
     categoryData?: AllCategories;
     categoryButtonText?: string;
     noButton?: boolean;
@@ -152,11 +152,10 @@ export enum SEARCH_STATE {
     ERROR = 'error-search',
 }
 
-export type RelevantCategoryStateProps = {
-    title: string;
-    description: string;
-    reciepts: RecipeProps[];
-};
+// export type RelevantCategoryStateProps = {
+//     title: string;
+//     description?: string;
+// };
 
 export type CategoryMenuProps = {
     list: SubCategoryList[];

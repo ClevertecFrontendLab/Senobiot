@@ -4,15 +4,19 @@ import { RecipeProps, SEARCH_STATE } from '~/types';
 
 type UseSearchStateParams = {
     searchString: string | undefined;
-    latestRecipes?: RecipeProps[];
-    juiciestRecipes?: RecipeProps[];
+    categoryData?: RecipeProps[];
+    latestData?: RecipeProps[];
+    juiciestData?: RecipeProps[];
+    relevantData?: RecipeProps[];
     isError: boolean;
 };
 
 export const useSearchState = ({
     searchString,
-    latestRecipes,
-    juiciestRecipes,
+    categoryData,
+    latestData,
+    juiciestData,
+    relevantData,
     isError,
 }: UseSearchStateParams) => {
     const [searchResultState, setSearchResultState] = useState<SEARCH_STATE | undefined>(undefined);
@@ -25,7 +29,13 @@ export const useSearchState = ({
             return;
         }
 
-        if ((latestRecipes?.length || juiciestRecipes?.length) && searchString) {
+        if (
+            (categoryData?.length ||
+                latestData?.length ||
+                juiciestData?.length ||
+                relevantData?.length) &&
+            searchString
+        ) {
             setSearchResultState(SEARCH_STATE.SUCCESS);
             setMarkdownText(searchString);
         } else if (searchString) {
@@ -35,7 +45,7 @@ export const useSearchState = ({
             setSearchResultState(undefined);
             setMarkdownText(undefined);
         }
-    }, [searchString, latestRecipes, juiciestRecipes, isError]);
+    }, [searchString, categoryData, latestData, juiciestData, relevantData, isError]);
 
     return { searchResultState, markdownText };
 };

@@ -7,6 +7,7 @@ export const PAGE_TITLES = {
 
 export const EXCLUDED_ROUTES = {
     juiciest: 'the-juiciest',
+    notFound: 'not-found',
 } as const;
 
 export const TEST_IDS = {
@@ -98,6 +99,10 @@ export const BUTTONS_TEXT = {
         apply: 'Найти рецепт',
     },
     footer: 'Выйти',
+    viewMore: {
+        loaded: 'Загрузить еще',
+        loading: 'Загрузка',
+    },
 } as const;
 
 export const BOTTOM_MENU_CONIG = [

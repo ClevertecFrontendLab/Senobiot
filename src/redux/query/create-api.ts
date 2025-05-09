@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { API_QUERY_PARAMS } from '~/constants';
-import { RecipeProps } from '~/types';
+import { RecipeProps, RecipesResponse } from '~/types';
 
 import { ApiEndpoints } from './constants/api';
 import {
@@ -27,7 +27,8 @@ export const apiSlice = createApi({
         }),
         categoryReciepts: builder.query({
             query: (params: QueryParams) => buildRecieptsQuery(params),
-            transformResponse: transformRecieptsResponse,
+            transformResponse: (response, _, arg) =>
+                transformRecieptsResponse(response as RecipesResponse | RecipeProps, arg.idKeys),
         }),
         reciept: builder.query<RecipeProps, string>({
             query: (id) => `/recipe/${id}`,
@@ -39,7 +40,8 @@ export const apiSlice = createApi({
                 limit = API_QUERY_PARAMS.defaultRequestAmount,
                 page = API_QUERY_PARAMS.defaultPage,
             }) => `/recipe/category/${id}?page=${page}&limit=${limit}`,
-            transformResponse: transformRecieptsResponse,
+            transformResponse: (response, _, arg) =>
+                transformRecieptsResponse(response as RecipesResponse | RecipeProps, arg.idKeys),
         }),
     }),
 });

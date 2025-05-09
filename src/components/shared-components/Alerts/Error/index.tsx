@@ -11,7 +11,7 @@ export const ServerErrorAlert: React.FC<ServerErrorAlertProps> = ({
     title = INSCRIPTIONS.alert.title.default,
     body = INSCRIPTIONS.alert.body.default,
 }) => (
-    <Alert data-test-id={TEST_IDS.alert} sx={alertStyles}>
+    <Alert data-test-id={TEST_IDS.alert} sx={alertStyles} status='error' variant='solid'>
         <AlertIcon boxSize='24px' mr={3} />
         <Box flex='1'>
             <AlertTitle fontWeight={700}>{title}</AlertTitle>
