@@ -1,8 +1,12 @@
+import { useMemo } from 'react';
 import { useLocation } from 'react-router';
 
+import { EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import {
     AllCategories,
+    BreadcrumbsItems,
     CategoriesByIds,
+    LocationParams,
     NavigationConfig,
     RecipeProps,
     SubCategoriesByIds,
@@ -98,3 +102,67 @@ export const categoryTitleSlicer = (category: AllCategories[]) =>
                   ? 'Заготовки'
                   : e.categoryRu,
     }));
+
+export const useCurrentLocation = (
+    params: LocationParams,
+    navigationConfig: NavigationConfig,
+    recipe?: string,
+) => {
+    const { category, subcategory } = params;
+    const { navigationTree } = navigationConfig;
+
+    const {
+        breadcrumbs,
+        categoryRu,
+        categoryDescription,
+        apiQueryId,
+        currentSubCategory,
+        currentCategory,
+    } = useMemo(() => {
+        const crumbs: BreadcrumbsItems = {};
+
+        if (category === EXCLUDED_ROUTES.juiciest) {
+            crumbs.category = { label: PAGE_TITLES.juiciest, to: `/${EXCLUDED_ROUTES.juiciest}` };
+        }
+
+        const currentCategory = navigationTree.find((e) => e.categoryEn === category);
+        const currentSubCategory = currentCategory?.subCategories?.find(
+            (e) => e.subcategoryEn === subcategory,
+        );
+        const categoryRu = currentCategory?.categoryRu;
+        const categoryDescription = currentCategory?.categoryDescription;
+        const apiQueryId = currentSubCategory?.apiQueryId;
+
+        if (category && currentCategory) {
+            const { route: to, categoryRu } = currentCategory;
+            crumbs.category = { label: categoryRu, to };
+        }
+
+        if (subcategory && currentSubCategory) {
+            const { route: to, subcategoryRu } = currentSubCategory;
+            crumbs.subcategory = { label: subcategoryRu, to };
+        }
+
+        if (recipe) {
+            crumbs.recipe = { label: recipe };
+        }
+
+        return {
+            breadcrumbs: crumbs,
+            categoryRu,
+            categoryDescription,
+            apiQueryId,
+            currentSubCategory,
+            currentCategory,
+        };
+    }, [category, subcategory, navigationTree, recipe]);
+
+    return {
+        breadcrumbs,
+        categoryRu,
+        currentCategory,
+        currentSubCategory,
+        categoryDescription,
+        apiQueryId,
+    };
+};

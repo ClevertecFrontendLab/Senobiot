@@ -1,5 +1,5 @@
 import { VStack } from '@chakra-ui/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
 
@@ -12,40 +12,31 @@ import {
     ServerErrorAlert,
 } from '~/components/shared-components';
 import { BUTTONS_TEXT, EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
-import { useSearchState } from '~/hooks';
+import { useBreadCrumbs, useSearchState } from '~/hooks';
 import { useFilters } from '~/providers/Filters/useFilters';
-import { setCurrentLocation } from '~/redux';
 import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
-import { NavigationConfig, RecipeProps } from '~/types';
-import { getRandomCategory } from '~/utils';
+import { LocationParams, NavigationConfig, RecipeProps } from '~/types';
+import { getRandomCategory, useCurrentLocation } from '~/utils';
 
 const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
     const { filters } = useFilters();
-    const { category, subcategory } = useParams<{ category: string; subcategory: string }>();
-    const { subCategoriesByIds, categoriesByIds, navigationTree } = navigationConfig;
-    const isJuiciest: boolean = category === EXCLUDED_ROUTES.juiciest;
+    const prevSearchRef = useRef(filters.searchString);
+    const params = useParams<LocationParams>();
+    const { subCategoriesByIds, categoriesByIds } = navigationConfig;
+    const isJuiciest: boolean = params.category === EXCLUDED_ROUTES.juiciest;
 
     const idKeys = useMemo(() => subCategoriesByIds, [subCategoriesByIds]);
     const randomCategory = useMemo(() => getRandomCategory(categoriesByIds), [categoriesByIds]);
-    const currentCategory = useMemo(
-        () => navigationTree.find((e) => e.categoryEn === category),
-        [category, navigationTree],
+
+    const { apiQueryId, currentSubCategory, currentCategory, breadcrumbs } = useCurrentLocation(
+        params,
+        navigationConfig,
     );
-
-    const {
-        apiQureryId,
-        subcategoryRu,
-        route: subcategoryRoute,
-    } = useMemo(
-        () => currentCategory?.subCategories?.find((e) => e.subcategoryEn === subcategory),
-        [currentCategory, subcategory],
-    ) || {};
-
-    const { categoryRu, categoryDescription, route: categoryRoute } = currentCategory || {};
 
     const error = useSelector(userErrorSelector);
     const dispatch = useDispatch();
+    const { setBreadCrumbs } = useBreadCrumbs();
 
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
@@ -68,7 +59,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         isErrorCategory,
         isErrorRelevant,
         isFetching,
-    } = useRecipeRequests({ randomCategory, isJuiciest, apiQureryId, page, idKeys });
+    } = useRecipeRequests({ randomCategory, isJuiciest, apiQueryId, page, idKeys });
 
     const isError = isErrorCategory || isErrorRelevant;
 
@@ -78,6 +69,18 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         relevantData,
         isError,
     });
+
+    useEffect(() => {
+        setBreadCrumbs(breadcrumbs);
+    }, [breadcrumbs, setBreadCrumbs]);
+
+    useEffect(() => {
+        if (filters.searchString !== prevSearchRef.current) {
+            prevSearchRef.current = filters.searchString;
+            setCategoryReciepes([]);
+            setPage(1);
+        }
+    }, [filters.searchString]);
 
     useEffect(() => {
         if (categoryData?.length) {
@@ -92,30 +95,9 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
     }, [isErrorCategory, isErrorRelevant, dispatch]);
 
     useEffect(() => {
-        // TODO Сделать провайдер и выпилить это со всех вьюх
-        dispatch(
-            setCurrentLocation({
-                category: {
-                    label: isJuiciest ? PAGE_TITLES.juiciest : categoryRu || '',
-                    route: categoryRoute,
-                },
-                subcategory: {
-                    label: subcategoryRu || '',
-                    route: subcategoryRoute,
-                },
-            }),
-        );
-    }, [categoryRoute, categoryRu, dispatch, isJuiciest, subcategoryRoute, subcategoryRu]);
-
-    useEffect(() => {
+        setCategoryReciepes([]);
         setPage(1);
-    }, [apiQureryId]);
-
-    useEffect(() => {
-        if (isErrorCategory || isErrorRelevant) {
-            dispatch(setAppError(true));
-        }
-    }, [isErrorCategory, isErrorRelevant, dispatch]);
+    }, [apiQueryId]);
 
     if (!currentCategory && !isJuiciest) {
         return <Navigate to={`/${EXCLUDED_ROUTES.notFound}`} replace />;
@@ -132,12 +114,12 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
             <SearchBar
                 searchResultState={searchResultState}
                 isLoading={!!filters.searchString && isFetching}
-                pageTitle={(!isJuiciest ? categoryRu : PAGE_TITLES.juiciest) || ''}
-                pageDescription={categoryDescription}
+                pageTitle={(!isJuiciest ? currentCategory?.categoryRu : PAGE_TITLES.juiciest) || ''}
+                pageDescription={currentCategory?.categoryDescription}
             />
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
                 <CategorySection
-                    activeSubcategory={subcategory}
+                    activeSubcategory={currentSubCategory?.subcategoryEn}
                     categoryData={currentCategory}
                     categoryRecipes={categoryRecipes}
                     categoryButtonText={

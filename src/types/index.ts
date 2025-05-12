@@ -81,7 +81,7 @@ export type AllCategories = {
     categoryDescription?: string;
     categoryIcon?: string;
     categoryId?: string;
-    apiQureryId?: string;
+    apiQueryId?: string;
     subCategories?: SubCategory[];
     subCategoriesList?: SubCategoryList[];
 };
@@ -97,7 +97,7 @@ export type SubCategory = {
     subcategoryRu: string;
     route: string;
     subCategoriesList: SubCategoryList[];
-    apiQureryId: string;
+    apiQueryId: string;
 };
 
 export type SubCategoryList = {
@@ -121,14 +121,21 @@ export type NavigationConfig = {
 };
 
 export type LocationParams = {
-    category: string;
+    category?: string;
     subcategory?: string;
     id?: string;
 };
 
+export type BreadcrumbsItems = {
+    area?: BreadcrumbItem;
+    category?: BreadcrumbItem;
+    subcategory?: BreadcrumbItem;
+    recipe?: BreadcrumbItem;
+};
+
 export type BreadcrumbItem = {
     label: string;
-    to: string;
+    to?: string;
 };
 
 export type CurrentLocationState = {

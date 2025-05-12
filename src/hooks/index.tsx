@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
+import { BreadCrumbsContext } from '~/providers/BreadCrumbs/Context';
 import { RecipeProps, SEARCH_STATE } from '~/types';
 
 type UseSearchStateParams = {
@@ -48,4 +49,12 @@ export const useSearchState = ({
     }, [searchString, categoryData, latestData, juiciestData, relevantData, isError]);
 
     return { searchResultState, markdownText };
+};
+
+export const useBreadCrumbs = () => {
+    const context = useContext(BreadCrumbsContext);
+    if (!context) {
+        throw new Error('useBreadCrumbs должен использоваться внутри BreadCrumbsProvider');
+    }
+    return context;
 };

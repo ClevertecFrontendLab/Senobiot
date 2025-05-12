@@ -1,17 +1,16 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 
 import { TEST_IDS } from '~/constants';
-import { getcurrentLocationState } from '~/redux/selectors';
+import { useBreadCrumbs } from '~/hooks';
 
 const BreadCrump: React.FC<{
     onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }> = ({ onClick }) => {
-    const location = useSelector(getcurrentLocationState);
+    const { breadcrumbs } = useBreadCrumbs();
 
-    const breadcrumbs = Object.entries(location);
+    const breadcrumbsKeys = Object.entries({ area: { label: 'Главная', to: '/' }, ...breadcrumbs });
 
     return (
         <Breadcrumb
@@ -25,9 +24,9 @@ const BreadCrump: React.FC<{
                 },
             }}
         >
-            {breadcrumbs?.map((item, index) => {
-                const isLast = index === breadcrumbs.length - 1;
-                const { label, route } = item[1];
+            {breadcrumbsKeys.map((item, index) => {
+                const isLast = index === breadcrumbsKeys.length - 1;
+                const { label, to } = item[1];
 
                 return (
                     <BreadcrumbItem key={index}>
@@ -37,7 +36,7 @@ const BreadCrump: React.FC<{
                             <BreadcrumbLink
                                 onClick={onClick}
                                 as={Link}
-                                to={route}
+                                to={to}
                                 color='blackAlpha.700'
                             >
                                 {label}

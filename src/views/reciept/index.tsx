@@ -15,10 +15,11 @@ import {
 } from '~/components/shared-components';
 import { AuthorCard } from '~/components/shared-components/Authors';
 import { PADDINGS } from '~/constants/styles';
-import { setCurrentLocation } from '~/redux';
+import { useBreadCrumbs } from '~/hooks';
 import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { LocationParams, NavigationConfig } from '~/types';
+import { useCurrentLocation } from '~/utils';
 
 const authorData = {
     id: 1,
@@ -29,25 +30,11 @@ const authorData = {
 };
 
 const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigationConfig }) => {
-    const { id, category, subcategory } = useParams<LocationParams>();
-
-    const { subCategoriesByIds, navigationTree } = navigationConfig;
+    const { setBreadCrumbs } = useBreadCrumbs();
+    const params = useParams<LocationParams>();
     const navigate = useNavigate();
-    const idKeys = useMemo(() => subCategoriesByIds, [subCategoriesByIds]);
-    const currentCategory = useMemo(
-        () => navigationTree.find((e) => e.categoryEn === category),
-        [category, navigationTree],
-    );
-
-    const { subcategoryRu, route: subcategoryRoute } =
-        useMemo(
-            () => currentCategory?.subCategories?.find((e) => e.subcategoryEn === subcategory),
-            [currentCategory, subcategory],
-        ) || {};
-
-    const { categoryRu, route: categoryRoute } = currentCategory || {};
-
     const dispatch = useDispatch();
+    const idKeys = useMemo(() => navigationConfig.subCategoriesByIds, [navigationConfig]);
     const error = useSelector(userErrorSelector);
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
@@ -60,23 +47,13 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
         isErrorRecipe,
         isErrorLatest,
         isLoadingLatest,
-    } = useRecipeRequests({ recipeId: id, idKeys });
+    } = useRecipeRequests({ recipeId: params.id, idKeys });
+
+    const { breadcrumbs } = useCurrentLocation(params, navigationConfig, recipeData?.title);
 
     useEffect(() => {
-        dispatch(
-            setCurrentLocation({
-                category: {
-                    label: categoryRu || '',
-                    route: categoryRoute,
-                },
-                subcategory: {
-                    label: subcategoryRu || '',
-                    route: subcategoryRoute,
-                },
-                reciept: { label: recipeData?.title || '' },
-            }),
-        );
-    }, [dispatch, categoryRoute, categoryRu, recipeData?.title, subcategoryRoute, subcategoryRu]);
+        setBreadCrumbs(breadcrumbs);
+    }, [breadcrumbs, setBreadCrumbs]);
 
     useEffect(() => {
         if (isErrorLatest || isErrorRecipe) {

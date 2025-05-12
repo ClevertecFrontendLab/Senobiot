@@ -13,9 +13,8 @@ import {
 } from '~/components/shared-components';
 import { BlogsSection } from '~/components/shared-components';
 import { PAGE_TITLES } from '~/constants';
-import { useSearchState } from '~/hooks';
+import { useBreadCrumbs, useSearchState } from '~/hooks';
 import { useFilters } from '~/providers/Filters/useFilters';
-import { setCurrentLocation } from '~/redux';
 import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { NavigationConfig } from '~/types';
@@ -27,6 +26,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     const randomCategory = useMemo(() => getRandomCategory(categoriesByIds), [categoriesByIds]);
     const { filters } = useFilters();
     const dispatch = useDispatch();
+    const { setBreadCrumbs } = useBreadCrumbs();
     const error = useSelector(userErrorSelector);
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
@@ -63,8 +63,8 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     }, [isErrorLatest, isErrorJuiciest, isErrorRelevant, dispatch]);
 
     useEffect(() => {
-        dispatch(setCurrentLocation());
-    }, [dispatch]);
+        setBreadCrumbs({});
+    }, [setBreadCrumbs]);
 
     if (isLoadingLatest || isLoadingJuiciest || isLoadingRelevant) {
         return <Loader />;

@@ -60,7 +60,7 @@ export function transformCategoriesResponse(response: AllCategoriesResponse) {
                         route: `/${category?.category}/${e.category}`,
                     })) ?? [],
                 route: `/${category?.category}/${item.category}`,
-                apiQureryId: item._id,
+                apiQueryId: item._id,
             };
 
             return;
@@ -80,7 +80,7 @@ export function transformCategoriesResponse(response: AllCategoriesResponse) {
             categoryDescription: item.description ?? '',
             categoryIcon: BASE_ICON_URL + item.icon,
             route: `/${item.category}/${item.subCategories ? item.subCategories[0]?.category : ''}`,
-            apiQureryId: item.subCategories ? item.subCategories[0]?._id : '',
+            apiQueryId: item.subCategories ? item.subCategories[0]?._id : '',
             subCategoriesList,
             subCategories:
                 item.subCategories?.map((subItem) => ({
@@ -94,7 +94,7 @@ export function transformCategoriesResponse(response: AllCategoriesResponse) {
                     subcategoryRu: subItem.title,
                     subCategoriesList,
                     route: `/${item.category}/${subItem.category}`,
-                    apiQureryId: subItem._id,
+                    apiQueryId: subItem._id,
                 })) ?? [],
         };
 
@@ -156,7 +156,7 @@ export function transformRecieptResponse(response: RecipeProps) {
 type useReciepeRequestsProps = {
     randomCategory?: AllCategories;
     isJuiciest?: boolean;
-    apiQureryId?: string;
+    apiQueryId?: string;
     page?: number;
     recipeId?: string;
     idKeys: SubCategoriesByIds;
@@ -165,7 +165,7 @@ type useReciepeRequestsProps = {
 
 export const useRecipeRequests = ({
     randomCategory,
-    apiQureryId,
+    apiQueryId,
     isJuiciest,
     page,
     recipeId,
@@ -211,7 +211,7 @@ export const useRecipeRequests = ({
         isError: isErrorRelevant,
     } = useRecipeByCategoryQuery(
         {
-            id: randomCategory?.apiQureryId || '',
+            id: randomCategory?.apiQueryId || '',
             limit: API_QUERY_PARAMS.randomSectionAmount,
             idKeys,
         },
@@ -219,7 +219,7 @@ export const useRecipeRequests = ({
     );
 
     const { data: { data: reciepesByCategoryData } = {} } = useRecipeByCategoryQuery(
-        { id: apiQureryId, idKeys },
+        { id: apiQueryId, idKeys },
         { skip: isJuiciest || !randomCategory },
     );
 
@@ -233,7 +233,7 @@ export const useRecipeRequests = ({
             ...filters,
             allergens: filters.allergens?.join(','),
             page,
-            subcategoriesIds: apiQureryId,
+            subcategoriesIds: apiQueryId,
             isJuiciest,
             idKeys,
         },
