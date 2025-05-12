@@ -1,15 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { keysReducer } from '~/redux/reducers/keys';
-
 import { apiSlice } from '../query/create-api';
-import { navigationReducer } from '../reducers';
+import { authReducer, keysReducer, navigationReducer } from '../reducers';
 import appReducer, { appSlice } from './app-slice';
 
 const isProduction = false;
 const rootReducer = combineReducers({
     [appSlice.name]: appReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
+    auth: authReducer,
     keys: keysReducer,
     navigation: navigationReducer,
 });

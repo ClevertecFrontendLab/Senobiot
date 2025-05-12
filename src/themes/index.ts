@@ -26,6 +26,7 @@ export const defaultTheme = extendTheme({
             300: '#C4FF61',
             400: '#B1FF2E',
             600: '#2DB100',
+            700: '#207E00',
             800: '134B00',
         },
         blackAlpha: {

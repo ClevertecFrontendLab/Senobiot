@@ -7,7 +7,10 @@ type PageWrapperProps = {
     children: React.ReactNode;
 };
 
-export const PageWrapper: React.FC<PageWrapperProps> = ({ pt = PADDINGS.pageTop, children }) => (
+export const ContentPageWrapper: React.FC<PageWrapperProps> = ({
+    pt = PADDINGS.pageTop,
+    children,
+}) => (
     <Flex
         minH='100vh'
         mx={PADDINGS.sectionMx}

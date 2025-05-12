@@ -8,7 +8,7 @@ export * from './CategorySectionNext';
 export * from './Headers';
 export * from './Inputs';
 export * from './PageSections';
-export * from './PageWrapper';
+export * from './PageWrappers';
 export * from './ProfileNotification';
 export * from './RecieptCard';
 export * from './RecieptSection';

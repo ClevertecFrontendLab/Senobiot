@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
 import {
+    ContentPageWrapper,
     JuiciestRecipesSection,
     LatestRecipesSection,
-    PageWrapper,
     RelevantKitchenSection,
     ServerErrorAlert,
 } from '~/components/shared-components';
@@ -71,7 +71,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     }
 
     return (
-        <PageWrapper>
+        <ContentPageWrapper>
             {!filters.searchString && (isFetchingLatest || isFetchingJuiciest) && <Loader />}
             {error && <ServerErrorAlert onClose={resetError} />}
 
@@ -90,7 +90,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
                     data={relevantData}
                 />
             </VStack>
-        </PageWrapper>
+        </ContentPageWrapper>
     );
 };
 

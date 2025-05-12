@@ -10,9 +10,9 @@ import {
 } from '~/components/layouts-components';
 import { useAllCategoriesQuery } from '~/redux/query/create-api';
 import { getLocallySavedNavigationConfig } from '~/utils';
-import AppViews from '~/views';
+import { ContentViews } from '~/views';
 
-const AppLayout: React.FC = () => {
+export const ContentLayout: React.FC = () => {
     const savedNavigationConfig = getLocallySavedNavigationConfig();
     const { data: navigationConfig, isLoading } = useAllCategoriesQuery(undefined, {
         skip: !!savedNavigationConfig,
@@ -31,11 +31,9 @@ const AppLayout: React.FC = () => {
             <BookmarkSideMenu />
             <RecipeFilter />
             {navigation && (
-                <AppViews navigationConfig={savedNavigationConfig || navigationConfig} />
+                <ContentViews navigationConfig={savedNavigationConfig || navigationConfig} />
             )}
             <BottomNavMenu />
         </Box>
     );
 };
-
-export default AppLayout;

@@ -7,7 +7,7 @@ import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
 import {
     CategorySection,
-    PageWrapper,
+    ContentPageWrapper,
     RelevantKitchenSection,
     ServerErrorAlert,
 } from '~/components/shared-components';
@@ -108,7 +108,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
     }
 
     return (
-        <PageWrapper>
+        <ContentPageWrapper>
             {!filters.searchString && isFetching && <Loader />}
             {error && <ServerErrorAlert onClose={resetError} />}
             <SearchBar
@@ -137,7 +137,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                     data={relevantData}
                 />
             </VStack>
-        </PageWrapper>
+        </ContentPageWrapper>
     );
 };
 

@@ -12,3 +12,4 @@ export const getCategoriesByIds = (state: ApplicationState) =>
     state.navigation.navigationConfig.categoriesByIds;
 export const getcurrentLocationState = (state: ApplicationState) =>
     state.navigation.currentLocationState;
+export const getIsLogged = (state: ApplicationState) => state.auth.isLogged;

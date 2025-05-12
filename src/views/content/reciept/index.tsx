@@ -5,11 +5,11 @@ import { useNavigate, useParams } from 'react-router';
 
 import { Loader } from '~/components/layouts-components';
 import {
+    ContentPageWrapper,
     CookingSteps,
     IngridientsSection,
     LatestRecipesSection,
     NutritionInfo,
-    PageWrapper,
     RecieptSectionCard,
     ServerErrorAlert,
 } from '~/components/shared-components';
@@ -69,7 +69,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
     }
 
     return (
-        <PageWrapper pt={PADDINGS.pageRecieptTop}>
+        <ContentPageWrapper pt={PADDINGS.pageRecieptTop}>
             {error && <ServerErrorAlert onClose={resetError} />}
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
                 <RecieptSectionCard recipe={recipeData} />
@@ -88,7 +88,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
                 </VStack>
                 <LatestRecipesSection recipes={latestData} />
             </VStack>
-        </PageWrapper>
+        </ContentPageWrapper>
     );
 };
 

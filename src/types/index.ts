@@ -257,3 +257,45 @@ type MetaData = {
     limit: number;
     totalPages: number;
 };
+
+export type FormValues = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    username: string;
+    password: string;
+    confirmPassword: string;
+};
+
+export type FormErrors = {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    username?: string;
+    password?: string;
+    confirmPassword?: string;
+};
+
+export type FormInputProps = {
+    field: keyof FormValues;
+    label: string;
+    value: string;
+    error?: string;
+    type?: string;
+    onChange: (field: keyof FormValues, value: string) => void;
+    onBlur: (field: keyof FormValues, value: string) => void;
+};
+
+export type RegistrationStepProps = {
+    formValues: FormValues;
+    inputList: RegistrationInputsListProps[];
+    errors: FormErrors;
+    onChange: (field: keyof FormValues, value: string) => void;
+    onBlur: (field: keyof FormValues, value: string) => void;
+};
+
+export type RegistrationInputsListProps = {
+    field: keyof FormValues;
+    label: string;
+    type?: string;
+};

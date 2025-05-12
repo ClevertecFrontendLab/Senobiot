@@ -6,6 +6,8 @@ export const PAGE_TITLES = {
 } as const;
 
 export const EXCLUDED_ROUTES = {
+    registration: 'registration',
+    login: 'login',
     juiciest: 'the-juiciest',
     notFound: 'not-found',
 } as const;

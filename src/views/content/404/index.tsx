@@ -1,11 +1,11 @@
 import { Image, Text, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
-import { PageWrapper, SubtitleText } from '~/components/shared-components';
+import { ContentPageWrapper, SubtitleText } from '~/components/shared-components';
 import { PAGE_TITLES, TEST_IDS } from '~/constants';
 
 const NotFoundPage: React.FC = () => (
-    <PageWrapper>
+    <ContentPageWrapper>
         <VStack
             justifyContent='center'
             alignItems='center'
@@ -35,7 +35,7 @@ const NotFoundPage: React.FC = () => (
                 </Link>
             </Text>
         </VStack>
-    </PageWrapper>
+    </ContentPageWrapper>
 );
 
 export default NotFoundPage;
