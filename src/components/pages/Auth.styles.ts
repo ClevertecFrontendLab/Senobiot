@@ -1,4 +1,4 @@
-export const button = {
+export const buttonRegister = {
     fontWeight: 600,
     fontSize: '18px',
     lineHeight: '28px',
@@ -6,6 +6,12 @@ export const button = {
     bg: '#000',
     w: '100%',
     h: 12,
+    mt: 6,
+};
+
+export const buttonLogin = {
+    ...buttonRegister,
+    mt: '88px',
 };
 
 export const progressWrapper = {
@@ -26,4 +32,12 @@ export const progressBar = {
 
 export const form = {
     w: 'inherit',
+};
+
+export const restore = {
+    mt: -2,
+    fontWeight: 600,
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#000',
 };

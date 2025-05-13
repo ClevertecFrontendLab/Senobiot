@@ -59,7 +59,7 @@ export const tab = {
         boxShadow: 'none',
     },
     color: '#134B00',
-    fontSize: '18px',
+    fontSize: { base: '16px', xl: '18px' },
     fontWeight: 500,
     lineHeight: '28px',
 };

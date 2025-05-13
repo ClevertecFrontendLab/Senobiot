@@ -6,7 +6,7 @@ import { BUTTONS_TEXT, EXCLUDED_ROUTES, INSCRIPTIONS, TEST_IDS } from '~/constan
 import { useRegistrationForm } from '~/hooks/useRegistrationForm';
 import { RegistrationInputsListProps } from '~/types';
 
-import * as styles from './Registration.styles';
+import * as styles from '../Auth.styles';
 import RegistrationStep from './Step';
 
 const inputList: RegistrationInputsListProps[] = [
@@ -31,7 +31,7 @@ const inputList: RegistrationInputsListProps[] = [
     {
         field: 'username',
         label: 'Логин для входа на сайт:',
-        helper: 'Логин не менее 5 символов, только латиница',
+        // helper: 'Логин не менее 5 символов, только латиница',
         placeholder: 'Логин',
         dataTestId: TEST_IDS.formRegistrationInputLogin,
     },
@@ -40,7 +40,7 @@ const inputList: RegistrationInputsListProps[] = [
         label: 'Пароль:',
         type: 'password',
         placeholder: 'Пароль',
-        helper: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
+        // helper: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
         dataTestId: TEST_IDS.formRegistrationInputPassword,
     },
     {
@@ -106,14 +106,14 @@ const RegistrationPage: React.FC = () => {
                     {step === 1 ? (
                         <Button
                             data-test-id={TEST_IDS.formRegistrationSubmitButton}
-                            sx={styles.button}
+                            sx={styles.buttonRegister}
                             onClick={handleNext}
                         >
                             {BUTTONS_TEXT.registration.step1}
                         </Button>
                     ) : (
                         <Button
-                            sx={styles.button}
+                            sx={styles.buttonRegister}
                             type='submit'
                             data-test-id={TEST_IDS.formRegistrationSubmitButton}
                         >

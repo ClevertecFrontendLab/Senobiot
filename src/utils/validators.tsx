@@ -31,7 +31,7 @@ export const validatePassword = (value: string): string => {
     const regex = /^[A-Za-z0-9!@#$&_+\-.]+$/;
 
     if (value.length < 8) return 'Пароль должен содержать минимум 8 символов';
-    if (value.length > 50) return 'Максимальная длина пароля – 50 символов';
+    if (value.length > 50) return 'Максимальная длина 50 символов';
     if (!regex.test(value))
         return 'Допустимые символы: латиница A-Z, цифры и спецсимволы ! @ # $ & _ + - .';
 

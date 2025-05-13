@@ -30,6 +30,16 @@ export const TEST_IDS = {
     filtersFindButton: 'find-recipe-button',
     filtersCategoryInput: 'filter-menu-button-категория',
     filtersTag: 'filter-tag',
+    form: {
+        login: {
+            form: 'sign-in-form',
+            login: 'login-input',
+            password: 'password-input',
+            passwordVisibility: 'password-visibility-button',
+            buttonSubmit: 'submit-button',
+            restoreLink: 'forgot-password',
+        },
+    },
     formRegistrationProgress: 'sign-up-progress',
     formRegistration: 'sign-up-form',
     formRegistrationInputName: 'first-name-input',
@@ -90,6 +100,7 @@ export const INSCRIPTIONS = {
         step1: 'Шаг 1. Личная информация',
         step2: 'Шаг 2. Логин и пароль',
     },
+    loginRemember: 'Забыли логин или пароль?',
 } as const;
 
 export const PLACEHOLDERS = {
@@ -123,6 +134,7 @@ export const BUTTONS_TEXT = {
         step1: 'Дальше',
         step2: 'Зарегистрироваться',
     },
+    login: 'Войти',
 } as const;
 
 export const BOTTOM_MENU_CONIG = [

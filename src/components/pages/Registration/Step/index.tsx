@@ -12,12 +12,11 @@ const RegistrationStep: React.FC<RegistrationStepProps> = ({
     inputList,
     showPassword,
     setShowPassword,
-    dataTestId,
 }) => (
-    <VStack gap={0} w='100%'>
+    <VStack gap={6} w='100%'>
         {inputList.map((e, index) => (
             <FormInput
-                dataTestId={dataTestId}
+                dataTestId={e.dataTestId}
                 key={index}
                 field={e.field}
                 label={e.label}

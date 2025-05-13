@@ -49,7 +49,7 @@ export const useRegistrationForm = () => {
         let validCount = 0;
 
         if (!validateName(formValues.firstName)) validCount++;
-        if (!validateName(formValues.lastName)) validCount++;
+        if (!validateName(formValues.lastName, false)) validCount++;
         if (!validateEmail(formValues.email)) validCount++;
         if (!validateUsername(formValues.username)) validCount++;
         if (!validatePassword(formValues.password)) validCount++;
@@ -60,9 +60,20 @@ export const useRegistrationForm = () => {
 
     const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const firstNameError = validateName(formValues.firstName);
-        const lastNameError = validateName(formValues.lastName);
-        const emailError = validateEmail(formValues.email);
+        const trimmedFirstName = formValues.firstName.trim();
+        const trimmedLastName = formValues.lastName.trim();
+        const trimmedEmail = formValues.email.trim();
+
+        setFormValues((prev) => ({
+            ...prev,
+            firstName: trimmedFirstName,
+            lastName: trimmedLastName,
+            email: trimmedEmail,
+        }));
+
+        const firstNameError = validateName(trimmedFirstName);
+        const lastNameError = validateName(trimmedLastName, false);
+        const emailError = validateEmail(trimmedEmail);
 
         setErrors((prev) => ({
             ...prev,
@@ -78,7 +89,7 @@ export const useRegistrationForm = () => {
 
     const validateAllFields = (): boolean => {
         const firstNameError = validateName(formValues.firstName);
-        const lastNameError = validateName(formValues.lastName);
+        const lastNameError = validateName(formValues.lastName, false);
         const emailError = validateEmail(formValues.email);
         const usernameError = validateUsername(formValues.username);
         const passwordError = validatePassword(formValues.password);
@@ -86,7 +97,7 @@ export const useRegistrationForm = () => {
             formValues.confirmPassword,
             formValues.password,
         );
-        console.log('validateAllFields');
+
         setErrors({
             firstName: firstNameError,
             lastName: lastNameError,

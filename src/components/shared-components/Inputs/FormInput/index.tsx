@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
+import { TEST_IDS } from '~/constants';
 import { FormInputProps } from '~/types';
 
 import * as styles from './FormInput.styles';
@@ -29,7 +30,7 @@ export const FormInput: React.FC<FormInputProps> = ({
     const isPassword = field === 'password' || field === 'confirmPassword';
 
     return (
-        <FormControl minH='124px' isInvalid={!!error}>
+        <FormControl isInvalid={!!error}>
             <FormLabel mb={1}>{label}</FormLabel>
             <Input
                 type={
@@ -44,6 +45,7 @@ export const FormInput: React.FC<FormInputProps> = ({
             />
             {isPassword && (
                 <Button
+                    data-test-id={TEST_IDS.form.login.passwordVisibility}
                     variant='ghost'
                     onMouseDown={() => setShowPassword(field, true)}
                     onMouseUp={() => setShowPassword(field, false)}

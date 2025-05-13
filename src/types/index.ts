@@ -267,6 +267,17 @@ export type FormValues = {
     confirmPassword: string;
 };
 
+export type FormLoginValues = Pick<FormValues, 'username' | 'password'>;
+
+export type LoginInputsListProps = {
+    field: keyof FormLoginValues;
+    label: string;
+    placeholder: string;
+    type?: string;
+    helper?: string;
+    dataTestId?: string;
+};
+
 export type FormErrors = {
     firstName?: string;
     lastName?: string;
