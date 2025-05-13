@@ -14,7 +14,7 @@ export const validateEmail = (value: string): string => {
     return '';
 };
 
-export const validateUsername = (value: string): string => {
+export const validateLogin = (value: string): string => {
     const regex = /^[A-Za-z0-9!@#$&_+\-.]+$/;
 
     if (!value || value.trim().length === 0) return 'Введите логин';
@@ -34,6 +34,10 @@ export const validatePassword = (value: string): string => {
     if (value.length > 50) return 'Максимальная длина 50 символов';
     if (!regex.test(value))
         return 'Допустимые символы: латиница A-Z, цифры и спецсимволы ! @ # $ & _ + - .';
+
+    if (!/[A-Z]/.test(value)) return 'Пароль должен содержать хотя бы одну заглавную букву';
+
+    if (!/\d/.test(value)) return 'Пароль должен содержать хотя бы одну цифру';
 
     return '';
 };

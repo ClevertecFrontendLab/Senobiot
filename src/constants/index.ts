@@ -1,3 +1,5 @@
+import { LoginInputsListProps, RegistrationInputsListProps } from '~/types';
+
 export const PAGE_TITLES = {
     home: 'Приятного аппетита!',
     slider: 'Новые рецепты',
@@ -87,11 +89,22 @@ export const API_QUERY_PARAMS = {
     sliderDefaultAmount: 10,
 } as const;
 
-export const INSCRIPTIONS = {
-    alert: {
-        title: { default: 'Ошибка сервера' },
-        body: { default: 'Попробуйте поискать снова попозже' },
+export const ALERTS: {
+    default: { title: string; body: string };
+    login: Record<number, { title: string; body: string }>;
+    registration: Record<number, { body: string }>;
+} = {
+    default: { title: 'Ошибка сервера', body: 'Попробуйте поискать снова попозже' },
+    login: {
+        401: { title: 'Неверный логин или пароль', body: 'Попробуйте снова' },
+        403: { title: 'E-mail не верифицирован', body: 'Проверьте почту и перейдите по ссылке' },
     },
+    registration: {
+        500: { body: 'Поробуйте немного позже' },
+    },
+};
+
+export const INSCRIPTIONS = {
     footer: {
         title: 'Версия программы 03.25',
         copyright: 'Все права защищены, ученический файл, \n©Клевер Технолоджи, 2025',
@@ -163,3 +176,70 @@ export const BOTTOM_MENU_CONIG = [
         isActive: false,
     },
 ] as const;
+
+export const LOGIN_INPUT_LIST: LoginInputsListProps[] = [
+    {
+        field: 'login',
+        label: 'Логин для входа на сайт:',
+        placeholder: 'Логин',
+        dataTestId: TEST_IDS.form.login.login,
+        autocomplete: 'username',
+    },
+    {
+        field: 'password',
+        label: 'Пароль:',
+        type: 'password',
+        placeholder: 'Пароль',
+        dataTestId: TEST_IDS.form.login.password,
+        autocomplete: 'current-password',
+    },
+];
+
+export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
+    {
+        field: 'firstName',
+        label: 'Ваше имя',
+        placeholder: 'Имя',
+        dataTestId: TEST_IDS.formRegistrationInputName,
+        autocomplete: 'given-name',
+    },
+    {
+        field: 'lastName',
+        label: 'Ваша фамилия',
+        placeholder: 'Фамилия',
+        dataTestId: TEST_IDS.formRegistrationInputLastName,
+        autocomplete: 'family-name',
+    },
+    {
+        field: 'email',
+        label: 'Ваш e-mail',
+        placeholder: 'email',
+        dataTestId: TEST_IDS.formRegistrationInputEmail,
+        autocomplete: 'email',
+    },
+    {
+        field: 'login',
+        label: 'Логин для входа на сайт:',
+        // helper: 'Логин не менее 5 символов, только латиница',
+        placeholder: 'Логин',
+        dataTestId: TEST_IDS.formRegistrationInputLogin,
+        autocomplete: 'username',
+    },
+    {
+        field: 'password',
+        label: 'Пароль:',
+        type: 'password',
+        placeholder: 'Пароль',
+        // helper: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
+        dataTestId: TEST_IDS.formRegistrationInputPassword,
+        autocomplete: 'new-password',
+    },
+    {
+        field: 'confirmPassword',
+        label: 'Повторите пароль:',
+        type: 'password',
+        placeholder: 'Пароль',
+        dataTestId: TEST_IDS.formRegistrationInputPasswordConfirm,
+        autocomplete: 'new-password',
+    },
+];

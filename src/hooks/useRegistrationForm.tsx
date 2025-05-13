@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
+import { useSignUpMutation } from '~/redux';
 import { FormErrors, FormValues, ShowPasswords } from '~/types';
 
 import {
     validateConfirmPassword,
     validateEmail,
+    validateLogin,
     validateName,
     validatePassword,
-    validateUsername,
 } from '../utils/validators';
 
 export const useRegistrationForm = () => {
@@ -15,13 +16,14 @@ export const useRegistrationForm = () => {
         firstName: '',
         lastName: '',
         email: '',
-        username: '',
+        login: '',
         password: '',
         confirmPassword: '',
     });
     const [errors, setErrors] = useState<FormErrors>({});
     const [step, setStep] = useState<number>(1);
     const [showPassword, setShowPassword] = useState<ShowPasswords>({});
+    const [signUp] = useSignUpMutation();
 
     const handleChange = (field: keyof FormValues, value: string) => {
         setFormValues((prev) => ({
@@ -51,7 +53,7 @@ export const useRegistrationForm = () => {
         if (!validateName(formValues.firstName)) validCount++;
         if (!validateName(formValues.lastName, false)) validCount++;
         if (!validateEmail(formValues.email)) validCount++;
-        if (!validateUsername(formValues.username)) validCount++;
+        if (!validateLogin(formValues.login)) validCount++;
         if (!validatePassword(formValues.password)) validCount++;
         if (!validateConfirmPassword(formValues.confirmPassword, formValues.password)) validCount++;
 
@@ -91,7 +93,7 @@ export const useRegistrationForm = () => {
         const firstNameError = validateName(formValues.firstName);
         const lastNameError = validateName(formValues.lastName, false);
         const emailError = validateEmail(formValues.email);
-        const usernameError = validateUsername(formValues.username);
+        const loginError = validateLogin(formValues.login);
         const passwordError = validatePassword(formValues.password);
         const confirmPasswordError = validateConfirmPassword(
             formValues.confirmPassword,
@@ -102,7 +104,7 @@ export const useRegistrationForm = () => {
             firstName: firstNameError,
             lastName: lastNameError,
             email: emailError,
-            username: usernameError,
+            login: loginError,
             password: passwordError,
             confirmPassword: confirmPasswordError,
         });
@@ -111,7 +113,7 @@ export const useRegistrationForm = () => {
             !firstNameError &&
             !lastNameError &&
             !emailError &&
-            !usernameError &&
+            !loginError &&
             !passwordError &&
             !confirmPasswordError
         );
@@ -121,7 +123,8 @@ export const useRegistrationForm = () => {
         e.preventDefault();
 
         if (validateAllFields()) {
-            console.log('Submitting registration', formValues);
+            const { confirmPassword, ...requestData } = formValues;
+            signUp(requestData);
         }
     };
 
@@ -130,6 +133,7 @@ export const useRegistrationForm = () => {
         errors,
         step,
         showPassword,
+
         handlePasswordShow,
         getProgress,
         handleChange,

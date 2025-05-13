@@ -23,6 +23,7 @@ export const FormInput: React.FC<FormInputProps> = ({
     helper,
     dataTestId,
     showPassword,
+    autocomplete,
     setShowPassword,
     onChange,
     onBlur,
@@ -41,6 +42,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                 onChange={(e) => onChange(field, e.target.value)}
                 onBlur={(e) => onBlur(field, e.target.value)}
                 sx={styles.input}
+                autoComplete={autocomplete}
                 data-test-id={dataTestId}
             />
             {isPassword && (

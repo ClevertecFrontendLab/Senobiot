@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router';
 
 import { AuthLayout, ContentLayout } from '~/layouts';
-import { getIsLogged } from '~/redux/selectors';
+import { selectLoginStatus } from '~/redux/selectors';
 
 function App() {
-    const isLogged = useSelector(getIsLogged);
+    const isLogged = useSelector(selectLoginStatus);
 
     return <BrowserRouter>{isLogged ? <ContentLayout /> : <AuthLayout />}</BrowserRouter>;
 }

@@ -1,15 +1,15 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from '@chakra-ui/react';
 import React from 'react';
 
-import { INSCRIPTIONS, TEST_IDS } from '~/constants';
+import { ALERTS, TEST_IDS } from '~/constants';
 import { ServerErrorAlertProps } from '~/types';
 
 import { alertCloseButtonStyles, alertStyles } from './Error.styles';
 
 export const ServerErrorAlert: React.FC<ServerErrorAlertProps> = ({
     onClose,
-    title = INSCRIPTIONS.alert.title.default,
-    body = INSCRIPTIONS.alert.body.default,
+    title = ALERTS.default.title,
+    body = ALERTS.default.body,
 }) => (
     <Alert data-test-id={TEST_IDS.alert} sx={alertStyles} status='error' variant='solid'>
         <AlertIcon boxSize='24px' mr={3} />

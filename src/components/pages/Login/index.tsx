@@ -2,27 +2,16 @@ import { Button, Link, VStack } from '@chakra-ui/react';
 import React from 'react';
 
 import { AuthPageWrapper, FormInput } from '~/components/shared-components';
-import { BUTTONS_TEXT, EXCLUDED_ROUTES, INSCRIPTIONS, TEST_IDS } from '~/constants';
+import {
+    BUTTONS_TEXT,
+    EXCLUDED_ROUTES,
+    INSCRIPTIONS,
+    LOGIN_INPUT_LIST,
+    TEST_IDS,
+} from '~/constants';
 import { useLoginForm } from '~/hooks/useLoginForm';
-import { LoginInputsListProps } from '~/types';
 
 import * as styles from '../Auth.styles';
-
-const inputList: LoginInputsListProps[] = [
-    {
-        field: 'username',
-        label: 'Логин для входа на сайт:',
-        placeholder: 'Логин',
-        dataTestId: TEST_IDS.form.login.login,
-    },
-    {
-        field: 'password',
-        label: 'Пароль:',
-        type: 'password',
-        placeholder: 'Пароль',
-        dataTestId: TEST_IDS.form.login.password,
-    },
-];
 
 const RegistrationPage: React.FC = () => {
     const {
@@ -43,7 +32,7 @@ const RegistrationPage: React.FC = () => {
                 data-test-id={TEST_IDS.form.login.form}
             >
                 <VStack gap={6} sx={styles.form}>
-                    {inputList.map((e) => (
+                    {LOGIN_INPUT_LIST.map((e) => (
                         <FormInput
                             key={e.label}
                             field={e.field}
@@ -58,6 +47,7 @@ const RegistrationPage: React.FC = () => {
                             showPassword={showPassword}
                             setShowPassword={handlePasswordShow}
                             dataTestId={e.dataTestId}
+                            autocomplete={e.autocomplete}
                         />
                     ))}
                     <Link sx={styles.restore} data-test-id={TEST_IDS.form.login.restoreLink}>

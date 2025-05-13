@@ -1,16 +1,18 @@
 import { useState } from 'react';
 
+import { useSignInMutation } from '~/redux';
 import { FormErrors, FormLoginValues, FormValues, ShowPasswords } from '~/types';
 
-import { validatePassword, validateUsername } from '../utils/validators';
+import { validateLogin, validatePassword } from '../utils/validators';
 
 export const useLoginForm = () => {
     const [formValues, setFormValues] = useState<FormLoginValues>({
-        username: '',
+        login: '',
         password: '',
     });
     const [errors, setErrors] = useState<FormErrors>({});
     const [showPassword, setShowPassword] = useState<ShowPasswords>({});
+    const [signIn] = useSignInMutation();
 
     const handleChange = (field: keyof FormValues, value: string) => {
         setFormValues((prev) => ({
@@ -34,22 +36,22 @@ export const useLoginForm = () => {
     };
 
     const validateAllFields = (): boolean => {
-        const usernameError = validateUsername(formValues.username);
+        const loginError = validateLogin(formValues.login);
         const passwordError = validatePassword(formValues.password ?? '');
 
         setErrors({
-            username: usernameError,
+            login: loginError,
             password: passwordError,
         });
 
-        return !usernameError && !passwordError;
+        return !loginError && !passwordError;
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (validateAllFields()) {
-            console.log('Logining', formValues);
+            signIn(formValues);
         }
     };
 

@@ -8,7 +8,7 @@ import {
     RecipeFilter,
     SideMenu,
 } from '~/components/layouts-components';
-import { useAllCategoriesQuery } from '~/redux/query/create-api';
+import { useAllCategoriesQuery } from '~/redux/query/api/recipes';
 import { getLocallySavedNavigationConfig } from '~/utils';
 import { ContentViews } from '~/views';
 

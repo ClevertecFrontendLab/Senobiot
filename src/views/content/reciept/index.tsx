@@ -16,7 +16,7 @@ import {
 import { AuthorCard } from '~/components/shared-components/Authors';
 import { PADDINGS } from '~/constants/styles';
 import { useBreadCrumbs } from '~/hooks';
-import { useRecipeRequests } from '~/redux/query/utils';
+import { useRecipeRequests } from '~/hooks/useRecipeQuery';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { LocationParams, NavigationConfig } from '~/types';
 import { useCurrentLocation } from '~/utils';

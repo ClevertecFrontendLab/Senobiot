@@ -1,21 +1,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { API_QUERY_PARAMS } from '~/constants';
-import { RecipeProps, RecipesResponse } from '~/types';
+import { QueryParams, RecipeProps, RecipesResponse } from '~/types';
 
-import { ApiEndpoints } from './constants/api';
+import { ApiEndpoints } from '../constants/api';
 import {
     buildRecieptsQuery,
-    QueryParams,
     transformCategoriesResponse,
     transformRecieptResponse,
     transformRecieptsResponse,
-} from './utils';
+} from '../utils';
 
 const { BASE_URL } = ApiEndpoints;
 
-export const apiSlice = createApi({
-    reducerPath: 'categoriesApi',
+export const recipesApi = createApi({
+    reducerPath: 'recipesApi',
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     endpoints: (builder) => ({
         allCategories: builder.query({
@@ -52,4 +51,4 @@ export const {
     useCategoryRecieptsQuery,
     useRecieptQuery,
     useRecipeByCategoryQuery,
-} = apiSlice;
+} = recipesApi;

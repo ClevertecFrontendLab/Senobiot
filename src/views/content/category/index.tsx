@@ -13,8 +13,8 @@ import {
 } from '~/components/shared-components';
 import { BUTTONS_TEXT, EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { useBreadCrumbs, useSearchState } from '~/hooks';
+import { useRecipeRequests } from '~/hooks/useRecipeQuery';
 import { useFilters } from '~/providers/Filters/useFilters';
-import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { LocationParams, NavigationConfig, RecipeProps } from '~/types';
 import { getRandomCategory, useCurrentLocation } from '~/utils';

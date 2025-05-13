@@ -29,6 +29,7 @@ const RegistrationStep: React.FC<RegistrationStepProps> = ({
                 onBlur={onBlur}
                 showPassword={showPassword}
                 setShowPassword={setShowPassword}
+                autocomplete={e.autocomplete}
             />
         ))}
     </VStack>

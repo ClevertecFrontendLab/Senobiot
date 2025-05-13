@@ -14,8 +14,8 @@ import {
 import { BlogsSection } from '~/components/shared-components';
 import { PAGE_TITLES } from '~/constants';
 import { useBreadCrumbs, useSearchState } from '~/hooks';
+import { useRecipeRequests } from '~/hooks/useRecipeQuery';
 import { useFilters } from '~/providers/Filters/useFilters';
-import { useRecipeRequests } from '~/redux/query/utils';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 import { NavigationConfig } from '~/types';
 import { getRandomCategory } from '~/utils';

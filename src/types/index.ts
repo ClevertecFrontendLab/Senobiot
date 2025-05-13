@@ -262,12 +262,12 @@ export type FormValues = {
     firstName: string;
     lastName: string;
     email: string;
-    username: string;
+    login: string;
     password: string;
     confirmPassword: string;
 };
 
-export type FormLoginValues = Pick<FormValues, 'username' | 'password'>;
+export type FormLoginValues = Pick<FormValues, 'login' | 'password'>;
 
 export type LoginInputsListProps = {
     field: keyof FormLoginValues;
@@ -276,13 +276,14 @@ export type LoginInputsListProps = {
     type?: string;
     helper?: string;
     dataTestId?: string;
+    autocomplete?: string;
 };
 
 export type FormErrors = {
     firstName?: string;
     lastName?: string;
     email?: string;
-    username?: string;
+    login?: string;
     password?: string;
     confirmPassword?: string;
 };
@@ -302,6 +303,7 @@ export type FormInputProps = {
     helper?: string;
     showPassword?: ShowPasswords;
     dataTestId?: string;
+    autocomplete?: string;
     setShowPassword: (field: keyof FormValues, value: boolean) => void;
     onChange: (field: keyof FormValues, value: string) => void;
     onBlur: (field: keyof FormValues, value: string) => void;
@@ -325,4 +327,58 @@ export type RegistrationInputsListProps = {
     type?: string;
     helper?: string;
     dataTestId?: string;
+    autocomplete?: string;
+};
+
+export type SignUpRequest = {
+    email: string;
+    login: string;
+    password: string;
+    firstName?: string;
+    lastName?: string;
+};
+
+export type SignInRequest = {
+    login: string;
+    password: string;
+};
+
+export type SignUpResponse = {
+    statusCode: number;
+    message: string;
+    error?: string;
+};
+
+export type SignInResponse = {
+    statusCode: number;
+    message: string;
+    error?: string;
+};
+
+export type useReciepeRequestsProps = {
+    randomCategory?: AllCategories;
+    isJuiciest?: boolean;
+    apiQueryId?: string;
+    page?: number;
+    recipeId?: string;
+    idKeys: SubCategoriesByIds;
+    noSkipJuciciest?: boolean;
+};
+
+export type QueryParams = {
+    limit?: number;
+    page?: number;
+    allergens?: string;
+    searchString?: string;
+    meat?: string;
+    garnish?: string;
+    subcategoriesIds?: string;
+    isJuiciest?: boolean;
+    isLatest?: boolean;
+    idKeys: SubCategoriesByIds;
+};
+
+export type AlertError = {
+    title: string;
+    body: string;
 };

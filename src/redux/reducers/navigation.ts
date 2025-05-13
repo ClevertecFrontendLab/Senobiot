@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CurrentLocationState, NavigationConfig } from '~/types';
 import { getLocallySavedNavigationConfig, saveLocallyNavigationConfig } from '~/utils';
 
-import { apiSlice } from '../query/create-api';
+import { recipesApi } from '..';
 
 export type NavigationReducerProps = {
     navigationConfig: NavigationConfig;
@@ -27,7 +27,7 @@ const navigation = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addMatcher(apiSlice.endpoints.allCategories.matchFulfilled, (state, action) => {
+        builder.addMatcher(recipesApi.endpoints.allCategories.matchFulfilled, (state, action) => {
             state.navigationConfig = action.payload;
             saveLocallyNavigationConfig(action.payload);
         });

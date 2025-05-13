@@ -2,55 +2,17 @@ import { Button, Progress, VStack } from '@chakra-ui/react';
 import React from 'react';
 
 import { AuthPageWrapper, TextRegular } from '~/components/shared-components';
-import { BUTTONS_TEXT, EXCLUDED_ROUTES, INSCRIPTIONS, TEST_IDS } from '~/constants';
+import {
+    BUTTONS_TEXT,
+    EXCLUDED_ROUTES,
+    INSCRIPTIONS,
+    REGISTRATION_INPUT_LIST,
+    TEST_IDS,
+} from '~/constants';
 import { useRegistrationForm } from '~/hooks/useRegistrationForm';
-import { RegistrationInputsListProps } from '~/types';
 
 import * as styles from '../Auth.styles';
 import RegistrationStep from './Step';
-
-const inputList: RegistrationInputsListProps[] = [
-    {
-        field: 'firstName',
-        label: 'Ваше имя',
-        placeholder: 'Имя',
-        dataTestId: TEST_IDS.formRegistrationInputName,
-    },
-    {
-        field: 'lastName',
-        label: 'Ваша фамилия',
-        placeholder: 'Фамилия',
-        dataTestId: TEST_IDS.formRegistrationInputLastName,
-    },
-    {
-        field: 'email',
-        label: 'Ваш e-mail',
-        placeholder: 'email',
-        dataTestId: TEST_IDS.formRegistrationInputEmail,
-    },
-    {
-        field: 'username',
-        label: 'Логин для входа на сайт:',
-        // helper: 'Логин не менее 5 символов, только латиница',
-        placeholder: 'Логин',
-        dataTestId: TEST_IDS.formRegistrationInputLogin,
-    },
-    {
-        field: 'password',
-        label: 'Пароль:',
-        type: 'password',
-        placeholder: 'Пароль',
-        // helper: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
-        dataTestId: TEST_IDS.formRegistrationInputPassword,
-    },
-    {
-        field: 'confirmPassword',
-        label: 'Повторите пароль:',
-        type: 'password',
-        placeholder: 'Пароль',
-        dataTestId: TEST_IDS.formRegistrationInputPasswordConfirm,
-    },
-];
 
 const RegistrationPage: React.FC = () => {
     const {
@@ -65,6 +27,8 @@ const RegistrationPage: React.FC = () => {
         handleNext,
         handleSubmit,
     } = useRegistrationForm();
+
+    const inputList = [...REGISTRATION_INPUT_LIST];
 
     return (
         <AuthPageWrapper pageRoute={EXCLUDED_ROUTES.registration}>
