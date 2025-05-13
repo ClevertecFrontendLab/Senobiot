@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { FormErrors, FormValues } from '~/types';
+import { FormErrors, FormValues, ShowPasswords } from '~/types';
 
 import {
     validateConfirmPassword,
@@ -21,6 +21,7 @@ export const useRegistrationForm = () => {
     });
     const [errors, setErrors] = useState<FormErrors>({});
     const [step, setStep] = useState<number>(1);
+    const [showPassword, setShowPassword] = useState<ShowPasswords>({});
 
     const handleChange = (field: keyof FormValues, value: string) => {
         setFormValues((prev) => ({
@@ -38,6 +39,10 @@ export const useRegistrationForm = () => {
             ...prev,
             [field]: errors[field] && !trimmedValue ? errors[field] : '',
         }));
+    };
+
+    const handlePasswordShow = (field: keyof FormValues, value: boolean) => {
+        setShowPassword((prev) => ({ ...prev, [field]: value }));
     };
 
     const getProgress = (): number => {
@@ -113,6 +118,8 @@ export const useRegistrationForm = () => {
         formValues,
         errors,
         step,
+        showPassword,
+        handlePasswordShow,
         getProgress,
         handleChange,
         handleBlur,

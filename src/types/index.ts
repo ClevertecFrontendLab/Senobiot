@@ -276,13 +276,22 @@ export type FormErrors = {
     confirmPassword?: string;
 };
 
+export type ShowPasswords = {
+    password?: boolean;
+    confirmPassword?: boolean;
+};
+
 export type FormInputProps = {
     field: keyof FormValues;
     label: string;
     value: string;
     error?: string;
     type?: string;
-    placeholder: string;
+    placeholder?: string;
+    helper?: string;
+    showPassword?: ShowPasswords;
+    dataTestId?: string;
+    setShowPassword: (field: keyof FormValues, value: boolean) => void;
     onChange: (field: keyof FormValues, value: string) => void;
     onBlur: (field: keyof FormValues, value: string) => void;
 };
@@ -291,6 +300,9 @@ export type RegistrationStepProps = {
     formValues: FormValues;
     inputList: RegistrationInputsListProps[];
     errors: FormErrors;
+    showPassword?: ShowPasswords;
+    dataTestId?: string;
+    setShowPassword: (field: keyof FormValues, value: boolean) => void;
     onChange: (field: keyof FormValues, value: string) => void;
     onBlur: (field: keyof FormValues, value: string) => void;
 };
@@ -300,4 +312,6 @@ export type RegistrationInputsListProps = {
     label: string;
     placeholder: string;
     type?: string;
+    helper?: string;
+    dataTestId?: string;
 };

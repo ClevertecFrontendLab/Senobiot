@@ -10,10 +10,14 @@ const RegistrationStep: React.FC<RegistrationStepProps> = ({
     onChange,
     onBlur,
     inputList,
+    showPassword,
+    setShowPassword,
+    dataTestId,
 }) => (
     <VStack gap={0} w='100%'>
         {inputList.map((e, index) => (
             <FormInput
+                dataTestId={dataTestId}
                 key={index}
                 field={e.field}
                 label={e.label}
@@ -21,8 +25,11 @@ const RegistrationStep: React.FC<RegistrationStepProps> = ({
                 value={formValues[e.field]}
                 error={errors[e.field]}
                 placeholder={e.placeholder}
+                helper={e.helper}
                 onChange={onChange}
                 onBlur={onBlur}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
             />
         ))}
     </VStack>

@@ -1,8 +1,16 @@
-import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import {
+    Button,
+    FormControl,
+    FormErrorMessage,
+    FormHelperText,
+    FormLabel,
+    Input,
+} from '@chakra-ui/react';
 import React from 'react';
 
-import { BORDERS } from '~/constants/styles';
 import { FormInputProps } from '~/types';
+
+import * as styles from './FormInput.styles';
 
 export const FormInput: React.FC<FormInputProps> = ({
     field,
@@ -11,23 +19,40 @@ export const FormInput: React.FC<FormInputProps> = ({
     error,
     type = 'text',
     placeholder,
+    helper,
+    dataTestId,
+    showPassword,
+    setShowPassword,
     onChange,
     onBlur,
-}) => (
-    <FormControl h='100px' isInvalid={!!error}>
-        <FormLabel>{label}</FormLabel>
-        <Input
-            type={type}
-            value={value}
-            placeholder={placeholder}
-            onChange={(e) => onChange(field, e.target.value)}
-            onBlur={(e) => onBlur(field, e.target.value)}
-            _placeholder={{
-                color: 'lime.800',
-            }}
-            bg='#fff'
-            border={BORDERS.lime}
-        />
-        <FormErrorMessage>{error}</FormErrorMessage>
-    </FormControl>
-);
+}) => {
+    const isPassword = field === 'password' || field === 'confirmPassword';
+
+    return (
+        <FormControl minH='124px' isInvalid={!!error}>
+            <FormLabel mb={1}>{label}</FormLabel>
+            <Input
+                type={
+                    isPassword && showPassword ? (showPassword[field] ? 'text' : 'password') : type
+                }
+                value={value}
+                placeholder={placeholder}
+                onChange={(e) => onChange(field, e.target.value)}
+                onBlur={(e) => onBlur(field, e.target.value)}
+                sx={styles.input}
+                data-test-id={dataTestId}
+            />
+            {isPassword && (
+                <Button
+                    variant='ghost'
+                    onMouseDown={() => setShowPassword(field, true)}
+                    onMouseUp={() => setShowPassword(field, false)}
+                    onMouseLeave={() => setShowPassword(field, false)}
+                    sx={styles.getPasswordImgStyles(showPassword && showPassword[field])}
+                ></Button>
+            )}
+            {helper && <FormHelperText sx={styles.helper}>{helper}</FormHelperText>}
+            <FormErrorMessage mt={1}>{error}</FormErrorMessage>
+        </FormControl>
+    );
+};
