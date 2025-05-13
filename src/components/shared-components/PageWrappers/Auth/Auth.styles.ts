@@ -12,9 +12,13 @@ export const pageWrapper = {
     position: 'relative',
 };
 
-export const formWrapper = {
+export const contentWrapper = {
     w: { base: '100%', xl: '50%' },
     ml: 0,
+};
+
+export const formWrapper = {
+    w: { base: '328px', md: '355px', xl: '451px', '2xl': '461px' },
 };
 
 export const copyrightWrapper = {
@@ -42,6 +46,7 @@ export const logoText = {
 };
 
 export const tab = {
+    px: 6,
     _selected: {
         color: 'lime.700',
         borderBottom: '2px solid',
@@ -60,6 +65,11 @@ export const tab = {
 };
 
 export const tablist = {
+    gap: 4,
     mb: 10,
     borderBottom: '2px solid rgba(0, 0, 0, 0.08)',
+};
+
+export const tabs = {
+    w: '100%',
 };

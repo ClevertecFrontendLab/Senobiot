@@ -11,14 +11,16 @@ const RegistrationStep: React.FC<RegistrationStepProps> = ({
     onBlur,
     inputList,
 }) => (
-    <VStack spacing={4}>
-        {inputList.map((e) => (
+    <VStack gap={0} w='100%'>
+        {inputList.map((e, index) => (
             <FormInput
+                key={index}
                 field={e.field}
                 label={e.label}
                 type={e.type ? e.type : 'initial'}
                 value={formValues[e.field]}
                 error={errors[e.field]}
+                placeholder={e.placeholder}
                 onChange={onChange}
                 onBlur={onBlur}
             />

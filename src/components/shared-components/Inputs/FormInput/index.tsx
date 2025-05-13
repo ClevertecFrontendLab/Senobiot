@@ -1,6 +1,7 @@
 import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 import React from 'react';
 
+import { BORDERS } from '~/constants/styles';
 import { FormInputProps } from '~/types';
 
 export const FormInput: React.FC<FormInputProps> = ({
@@ -9,17 +10,23 @@ export const FormInput: React.FC<FormInputProps> = ({
     value,
     error,
     type = 'text',
+    placeholder,
     onChange,
     onBlur,
 }) => (
-    <FormControl isRequired isInvalid={!!error}>
+    <FormControl h='100px' isInvalid={!!error}>
         <FormLabel>{label}</FormLabel>
         <Input
             type={type}
             value={value}
-            placeholder={label}
+            placeholder={placeholder}
             onChange={(e) => onChange(field, e.target.value)}
             onBlur={(e) => onBlur(field, e.target.value)}
+            _placeholder={{
+                color: 'lime.800',
+            }}
+            bg='#fff'
+            border={BORDERS.lime}
         />
         <FormErrorMessage>{error}</FormErrorMessage>
     </FormControl>

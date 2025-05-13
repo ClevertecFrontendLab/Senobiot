@@ -20,7 +20,7 @@ export const useRegistrationForm = () => {
         confirmPassword: '',
     });
     const [errors, setErrors] = useState<FormErrors>({});
-    const [currentStep, setCurrentStep] = useState<number>(1);
+    const [step, setStep] = useState<number>(1);
 
     const handleChange = (field: keyof FormValues, value: string) => {
         setFormValues((prev) => ({
@@ -34,32 +34,10 @@ export const useRegistrationForm = () => {
             field === 'password' || field === 'confirmPassword' ? value : value.trim();
 
         handleChange(field, trimmedValue);
-
-        let errorMessage = '';
-
-        switch (field) {
-            case 'firstName':
-                errorMessage = validateName(trimmedValue);
-                break;
-            case 'lastName':
-                errorMessage = validateName(trimmedValue, false);
-                break;
-            case 'email':
-                errorMessage = validateEmail(trimmedValue);
-                break;
-            case 'username':
-                errorMessage = validateUsername(trimmedValue);
-                break;
-            case 'password':
-                errorMessage = validatePassword(trimmedValue);
-                break;
-            case 'confirmPassword':
-                errorMessage = validateConfirmPassword(trimmedValue, formValues.password);
-                break;
-            default:
-                break;
-        }
-        setErrors((prev) => ({ ...prev, [field]: errorMessage }));
+        setErrors((prev) => ({
+            ...prev,
+            [field]: errors[field] && !trimmedValue ? errors[field] : '',
+        }));
     };
 
     const getProgress = (): number => {
@@ -75,7 +53,8 @@ export const useRegistrationForm = () => {
         return (validCount / 6) * 100;
     };
 
-    const handleNext = () => {
+    const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         const firstNameError = validateName(formValues.firstName);
         const lastNameError = validateName(formValues.lastName);
         const emailError = validateEmail(formValues.email);
@@ -88,7 +67,7 @@ export const useRegistrationForm = () => {
         }));
 
         if (!firstNameError && !lastNameError && !emailError) {
-            setCurrentStep(2);
+            setStep(2);
         }
     };
 
@@ -102,7 +81,7 @@ export const useRegistrationForm = () => {
             formValues.confirmPassword,
             formValues.password,
         );
-
+        console.log('validateAllFields');
         setErrors({
             firstName: firstNameError,
             lastName: lastNameError,
@@ -133,7 +112,7 @@ export const useRegistrationForm = () => {
     return {
         formValues,
         errors,
-        currentStep,
+        step,
         getProgress,
         handleChange,
         handleBlur,

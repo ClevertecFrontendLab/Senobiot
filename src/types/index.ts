@@ -282,6 +282,7 @@ export type FormInputProps = {
     value: string;
     error?: string;
     type?: string;
+    placeholder: string;
     onChange: (field: keyof FormValues, value: string) => void;
     onBlur: (field: keyof FormValues, value: string) => void;
 };
@@ -297,5 +298,6 @@ export type RegistrationStepProps = {
 export type RegistrationInputsListProps = {
     field: keyof FormValues;
     label: string;
+    placeholder: string;
     type?: string;
 };

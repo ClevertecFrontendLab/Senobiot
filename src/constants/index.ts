@@ -76,6 +76,10 @@ export const INSCRIPTIONS = {
         title: 'Версия программы 03.25',
         copyright: 'Все права защищены, ученический файл, \n©Клевер Технолоджи, 2025',
     },
+    registration: {
+        step1: 'Шаг 1. Личная информация',
+        step2: 'Шаг 2. Логин и пароль',
+    },
 } as const;
 
 export const PLACEHOLDERS = {
@@ -104,6 +108,10 @@ export const BUTTONS_TEXT = {
     viewMore: {
         loaded: 'Загрузить еще',
         loading: 'Загрузка',
+    },
+    registration: {
+        step1: 'Дальше',
+        step2: 'Зарегистрироваться',
     },
 } as const;
 

@@ -15,19 +15,31 @@ export const validateEmail = (value: string): string => {
 };
 
 export const validateUsername = (value: string): string => {
+    const regex = /^[A-Za-z0-9!@#$&_+\-.]+$/;
+
     if (!value || value.trim().length === 0) return 'Введите логин';
+    if (value.length < 5) return 'Не соответствует формату';
     if (value.length > 50) return 'Максимальная длина 50 символов';
+    if (!regex.test(value))
+        return 'Допустимые символы: латиница A-Z, цифры и спецсимволы ! @ # $ & _ + - .';
     return '';
 };
 
 export const validatePassword = (value: string): string => {
     if (!value) return 'Введите пароль';
-    if (value.length < 6) return 'Пароль должен содержать минимум 6 символов';
+
+    const regex = /^[A-Za-z0-9!@#$&_+\-.]+$/;
+
+    if (value.length < 8) return 'Пароль должен содержать минимум 8 символов';
+    if (value.length > 50) return 'Максимальная длина пароля – 50 символов';
+    if (!regex.test(value))
+        return 'Допустимые символы: латиница A-Z, цифры и спецсимволы ! @ # $ & _ + - .';
+
     return '';
 };
 
 export const validateConfirmPassword = (value: string, password: string): string => {
-    if (!value) return 'Введите подтверждение пароля';
-    if (value !== password) return 'Пароли не совпадают';
+    if (!value) return 'Повторите пароль';
+    if (value !== password) return 'Пароли должны совпадать';
     return '';
 };

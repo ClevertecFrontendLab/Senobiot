@@ -21,16 +21,15 @@ type AuthPageWrapperProps = {
     pageRoute: string;
 };
 
-export const AuthPageWrapper: React.FC<AuthPageWrapperProps> = ({ children, pageRoute }) => {
-    console.log(pageRoute === EXCLUDED_ROUTES.login ? 0 : 1);
-    return (
-        <VStack sx={styles.pageWrapper}>
+export const AuthPageWrapper: React.FC<AuthPageWrapperProps> = ({ children, pageRoute }) => (
+    <VStack sx={styles.pageWrapper}>
+        <VStack sx={styles.contentWrapper}>
             <VStack sx={styles.formWrapper}>
                 <HStack sx={styles.logoWrapper}>
                     <Image sx={styles.logo} src='/logo-img.svg' alt='logo cup' />
                     <Image sx={styles.logoText} src='/logo-text.svg' alt='logo text Yeedaa' />
                 </HStack>
-                <Tabs index={pageRoute === EXCLUDED_ROUTES.login ? 0 : 1}>
+                <Tabs sx={styles.tabs} index={pageRoute === EXCLUDED_ROUTES.login ? 0 : 1}>
                     <TabList sx={styles.tablist}>
                         {tabsList.map((item, index) => (
                             <Tab sx={styles.tab} key={index} as={Link} to={item.route}>
@@ -41,10 +40,10 @@ export const AuthPageWrapper: React.FC<AuthPageWrapperProps> = ({ children, page
                 </Tabs>
                 {children}
             </VStack>
-            <Flex sx={styles.copyrightWrapper}>
-                <Text>Все права защищены, ученический файл, ©Клевер Технолоджи, 2025</Text>
-                <Text>̶ Лучший сервис для ваших кулинарных побед </Text>
-            </Flex>
         </VStack>
-    );
-};
+        <Flex sx={styles.copyrightWrapper}>
+            <Text>Все права защищены, ученический файл, ©Клевер Технолоджи, 2025</Text>
+            <Text>̶ Лучший сервис для ваших кулинарных побед </Text>
+        </Flex>
+    </VStack>
+);
