@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { authApi, recipesApi } from '..';
+import { listener } from '../middlewares/listener';
 import { keysReducer, navigationReducer } from '../reducers';
 import appReducer, { appSlice } from './app-slice';
 
@@ -17,6 +18,9 @@ export type ApplicationState = ReturnType<typeof rootReducer>;
 export const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(recipesApi.middleware).concat(authApi.middleware),
+        getDefaultMiddleware()
+            .prepend(listener.middleware)
+            .concat(recipesApi.middleware)
+            .concat(authApi.middleware),
     devTools: !isProduction,
 });

@@ -37,7 +37,7 @@ const RegistrationPage: React.FC = () => {
                             key={e.label}
                             field={e.field}
                             label={e.label}
-                            type={e.type ? e.type : 'initial'}
+                            type={e.type ? e.type : 'text'}
                             value={formValues[e.field]}
                             error={errors[e.field]}
                             placeholder={e.placeholder}

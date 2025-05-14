@@ -379,6 +379,15 @@ export type QueryParams = {
 };
 
 export type AlertError = {
-    title: string;
-    body: string;
+    title?: string;
+    body?: string;
 };
+
+export enum Modals {
+    AUTH_VERIFICATION_SEND = 'AUTH_VERIFICATION_SEND',
+    AUTH_VERIFICATION_FAILED = 'AUTH_VERIFICATION_FAILED',
+    AUTH_LOGIN_FAILED = 'AUTH_LOGIN_FAILED',
+    AUTH_RESTORE_BY_EMAIL = 'AUTH_RESTORE_BY_EMAIL',
+    AUTH_RESTORE_BY_PIN = 'AUTH_RESTORE_BY_PIN',
+    AUTH_RESTORE_FINISH = 'AUTH_RESTORE_FINISH',
+}

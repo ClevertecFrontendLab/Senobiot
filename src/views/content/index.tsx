@@ -23,6 +23,7 @@ export const ContentViews: React.FC<{ navigationConfig: NavigationConfig }> = ({
                 element={<CategoryPage navigationConfig={navigationConfig} />}
             />
             <Route path='/not-found' element={<ErrorPage />} />
+            <Route path='/login' element={<Navigate to='/' replace />} />
             <Route path='*' element={<Navigate to='/not-found' replace />} />
         </Routes>
     </Suspense>

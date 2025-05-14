@@ -14,6 +14,7 @@ import {
     ServerErrorAlert,
 } from '~/components/shared-components';
 import { AuthorCard } from '~/components/shared-components/Authors';
+import { ALERTS } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 import { useBreadCrumbs } from '~/hooks';
 import { useRecipeRequests } from '~/hooks/useRecipeQuery';
@@ -57,7 +58,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
 
     useEffect(() => {
         if (isErrorLatest || isErrorRecipe) {
-            dispatch(setAppError(true));
+            dispatch(setAppError(ALERTS.default));
             if (isErrorRecipe) {
                 navigate(-1);
             }

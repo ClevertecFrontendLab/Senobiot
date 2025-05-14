@@ -12,7 +12,7 @@ import {
     ServerErrorAlert,
 } from '~/components/shared-components';
 import { BlogsSection } from '~/components/shared-components';
-import { PAGE_TITLES } from '~/constants';
+import { ALERTS, PAGE_TITLES } from '~/constants';
 import { useBreadCrumbs, useSearchState } from '~/hooks';
 import { useRecipeRequests } from '~/hooks/useRecipeQuery';
 import { useFilters } from '~/providers/Filters/useFilters';
@@ -58,7 +58,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
 
     useEffect(() => {
         if (isErrorLatest || isErrorJuiciest || isErrorRelevant) {
-            dispatch(setAppError(true));
+            dispatch(setAppError(ALERTS.default));
         }
     }, [isErrorLatest, isErrorJuiciest, isErrorRelevant, dispatch]);
 

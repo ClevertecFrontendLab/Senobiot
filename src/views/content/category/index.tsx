@@ -11,7 +11,7 @@ import {
     RelevantKitchenSection,
     ServerErrorAlert,
 } from '~/components/shared-components';
-import { BUTTONS_TEXT, EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
+import { ALERTS, BUTTONS_TEXT, EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { useBreadCrumbs, useSearchState } from '~/hooks';
 import { useRecipeRequests } from '~/hooks/useRecipeQuery';
 import { useFilters } from '~/providers/Filters/useFilters';
@@ -90,7 +90,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
 
     useEffect(() => {
         if (isErrorCategory || isErrorRelevant) {
-            dispatch(setAppError(true));
+            dispatch(setAppError(ALERTS.default));
         }
     }, [isErrorCategory, isErrorRelevant, dispatch]);
 
