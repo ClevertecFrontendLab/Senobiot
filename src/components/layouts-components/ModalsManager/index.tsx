@@ -6,10 +6,11 @@ import { setAppModal } from '~/redux/store/app-slice';
 import { Modals } from '~/types';
 
 import {
-    LoginFailedModalPopup,
+    EnterPin,
+    LoginFailed,
     RestoreByEmail,
-    VerificationFailedModalPopup,
-    VerificationSendModalPopup,
+    VerificationFailed,
+    VerificationSend,
 } from './Modals';
 
 export const ModalManager: React.FC = () => {
@@ -24,16 +25,19 @@ export const ModalManager: React.FC = () => {
 
     switch (currentModal) {
         case Modals.AUTH_VERIFICATION_SEND:
-            return <VerificationSendModalPopup isOpen={!!currentModal} onClose={onClose} />;
+            return <VerificationSend isOpen={!!currentModal} onClose={onClose} />;
 
         case Modals.AUTH_VERIFICATION_FAILED:
-            return <VerificationFailedModalPopup isOpen={!!currentModal} onClose={onClose} />;
+            return <VerificationFailed isOpen={!!currentModal} onClose={onClose} />;
 
         case Modals.AUTH_LOGIN_FAILED:
-            return <LoginFailedModalPopup isOpen={!!currentModal} onClose={onClose} />;
+            return <LoginFailed isOpen={!!currentModal} onClose={onClose} />;
 
         case Modals.AUTH_RESTORE_BY_EMAIL:
             return <RestoreByEmail isOpen={!!currentModal} onClose={onClose} />;
+
+        case Modals.AUTH_ENTER_PIN:
+            return <EnterPin isOpen={!!currentModal} onClose={onClose} />;
 
         default:
             return null;

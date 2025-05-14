@@ -1,5 +1,6 @@
 import { Button, Link, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { AuthPageWrapper, FormInput } from '~/components/shared-components';
 import {
@@ -10,10 +11,13 @@ import {
     TEST_IDS,
 } from '~/constants';
 import { useLoginForm } from '~/hooks';
+import { setAppModal } from '~/redux/store/app-slice';
+import { Modals } from '~/types';
 
 import * as styles from '../Auth.styles';
 
 const RegistrationPage: React.FC = () => {
+    const dispatch = useDispatch();
     const {
         formValues,
         errors,
@@ -23,6 +27,8 @@ const RegistrationPage: React.FC = () => {
         handleBlur,
         handleSubmit,
     } = useLoginForm();
+
+    const handleRestore = () => dispatch(setAppModal(Modals.AUTH_RESTORE_BY_EMAIL));
 
     return (
         <AuthPageWrapper pageRoute={EXCLUDED_ROUTES.login}>
@@ -50,7 +56,11 @@ const RegistrationPage: React.FC = () => {
                             autocomplete={e.autocomplete}
                         />
                     ))}
-                    <Link sx={styles.restore} data-test-id={TEST_IDS.form.login.restoreLink}>
+                    <Link
+                        onClick={handleRestore}
+                        sx={styles.restore}
+                        data-test-id={TEST_IDS.form.login.restoreLink}
+                    >
                         {INSCRIPTIONS.loginRemember}
                     </Link>
                     <Button

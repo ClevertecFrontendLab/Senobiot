@@ -1,4 +1,10 @@
-export { authApi, useRestoreMutation, useSignInMutation, useSignUpMutation } from './api/auth';
+export {
+    authApi,
+    useRestoreMutation,
+    useSignInMutation,
+    useSignUpMutation,
+    useVerifyOtpMutation,
+} from './api/auth';
 export {
     recipesApi,
     useAllCategoriesQuery,

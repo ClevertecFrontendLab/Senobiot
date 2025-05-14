@@ -4,7 +4,7 @@ import { AuthPopupProps } from '~/types';
 
 import { ModalPopup } from '../../Default';
 
-export const VerificationFailedModalPopup: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
+export const VerificationFailed: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
     const description = (
         <Text>
             Ваша ссылка для верификации недействительна. Попробуйте зарегистрироваться снова.

@@ -8,8 +8,8 @@ export type AppState = typeof initialState;
 const initialState = {
     isLoading: false,
     error: null as AlertError | null,
-    // modal: null as Modals | null,
-    modal: Modals.AUTH_RESTORE_BY_EMAIL as Modals | null,
+    modal: null as Modals | null,
+    userEmail: '',
     isLogged: false,
 };
 export const appSlice = createSlice({
@@ -28,10 +28,13 @@ export const appSlice = createSlice({
         setLogged(state, { payload: isLogged }: PayloadAction<boolean>) {
             state.isLogged = isLogged;
         },
+        setUserEmail(state, { payload: userEmail }: PayloadAction<string>) {
+            state.userEmail = userEmail;
+        },
     },
 });
 export const userLoadingSelector = (state: ApplicationState) => state.app.isLoading;
 export const userErrorSelector = (state: ApplicationState) => state.app.error;
 
-export const { setAppError, setAppLoader, setLogged, setAppModal } = appSlice.actions;
+export const { setAppError, setAppLoader, setLogged, setAppModal, setUserEmail } = appSlice.actions;
 export default appSlice.reducer;

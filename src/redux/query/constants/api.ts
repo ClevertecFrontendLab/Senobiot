@@ -6,4 +6,5 @@ export enum ApiEndpoints {
     LOGIN = '/login',
     REGISTER = '/signup',
     RESTORE = '/forgot-password',
+    VERIFY_OTP = '/verify-otp',
 }

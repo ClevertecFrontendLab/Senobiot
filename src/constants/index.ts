@@ -93,6 +93,8 @@ export const ALERTS: {
     default: { title: string; body: string };
     login: Record<number, { title: string; body: string }>;
     registration: Record<number, { body: string }>;
+    restore: Record<number, { title: string; body: string }>;
+    verify: Record<number, { title: string; body: string }>;
 } = {
     default: { title: 'Ошибка сервера', body: 'Попробуйте поискать снова попозже' },
     login: {
@@ -101,6 +103,16 @@ export const ALERTS: {
     },
     registration: {
         500: { body: 'Поробуйте немного позже' },
+    },
+    restore: {
+        403: {
+            title: 'Такого e-mail нет',
+            body: 'Попробуйте другой e-mail или проверьте правильность его написания',
+        },
+        500: { title: 'Ошибка сервера', body: 'Попробуйте немного позже' },
+    },
+    verify: {
+        500: { title: 'Ошибка сервера', body: 'Попробуйте немного позже' },
     },
 };
 

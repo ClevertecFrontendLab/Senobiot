@@ -9,7 +9,7 @@ export const mainWrapper = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 100,
+    zIndex: 2000,
 };
 
 export const wrapper = {

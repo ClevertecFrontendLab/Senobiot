@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRestoreMutation } from '~/redux';
 import { FormErrors, FormValues, RestoreValues } from '~/types';
@@ -14,7 +14,7 @@ export const useRestoreByEmail = () => {
             ...prev,
             [field]: value,
         }));
-    const [restore] = useRestoreMutation();
+    const [restore, { isError }] = useRestoreMutation();
 
     const handleBlur = (field: keyof FormValues, value: string) => {
         const trimmedEmail = value.trim();
@@ -35,6 +35,13 @@ export const useRestoreByEmail = () => {
             restore(value);
         }
     };
+
+    useEffect(() => {
+        if (isError) {
+            setError({ email: ' ' });
+            setEmail({ email: '' });
+        }
+    }, [isError]);
 
     return {
         email: value.email,

@@ -7,7 +7,7 @@ export type AuthPopupProps = {
     onClose: () => void;
 };
 
-export const VerificationSendModalPopup: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
+export const VerificationSend: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
     const description = (
         <Text>
             Мы отправили вам на почту

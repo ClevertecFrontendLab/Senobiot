@@ -348,6 +348,11 @@ export type RestoreRequest = {
     email: string;
 };
 
+export type OtpVerifyRequest = {
+    email: string;
+    otpToken: string;
+};
+
 export type SignUpResponse = {
     statusCode: number;
     message: string;
@@ -393,7 +398,7 @@ export enum Modals {
     AUTH_VERIFICATION_FAILED = 'AUTH_VERIFICATION_FAILED',
     AUTH_LOGIN_FAILED = 'AUTH_LOGIN_FAILED',
     AUTH_RESTORE_BY_EMAIL = 'AUTH_RESTORE_BY_EMAIL',
-    AUTH_RESTORE_BY_PIN = 'AUTH_RESTORE_BY_PIN',
+    AUTH_ENTER_PIN = 'AUTH_ENTER_PIN',
     AUTH_RESTORE_FINISH = 'AUTH_RESTORE_FINISH',
 }
 

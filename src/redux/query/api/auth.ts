@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import {
+    OtpVerifyRequest,
     RestoreRequest,
     SignInRequest,
     SignInResponse,
@@ -10,7 +11,7 @@ import {
 
 import { ApiEndpoints } from '../constants/api';
 
-const { BASE_URL, AUTH, LOGIN, REGISTER, RESTORE } = ApiEndpoints;
+const { BASE_URL, AUTH, LOGIN, REGISTER, RESTORE, VERIFY_OTP } = ApiEndpoints;
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -44,7 +45,15 @@ export const authApi = createApi({
                 body: data,
             }),
         }),
+        verifyOtp: builder.mutation<unknown, OtpVerifyRequest>({
+            query: (data) => ({
+                url: VERIFY_OTP,
+                method: 'POST',
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useSignUpMutation, useSignInMutation, useRestoreMutation } = authApi;
+export const { useSignUpMutation, useSignInMutation, useRestoreMutation, useVerifyOtpMutation } =
+    authApi;

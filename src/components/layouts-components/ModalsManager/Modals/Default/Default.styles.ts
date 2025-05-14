@@ -1,8 +1,10 @@
 export const overlay = {
     backdropFilter: 'blur(2px)',
+    zIndex: 99,
 };
 
 export const content = {
+    w: { base: '316px', xl: '396px' },
     maxW: { base: '316px', xl: '396px' },
     minH: { base: '380px', xl: '478px' },
     p: 8,
@@ -38,9 +40,11 @@ export const description = {
     color: 'blackAlpha.900',
     fontSize: '16px',
     span: {
-        display: 'block',
-        fontWeight: 600,
-        w: '100%',
+        ':first-of-type': {
+            display: 'block',
+            fontWeight: 600,
+            w: '100%',
+        },
     },
 };
 

@@ -5,7 +5,7 @@ import { AuthPopupProps } from '~/types';
 
 import { ModalPopup } from '../../Default';
 
-export const LoginFailedModalPopup: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => (
+export const LoginFailed: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => (
     <ModalPopup
         isOpen={isOpen}
         onClose={onClose}
