@@ -9,7 +9,7 @@ const initialState = {
     isLoading: false,
     error: null as AlertError | null,
     // modal: null as Modals | null,
-    modal: Modals.AUTH_LOGIN_FAILED as Modals | null,
+    modal: Modals.AUTH_RESTORE_BY_EMAIL as Modals | null,
     isLogged: false,
 };
 export const appSlice = createSlice({

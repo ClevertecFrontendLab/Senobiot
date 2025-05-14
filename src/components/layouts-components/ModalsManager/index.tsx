@@ -7,6 +7,7 @@ import { Modals } from '~/types';
 
 import {
     LoginFailedModalPopup,
+    RestoreByEmail,
     VerificationFailedModalPopup,
     VerificationSendModalPopup,
 } from './Modals';
@@ -30,6 +31,9 @@ export const ModalManager: React.FC = () => {
 
         case Modals.AUTH_LOGIN_FAILED:
             return <LoginFailedModalPopup isOpen={!!currentModal} onClose={onClose} />;
+
+        case Modals.AUTH_RESTORE_BY_EMAIL:
+            return <RestoreByEmail isOpen={!!currentModal} onClose={onClose} />;
 
         default:
             return null;

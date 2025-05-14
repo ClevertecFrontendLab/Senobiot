@@ -1,13 +1,9 @@
 import { Text } from '@chakra-ui/react';
 
 import { ButtonBlack } from '~/components/shared-components';
+import { AuthPopupProps } from '~/types';
 
 import { ModalPopup } from '../../Default';
-
-export type AuthPopupProps = {
-    isOpen: boolean;
-    onClose: () => void;
-};
 
 export const LoginFailedModalPopup: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => (
     <ModalPopup

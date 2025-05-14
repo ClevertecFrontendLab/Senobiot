@@ -1,11 +1,8 @@
 import { Link, Text } from '@chakra-ui/react';
 
-import { ModalPopup } from '../../Default';
+import { AuthPopupProps } from '~/types';
 
-export type AuthPopupProps = {
-    isOpen: boolean;
-    onClose: () => void;
-};
+import { ModalPopup } from '../../Default';
 
 export const VerificationFailedModalPopup: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
     const description = (

@@ -268,6 +268,7 @@ export type FormValues = {
 };
 
 export type FormLoginValues = Pick<FormValues, 'login' | 'password'>;
+export type RestoreValues = Pick<FormValues, 'email'>;
 
 export type LoginInputsListProps = {
     field: keyof FormLoginValues;
@@ -304,7 +305,7 @@ export type FormInputProps = {
     showPassword?: ShowPasswords;
     dataTestId?: string;
     autocomplete?: string;
-    setShowPassword: (field: keyof FormValues, value: boolean) => void;
+    setShowPassword?: (field: keyof FormValues, value: boolean) => void;
     onChange: (field: keyof FormValues, value: string) => void;
     onBlur: (field: keyof FormValues, value: string) => void;
 };
@@ -341,6 +342,10 @@ export type SignUpRequest = {
 export type SignInRequest = {
     login: string;
     password: string;
+};
+
+export type RestoreRequest = {
+    email: string;
 };
 
 export type SignUpResponse = {
@@ -391,3 +396,8 @@ export enum Modals {
     AUTH_RESTORE_BY_PIN = 'AUTH_RESTORE_BY_PIN',
     AUTH_RESTORE_FINISH = 'AUTH_RESTORE_FINISH',
 }
+
+export type AuthPopupProps = {
+    isOpen: boolean;
+    onClose: () => void;
+};

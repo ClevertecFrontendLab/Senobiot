@@ -5,4 +5,5 @@ export enum ApiEndpoints {
     AUTH = '/auth',
     LOGIN = '/login',
     REGISTER = '/signup',
+    RESTORE = '/forgot-password',
 }

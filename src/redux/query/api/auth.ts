@@ -1,10 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from '~/types';
+import {
+    RestoreRequest,
+    SignInRequest,
+    SignInResponse,
+    SignUpRequest,
+    SignUpResponse,
+} from '~/types';
 
 import { ApiEndpoints } from '../constants/api';
 
-const { BASE_URL, AUTH, LOGIN, REGISTER } = ApiEndpoints;
+const { BASE_URL, AUTH, LOGIN, REGISTER, RESTORE } = ApiEndpoints;
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -31,7 +37,14 @@ export const authApi = createApi({
                 body: data,
             }),
         }),
+        restore: builder.mutation<unknown, RestoreRequest>({
+            query: (data) => ({
+                url: RESTORE,
+                method: 'POST',
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useSignUpMutation, useSignInMutation } = authApi;
+export const { useSignUpMutation, useSignInMutation, useRestoreMutation } = authApi;

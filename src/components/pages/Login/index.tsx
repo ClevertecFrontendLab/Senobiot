@@ -9,7 +9,7 @@ import {
     LOGIN_INPUT_LIST,
     TEST_IDS,
 } from '~/constants';
-import { useLoginForm } from '~/hooks/useLoginForm';
+import { useLoginForm } from '~/hooks';
 
 import * as styles from '../Auth.styles';
 

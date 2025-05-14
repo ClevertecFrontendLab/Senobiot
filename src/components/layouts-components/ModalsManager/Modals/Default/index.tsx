@@ -33,7 +33,13 @@ export const ModalPopup: React.FC<ModalPopupProps> = ({
     content,
     footer,
 }) => (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered motionPreset='scale'>
+    <Modal
+        closeOnOverlayClick={false}
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        motionPreset='scale'
+    >
         <ModalOverlay sx={styles.overlay} />
         <ModalContent sx={styles.content}>
             <ModalCloseButton sx={styles.closeButton} />

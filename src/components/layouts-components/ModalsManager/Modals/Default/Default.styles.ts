@@ -21,7 +21,7 @@ export const image = {
     w: { base: '106px', xl: '208px' },
     h: { base: '106px', xl: '208px' },
     mx: 'auto',
-    mb: 8,
+    // mb: 8,
 };
 
 export const header = {
@@ -33,8 +33,10 @@ export const header = {
 };
 
 export const description = {
+    textAlign: 'center',
+    px: { base: 0, xl: 6 },
     color: 'blackAlpha.900',
-    fontsSize: '16px',
+    fontSize: '16px',
     span: {
         display: 'block',
         fontWeight: 600,
@@ -43,6 +45,8 @@ export const description = {
 };
 
 export const footer = {
+    p: 0,
+    mt: 6,
     justifyContent: 'center',
     fontSize: '12px',
     color: 'blackAlpha.600',
@@ -53,4 +57,5 @@ export const footer = {
 
 export const body = {
     flexGrow: 0,
+    p: 0,
 };

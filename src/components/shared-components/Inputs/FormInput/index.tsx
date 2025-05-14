@@ -45,7 +45,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                 autoComplete={autocomplete}
                 data-test-id={dataTestId}
             />
-            {isPassword && (
+            {isPassword && setShowPassword && (
                 <Button
                     data-test-id={TEST_IDS.form.login.passwordVisibility}
                     variant='ghost'
