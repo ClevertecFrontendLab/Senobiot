@@ -1,5 +1,6 @@
 export {
     authApi,
+    useResetMutation,
     useRestoreMutation,
     useSignInMutation,
     useSignUpMutation,

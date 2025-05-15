@@ -2,16 +2,15 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import {
     OtpVerifyRequest,
+    ResetRequest,
     RestoreRequest,
     SignInRequest,
-    SignInResponse,
     SignUpRequest,
-    SignUpResponse,
 } from '~/types';
 
 import { ApiEndpoints } from '../constants/api';
 
-const { BASE_URL, AUTH, LOGIN, REGISTER, RESTORE, VERIFY_OTP } = ApiEndpoints;
+const { BASE_URL, AUTH, LOGIN, REGISTER, RESTORE, VERIFY_OTP, RESET } = ApiEndpoints;
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -22,16 +21,16 @@ export const authApi = createApi({
             return headers;
         },
     }),
-
+    // unknown - в тестах ответ произвольный не соответсвует response schema
     endpoints: (builder) => ({
-        signUp: builder.mutation<SignUpResponse, SignUpRequest>({
+        signUp: builder.mutation<unknown, SignUpRequest>({
             query: (data) => ({
                 url: REGISTER,
                 method: 'POST',
                 body: data,
             }),
         }),
-        signIn: builder.mutation<{ data: SignInResponse }, SignInRequest>({
+        signIn: builder.mutation<unknown, SignInRequest>({
             query: (data) => ({
                 url: LOGIN,
                 method: 'POST',
@@ -52,8 +51,20 @@ export const authApi = createApi({
                 body: data,
             }),
         }),
+        reset: builder.mutation<unknown, ResetRequest>({
+            query: (data) => ({
+                url: RESET,
+                method: 'POST',
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useSignUpMutation, useSignInMutation, useRestoreMutation, useVerifyOtpMutation } =
-    authApi;
+export const {
+    useSignUpMutation,
+    useSignInMutation,
+    useRestoreMutation,
+    useVerifyOtpMutation,
+    useResetMutation,
+} = authApi;

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { useRestoreMutation } from '~/redux';
-import { FormErrors, FormValues, RestoreValues } from '~/types';
+import { FormErrors, FormRestoreValues, FormValues } from '~/types';
 
 import { validateEmail } from '../utils/validators';
 
 export const useRestoreByEmail = () => {
-    const [value, setEmail] = useState<RestoreValues>({ email: '' });
+    const [value, setEmail] = useState<FormRestoreValues>({ email: '' });
     const [error, setError] = useState<FormErrors>({});
 
     const handleChange = (field: keyof FormValues, value: string) =>

@@ -264,11 +264,12 @@ export type FormValues = {
     email: string;
     login: string;
     password: string;
-    confirmPassword: string;
+    passwordConfirm: string;
 };
 
+export type FormResetValues = Pick<FormValues, 'login' | 'password' | 'passwordConfirm'>;
 export type FormLoginValues = Pick<FormValues, 'login' | 'password'>;
-export type RestoreValues = Pick<FormValues, 'email'>;
+export type FormRestoreValues = Pick<FormValues, 'email'>;
 
 export type LoginInputsListProps = {
     field: keyof FormLoginValues;
@@ -286,12 +287,12 @@ export type FormErrors = {
     email?: string;
     login?: string;
     password?: string;
-    confirmPassword?: string;
+    passwordConfirm?: string;
 };
 
 export type ShowPasswords = {
     password?: boolean;
-    confirmPassword?: boolean;
+    passwordConfirm?: boolean;
 };
 
 export type FormInputProps = {
@@ -353,17 +354,23 @@ export type OtpVerifyRequest = {
     otpToken: string;
 };
 
-export type SignUpResponse = {
-    statusCode: number;
-    message: string;
-    error?: string;
+export type ResetRequest = {
+    login: string;
+    password: string;
+    passwordConfirm: string;
 };
 
-export type SignInResponse = {
-    statusCode: number;
-    message: string;
-    error?: string;
-};
+// export type SignUpResponse = {
+//     statusCode: number;
+//     message: string;
+//     error?: string;
+// };
+
+// export type SignInResponse = {
+//     statusCode: number;
+//     message: string;
+//     error?: string;
+// };
 
 export type useReciepeRequestsProps = {
     randomCategory?: AllCategories;
