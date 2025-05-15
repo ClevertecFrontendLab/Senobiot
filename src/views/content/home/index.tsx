@@ -84,11 +84,13 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
                 <LatestRecipesSection recipes={latestData} markdownText={markdownText} />
                 <JuiciestRecipesSection recipes={juiciestData} markdownText={markdownText} />
                 <BlogsSection />
-                <RelevantKitchenSection
-                    title={randomCategory.categoryRu}
-                    description={randomCategory.categoryDescription}
-                    data={relevantData}
-                />
+                {randomCategory && (
+                    <RelevantKitchenSection
+                        title={randomCategory.categoryRu}
+                        description={randomCategory.categoryDescription}
+                        data={relevantData}
+                    />
+                )}
             </VStack>
         </ContentPageWrapper>
     );

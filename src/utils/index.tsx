@@ -49,7 +49,7 @@ export const getLocallySavedNavigationConfig = () => {
     if (saved) {
         return JSON.parse(saved);
     }
-    return saved;
+    return {};
 };
 
 export const saveLocallyNavigationConfig = (config: NavigationConfig) => {
@@ -87,12 +87,14 @@ export const populateRecieptCategory = (
 };
 
 export const getRandomCategory = (categories: CategoriesByIds, exceptId: string = '') => {
+    if (!categories) return;
+
     const ids = Object.keys(categories).filter((id) => id !== exceptId);
     const randomCategoryId = ids[Math.floor(Math.random() * ids.length)];
     return categories[randomCategoryId];
 };
 
-export const categoryTitleSlicer = (category: AllCategories[]) =>
+export const categoryTitleSlicer = (category: AllCategories[] = []) =>
     category.map((e) => ({
         ...e,
         categoryRu:

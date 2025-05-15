@@ -8,9 +8,11 @@ export const validateName = (value: string, isFirstName: boolean = true): string
 
 export const validateEmail = (value: string): string => {
     if (!value) return 'Введите e-mail';
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) return 'Введите корректный e-mail';
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (value.length > 50) return 'Максимальная длина 50 символов';
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(value)) return 'Введите корректный e-mail';
+
     return '';
 };
 
@@ -20,8 +22,7 @@ export const validateLogin = (value: string): string => {
     if (!value || value.trim().length === 0) return 'Введите логин';
     if (value.length < 5) return 'Не соответствует формату';
     if (value.length > 50) return 'Максимальная длина 50 символов';
-    if (!regex.test(value))
-        return 'Допустимые символы: латиница A-Z, цифры и спецсимволы ! @ # $ & _ + - .';
+    if (!regex.test(value)) return 'Не соответствует формату';
     return '';
 };
 
@@ -30,14 +31,13 @@ export const validatePassword = (value: string): string => {
 
     const regex = /^[A-Za-z0-9!@#$&_+\-.]+$/;
 
-    if (value.length < 8) return 'Пароль должен содержать минимум 8 символов';
+    if (value.length < 8) return 'Не соответствует формату';
     if (value.length > 50) return 'Максимальная длина 50 символов';
-    if (!regex.test(value))
-        return 'Допустимые символы: латиница A-Z, цифры и спецсимволы ! @ # $ & _ + - .';
+    if (!regex.test(value)) return 'Не соответствует формату';
 
-    if (!/[A-Z]/.test(value)) return 'Пароль должен содержать хотя бы одну заглавную букву';
+    if (!/[A-Z]/.test(value)) return 'Не соответствует формату';
 
-    if (!/\d/.test(value)) return 'Пароль должен содержать хотя бы одну цифру';
+    if (!/\d/.test(value)) return 'Не соответствует формату';
 
     return '';
 };

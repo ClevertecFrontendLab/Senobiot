@@ -16,7 +16,7 @@ import { Modals } from '~/types';
 
 import * as styles from '../Auth.styles';
 
-const RegistrationPage: React.FC = () => {
+const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
     const {
         formValues,
@@ -76,4 +76,4 @@ const RegistrationPage: React.FC = () => {
     );
 };
 
-export default RegistrationPage;
+export default LoginPage;

@@ -44,6 +44,13 @@ export function transformCategoriesResponse(response: AllCategoriesResponse) {
     const categoriesByIds: CategoriesByIds = {};
     const subCategoriesByIds: SubCategoriesByIds = {};
 
+    if (!Array.isArray(response))
+        return {
+            navigationTree: [],
+            categoriesByIds: {},
+            subCategoriesByIds: {},
+        };
+
     response.forEach((item, _, array) => {
         if (item.rootCategoryId) {
             const category = array.find((e) => e._id === item.rootCategoryId)!;

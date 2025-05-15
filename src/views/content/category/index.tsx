@@ -131,11 +131,13 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
                     markdownText={markdownText}
                     recieptsByCategory={reciepesByCategoryData}
                 />
-                <RelevantKitchenSection
-                    title={randomCategory.categoryRu}
-                    description={randomCategory.categoryDescription}
-                    data={relevantData}
-                />
+                {randomCategory && (
+                    <RelevantKitchenSection
+                        title={randomCategory.categoryRu}
+                        description={randomCategory.categoryDescription}
+                        data={relevantData}
+                    />
+                )}
             </VStack>
         </ContentPageWrapper>
     );

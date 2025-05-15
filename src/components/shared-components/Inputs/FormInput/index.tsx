@@ -47,7 +47,7 @@ export const FormInput: React.FC<FormInputProps> = ({
             />
             {isPassword && setShowPassword && (
                 <Button
-                    data-test-id={TEST_IDS.form.login.passwordVisibility}
+                    data-test-id={TEST_IDS.pages.signIn.passwordShowButton}
                     variant='ghost'
                     onMouseDown={() => setShowPassword(field, true)}
                     onMouseUp={() => setShowPassword(field, false)}

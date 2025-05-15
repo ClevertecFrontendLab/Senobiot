@@ -373,11 +373,11 @@ export type ResetRequest = {
     passwordConfirm: string;
 };
 
-// export type SignUpResponse = {
-//     statusCode: number;
-//     message: string;
-//     error?: string;
-// };
+export type SignUpResponse = {
+    statusCode: number;
+    message: string;
+    error?: string;
+};
 
 // export type SignInResponse = {
 //     statusCode: number;

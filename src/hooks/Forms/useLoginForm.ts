@@ -4,6 +4,7 @@ import { useSignInMutation } from '~/redux';
 import { FormErrors, FormLoginValues, FormValues, ShowPasswords } from '~/types';
 
 import { validateLogin, validatePassword } from '../../utils/validators';
+import { useRecentCredentials } from './useRecentCredentials';
 
 export const useLoginForm = () => {
     const [formValues, setFormValues] = useState<FormLoginValues>({
@@ -13,6 +14,7 @@ export const useLoginForm = () => {
     const [errors, setErrors] = useState<FormErrors>({});
     const [showPassword, setShowPassword] = useState<ShowPasswords>({});
     const [signIn] = useSignInMutation();
+    const { setRecentCredentials } = useRecentCredentials();
 
     const handleChange = (field: keyof FormValues, value: string) => {
         setFormValues((prev) => ({
@@ -51,6 +53,7 @@ export const useLoginForm = () => {
         e.preventDefault();
 
         if (validateAllFields()) {
+            setRecentCredentials(formValues);
             signIn(formValues);
         }
     };

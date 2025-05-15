@@ -110,12 +110,19 @@ listener.startListening({
 listener.startListening({
     matcher: authApi.endpoints.signUp.matchRejected,
     effect: (action, listenerApi) => {
-        const { status } = action.payload || {};
-        const statusCode: number = Number(status) || 500;
-        const error = {
-            title: ALERTS.login[statusCode]?.title || '',
-            body: ALERTS.registration[statusCode]?.body || '',
-        };
+        const {
+            status,
+            data: { message },
+        } = action.payload || {};
+        const statusCode: number = Number(status);
+        console.log(action.payload);
+        if (statusCode === 400 && message) {
+            listenerApi.dispatch(setAppError({ title: message }));
+            listenerApi.dispatch(setAppLoader(false));
+            return;
+        }
+
+        const error = ALERTS.registration[statusCode] || {};
         listenerApi.dispatch(setAppError(error));
         listenerApi.dispatch(setAppLoader(false));
     },
@@ -125,7 +132,14 @@ listener.startListening({
     matcher: authApi.endpoints.signIn.matchRejected,
     effect: (action, listenerApi) => {
         const { status } = action.payload || {};
-        const statusCode: number = Number(status) || 500;
+        const statusCode: number = Number(status);
+
+        if (statusCode === 500) {
+            listenerApi.dispatch(setAppLoader(false));
+            listenerApi.dispatch(setAppModal(Modals.AUTH_LOGIN_FAILED));
+            return;
+        }
+
         const error = {
             title: ALERTS.login[statusCode]?.title || '',
             body: ALERTS.login[statusCode]?.body || '',

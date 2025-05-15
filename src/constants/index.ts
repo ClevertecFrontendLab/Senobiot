@@ -36,7 +36,7 @@ export const TEST_IDS = {
         signInError: {
             window: 'sign-in-error-modal',
             closeButton: 'close-button',
-            repeatButton: 'repeat-button ',
+            repeatButton: 'repeat-button',
         },
         signUpSuccess: {
             window: 'sign-up-success-modal',
@@ -132,7 +132,7 @@ export const API_QUERY_PARAMS = {
 export const ALERTS: {
     default: { title: string; body: string };
     login: Record<number, { title: string; body: string }>;
-    registration: Record<number, { body: string }>;
+    registration: Record<number, { title: string; body: string }>;
     restore: Record<number, { title: string; body: string }>;
     verify: Record<number, { title: string; body: string }>;
 } = {
@@ -142,7 +142,7 @@ export const ALERTS: {
         403: { title: 'E-mail не верифицирован', body: 'Проверьте почту и перейдите по ссылке' },
     },
     registration: {
-        500: { body: 'Поробуйте немного позже' },
+        500: { title: 'Ошибка сервера', body: 'Попробуйте немного позже' },
     },
     restore: {
         403: {

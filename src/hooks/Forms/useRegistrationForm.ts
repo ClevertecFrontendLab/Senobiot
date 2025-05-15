@@ -10,6 +10,8 @@ import {
     validatePassword,
 } from '~/utils/validators';
 
+import { useRecentCredentials } from './useRecentCredentials';
+
 export const useRegistrationForm = () => {
     const [formValues, setFormValues] = useState<FormValues>({
         firstName: '',
@@ -23,6 +25,7 @@ export const useRegistrationForm = () => {
     const [step, setStep] = useState<number>(1);
     const [showPassword, setShowPassword] = useState<ShowPasswords>({});
     const [signUp] = useSignUpMutation();
+    const { setRecentCredentials } = useRecentCredentials();
 
     const handleChange = (field: keyof FormValues, value: string) => {
         setFormValues((prev) => ({
@@ -124,6 +127,7 @@ export const useRegistrationForm = () => {
         if (validateAllFields()) {
             const { passwordConfirm, ...requestData } = formValues;
             signUp(requestData);
+            setRecentCredentials({ email: requestData.email });
         }
     };
 

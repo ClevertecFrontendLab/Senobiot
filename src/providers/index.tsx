@@ -4,6 +4,7 @@ import { Filters } from '~/types';
 
 import { BreadCrumbsProvider } from './BreadCrumbs/Provider';
 import { FiltersProvider } from './Filters/Provider';
+import { RecentCredentialsProvider } from './RecentCredentials/Provider';
 
 export const AppProviders: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [filters, setFilters] = useState<Filters>({});
@@ -11,7 +12,7 @@ export const AppProviders: React.FC<{ children: ReactNode }> = ({ children }) =>
     return (
         <BreadCrumbsProvider>
             <FiltersProvider filters={filters} setFilters={setFilters}>
-                {children}
+                <RecentCredentialsProvider>{children}</RecentCredentialsProvider>
             </FiltersProvider>
         </BreadCrumbsProvider>
     );
