@@ -2,14 +2,13 @@ import { useState } from 'react';
 
 import { useSignUpMutation } from '~/redux';
 import { FormErrors, FormValues, ShowPasswords } from '~/types';
-
 import {
     validateConfirmPassword,
     validateEmail,
     validateLogin,
     validateName,
     validatePassword,
-} from '../utils/validators';
+} from '~/utils/validators';
 
 export const useRegistrationForm = () => {
     const [formValues, setFormValues] = useState<FormValues>({
@@ -18,7 +17,7 @@ export const useRegistrationForm = () => {
         email: '',
         login: '',
         password: '',
-        confirmPassword: '',
+        passwordConfirm: '',
     });
     const [errors, setErrors] = useState<FormErrors>({});
     const [step, setStep] = useState<number>(1);
@@ -34,7 +33,7 @@ export const useRegistrationForm = () => {
 
     const handleBlur = (field: keyof FormValues, value: string) => {
         const trimmedValue =
-            field === 'password' || field === 'confirmPassword' ? value : value.trim();
+            field === 'password' || field === 'passwordConfirm' ? value : value.trim();
 
         handleChange(field, trimmedValue);
         setErrors((prev) => ({
@@ -55,7 +54,7 @@ export const useRegistrationForm = () => {
         if (!validateEmail(formValues.email)) validCount++;
         if (!validateLogin(formValues.login)) validCount++;
         if (!validatePassword(formValues.password)) validCount++;
-        if (!validateConfirmPassword(formValues.confirmPassword, formValues.password)) validCount++;
+        if (!validateConfirmPassword(formValues.passwordConfirm, formValues.password)) validCount++;
 
         return (validCount / 6) * 100;
     };
@@ -96,7 +95,7 @@ export const useRegistrationForm = () => {
         const loginError = validateLogin(formValues.login);
         const passwordError = validatePassword(formValues.password);
         const confirmPasswordError = validateConfirmPassword(
-            formValues.confirmPassword,
+            formValues.passwordConfirm,
             formValues.password,
         );
 
@@ -106,7 +105,7 @@ export const useRegistrationForm = () => {
             email: emailError,
             login: loginError,
             password: passwordError,
-            confirmPassword: confirmPasswordError,
+            passwordConfirm: confirmPasswordError,
         });
 
         return (
@@ -123,7 +122,7 @@ export const useRegistrationForm = () => {
         e.preventDefault();
 
         if (validateAllFields()) {
-            const { confirmPassword, ...requestData } = formValues;
+            const { passwordConfirm, ...requestData } = formValues;
             signUp(requestData);
         }
     };

@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
 import {
+    AlertPopup,
     ContentPageWrapper,
     JuiciestRecipesSection,
     LatestRecipesSection,
     RelevantKitchenSection,
-    ServerErrorAlert,
 } from '~/components/shared-components';
 import { BlogsSection } from '~/components/shared-components';
 import { ALERTS, PAGE_TITLES } from '~/constants';
@@ -73,7 +73,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     return (
         <ContentPageWrapper>
             {!filters.searchString && (isFetchingLatest || isFetchingJuiciest) && <Loader />}
-            {error && <ServerErrorAlert onClose={resetError} />}
+            {error && <AlertPopup onClose={resetError} />}
 
             <SearchBar
                 searchResultState={searchResultState}

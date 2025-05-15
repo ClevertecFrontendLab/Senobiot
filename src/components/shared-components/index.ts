@@ -1,4 +1,4 @@
-export * from './Alerts';
+export { AlertPopup } from './Alert';
 export * from './AllergensFilter';
 export * from './BlogsSection';
 export * from './BookmarksSection';

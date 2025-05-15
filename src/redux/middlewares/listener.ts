@@ -47,6 +47,14 @@ listener.startListening({
 });
 
 listener.startListening({
+    matcher: authApi.endpoints.reset.matchPending,
+    effect: (_, listenerApi) => {
+        listenerApi.dispatch(setAppLoader(true));
+        listenerApi.dispatch(setAppError(null));
+    },
+});
+
+listener.startListening({
     matcher: authApi.endpoints.signUp.matchFulfilled,
     effect: (_, listenerApi) => {
         listenerApi.dispatch(setAppModal(Modals.AUTH_VERIFICATION_SEND));
@@ -77,7 +85,15 @@ listener.startListening({
     matcher: authApi.endpoints.verifyOtp.matchFulfilled,
     effect: (_, listenerApi) => {
         listenerApi.dispatch(setAppLoader(false));
-        listenerApi.dispatch(setAppModal(Modals.AUTH_RESTORE_FINISH));
+        listenerApi.dispatch(setAppModal(Modals.AUTH_RESET_PASSWORD));
+    },
+});
+
+listener.startListening({
+    matcher: authApi.endpoints.verifyOtp.matchFulfilled,
+    effect: (_, listenerApi) => {
+        listenerApi.dispatch(setAppLoader(false));
+        listenerApi.dispatch(setAppModal(Modals.AUTH_RESET_PASSWORD));
     },
 });
 

@@ -8,10 +8,12 @@ export type AppState = typeof initialState;
 const initialState = {
     isLoading: false,
     error: null as AlertError | null,
-    modal: null as Modals | null,
+    modal: Modals.AUTH_RESET_PASSWORD as Modals | null,
+    popup: null as string | null,
     userEmail: '',
     isLogged: false,
 };
+
 export const appSlice = createSlice({
     name: 'app',
     initialState,

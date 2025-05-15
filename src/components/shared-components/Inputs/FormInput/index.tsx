@@ -28,7 +28,7 @@ export const FormInput: React.FC<FormInputProps> = ({
     onChange,
     onBlur,
 }) => {
-    const isPassword = field === 'password' || field === 'confirmPassword';
+    const isPassword = field === 'password' || field === 'passwordConfirm';
 
     return (
         <FormControl isInvalid={!!error}>

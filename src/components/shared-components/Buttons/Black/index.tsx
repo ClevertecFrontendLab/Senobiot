@@ -2,7 +2,7 @@ import { Button, ButtonProps } from '@chakra-ui/react';
 
 type ButtonBlackProps = ButtonProps & { text?: string };
 
-export const ButtonBlack: React.FC<ButtonBlackProps> = ({ text, onClick }) => (
+export const ButtonBlack: React.FC<ButtonBlackProps> = ({ text, onClick, type }) => (
     <Button
         onClick={onClick}
         fontWeight={600}
@@ -12,6 +12,7 @@ export const ButtonBlack: React.FC<ButtonBlackProps> = ({ text, onClick }) => (
         bg='#000'
         w='100%'
         h={12}
+        type={type}
     >
         {text}
     </Button>

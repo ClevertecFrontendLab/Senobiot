@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { useRestoreMutation } from '~/redux';
 import { FormErrors, FormRestoreValues, FormValues } from '~/types';
+import { validateEmail } from '~/utils/validators';
 
-import { validateEmail } from '../utils/validators';
-
-export const useRestoreByEmail = () => {
+export const useRestoreForm = () => {
     const [value, setEmail] = useState<FormRestoreValues>({ email: '' });
     const [error, setError] = useState<FormErrors>({});
 

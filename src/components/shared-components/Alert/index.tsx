@@ -2,16 +2,22 @@ import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from
 import React from 'react';
 
 import { ALERTS, TEST_IDS } from '~/constants';
-import { ServerErrorAlertProps } from '~/types';
+import { AlertProps } from '~/types';
 
-import { alertCloseButtonStyles, alertStyles } from './Error.styles';
+import { alertCloseButtonStyles, getAlertStyles } from './Alert.styles';
 
-export const ServerErrorAlert: React.FC<ServerErrorAlertProps> = ({
+export const AlertPopup: React.FC<AlertProps> = ({
     onClose,
     title = ALERTS.default.title,
     body = ALERTS.default.body,
+    status = 'error',
 }) => (
-    <Alert data-test-id={TEST_IDS.alert} sx={alertStyles} status='error' variant='solid'>
+    <Alert
+        data-test-id={TEST_IDS.alert}
+        sx={getAlertStyles(status)}
+        status={status}
+        variant='solid'
+    >
         <AlertIcon boxSize='24px' mr={3} />
         <Box flex='1'>
             <AlertTitle fontWeight={700}>{title}</AlertTitle>

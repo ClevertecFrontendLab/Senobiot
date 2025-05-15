@@ -1,13 +1,13 @@
 import { Text, VStack } from '@chakra-ui/react';
 
 import { ButtonBlack, FormInput } from '~/components/shared-components';
-import { useRestoreByEmail } from '~/hooks';
+import { useRestoreForm } from '~/hooks';
 import { AuthPopupProps } from '~/types';
 
 import { ModalPopup } from '../../Default';
 
 export const RestoreByEmail: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
-    const { email, error, handleChange, handleBlur, handleSubmit } = useRestoreByEmail();
+    const { email, error, handleChange, handleBlur, handleSubmit } = useRestoreForm();
 
     const description = (
         <Text>

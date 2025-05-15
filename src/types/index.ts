@@ -1,3 +1,4 @@
+import { AlertStatus } from '@chakra-ui/react';
 import { MouseEventHandler } from 'react';
 
 export type RecipeProps = {
@@ -173,10 +174,11 @@ export type SearchInputProps = {
     onSearch: (searchText: string) => void;
 };
 
-export type ServerErrorAlertProps = {
+export type AlertProps = {
     onClose?: () => void;
     title?: string;
     body?: string;
+    status?: AlertStatus;
 };
 
 export type BurgerNavMenuProps = {
@@ -273,6 +275,16 @@ export type FormRestoreValues = Pick<FormValues, 'email'>;
 
 export type LoginInputsListProps = {
     field: keyof FormLoginValues;
+    label: string;
+    placeholder: string;
+    type?: string;
+    helper?: string;
+    dataTestId?: string;
+    autocomplete?: string;
+};
+
+export type ResetnInputsListProps = {
+    field: keyof FormResetValues;
     label: string;
     placeholder: string;
     type?: string;
@@ -406,7 +418,7 @@ export enum Modals {
     AUTH_LOGIN_FAILED = 'AUTH_LOGIN_FAILED',
     AUTH_RESTORE_BY_EMAIL = 'AUTH_RESTORE_BY_EMAIL',
     AUTH_ENTER_PIN = 'AUTH_ENTER_PIN',
-    AUTH_RESTORE_FINISH = 'AUTH_RESTORE_FINISH',
+    AUTH_RESET_PASSWORD = 'AUTH_RESET_PASSWORD',
 }
 
 export type AuthPopupProps = {

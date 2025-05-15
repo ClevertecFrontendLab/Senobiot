@@ -15,5 +15,6 @@ export const getcurrentLocationState = (state: ApplicationState) =>
 export const selectLoginStatus = (state: ApplicationState) => state.app.isLogged;
 export const selectLoadingStatus = (state: ApplicationState) => state.app.isLoading;
 export const selectError = (state: ApplicationState) => state.app.error;
+export const selectPopup = (state: ApplicationState) => state.app.popup;
 export const selectModal = (state: ApplicationState) => state.app.modal;
 export const selectUserEmail = (state: ApplicationState) => state.app.userEmail;

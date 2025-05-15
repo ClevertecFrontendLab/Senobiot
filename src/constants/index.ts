@@ -1,4 +1,4 @@
-import { LoginInputsListProps, RegistrationInputsListProps } from '~/types';
+import { LoginInputsListProps, RegistrationInputsListProps, ResetnInputsListProps } from '~/types';
 
 export const PAGE_TITLES = {
     home: 'Приятного аппетита!',
@@ -207,6 +207,31 @@ export const LOGIN_INPUT_LIST: LoginInputsListProps[] = [
     },
 ];
 
+export const RESTORE_INPUT_LIST: ResetnInputsListProps[] = [
+    {
+        field: 'login',
+        label: 'Логин для входа на сайт:',
+        placeholder: 'Логин',
+        helper: 'Логин не менее 5 символов, только латиница',
+        autocomplete: 'username',
+    },
+    {
+        field: 'password',
+        label: 'Пароль:',
+        type: 'password',
+        placeholder: 'Пароль',
+        helper: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
+        autocomplete: 'current-password',
+    },
+    {
+        field: 'passwordConfirm',
+        label: 'Повторите пароль:',
+        type: 'password',
+        placeholder: 'Пароль',
+        autocomplete: 'new-password',
+    },
+];
+
 export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
     {
         field: 'firstName',
@@ -247,7 +272,7 @@ export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
         autocomplete: 'new-password',
     },
     {
-        field: 'confirmPassword',
+        field: 'passwordConfirm',
         label: 'Повторите пароль:',
         type: 'password',
         placeholder: 'Пароль',

@@ -1,8 +1,7 @@
-import { SystemStyleObject } from '@chakra-ui/react';
-
-export const alertStyles: SystemStyleObject = {
+import { AlertStatus, SystemStyleObject } from '@chakra-ui/react';
+export const getAlertStyles = (status: AlertStatus): SystemStyleObject => ({
     fontFamily: 'Inter',
-    bg: 'red.500',
+    bg: status === 'success' ? 'green.500' : 'red.500',
     borderRadius: 'md',
     position: 'fixed',
     w: { base: '328px', xl: '400px' },
@@ -11,7 +10,7 @@ export const alertStyles: SystemStyleObject = {
     transform: 'translateX(-50%)',
     bottom: { base: '100px', xl: '80px' },
     zIndex: 100,
-};
+});
 
 export const alertCloseButtonStyles = {
     position: 'absolute',

@@ -32,6 +32,8 @@ export const header = {
     color: '#000',
     fontSize: '24px',
     mb: 4,
+    whiteSpace: 'pre-line',
+    textAlign: 'center',
 };
 
 export const description = {

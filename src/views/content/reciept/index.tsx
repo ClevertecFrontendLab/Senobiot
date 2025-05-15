@@ -5,13 +5,13 @@ import { useNavigate, useParams } from 'react-router';
 
 import { Loader } from '~/components/layouts-components';
 import {
+    AlertPopup,
     ContentPageWrapper,
     CookingSteps,
     IngridientsSection,
     LatestRecipesSection,
     NutritionInfo,
     RecieptSectionCard,
-    ServerErrorAlert,
 } from '~/components/shared-components';
 import { AuthorCard } from '~/components/shared-components/Authors';
 import { ALERTS } from '~/constants';
@@ -71,7 +71,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
 
     return (
         <ContentPageWrapper pt={PADDINGS.pageRecieptTop}>
-            {error && <ServerErrorAlert onClose={resetError} />}
+            {error && <AlertPopup onClose={resetError} />}
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
                 <RecieptSectionCard recipe={recipeData} />
                 <VStack

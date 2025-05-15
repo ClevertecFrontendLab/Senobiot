@@ -6,10 +6,10 @@ import { Navigate, useParams } from 'react-router';
 import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
 import {
+    AlertPopup,
     CategorySection,
     ContentPageWrapper,
     RelevantKitchenSection,
-    ServerErrorAlert,
 } from '~/components/shared-components';
 import { ALERTS, BUTTONS_TEXT, EXCLUDED_ROUTES, PAGE_TITLES } from '~/constants';
 import { useBreadCrumbs, useSearchState } from '~/hooks';
@@ -110,7 +110,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
     return (
         <ContentPageWrapper>
             {!filters.searchString && isFetching && <Loader />}
-            {error && <ServerErrorAlert onClose={resetError} />}
+            {error && <AlertPopup onClose={resetError} />}
             <SearchBar
                 searchResultState={searchResultState}
                 isLoading={!!filters.searchString && isFetching}

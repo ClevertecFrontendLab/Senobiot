@@ -1,18 +1,16 @@
 import { useState } from 'react';
 
-import { useSignInMutation } from '~/redux';
-import { FormErrors, FormLoginValues, FormValues, ShowPasswords } from '~/types';
+import { useResetMutation } from '~/redux';
+import { FormErrors, FormResetValues, FormValues, ShowPasswords } from '~/types';
+import { validateConfirmPassword, validateLogin, validatePassword } from '~/utils/validators';
 
-import { validateLogin, validatePassword } from '../utils/validators';
+export const useResetForm = () => {
+    const initialValues = { login: '', password: '', passwordConfirm: '' };
 
-export const useLoginForm = () => {
-    const [formValues, setFormValues] = useState<FormLoginValues>({
-        login: '',
-        password: '',
-    });
+    const [formValues, setFormValues] = useState<FormResetValues>(initialValues);
     const [errors, setErrors] = useState<FormErrors>({});
     const [showPassword, setShowPassword] = useState<ShowPasswords>({});
-    const [signIn] = useSignInMutation();
+    const [reset] = useResetMutation();
 
     const handleChange = (field: keyof FormValues, value: string) => {
         setFormValues((prev) => ({
@@ -22,7 +20,8 @@ export const useLoginForm = () => {
     };
 
     const handleBlur = (field: keyof FormValues, value: string) => {
-        const trimmedValue = field === 'password' ? value : value.trim();
+        const trimmedValue =
+            field === 'password' || field === 'passwordConfirm' ? value : value.trim();
 
         handleChange(field, trimmedValue);
         setErrors((prev) => ({
@@ -37,21 +36,27 @@ export const useLoginForm = () => {
 
     const validateAllFields = (): boolean => {
         const loginError = validateLogin(formValues.login);
-        const passwordError = validatePassword(formValues.password ?? '');
+        const passwordError = validatePassword(formValues.password);
+        const passwordConfirmError = validateConfirmPassword(
+            formValues.passwordConfirm,
+            formValues.password,
+        );
 
         setErrors({
             login: loginError,
             password: passwordError,
+            passwordConfirm: passwordConfirmError,
         });
 
-        return !loginError && !passwordError;
+        return !loginError && !passwordError && !passwordConfirmError;
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        console.log('?');
         e.preventDefault();
 
         if (validateAllFields()) {
-            signIn(formValues);
+            reset(formValues);
         }
     };
 

@@ -8,6 +8,7 @@ import { Modals } from '~/types';
 import {
     EnterPin,
     LoginFailed,
+    ResetPassword,
     RestoreByEmail,
     VerificationFailed,
     VerificationSend,
@@ -38,6 +39,9 @@ export const ModalManager: React.FC = () => {
 
         case Modals.AUTH_ENTER_PIN:
             return <EnterPin isOpen={!!currentModal} onClose={onClose} />;
+
+        case Modals.AUTH_RESET_PASSWORD:
+            return <ResetPassword isOpen={!!currentModal} onClose={onClose} />;
 
         default:
             return null;
