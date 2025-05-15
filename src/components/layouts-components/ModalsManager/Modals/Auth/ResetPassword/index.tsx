@@ -1,13 +1,16 @@
 import { VStack } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
 import { ButtonBlack, FormInput } from '~/components/shared-components';
 import { RESTORE_INPUT_LIST, TEST_IDS } from '~/constants';
 import { useResetForm } from '~/hooks';
+import { selectUserEmail } from '~/redux/selectors';
 import { AuthPopupProps } from '~/types';
 
 import { ModalPopup } from '../../Default';
 
 export const ResetPassword: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
+    const email = useSelector(selectUserEmail);
     const {
         formValues,
         errors,
@@ -16,7 +19,7 @@ export const ResetPassword: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => 
         handleSubmit,
         showPassword,
         handlePasswordShow,
-    } = useResetForm();
+    } = useResetForm(email);
 
     const content = (
         <form onSubmit={handleSubmit} style={{ width: 'inherit' }}>

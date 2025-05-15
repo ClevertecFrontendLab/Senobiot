@@ -135,6 +135,7 @@ export const ALERTS: {
     registration: Record<number, { title: string; body: string }>;
     restore: Record<number, { title: string; body: string }>;
     verify: Record<number, { title: string; body: string }>;
+    reset: Record<number, { title: string; body: string }>;
 } = {
     default: { title: 'Ошибка сервера', body: 'Попробуйте поискать снова попозже' },
     login: {
@@ -152,6 +153,9 @@ export const ALERTS: {
         500: { title: 'Ошибка сервера', body: 'Попробуйте немного позже' },
     },
     verify: {
+        500: { title: 'Ошибка сервера', body: 'Попробуйте немного позже' },
+    },
+    reset: {
         500: { title: 'Ошибка сервера', body: 'Попробуйте немного позже' },
     },
 };

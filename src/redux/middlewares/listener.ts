@@ -178,3 +178,19 @@ listener.startListening({
         listenerApi.dispatch(setAppLoader(false));
     },
 });
+
+listener.startListening({
+    matcher: authApi.endpoints.reset.matchRejected,
+    effect: (action, listenerApi) => {
+        const { status } = action.payload || {};
+
+        if (Number(status) === 500) {
+            const error = {
+                title: ALERTS.reset[500].title,
+                body: ALERTS.reset[500].body,
+            };
+            listenerApi.dispatch(setAppError(error));
+        }
+        listenerApi.dispatch(setAppLoader(false));
+    },
+});

@@ -18,23 +18,25 @@ export const RestoreByEmail: React.FC<AuthPopupProps> = ({ isOpen, onClose }) =>
     const footer = <Text>Не пришло письмо? Проверьте папку Спам.</Text>;
 
     const content = (
-        <VStack gap={6} mt={4}>
-            <FormInput
-                field='email'
-                label='Ваш e-mail'
-                value={email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                placeholder='email'
-                error={error}
-                dataTestId={TEST_IDS.modals.restoreByEmail.email}
-            />
-            <ButtonBlack
-                text='Получить код'
-                onClick={handleSubmit}
-                dataTestId={TEST_IDS.modals.restoreByEmail.submitButton}
-            />
-        </VStack>
+        <form onSubmit={handleSubmit} style={{ width: 'inherit' }}>
+            <VStack gap={6} mt={4}>
+                <FormInput
+                    field='email'
+                    label='Ваш e-mail'
+                    value={email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder='email'
+                    error={error}
+                    dataTestId={TEST_IDS.modals.restoreByEmail.email}
+                />
+                <ButtonBlack
+                    text='Получить код'
+                    type='submit'
+                    dataTestId={TEST_IDS.modals.restoreByEmail.submitButton}
+                />
+            </VStack>
+        </form>
     );
 
     return (

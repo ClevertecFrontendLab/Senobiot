@@ -4,8 +4,8 @@ import { useResetMutation } from '~/redux';
 import { FormErrors, FormResetValues, FormValues, ShowPasswords } from '~/types';
 import { validateConfirmPassword, validateLogin, validatePassword } from '~/utils/validators';
 
-export const useResetForm = () => {
-    const initialValues = { login: '', password: '', passwordConfirm: '' };
+export const useResetForm = (email: string) => {
+    const initialValues = { login: '', password: '', passwordConfirm: '', email };
 
     const [formValues, setFormValues] = useState<FormResetValues>(initialValues);
     const [errors, setErrors] = useState<FormErrors>({});
@@ -52,7 +52,6 @@ export const useResetForm = () => {
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        console.log('?');
         e.preventDefault();
 
         if (validateAllFields()) {

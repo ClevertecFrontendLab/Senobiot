@@ -29,7 +29,9 @@ export const useRestoreForm = () => {
         return !emailError;
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
         if (validate()) {
             restore(value);
         }

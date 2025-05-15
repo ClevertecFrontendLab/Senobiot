@@ -1,5 +1,5 @@
 import { Link, Text } from '@chakra-ui/react';
-import { Navigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { EXCLUDED_ROUTES, TEST_IDS } from '~/constants';
 import { useRecentCredentials } from '~/hooks';
@@ -15,9 +15,11 @@ export const RegistrationSuccess: React.FC<AuthPopupProps> = ({ isOpen, onClose 
     const {
         recentCredentials: { email },
     } = useRecentCredentials();
+    const navigate = useNavigate();
+
     const handleClose = () => {
+        navigate(`/${EXCLUDED_ROUTES.login}`, { replace: true });
         onClose();
-        return <Navigate to={`/${EXCLUDED_ROUTES.login}`} replace />;
     };
 
     const description = (

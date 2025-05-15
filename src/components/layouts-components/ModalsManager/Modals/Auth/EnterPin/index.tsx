@@ -4,29 +4,42 @@ import { useSelector } from 'react-redux';
 
 import { TEST_IDS } from '~/constants';
 import { useVerifyOtpMutation } from '~/redux';
-import { selectError, selectUserEmail } from '~/redux/selectors';
+import { selectUserEmail } from '~/redux/selectors';
 import { AuthPopupProps } from '~/types';
 
 import { ModalPopup } from '../../Default';
 
 export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
     const email = useSelector(selectUserEmail);
-    const popupError = useSelector(selectError);
     const [isInvalidCode, setIsInvalidCode] = useState<boolean>(false);
     const [code, setCode] = useState('');
 
-    const [verify, { isError }] = useVerifyOtpMutation();
-    const handleVerify = (otpToken: string) => verify({ email, otpToken });
+    const [verify, { error }] = useVerifyOtpMutation();
+
+    const handleVerify = (otpToken: string) => {
+        verify({ email, otpToken });
+        setIsInvalidCode(false);
+    };
 
     useEffect(() => {
-        if (isError && !popupError) {
-            setIsInvalidCode(true);
-            setCode('');
+        if (error && 'status' in error) {
+            const { status } = error;
+            const statusCode: number = Number(status);
+
+            if (statusCode === 403) {
+                setIsInvalidCode(true);
+                setCode('');
+            }
+
+            if (statusCode === 500) {
+                setIsInvalidCode(false);
+                setCode('');
+            }
         }
-    }, [isError, popupError]);
+    }, [error]);
     const description = (
         <Text>
-            Мы отправили вам на почту
+            Мы отправили вам на e-mail
             <Text as='span'>{email}</Text>
             шестизначный код.&nbsp;
             <Text as='span' display={{ base: 'block', xl: 'initial' }}>
@@ -50,7 +63,7 @@ export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
                     .map((_, i) => (
                         <PinInputField
                             key={i}
-                            data-test-id={`${TEST_IDS.modals.otp.digitInput}${i}`}
+                            data-test-id={`${TEST_IDS.modals.otp.digitInput}${i + 1}`}
                         />
                     ))}
             </PinInput>
@@ -59,6 +72,7 @@ export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
 
     return (
         <ModalPopup
+            header={isInvalidCode ? 'Неверный код' : ''}
             isOpen={isOpen}
             onClose={onClose}
             imageSrc='/modals/modal-error.png'
