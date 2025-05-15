@@ -8,10 +8,10 @@ import { Modals } from '~/types';
 import {
     EnterPin,
     LoginFailed,
+    RegistrationSuccess,
     ResetPassword,
     RestoreByEmail,
     VerificationFailed,
-    VerificationSend,
 } from './Modals';
 
 export const ModalManager: React.FC = () => {
@@ -26,7 +26,7 @@ export const ModalManager: React.FC = () => {
 
     switch (currentModal) {
         case Modals.AUTH_VERIFICATION_SEND:
-            return <VerificationSend isOpen={!!currentModal} onClose={onClose} />;
+            return <RegistrationSuccess isOpen={!!currentModal} onClose={onClose} />;
 
         case Modals.AUTH_VERIFICATION_FAILED:
             return <VerificationFailed isOpen={!!currentModal} onClose={onClose} />;

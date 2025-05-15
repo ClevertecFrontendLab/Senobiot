@@ -1,7 +1,7 @@
 import { VStack } from '@chakra-ui/react';
 
 import { ButtonBlack, FormInput } from '~/components/shared-components';
-import { RESTORE_INPUT_LIST } from '~/constants';
+import { RESTORE_INPUT_LIST, TEST_IDS } from '~/constants';
 import { useResetForm } from '~/hooks';
 import { AuthPopupProps } from '~/types';
 
@@ -39,13 +39,20 @@ export const ResetPassword: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => 
                         autocomplete={e.autocomplete}
                     />
                 ))}
-                <ButtonBlack text='Зарегистрироваться' type='submit' color='red' />
+                <ButtonBlack
+                    text='Зарегистрироваться'
+                    type='submit'
+                    color='red'
+                    dataTestId={TEST_IDS.modals.resetPassword.submitButton}
+                />
             </VStack>
         </form>
     );
 
     return (
         <ModalPopup
+            dataTestIdWindow={TEST_IDS.modals.resetPassword.window}
+            dataTestIdCloseButton={TEST_IDS.modals.resetPassword.closeButton}
             header={`Восстановление\nаккаунта`}
             isOpen={isOpen}
             onClose={onClose}

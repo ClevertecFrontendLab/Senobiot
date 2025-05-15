@@ -35,7 +35,7 @@ const RegistrationPage: React.FC = () => {
             <form
                 onSubmit={handleSubmit}
                 style={{ width: 'inherit' }}
-                data-test-id={TEST_IDS.form.login.form}
+                data-test-id={TEST_IDS.pages.signIn.form}
             >
                 <VStack gap={6} sx={styles.form}>
                     {LOGIN_INPUT_LIST.map((e) => (
@@ -59,12 +59,12 @@ const RegistrationPage: React.FC = () => {
                     <Link
                         onClick={handleRestore}
                         sx={styles.restore}
-                        data-test-id={TEST_IDS.form.login.restoreLink}
+                        data-test-id={TEST_IDS.pages.signIn.forgotLink}
                     >
                         {INSCRIPTIONS.loginRemember}
                     </Link>
                     <Button
-                        data-test-id={TEST_IDS.form.login.buttonSubmit}
+                        data-test-id={TEST_IDS.pages.signIn.submitButton}
                         sx={styles.buttonLogin}
                         type='submit'
                     >

@@ -22,6 +22,8 @@ export type ModalPopupProps = {
     description?: ReactElement;
     content?: ReactElement;
     footer?: ReactElement;
+    dataTestIdWindow?: string;
+    dataTestIdCloseButton?: string;
 };
 
 export const ModalPopup: React.FC<ModalPopupProps> = ({
@@ -32,6 +34,8 @@ export const ModalPopup: React.FC<ModalPopupProps> = ({
     description,
     content,
     footer,
+    dataTestIdWindow,
+    dataTestIdCloseButton,
 }) => (
     <Modal
         closeOnOverlayClick={false}
@@ -41,8 +45,8 @@ export const ModalPopup: React.FC<ModalPopupProps> = ({
         motionPreset='scale'
     >
         <ModalOverlay sx={styles.overlay} />
-        <ModalContent sx={styles.content}>
-            <ModalCloseButton sx={styles.closeButton} />
+        <ModalContent sx={styles.content} data-test-id={dataTestIdWindow}>
+            <ModalCloseButton sx={styles.closeButton} data-test-id={dataTestIdCloseButton} />
             {imageSrc && <Image sx={styles.image} src={imageSrc} alt='popup' />}
             <VStack gap={0}>
                 <ModalHeader sx={styles.header}>{header}</ModalHeader>

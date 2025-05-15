@@ -2,6 +2,7 @@ import { HStack, PinInput, PinInputField, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { TEST_IDS } from '~/constants';
 import { useVerifyOtpMutation } from '~/redux';
 import { selectError, selectUserEmail } from '~/redux/selectors';
 import { AuthPopupProps } from '~/types';
@@ -47,7 +48,10 @@ export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
                 {Array(6)
                     .fill(0)
                     .map((_, i) => (
-                        <PinInputField key={i} />
+                        <PinInputField
+                            key={i}
+                            data-test-id={`${TEST_IDS.modals.otp.digitInput}${i}`}
+                        />
                     ))}
             </PinInput>
         </HStack>
@@ -61,6 +65,8 @@ export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
             description={description}
             footer={footer}
             content={content}
+            dataTestIdCloseButton={TEST_IDS.modals.otp.closeButton}
+            dataTestIdWindow={TEST_IDS.modals.otp.window}
         />
     );
 };

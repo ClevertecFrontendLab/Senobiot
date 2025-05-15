@@ -1,5 +1,7 @@
 import { Link, Text } from '@chakra-ui/react';
 
+import { TEST_IDS } from '~/constants';
+
 import { ModalPopup } from '../../Default';
 
 export type AuthPopupProps = {
@@ -7,7 +9,7 @@ export type AuthPopupProps = {
     onClose: () => void;
 };
 
-export const VerificationSend: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
+export const RegistrationSuccess: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
     const description = (
         <Text>
             Мы отправили вам на почту
@@ -24,6 +26,8 @@ export const VerificationSend: React.FC<AuthPopupProps> = ({ isOpen, onClose }) 
 
     return (
         <ModalPopup
+            dataTestIdWindow={TEST_IDS.modals.signUpSuccess.window}
+            dataTestIdCloseButton={TEST_IDS.modals.signUpSuccess.closeButton}
             isOpen={isOpen}
             onClose={onClose}
             imageSrc='/modals/modal-verification.png'

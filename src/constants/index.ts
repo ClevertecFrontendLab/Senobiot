@@ -32,26 +32,66 @@ export const TEST_IDS = {
     filtersFindButton: 'find-recipe-button',
     filtersCategoryInput: 'filter-menu-button-категория',
     filtersTag: 'filter-tag',
-    form: {
-        login: {
+    modals: {
+        signInError: {
+            window: 'sign-in-error-modal',
+            closeButton: 'close-button',
+            repeatButton: 'repeat-button ',
+        },
+        signUpSuccess: {
+            window: 'sign-up-success-modal',
+            closeButton: 'close-button',
+        },
+        verificationFailed: {
+            window: 'email-verification-failed-modal',
+            closeButton: 'close-button',
+        },
+        restoreByEmail: {
+            window: 'send-email-modal',
+            email: 'email-input',
+            submitButton: 'submit-button',
+            closeButton: 'close-button',
+        },
+        otp: {
+            window: 'verification-code-modal',
+            closeButton: 'close-button',
+            digitInput: 'verification-code-input-',
+        },
+        resetPassword: {
+            window: 'reset-credentials-modal',
+            closeButton: 'close-button',
+            login: 'login-input',
+            password: 'password-input',
+            passwordConfirm: 'confirm-password-input',
+            submitButton: 'submit-button',
+        },
+    },
+    pages: {
+        signIn: {
             form: 'sign-in-form',
             login: 'login-input',
             password: 'password-input',
-            passwordVisibility: 'password-visibility-button',
-            buttonSubmit: 'submit-button',
-            restoreLink: 'forgot-password',
+            passwordShowButton: 'password-visibility-button',
+            submitButton: 'submit-button',
+            forgotLink: 'forgot-password',
+        },
+        signUp: {
+            firstStep: {
+                progress: 'sign-up-progress',
+                form: 'sign-up-form',
+                firstName: 'first-name-input',
+                lastName: 'last-name-input',
+                email: 'email-input',
+                nextButton: 'submit-button',
+            },
+            secondStep: {
+                login: 'login-input',
+                password: 'password-input',
+                passwordConfirm: 'confirm-password-input',
+                submitButton: 'submit-button',
+            },
         },
     },
-    formRegistrationProgress: 'sign-up-progress',
-    formRegistration: 'sign-up-form',
-    formRegistrationInputName: 'first-name-input',
-    formRegistrationInputLastName: 'last-name-input',
-    formRegistrationInputEmail: 'email-input',
-    formRegistrationInputLogin: 'login-input',
-    formRegistrationInputPassword: 'password-input',
-    formRegistrationInputPasswordConfirm: 'confirm-password-input',
-    formRegistrationNextButton: 'submit-button',
-    formRegistrationSubmitButton: 'submit-button',
     footer: 'footer',
     hamburgerIcon: 'hamburger-icon',
     hamburgerCloseButton: 'close-icon',
@@ -198,7 +238,7 @@ export const LOGIN_INPUT_LIST: LoginInputsListProps[] = [
         field: 'login',
         label: 'Логин для входа на сайт:',
         placeholder: 'Логин',
-        dataTestId: TEST_IDS.form.login.login,
+        dataTestId: TEST_IDS.pages.signIn.login,
         autocomplete: 'username',
     },
     {
@@ -206,7 +246,7 @@ export const LOGIN_INPUT_LIST: LoginInputsListProps[] = [
         label: 'Пароль:',
         type: 'password',
         placeholder: 'Пароль',
-        dataTestId: TEST_IDS.form.login.password,
+        dataTestId: TEST_IDS.pages.signIn.password,
         autocomplete: 'current-password',
     },
 ];
@@ -218,6 +258,7 @@ export const RESTORE_INPUT_LIST: ResetnInputsListProps[] = [
         placeholder: 'Логин',
         helper: 'Логин не менее 5 символов, только латиница',
         autocomplete: 'username',
+        dataTestId: TEST_IDS.modals.resetPassword.login,
     },
     {
         field: 'password',
@@ -226,6 +267,7 @@ export const RESTORE_INPUT_LIST: ResetnInputsListProps[] = [
         placeholder: 'Пароль',
         helper: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
         autocomplete: 'current-password',
+        dataTestId: TEST_IDS.modals.resetPassword.password,
     },
     {
         field: 'passwordConfirm',
@@ -233,6 +275,7 @@ export const RESTORE_INPUT_LIST: ResetnInputsListProps[] = [
         type: 'password',
         placeholder: 'Пароль',
         autocomplete: 'new-password',
+        dataTestId: TEST_IDS.modals.resetPassword.passwordConfirm,
     },
 ];
 
@@ -241,21 +284,21 @@ export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
         field: 'firstName',
         label: 'Ваше имя',
         placeholder: 'Имя',
-        dataTestId: TEST_IDS.formRegistrationInputName,
+        dataTestId: TEST_IDS.pages.signUp.firstStep.firstName,
         autocomplete: 'given-name',
     },
     {
         field: 'lastName',
         label: 'Ваша фамилия',
         placeholder: 'Фамилия',
-        dataTestId: TEST_IDS.formRegistrationInputLastName,
+        dataTestId: TEST_IDS.pages.signUp.firstStep.lastName,
         autocomplete: 'family-name',
     },
     {
         field: 'email',
         label: 'Ваш e-mail',
         placeholder: 'email',
-        dataTestId: TEST_IDS.formRegistrationInputEmail,
+        dataTestId: TEST_IDS.pages.signUp.firstStep.email,
         autocomplete: 'email',
     },
     {
@@ -263,7 +306,7 @@ export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
         label: 'Логин для входа на сайт:',
         // helper: 'Логин не менее 5 символов, только латиница',
         placeholder: 'Логин',
-        dataTestId: TEST_IDS.formRegistrationInputLogin,
+        dataTestId: TEST_IDS.pages.signUp.secondStep.login,
         autocomplete: 'username',
     },
     {
@@ -272,7 +315,7 @@ export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
         type: 'password',
         placeholder: 'Пароль',
         // helper: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
-        dataTestId: TEST_IDS.formRegistrationInputPassword,
+        dataTestId: TEST_IDS.pages.signUp.secondStep.password,
         autocomplete: 'new-password',
     },
     {
@@ -280,7 +323,7 @@ export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
         label: 'Повторите пароль:',
         type: 'password',
         placeholder: 'Пароль',
-        dataTestId: TEST_IDS.formRegistrationInputPasswordConfirm,
+        dataTestId: TEST_IDS.pages.signUp.secondStep.passwordConfirm,
         autocomplete: 'new-password',
     },
 ];

@@ -1,6 +1,7 @@
 import { Text, VStack } from '@chakra-ui/react';
 
 import { ButtonBlack, FormInput } from '~/components/shared-components';
+import { TEST_IDS } from '~/constants';
 import { useRestoreForm } from '~/hooks';
 import { AuthPopupProps } from '~/types';
 
@@ -26,13 +27,20 @@ export const RestoreByEmail: React.FC<AuthPopupProps> = ({ isOpen, onClose }) =>
                 onBlur={handleBlur}
                 placeholder='email'
                 error={error}
+                dataTestId={TEST_IDS.modals.restoreByEmail.email}
             />
-            <ButtonBlack text='Получить код' onClick={handleSubmit} />
+            <ButtonBlack
+                text='Получить код'
+                onClick={handleSubmit}
+                dataTestId={TEST_IDS.modals.restoreByEmail.submitButton}
+            />
         </VStack>
     );
 
     return (
         <ModalPopup
+            dataTestIdWindow={TEST_IDS.modals.restoreByEmail.window}
+            dataTestIdCloseButton={TEST_IDS.modals.restoreByEmail.closeButton}
             isOpen={isOpen}
             onClose={onClose}
             imageSrc='/modals/modal-login-error.png'

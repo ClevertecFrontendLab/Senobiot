@@ -9,7 +9,7 @@ import {
     REGISTRATION_INPUT_LIST,
     TEST_IDS,
 } from '~/constants';
-import { useRegistrationForm } from '~/hooks/useRegistrationForm';
+import { useRegistrationForm } from '~/hooks';
 
 import * as styles from '../Auth.styles';
 import RegistrationStep from './Step';
@@ -35,7 +35,7 @@ const RegistrationPage: React.FC = () => {
             <form
                 onSubmit={handleSubmit}
                 style={{ width: 'inherit' }}
-                data-test-id={TEST_IDS.formRegistration}
+                data-test-id={TEST_IDS.pages.signUp.firstStep.form}
             >
                 <VStack spacing={4} sx={styles.form}>
                     <VStack sx={styles.progressWrapper}>
@@ -48,7 +48,7 @@ const RegistrationPage: React.FC = () => {
                             }
                         />
                         <Progress
-                            data-test-id={TEST_IDS.formRegistrationProgress}
+                            data-test-id={TEST_IDS.pages.signUp.firstStep.progress}
                             value={getProgress()}
                             size='sm'
                             sx={styles.progressBar}
@@ -69,7 +69,7 @@ const RegistrationPage: React.FC = () => {
                     />
                     {step === 1 ? (
                         <Button
-                            data-test-id={TEST_IDS.formRegistrationSubmitButton}
+                            data-test-id={TEST_IDS.pages.signUp.firstStep.nextButton}
                             sx={styles.buttonRegister}
                             onClick={handleNext}
                         >
@@ -79,7 +79,7 @@ const RegistrationPage: React.FC = () => {
                         <Button
                             sx={styles.buttonRegister}
                             type='submit'
-                            data-test-id={TEST_IDS.formRegistrationSubmitButton}
+                            data-test-id={TEST_IDS.pages.signUp.secondStep.submitButton}
                         >
                             {BUTTONS_TEXT.registration.step2}
                         </Button>
