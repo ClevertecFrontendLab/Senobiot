@@ -179,6 +179,7 @@ export type AlertProps = {
     title?: string;
     body?: string;
     status?: AlertStatus;
+    noBody?: boolean;
 };
 
 export type BurgerNavMenuProps = {

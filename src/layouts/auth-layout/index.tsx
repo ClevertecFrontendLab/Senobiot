@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '~/components/layouts-components';
 import { AlertPopup } from '~/components/shared-components';
 import { selectError, selectLoadingStatus, selectPopup } from '~/redux/selectors';
-import { setAppError } from '~/redux/store/app-slice';
+import { setAppError, setAppPopup } from '~/redux/store/app-slice';
 import { AuthViews } from '~/views';
 
 export const AuthLayout: React.FC = () => {
@@ -14,6 +14,9 @@ export const AuthLayout: React.FC = () => {
     const dispatch = useDispatch();
     const resetError = useCallback(() => {
         dispatch(setAppError(null));
+    }, [dispatch]);
+    const closePopup = useCallback(() => {
+        dispatch(setAppPopup(null));
     }, [dispatch]);
 
     return (
@@ -27,7 +30,9 @@ export const AuthLayout: React.FC = () => {
                     onClose={resetError}
                 />
             )}
-            {popup && <AlertPopup title={popup} onClose={resetError} status='success' />}
+            {popup && (
+                <AlertPopup title={popup} onClose={closePopup} status='success' noBody={true} />
+            )}
         </>
     );
 };

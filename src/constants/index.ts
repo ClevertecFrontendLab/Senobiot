@@ -116,6 +116,10 @@ export const ALERTS: {
     },
 };
 
+export const POPUPS = {
+    resetPasswordSuccess: 'Восстановление данных успешно',
+};
+
 export const INSCRIPTIONS = {
     footer: {
         title: 'Версия программы 03.25',

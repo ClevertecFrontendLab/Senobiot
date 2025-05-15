@@ -11,6 +11,7 @@ export const AlertPopup: React.FC<AlertProps> = ({
     title = ALERTS.default.title,
     body = ALERTS.default.body,
     status = 'error',
+    noBody = false,
 }) => (
     <Alert
         data-test-id={TEST_IDS.alert}
@@ -21,9 +22,11 @@ export const AlertPopup: React.FC<AlertProps> = ({
         <AlertIcon boxSize='24px' mr={3} />
         <Box flex='1'>
             <AlertTitle fontWeight={700}>{title}</AlertTitle>
-            <AlertDescription display='block' fontWeight={400}>
-                {body}
-            </AlertDescription>
+            {!noBody && (
+                <AlertDescription display='block' fontWeight={400}>
+                    {body}
+                </AlertDescription>
+            )}
         </Box>
         {onClose && (
             <CloseButton

@@ -27,6 +27,9 @@ export const appSlice = createSlice({
         setAppModal(state, { payload: modal }: PayloadAction<Modals | null>) {
             state.modal = modal;
         },
+        setAppPopup(state, { payload: popup }: PayloadAction<string | null>) {
+            state.popup = popup;
+        },
         setLogged(state, { payload: isLogged }: PayloadAction<boolean>) {
             state.isLogged = isLogged;
         },
@@ -38,5 +41,6 @@ export const appSlice = createSlice({
 export const userLoadingSelector = (state: ApplicationState) => state.app.isLoading;
 export const userErrorSelector = (state: ApplicationState) => state.app.error;
 
-export const { setAppError, setAppLoader, setLogged, setAppModal, setUserEmail } = appSlice.actions;
+export const { setAppError, setAppLoader, setLogged, setAppModal, setUserEmail, setAppPopup } =
+    appSlice.actions;
 export default appSlice.reducer;

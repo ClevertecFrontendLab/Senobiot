@@ -1,6 +1,6 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 
-import { ALERTS } from '~/constants';
+import { ALERTS, POPUPS } from '~/constants';
 import { Modals } from '~/types';
 
 import { authApi } from '..';
@@ -8,6 +8,7 @@ import {
     setAppError,
     setAppLoader,
     setAppModal,
+    setAppPopup,
     setLogged,
     setUserEmail,
 } from '../store/app-slice';
@@ -94,6 +95,15 @@ listener.startListening({
     effect: (_, listenerApi) => {
         listenerApi.dispatch(setAppLoader(false));
         listenerApi.dispatch(setAppModal(Modals.AUTH_RESET_PASSWORD));
+    },
+});
+
+listener.startListening({
+    matcher: authApi.endpoints.reset.matchFulfilled,
+    effect: (_, listenerApi) => {
+        listenerApi.dispatch(setAppLoader(false));
+        listenerApi.dispatch(setAppModal(null));
+        listenerApi.dispatch(setAppPopup(POPUPS.resetPasswordSuccess));
     },
 });
 

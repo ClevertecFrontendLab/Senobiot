@@ -5,11 +5,11 @@ export const getAlertStyles = (status: AlertStatus): SystemStyleObject => ({
     borderRadius: 'md',
     position: 'fixed',
     w: { base: '328px', xl: '400px' },
-    minH: '72px',
+    minH: status === 'success' ? '48px' : '72px',
     left: '50%',
     transform: 'translateX(-50%)',
     bottom: { base: '100px', xl: '80px' },
-    zIndex: 100,
+    zIndex: 1401,
 });
 
 export const alertCloseButtonStyles = {
