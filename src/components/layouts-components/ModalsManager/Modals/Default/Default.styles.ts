@@ -1,6 +1,6 @@
 export const overlay = {
     backdropFilter: 'blur(2px)',
-    zIndex: 99,
+    // zIndex: 99,
 };
 
 export const content = {
@@ -10,6 +10,9 @@ export const content = {
     p: 8,
     borderRadius: 'md',
     justifyContent: 'space-between',
+    // zIndex: 199,
+    // '& .chakra-modal__content-container': { zIndex: 150 },
+    // '.chakra-modal__content-container': { zIndex: 150 },
 };
 
 export const closeButton = {

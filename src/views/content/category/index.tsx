@@ -103,7 +103,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         return <Navigate to={`/${EXCLUDED_ROUTES.notFound}`} replace />;
     }
 
-    if (isLoadingCategory || isLoadingRelevant) {
+    if ((isLoadingCategory || isLoadingRelevant) && !filters.allergens?.length) {
         return <Loader />;
     }
 

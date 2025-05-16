@@ -25,7 +25,7 @@ export const JuiciestRecipesSection: React.FC<JuiciestRecipesSectionProps> = ({
             <Flex justifyContent='space-between'>
                 <CategoryHeader title='Самое сочное' mb={PADDINGS.subsectionHeaderMb} />
                 <ButtonViewMore
-                    display={{ base: 'none', md: 'flex' }}
+                    display={{ base: 'none', xl: 'flex' }}
                     as={Link}
                     to='/the-juiciest'
                     data-test-id={TEST_IDS.juciestLink}
@@ -67,7 +67,7 @@ export const JuiciestRecipesSection: React.FC<JuiciestRecipesSectionProps> = ({
             </Flex>
             <Flex
                 justifyContent='center'
-                display={{ base: 'flex', md: 'none' }}
+                display={{ base: 'flex', xl: 'none' }}
                 mt={{ base: 3, xl: 0 }}
             >
                 <ButtonViewMore

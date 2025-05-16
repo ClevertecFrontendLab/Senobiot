@@ -66,7 +66,7 @@ listener.startListening({
 listener.startListening({
     matcher: authApi.endpoints.signIn.matchFulfilled,
     effect: (_, listenerApi) => {
-        listenerApi.dispatch(setAppLoader(false));
+        listenerApi.dispatch(setAppLoader(true));
         listenerApi.dispatch(setLogged(true));
     },
 });

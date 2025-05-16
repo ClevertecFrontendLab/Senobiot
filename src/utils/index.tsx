@@ -49,7 +49,7 @@ export const getLocallySavedNavigationConfig = () => {
     if (saved) {
         return JSON.parse(saved);
     }
-    return {};
+    return null;
 };
 
 export const saveLocallyNavigationConfig = (config: NavigationConfig) => {

@@ -45,7 +45,11 @@ export const ModalPopup: React.FC<ModalPopupProps> = ({
         motionPreset='scale'
     >
         <ModalOverlay sx={styles.overlay} />
-        <ModalContent sx={styles.content} data-test-id={dataTestIdWindow}>
+        <ModalContent
+            sx={styles.content}
+            data-test-id={dataTestIdWindow}
+            containerProps={{ zIndex: 150 }}
+        >
             <ModalCloseButton sx={styles.closeButton} data-test-id={dataTestIdCloseButton} />
             {imageSrc && <Image sx={styles.image} src={imageSrc} alt='popup' />}
             <VStack gap={0}>
