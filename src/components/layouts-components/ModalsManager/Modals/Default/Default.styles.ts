@@ -1,6 +1,6 @@
 export const overlay = {
     backdropFilter: 'blur(2px)',
-    // zIndex: 99,
+    zIndex: 99,
 };
 
 export const content = {

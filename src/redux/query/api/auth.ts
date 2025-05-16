@@ -85,4 +85,6 @@ export const {
     useRestoreMutation,
     useVerifyOtpMutation,
     useResetMutation,
+    useCheckAuthQuery,
+    useRefreshAuthMutation,
 } = authApi;

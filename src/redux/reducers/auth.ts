@@ -26,6 +26,7 @@ const auth = createSlice({
                 baseMeta.response?.headers.get('authentication-access');
 
             if (accessToken) {
+                sessionStorage.setItem('accessToken', accessToken);
                 state.accessToken = accessToken;
             }
         });
