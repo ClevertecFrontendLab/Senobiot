@@ -1,7 +1,9 @@
 import React, { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router';
 
 import { NavigationConfig } from '~/types';
+
+import { RouteGuard } from './guard';
 
 const CategoryPage = lazy(() => import('./category'));
 const RecieptPage = lazy(() => import('./reciept'));
@@ -12,19 +14,19 @@ export const ContentViews: React.FC<{ navigationConfig: NavigationConfig }> = ({
     navigationConfig,
 }) => (
     <Suspense fallback={<div>Загрузка...</div>}>
-        <Routes>
-            <Route
-                path=':category/:subcategory/:id'
-                element={<RecieptPage navigationConfig={navigationConfig} />}
-            />
-            <Route path='/' element={<HomePage navigationConfig={navigationConfig} />} />
-            <Route
-                path='/:category/:subcategory?'
-                element={<CategoryPage navigationConfig={navigationConfig} />}
-            />
-            <Route path='/not-found' element={<ErrorPage />} />
-            <Route path='/login' element={<Navigate to='/' replace />} />
-            <Route path='*' element={<Navigate to='/not-found' replace />} />
-        </Routes>
+        <RouteGuard navigationConfig={navigationConfig}>
+            <Routes>
+                <Route path='/' element={<HomePage navigationConfig={navigationConfig} />} />
+                <Route
+                    path=':category/:subcategory/:id'
+                    element={<RecieptPage navigationConfig={navigationConfig} />}
+                />
+                <Route
+                    path='/:category/:subcategory?'
+                    element={<CategoryPage navigationConfig={navigationConfig} />}
+                />
+                <Route path='/not-found' element={<ErrorPage />} />
+            </Routes>
+        </RouteGuard>
     </Suspense>
 );

@@ -49,7 +49,6 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
         isErrorLatest,
         isLoadingLatest,
     } = useRecipeRequests({ recipeId: params.id, idKeys });
-
     const { breadcrumbs } = useCurrentLocation(params, navigationConfig, recipeData?.title);
 
     useEffect(() => {

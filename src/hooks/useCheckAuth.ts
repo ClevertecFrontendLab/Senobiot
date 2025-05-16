@@ -6,25 +6,32 @@ import { setLogged } from '~/redux/store/app-slice';
 
 export const useCheckAuth = () => {
     const dispatch = useDispatch();
+    const savedToken = sessionStorage.getItem('accessToken');
+
     const {
         data,
         error,
         isLoading: isCheckingAuth,
         isError: isErrorChecking,
-    } = useCheckAuthQuery();
+    } = useCheckAuthQuery(undefined, { skip: !!savedToken });
+
     const [refreshAuth, { isLoading: isRefreshing, isError: isErrorRefreshing }] =
         useRefreshAuthMutation();
 
     const [hasTriedRefresh, setHasTriedRefresh] = useState(false);
 
     useEffect(() => {
-        if (!isRefreshing && !hasTriedRefresh) {
+        if (savedToken) {
+            dispatch(setAccessToken(savedToken));
+            dispatch(setLogged(true));
+        } else if (!isRefreshing && !hasTriedRefresh) {
             if (data) {
                 dispatch(setLogged(true));
             } else if (error) {
                 refreshAuth()
                     .unwrap()
                     .then((res) => {
+                        sessionStorage.setItem('accessToken', res.accessToken);
                         dispatch(setAccessToken(res.accessToken));
                         dispatch(setLogged(true));
                     })
@@ -36,7 +43,7 @@ export const useCheckAuth = () => {
                     });
             }
         }
-    }, [data, error, isRefreshing, hasTriedRefresh, dispatch, refreshAuth]);
+    }, [savedToken, data, error, isRefreshing, hasTriedRefresh, dispatch, refreshAuth]);
 
     return {
         isLoading: isCheckingAuth || isRefreshing,

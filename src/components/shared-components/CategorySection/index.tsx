@@ -20,9 +20,10 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     noNavMenu = false,
     onClick,
     markdownText,
+    recieptsByCategory,
 }) => {
-    if (!categoryRecipes?.length) return null;
     const { subCategoriesList } = categoryData || {};
+    const recipes = categoryRecipes?.length ? categoryRecipes : recieptsByCategory;
 
     return (
         <Flex justifyContent='space-between' mb={mb} direction='column' w='100%'>
@@ -30,7 +31,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                 <CategoryMenu list={subCategoriesList} activeSubcategory={activeSubcategory} />
             )}
             <Flex flexWrap='wrap' gap={4}>
-                {categoryRecipes?.map((card, index) => {
+                {recipes?.map((card, index) => {
                     const { title, description, image, category, id, likes, bookmarks } = card;
 
                     return (

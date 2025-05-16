@@ -1,7 +1,7 @@
 import { VStack } from '@chakra-ui/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import { Loader } from '~/components/layouts-components';
 import { SearchBar } from '~/components/layouts-components/SearchBar';
@@ -98,10 +98,6 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
         setCategoryReciepes([]);
         setPage(1);
     }, [apiQueryId]);
-
-    if (!currentCategory && !isJuiciest) {
-        return <Navigate to={`/${EXCLUDED_ROUTES.notFound}`} replace />;
-    }
 
     if ((isLoadingCategory || isLoadingRelevant) && !filters.allergens?.length) {
         return <Loader />;

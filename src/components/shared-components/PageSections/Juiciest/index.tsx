@@ -35,16 +35,7 @@ export const JuiciestRecipesSection: React.FC<JuiciestRecipesSectionProps> = ({
             </Flex>
             <Flex flexWrap='wrap' gap={4}>
                 {recipes.map((card, index) => {
-                    const {
-                        title,
-                        description,
-                        category,
-                        subcategory,
-                        image,
-                        id,
-                        likes,
-                        bookmarks,
-                    } = card;
+                    const { title, description, category, image, id, likes, bookmarks } = card;
 
                     return (
                         <CategoryCard
@@ -56,7 +47,7 @@ export const JuiciestRecipesSection: React.FC<JuiciestRecipesSectionProps> = ({
                             categories={category}
                             bookmarkMaxHeight={6}
                             coockingButtonAs={Link}
-                            coockingButtonRoute={`/${category[0]}/${subcategory[0]}/${id}`}
+                            coockingButtonRoute={`${category[0].route}/${id}`}
                             coockingButtonDataId={index}
                             titleTextHighlight={markdownText}
                             bookmarksBookmarksValue={bookmarks}
