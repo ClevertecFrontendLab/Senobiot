@@ -23,11 +23,11 @@ import {
     SelectRegular,
     SwitchToggler,
 } from '~/components/shared-components';
-import { TEST_IDS } from '~/constants';
-import { BORDERS, SHADOWS } from '~/constants/styles';
+import { BASE_URL, BUTTONS_TEXT, PLACEHOLDERS, TEST_IDS, TITLES } from '~/constants';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { getCategories, getMeats, getSides } from '~/redux/selectors';
 
+import * as styles from './Filter.styles';
 import FilterTag from './FilterTag';
 import FilterTitle from './FilterTitle';
 
@@ -40,7 +40,7 @@ export const RecipeFilter: React.FC = () => {
 
     const authors = ['Сергей Разумов'];
 
-    const { isOpen, closeDrawer, setFilters, filters } = useFilters();
+    const { isOpen, closeFilters, setFilters, filters } = useFilters();
 
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isAuthorsOpen, setIsAuthorsOpen] = useState(false);
@@ -107,7 +107,7 @@ export const RecipeFilter: React.FC = () => {
         });
 
         setSelectedCategories([]);
-        closeDrawer();
+        closeFilters();
     };
 
     const clearFilters = () => {
@@ -127,75 +127,31 @@ export const RecipeFilter: React.FC = () => {
     };
 
     return (
-        <Drawer isOpen={isOpen} placement='right' onClose={closeDrawer}>
+        <Drawer isOpen={isOpen} placement='right' onClose={closeFilters}>
             <DrawerOverlay />
-            <DrawerContent
-                minW={{ base: 344, xl: 463 }}
-                p={{ base: 4, xl: 8 }}
-                pr={{ base: 1.5, xl: 2 }}
-                data-test-id={TEST_IDS.filters}
-            >
+            <DrawerContent data-test-id={TEST_IDS.filters} sx={styles.content}>
                 <DrawerCloseButton
                     data-test-id={TEST_IDS.filtersCloseButton}
-                    top={{ base: 5, xl: 8 }}
-                    right={{ base: 3, xl: 5 }}
+                    sx={styles.closeButton}
                 >
-                    <Image src='/icons/close-filter-icon.svg'></Image>
+                    <Image src={`${BASE_URL}assets/images/icons/close-filter-icon.svg`}></Image>
                 </DrawerCloseButton>
-                <DrawerHeader p={0} mb={8}>
-                    Фильтр
-                </DrawerHeader>
-                <DrawerBody
-                    sx={{
-                        '&::-webkit-scrollbar': {
-                            width: 2,
-                        },
-                        '&::-webkit-scrollbar-track': {
-                            background: 'blackAlpha.50',
-                        },
-                        '&::-webkit-scrollbar-thumb': {
-                            background: 'blackAlpha.300',
-                            borderRadius: 8,
-                        },
-                    }}
-                    width='100%'
-                    display='flex'
-                    flexDirection='column'
-                    justifyContent='space-between'
-                    p={0}
-                    h='100%'
-                >
-                    <VStack w='100%' gap={4} pr={{ base: 2.5 }} mb={6}>
-                        {/* Категория */}
+                <DrawerHeader sx={styles.header}>Фильтр</DrawerHeader>
+                <DrawerBody sx={styles.body}>
+                    <VStack sx={styles.filtersWrapper}>
                         <VStack w='100%' position='relative'>
                             <SelectInnerTags
-                                dataTestId='filter-menu-button-категория'
-                                // dataTestAllergenTag='filter-tag'
+                                dataTestId={TEST_IDS.filtersCategoryInput}
                                 options={selectedCategories}
                                 toggleDropdown={toggleCategoriesDropdown}
                                 isOpen={isCategoryOpen}
                                 onReset={resetCategories}
                                 noTagCloseButton={true}
-                                placeholder='Категория'
+                                placeholder={PLACEHOLDERS.filters.category}
                                 noResetButton={!selectedCategories.length}
-                                width='100%'
                             />
-                            {/* <SelectRegular
-                                dataTestId='filter-menu-button-категория'
-                                noResetButton={!selectedCategories.length}
-                                placeholder='Категория'
-                                isOpen={isCategoryOpen}
-                                toggleDropdown={toggleCategoriesDropdown}
-                                onReset={resetCategories}
-                            /> */}
                             {isCategoryOpen && (
-                                <VStack
-                                    align='start'
-                                    w='100%'
-                                    borderRadius='4px'
-                                    boxShadow={SHADOWS.allergensMenu}
-                                    border={BORDERS.light}
-                                >
+                                <VStack sx={styles.multiCheckBoxWrapper}>
                                     {categories.map((category, index) => (
                                         <CheckBoxLime
                                             dataTestCatagory={`checkbox-${category.toLowerCase()}`}
@@ -204,25 +160,21 @@ export const RecipeFilter: React.FC = () => {
                                             item={category}
                                             isChecked={selectedCategories.includes(category)}
                                             toggleItem={toggleCategorySelection}
-                                            // dataTestIds={index}
-                                            // dataTestkey='allergen-'
                                         />
                                     ))}
                                 </VStack>
                             )}
                         </VStack>
-
-                        {/* Авторы */}
                         <VStack w='100%'>
                             <SelectRegular
                                 noResetButton={!selectedAuthors.length}
-                                placeholder='Поиск по автору'
+                                placeholder={PLACEHOLDERS.filters.author}
                                 isOpen={isAuthorsOpen}
                                 toggleDropdown={toggleAuthorsDropdown}
                                 onReset={resetAuthors}
                             />
                             {isAuthorsOpen && (
-                                <VStack w='100%' align='start'>
+                                <VStack sx={styles.multiCheckBoxWrapper}>
                                     {authors.map((author, index) => (
                                         <CheckBoxLime
                                             key={index}
@@ -230,17 +182,13 @@ export const RecipeFilter: React.FC = () => {
                                             item={author}
                                             isChecked={selectedAuthors.includes(author)}
                                             toggleItem={toggleAuthorSelection}
-                                            // dataTestIds={index}
-                                            // dataTestkey='allergen-'
                                         />
                                     ))}
                                 </VStack>
                             )}
                         </VStack>
-
-                        {/* meat */}
                         <Box mt={4} w='100%'>
-                            <FilterTitle title='Тип мяса' />
+                            <FilterTitle title={TITLES.filters.meat} />
                             {meats.map((meat, index) => (
                                 <CheckBoxLime
                                     labelColor='#000'
@@ -253,10 +201,8 @@ export const RecipeFilter: React.FC = () => {
                                 />
                             ))}
                         </Box>
-
-                        {/* side */}
                         <Box mt={4} w='100%'>
-                            <FilterTitle title='Тип гарнира' />
+                            <FilterTitle title={TITLES.filters.garnish} />
                             {sides.map((side, index) => (
                                 <CheckBoxLime
                                     dataTestCatagory={`checkbox-${side.toLowerCase()}`}
@@ -270,18 +216,15 @@ export const RecipeFilter: React.FC = () => {
                                 />
                             ))}
                         </Box>
-
-                        {/* Allergens */}
                         <Box w='100%'>
-                            <Flex w='100%' alignItems='center' wrap='wrap' gap={2}>
+                            <Flex sx={styles.allergensWrapper}>
                                 <SwitchToggler
                                     dataTestId='allergens-switcher-filter'
-                                    text=' Исключить аллергены'
+                                    text={TITLES.filters.exludeAllergens}
                                     onChange={() => setIsExcludeAllergens(!isExcludeAllergens)}
                                     isChecked={isExcludeAllergens}
                                 />
                                 <AllergensFilter
-                                    // dataTestAllergenTag='filter-tag'
                                     dataTestCheckBoKeykey='allergen-'
                                     dataTestIdToggler='allergens-menu-button-filter'
                                     disabled={!isExcludeAllergens}
@@ -332,22 +275,17 @@ export const RecipeFilter: React.FC = () => {
                         ))}
                     </HStack>
                 </DrawerBody>
-                <DrawerFooter display='flex' p='32px 14px 0 0' w='100%'>
+                <DrawerFooter sx={styles.footer}>
                     <Button
-                        fontSize='14px'
-                        fontWeight={600}
-                        variant='outline'
-                        mr={2}
-                        onClick={clearFilters}
-                        px={6}
-                        border={BORDERS.main}
                         data-test-id={TEST_IDS.filtersClearButton}
+                        onClick={clearFilters}
+                        sx={styles.clearButton}
                     >
-                        Очистить фильтр
+                        {BUTTONS_TEXT.filters.clear}
                     </Button>
                     <Button
-                        fontSize='14px'
-                        fontWeight={600}
+                        data-test-id={TEST_IDS.filtersFindButton}
+                        onClick={searchReciepts}
                         pointerEvents={
                             selectedCategories.length ||
                             selectedAuthors.length ||
@@ -362,14 +300,9 @@ export const RecipeFilter: React.FC = () => {
                             !selectedMeats.length &&
                             !selectedSides.length
                         }
-                        bg='#000'
-                        color='#fff'
-                        onClick={searchReciepts}
-                        px={6}
-                        _hover={{ bg: '#000' }}
-                        data-test-id={TEST_IDS.filtersFindButton}
+                        sx={styles.applyButton}
                     >
-                        Найти рецепт
+                        {BUTTONS_TEXT.filters.apply}
                     </Button>
                 </DrawerFooter>
             </DrawerContent>

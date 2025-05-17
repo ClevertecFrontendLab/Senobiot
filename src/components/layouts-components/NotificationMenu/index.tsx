@@ -2,6 +2,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import { ButtonRounded, ProfileNotification } from '~/components/shared-components';
+import { BASE_URL } from '~/constants';
 import { PADDINGS, WIDTHS } from '~/constants/styles';
 
 export const BookmarkSideMenu: React.FC = () => (
@@ -34,7 +35,7 @@ export const BookmarkSideMenu: React.FC = () => (
         <Box mb={14}>
             <ButtonRounded
                 text='Записать рецепт'
-                iconUrl='/icons/bookmarks/pen.svg'
+                iconUrl={`${BASE_URL}assets/images/icons/bookmarks/pen.svg`}
                 isActive={true}
                 fontWeight={400}
                 activeTextColor='blackAlpha.700'

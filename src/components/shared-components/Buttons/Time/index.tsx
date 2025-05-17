@@ -1,5 +1,7 @@
 import { Button, Image, ResponsiveValue, Text } from '@chakra-ui/react';
 
+import { BASE_URL } from '~/constants';
+
 export type ButtonTimeBtnProps = {
     timeBtnText?: string;
     timeBtnIconsize?: string | number;
@@ -24,7 +26,7 @@ export const ButtonTimeBtn: React.FC<ButtonTimeBtnProps> = ({
         mt='auto'
         leftIcon={
             <Image
-                src='/icons/bookmarks/clock.svg'
+                src={`${BASE_URL}assets/images/icons/bookmarks/clock.svg`}
                 alt='coocking time icon'
                 boxSize={timeBtnIconsize}
             />

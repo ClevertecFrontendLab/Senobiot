@@ -2,50 +2,13 @@ import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import { ButtonRounded } from '~/components/shared-components';
-import { TEST_IDS } from '~/constants';
-import { PADDINGS } from '~/constants/styles';
+import { BOTTOM_MENU_CONIG, TEST_IDS } from '~/constants';
 
-const bottomMenuProps = [
-    // TODO возможно потом вынести куда
-    {
-        name: 'Главная',
-        iconUrl: '/icons/bottom-menu/home.svg',
-        route: '',
-        isActive: true,
-    },
-    {
-        name: 'Поиск',
-        iconUrl: '/icons/bottom-menu/lense.svg',
-        route: '',
-        isActive: false,
-    },
-    {
-        name: 'Записать',
-        iconUrl: '/icons/bottom-menu/pen.svg',
-        route: '',
-        isActive: false,
-    },
-    {
-        name: 'Мой профиль',
-        iconUrl: '/avatars/avatar-4.png',
-        route: '',
-        isActive: false,
-    },
-];
+import { bottomNavMenuStyles } from './BottomNavMenu.styles';
 
 export const BottomNavMenu: React.FC = () => (
-    <Flex
-        data-test-id={TEST_IDS.footer}
-        position='fixed'
-        bottom={0}
-        zIndex={10}
-        bg='lime.50'
-        display={{ base: 'flex', xl: 'none' }}
-        height={PADDINGS.bottomMnu * 4}
-        width='100%'
-        justifyContent='space-around'
-    >
-        {bottomMenuProps.map((button, index) => (
+    <Flex data-test-id={TEST_IDS.footer} sx={bottomNavMenuStyles}>
+        {BOTTOM_MENU_CONIG.map((button, index) => (
             <ButtonRounded
                 key={index}
                 text={button.name}

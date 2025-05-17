@@ -1,3 +1,4 @@
+export * from './Black';
 export * from './Bookmark';
 export * from './Category';
 export * from './Outlined';

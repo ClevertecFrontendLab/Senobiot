@@ -1,12 +1,7 @@
 import { Box, Flex, VStack } from '@chakra-ui/react';
 import { useCallback, useState } from 'react';
 
-import {
-    CheckBoxLime,
-    SelectInnerTags,
-    SelectOuterTags,
-    TextInputCustom,
-} from '~/components/shared-components';
+import { CheckBoxLime, SelectInnerTags, TextInputCustom } from '~/components/shared-components';
 import { predefinedAllergens, TEST_IDS } from '~/constants';
 import { SHADOWS } from '~/constants/styles';
 import { useFilters } from '~/providers/Filters/useFilters';
@@ -14,7 +9,6 @@ import { AllergensFilterProps } from '~/types';
 
 export const AllergensFilter: React.FC<AllergensFilterProps> = ({
     disabled,
-    outerTags = false,
     dataTestIdToggler,
     dataTestCheckBoKeykey,
     dataTestAllergenTag,
@@ -61,34 +55,23 @@ export const AllergensFilter: React.FC<AllergensFilterProps> = ({
 
     return (
         <Box
-            as='button'
             width='100%'
             position='relative'
-            userSelect={disabled ? 'none' : 'unset'}
-            pointerEvents={disabled ? 'none' : 'auto'}
-            data-test-id={dataTestIdToggler}
+            userSelect={disabled ? 'none' : 'auto'}
+            pointerEvents={disabled ? 'none' : 'all'}
             aria-disabled={disabled}
-            disabled={disabled}
             textAlign='left'
         >
-            {outerTags ? (
-                <SelectOuterTags
-                    options={filters.allergens || []}
-                    toggleDropdown={toggleDropdown}
-                    isOpen={isOpen}
-                    onReset={handleReset}
-                    noTagCloseButton={true}
-                />
-            ) : (
-                <SelectInnerTags
-                    dataTestAllergenTag={dataTestAllergenTag}
-                    options={filters.allergens}
-                    toggleDropdown={toggleDropdown}
-                    isOpen={isOpen}
-                    onReset={handleReset}
-                    noTagCloseButton={true}
-                />
-            )}
+            <SelectInnerTags
+                isDisabled={disabled}
+                dataTestIdToggler={dataTestIdToggler}
+                dataTestAllergenTag={dataTestAllergenTag}
+                options={filters.allergens}
+                toggleDropdown={toggleDropdown}
+                isOpen={isOpen}
+                onReset={handleReset}
+                noTagCloseButton={true}
+            />
             {isOpen && !disabled && (
                 <Box
                     data-test-id={TEST_IDS.allergens}

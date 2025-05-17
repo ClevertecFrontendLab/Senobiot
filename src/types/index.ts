@@ -1,3 +1,4 @@
+import { AlertStatus, ResponsiveValue } from '@chakra-ui/react';
 import { MouseEventHandler } from 'react';
 
 export type RecipeProps = {
@@ -50,7 +51,7 @@ export type CategoriesProps = {
 
 export type CategorySectionProps = {
     activeSubcategory?: string;
-    recieptsData?: RecipeProps[];
+    categoryRecipes?: RecipeProps[];
     categoryData?: AllCategories;
     categoryButtonText?: string;
     noButton?: boolean;
@@ -81,7 +82,7 @@ export type AllCategories = {
     categoryDescription?: string;
     categoryIcon?: string;
     categoryId?: string;
-    apiQureryId?: string;
+    apiQueryId?: string;
     subCategories?: SubCategory[];
     subCategoriesList?: SubCategoryList[];
 };
@@ -97,7 +98,7 @@ export type SubCategory = {
     subcategoryRu: string;
     route: string;
     subCategoriesList: SubCategoryList[];
-    apiQureryId: string;
+    apiQueryId: string;
 };
 
 export type SubCategoryList = {
@@ -121,14 +122,21 @@ export type NavigationConfig = {
 };
 
 export type LocationParams = {
-    category: string;
+    category?: string;
     subcategory?: string;
     id?: string;
 };
 
+export type BreadcrumbsItems = {
+    area?: BreadcrumbItem;
+    category?: BreadcrumbItem;
+    subcategory?: BreadcrumbItem;
+    recipe?: BreadcrumbItem;
+};
+
 export type BreadcrumbItem = {
     label: string;
-    to: string;
+    to?: string;
 };
 
 export type CurrentLocationState = {
@@ -152,16 +160,6 @@ export enum SEARCH_STATE {
     ERROR = 'error-search',
 }
 
-export type RandomCategoryStateProps = {
-    randomCategory: AllCategories;
-    subcategoriesIds: string;
-} | null;
-
-export type RandomCategoryataStateProps = {
-    category: { title: string; description?: string };
-    reciepts?: RecipeProps[];
-};
-
 export type CategoryMenuProps = {
     list: SubCategoryList[];
     activeSubcategory?: string;
@@ -171,10 +169,13 @@ export type SearchInputProps = {
     onSearch: (searchText: string) => void;
 };
 
-export type ServerErrorAlertProps = {
+export type AlertProps = {
     onClose?: () => void;
     title?: string;
     body?: string;
+    status?: AlertStatus;
+    noBody?: boolean;
+    position?: { left?: ResponsiveValue<string> };
 };
 
 export type BurgerNavMenuProps = {
@@ -242,4 +243,177 @@ export type CheckBoxLimeProps = {
     dataTestCatagory?: string;
     px?: number;
     labelColor?: string;
+};
+
+export type RecipesResponse = {
+    data: RecipeProps[];
+    meta: MetaData;
+};
+
+type MetaData = {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+};
+
+export type FormValues = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    login: string;
+    password: string;
+    passwordConfirm: string;
+};
+
+export type FormResetValues = Pick<FormValues, 'login' | 'password' | 'passwordConfirm'>;
+export type FormLoginValues = Pick<FormValues, 'login' | 'password'>;
+export type FormRestoreValues = Pick<FormValues, 'email'>;
+
+export type LoginInputsListProps = {
+    field: keyof FormLoginValues;
+    label: string;
+    placeholder: string;
+    type?: string;
+    helper?: string;
+    dataTestId?: string;
+    autocomplete?: string;
+};
+
+export type ResetnInputsListProps = {
+    field: keyof FormResetValues;
+    label: string;
+    placeholder: string;
+    type?: string;
+    helper?: string;
+    dataTestId?: string;
+    autocomplete?: string;
+};
+
+export type FormErrors = {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    login?: string;
+    password?: string;
+    passwordConfirm?: string;
+};
+
+export type ShowPasswords = {
+    password?: boolean;
+    passwordConfirm?: boolean;
+};
+
+export type FormInputProps = {
+    field: keyof FormValues;
+    label: string;
+    value: string;
+    error?: string;
+    type?: string;
+    placeholder?: string;
+    helper?: string;
+    showPassword?: ShowPasswords;
+    dataTestId?: string;
+    autocomplete?: string;
+    setShowPassword?: (field: keyof FormValues, value: boolean) => void;
+    onChange: (field: keyof FormValues, value: string) => void;
+    onBlur: (field: keyof FormValues, value: string) => void;
+};
+
+export type RegistrationStepProps = {
+    formValues: FormValues;
+    inputList: RegistrationInputsListProps[];
+    errors: FormErrors;
+    showPassword?: ShowPasswords;
+    dataTestId?: string;
+    setShowPassword: (field: keyof FormValues, value: boolean) => void;
+    onChange: (field: keyof FormValues, value: string) => void;
+    onBlur: (field: keyof FormValues, value: string) => void;
+};
+
+export type RegistrationInputsListProps = {
+    field: keyof FormValues;
+    label: string;
+    placeholder: string;
+    type?: string;
+    helper?: string;
+    dataTestId?: string;
+    autocomplete?: string;
+};
+
+export type SignUpRequest = {
+    email: string;
+    login: string;
+    password: string;
+    firstName?: string;
+    lastName?: string;
+};
+
+export type SignInRequest = {
+    login: string;
+    password: string;
+};
+
+export type RestoreRequest = {
+    email: string;
+};
+
+export type OtpVerifyRequest = {
+    email: string;
+    otpToken: string;
+};
+
+export type ResetRequest = {
+    login: string;
+    password: string;
+    passwordConfirm: string;
+};
+
+export type SignUpResponse = {
+    statusCode: number;
+    message: string;
+    error?: string;
+};
+
+export type useReciepeRequestsProps = {
+    randomCategory?: AllCategories;
+    isJuiciest?: boolean;
+    apiQueryId?: string;
+    page?: number;
+    recipeId?: string;
+    idKeys: SubCategoriesByIds;
+    noSkipJuciciest?: boolean;
+};
+
+export type QueryParams = {
+    limit?: number;
+    page?: number;
+    allergens?: string;
+    searchString?: string;
+    meat?: string;
+    garnish?: string;
+    subcategoriesIds?: string;
+    isJuiciest?: boolean;
+    isLatest?: boolean;
+    idKeys: SubCategoriesByIds;
+};
+
+export type AlertError = {
+    title?: string;
+    body?: string;
+    position?: { left?: ResponsiveValue<string> };
+};
+
+export enum Modals {
+    AUTH_VERIFICATION_SEND = 'AUTH_VERIFICATION_SEND',
+    AUTH_VERIFICATION_FAILED = 'AUTH_VERIFICATION_FAILED',
+    AUTH_LOGIN_FAILED = 'AUTH_LOGIN_FAILED',
+    AUTH_RESTORE_BY_EMAIL = 'AUTH_RESTORE_BY_EMAIL',
+    AUTH_ENTER_PIN = 'AUTH_ENTER_PIN',
+    AUTH_RESET_PASSWORD = 'AUTH_RESET_PASSWORD',
+}
+
+export type AuthPopupProps = {
+    isOpen: boolean;
+    onClose: () => void;
 };

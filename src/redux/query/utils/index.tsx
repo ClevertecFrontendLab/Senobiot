@@ -1,15 +1,14 @@
 import { API_QUERY_PARAMS } from '~/constants';
-import { useFilters } from '~/providers/Filters/useFilters';
 import {
     AllCategories,
     CategoriesByIds,
-    RandomCategoryStateProps,
+    QueryParams,
     RecipeProps,
     SubCategoriesByIds,
 } from '~/types';
+import { populateRecieptCategory } from '~/utils';
 
 import { ApiEndpoints } from '../constants/api';
-import { useCategoryRecieptsQuery, useRecieptQuery, useRecipeByCategoryQuery } from '../create-api';
 
 type AllCategoriesResponse = {
     category: string;
@@ -45,6 +44,13 @@ export function transformCategoriesResponse(response: AllCategoriesResponse) {
     const categoriesByIds: CategoriesByIds = {};
     const subCategoriesByIds: SubCategoriesByIds = {};
 
+    if (!Array.isArray(response))
+        return {
+            navigationTree: [],
+            categoriesByIds: {},
+            subCategoriesByIds: {},
+        };
+
     response.forEach((item, _, array) => {
         if (item.rootCategoryId) {
             const category = array.find((e) => e._id === item.rootCategoryId)!;
@@ -65,7 +71,7 @@ export function transformCategoriesResponse(response: AllCategoriesResponse) {
                         route: `/${category?.category}/${e.category}`,
                     })) ?? [],
                 route: `/${category?.category}/${item.category}`,
-                apiQureryId: item._id,
+                apiQueryId: item._id,
             };
 
             return;
@@ -85,7 +91,7 @@ export function transformCategoriesResponse(response: AllCategoriesResponse) {
             categoryDescription: item.description ?? '',
             categoryIcon: BASE_ICON_URL + item.icon,
             route: `/${item.category}/${item.subCategories ? item.subCategories[0]?.category : ''}`,
-            apiQureryId: item.subCategories ? item.subCategories[0]?._id : '',
+            apiQueryId: item.subCategories ? item.subCategories[0]?._id : '',
             subCategoriesList,
             subCategories:
                 item.subCategories?.map((subItem) => ({
@@ -99,7 +105,7 @@ export function transformCategoriesResponse(response: AllCategoriesResponse) {
                     subcategoryRu: subItem.title,
                     subCategoriesList,
                     route: `/${item.category}/${subItem.category}`,
-                    apiQureryId: subItem._id,
+                    apiQueryId: subItem._id,
                 })) ?? [],
         };
 
@@ -122,28 +128,30 @@ export function isRecipeProps(response: unknown): response is RecipeProps {
     return false;
 }
 
-export function transformRecieptsResponse(response: RecipesResponse | RecipeProps) {
+export function transformRecieptsResponse(
+    response: RecipesResponse | RecipeProps,
+    subIds: SubCategoriesByIds,
+) {
     if (!response) {
         return { data: [] };
     }
 
     if ('data' in response && Array.isArray(response.data)) {
-        // RecipesResponse`
+        // RecipesResponse: { data: [{recipe},...] || data:[[reciepe]] }
         const updatedData = response.data.flat().map((e) => ({
-            // ТЕСТЫ КИДАЮТ НЕСТАНДАРТЫЙ ОТВЕТ ВМЕСТО МАССИВА МАССИВ МАССИВОВ в МАССИВАХ ЕАДО ФЛЭТ МОГУТ ПАДАТЬ ТУТ
-            ...e,
+            ...populateRecieptCategory(e, subIds),
             image: e.image ? BASE_ICON_URL + e.image : '',
             id: e._id,
         }));
-        return { ...response, data: updatedData };
+        return { meta: response.meta, data: updatedData };
     } else if (isRecipeProps(response)) {
-        // RecipeProps`
+        // RecipeResponse: {reciepe}
         const updatedData = {
-            ...response,
+            ...populateRecieptCategory(response, subIds),
             image: response.image ? BASE_ICON_URL + response.image : '',
             id: response._id,
         };
-        return { data: [updatedData], meta: { totalPages: 0 } }; // ТЕСТЫ КИДАЮТ НЕСТАНДАРТЫЙ ОТВЕТ ВМЕСТО МАССИВА ПРСОТСТО ОБЪЕКТ БЕЗ ДАТЫ И МЕТЫ
+        return { data: [updatedData], meta: { totalPages: 0 } };
     }
 }
 
@@ -155,119 +163,6 @@ export function transformRecieptResponse(response: RecipeProps) {
 
     return { ...response, image: BASE_ICON_URL + response.image, steps: updatedSteps };
 }
-
-type useReciepeRequestsProps = {
-    randomCategory?: RandomCategoryStateProps;
-    isJuiciest?: boolean;
-    apiQureryId?: string;
-    page?: number;
-    recieptId?: string;
-};
-
-export const useRecipeRequests = ({
-    randomCategory,
-    apiQureryId,
-    isJuiciest,
-    page,
-    recieptId,
-}: useReciepeRequestsProps) => {
-    const { filters } = useFilters();
-
-    const {
-        data: { data: latestData } = {},
-        isLoading: isLoadingLatest,
-        isError: isErrorLatest,
-        isFetching: isFetchingLatest,
-    } = useCategoryRecieptsQuery({
-        ...filters,
-        allergens: filters.allergens?.join(','),
-        limit: API_QUERY_PARAMS.sliderDefaultAmount,
-        isLatest: true,
-    });
-
-    const {
-        data: { data: juciestData } = {},
-        isLoading: isLoadingJuciest,
-        isError: isErrorJuciest,
-        isFetching: isFetchingJuiciest,
-    } = useCategoryRecieptsQuery({
-        ...filters,
-        allergens: filters.allergens?.join(','),
-        limit: API_QUERY_PARAMS.juciestHomePageBlockAmount,
-        isJuiciest: true,
-    });
-
-    const {
-        data: { data: randomCategoryReciepts } = {},
-        isLoading: isLoadingRandom,
-        isError: isErrorRandom,
-    } = useRecipeByCategoryQuery(
-        {
-            id: randomCategory?.randomCategory.apiQureryId || '',
-            limit: API_QUERY_PARAMS.randomSectionAmount,
-        },
-        { skip: !randomCategory },
-    );
-
-    const { data: { data: recieptsByCategory } = {} } = useRecipeByCategoryQuery(
-        { id: apiQureryId },
-        { skip: isJuiciest },
-    );
-
-    const {
-        data: { data: categoryData, meta } = {},
-        isLoading: isLoadingCategory,
-        isError: isErrorCategory,
-        isFetching,
-    } = useCategoryRecieptsQuery({
-        ...filters,
-        allergens: filters.allergens?.join(','),
-        page,
-        subcategoriesIds: apiQureryId,
-        isJuiciest,
-    });
-
-    const {
-        data: recieptData,
-        isLoading: isLoadingReciept,
-        isError: isErrorReciept,
-    } = useRecieptQuery(recieptId || '', { skip: !recieptId });
-
-    return {
-        latestData,
-        juciestData,
-        randomCategoryReciepts,
-        recieptData,
-        recieptsByCategory,
-        categoryData,
-        meta,
-        isLoadingLatest,
-        isLoadingJuciest,
-        isLoadingRandom,
-        isLoadingCategory,
-        isLoadingReciept,
-        isErrorLatest,
-        isErrorJuciest,
-        isErrorRandom,
-        isErrorCategory,
-        isErrorReciept,
-        isFetchingLatest,
-        isFetchingJuiciest,
-        isFetching,
-    };
-};
-
-export type QueryParams = {
-    limit?: number;
-    page?: number;
-    allergens?: string;
-    searchString?: string;
-    meat?: string;
-    garnish?: string;
-    subcategoriesIds?: string;
-    isJuiciest?: boolean;
-    isLatest?: boolean;
-};
 
 export const buildRecieptsQuery = ({
     limit = API_QUERY_PARAMS.defaultRequestAmount,

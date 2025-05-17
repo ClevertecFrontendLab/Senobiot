@@ -1,4 +1,4 @@
-export * from './Alerts';
+export { AlertPopup } from './Alert';
 export * from './AllergensFilter';
 export * from './BlogsSection';
 export * from './BookmarksSection';
@@ -7,7 +7,8 @@ export * from './CategorySection';
 export * from './CategorySectionNext';
 export * from './Headers';
 export * from './Inputs';
-export * from './PageWrapper';
+export * from './PageSections';
+export * from './PageWrappers';
 export * from './ProfileNotification';
 export * from './RecieptCard';
 export * from './RecieptSection';

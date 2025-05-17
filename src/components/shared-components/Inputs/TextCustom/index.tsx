@@ -1,6 +1,8 @@
 import { Flex, Image, Input } from '@chakra-ui/react';
 import { ChangeEventHandler } from 'react';
 
+import { BASE_URL } from '~/constants';
+
 type TextInputCustomProps = {
     item: string;
     itemChange: ChangeEventHandler<HTMLInputElement>;
@@ -32,7 +34,7 @@ export const TextInputCustom: React.FC<TextInputCustomProps> = ({
             onClick={addItem}
             cursor='pointer'
             mx={3.5}
-            src='/icons/allergen-plus.svg'
+            src={`${BASE_URL}assets/images/icons/allergen-plus.svg`}
         />
     </Flex>
 );

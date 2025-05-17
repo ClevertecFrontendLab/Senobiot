@@ -3,8 +3,8 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 import { Filters } from '~/types';
 
 export type FiltersContextProps = {
-    openDrawer: () => void;
-    closeDrawer: () => void;
+    openFilters: () => void;
+    closeFilters: () => void;
     isOpen: boolean;
     filters: Filters;
     setFilters: Dispatch<SetStateAction<Filters>>;

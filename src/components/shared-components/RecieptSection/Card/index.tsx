@@ -1,9 +1,12 @@
+import { BASE_URL } from '~/constants';
 import { RecipeProps } from '~/types';
 
 import { RecieptCard } from '../../RecieptCard';
 
-export const RecieptSectionCard: React.FC<{ reciept: RecipeProps }> = ({ reciept }) => {
-    const { title, description, image, category, time, bookmarks, likes } = reciept;
+export const RecieptSectionCard: React.FC<{ recipe?: RecipeProps }> = ({ recipe }) => {
+    if (!recipe) return null;
+
+    const { title, description, image, category, time, bookmarks, likes } = recipe;
 
     return (
         <RecieptCard
@@ -32,13 +35,13 @@ export const RecieptSectionCard: React.FC<{ reciept: RecipeProps }> = ({ reciept
             stateIconSize={3.5}
             stateTextFontSize='14px'
             bookBtnText='Оценить рецепт'
-            bookBtnIconUrl='/icons/bookmarks/emoji-heart-eyes.svg'
+            bookBtnIconUrl={`${BASE_URL}assets/images/icons/bookmarks/emoji-heart-eyes.svg`}
             bookBtnTextDisplay={{ base: 'initial' }}
             bookBtnSize={{ base: '132px', xl: 'unset' }}
             coockingButtonText='Сохранить в закладки'
             coockingButtonBg='lime.400'
             coockingButtonTextColor='#000'
-            coockingButtonIconUrl='/icons/bookmarks/heart.svg'
+            coockingButtonIconUrl={`${BASE_URL}assets/images/icons/bookmarks/heart.svg`}
             noTimeButton={false}
             timeBtnText={time}
             cardBorder='none'

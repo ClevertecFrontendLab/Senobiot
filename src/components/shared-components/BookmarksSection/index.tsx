@@ -1,5 +1,6 @@
 import { Flex, FlexProps, HStack, ResponsiveValue, SystemStyleObject } from '@chakra-ui/react';
 
+import { BASE_URL } from '~/constants';
 import { CategoriesProps } from '~/types';
 
 import { ButtonCategory, ButtonCategoryProps } from '../Buttons';
@@ -27,8 +28,8 @@ export interface BookmarksSectionProps extends ButtonCategoryProps, StatItemProp
 }
 
 export const BookmarksSection: React.FC<BookmarksSectionProps> = ({
-    heartIcon = '/icons/bookmarks/heart.svg',
-    peopleIcon = '/icons/bookmarks/emoji-heart-eyes.svg',
+    heartIcon = `${BASE_URL}assets/images/icons/bookmarks/heart.svg`,
+    peopleIcon = `${BASE_URL}assets/images/icons/bookmarks/emoji-heart-eyes.svg`,
     noCategory = false,
     bookmarkJustify = 'space-between',
     bookmarkAlignItems = 'flex-start',
