@@ -14,7 +14,7 @@ export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
     const [isInvalidCode, setIsInvalidCode] = useState<boolean>(false);
     const [code, setCode] = useState('');
 
-    const [verify, { error }] = useVerifyOtpMutation();
+    const [verify, { error, isLoading }] = useVerifyOtpMutation();
 
     const handleVerify = (otpToken: string) => {
         verify({ email, otpToken });
@@ -57,6 +57,7 @@ export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
                 isInvalid={isInvalidCode}
                 value={code}
                 onChange={setCode}
+                isDisabled={isLoading}
             >
                 {Array(6)
                     .fill(0)
