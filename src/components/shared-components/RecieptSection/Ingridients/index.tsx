@@ -58,20 +58,16 @@ export const IngridientsSection: React.FC<{ data?: RecipeProps }> = ({ data }) =
                 </NumberInput>
             </Flex>
             <VStack w='100%'>
-                {data.ingredients.map((ingredient, index) => {
-                    const { title, count, measureUnit } = ingredient;
-
-                    return (
-                        <IngridientItem
-                            index={index}
-                            key={index}
-                            title={title}
-                            count={Number(count) * (portions / data.portions)}
-                            measureUnit={measureUnit}
-                            isGrayed={!!(index % 2)}
-                        />
-                    );
-                })}
+                {data.ingredients.map(({ title, count, measureUnit }, index) => (
+                    <IngridientItem
+                        index={index}
+                        key={index}
+                        title={title}
+                        count={Number(count) * (portions / data.portions)}
+                        measureUnit={measureUnit}
+                        isGrayed={!!(index % 2)}
+                    />
+                ))}
             </VStack>
         </VStack>
     );

@@ -2,19 +2,14 @@ import { Flex } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router';
 
-import { TEST_IDS } from '~/constants';
+import { EXCLUDED_ROUTES, TEST_IDS } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
-import { RecipeProps } from '~/types';
+import { PreviewRecipesSectionProps } from '~/types';
 
 import { ButtonViewMore, CategoryHeader } from '../..';
 import CategoryCard from '../../CategorySection/CategorySectionCard';
 
-interface JuiciestRecipesSectionProps {
-    recipes?: RecipeProps[];
-    markdownText?: string;
-}
-
-export const JuiciestRecipesSection: React.FC<JuiciestRecipesSectionProps> = ({
+export const JuiciestRecipesSection: React.FC<PreviewRecipesSectionProps> = ({
     recipes,
     markdownText,
 }) => {
@@ -27,21 +22,19 @@ export const JuiciestRecipesSection: React.FC<JuiciestRecipesSectionProps> = ({
                 <ButtonViewMore
                     display={{ base: 'none', xl: 'flex' }}
                     as={Link}
-                    to='/the-juiciest'
+                    to={`/${EXCLUDED_ROUTES.juiciest}`}
                     data-test-id={TEST_IDS.juciestLink}
                     title='Вся подборка'
                     noButtonIcon={false}
                 />
             </Flex>
             <Flex flexWrap='wrap' gap={4}>
-                {recipes.map((card, index) => {
-                    const { title, description, category, image, id, likes, bookmarks } = card;
-
-                    return (
+                {recipes.map(
+                    ({ title, description, category, image, id, likes, bookmarks }, index) => (
                         <CategoryCard
                             cardDataTestId={`food-card-${index}`}
                             img={image}
-                            key={index}
+                            key={id}
                             title={title}
                             description={description}
                             categories={category}
@@ -53,8 +46,8 @@ export const JuiciestRecipesSection: React.FC<JuiciestRecipesSectionProps> = ({
                             bookmarksBookmarksValue={bookmarks}
                             bookmarksLikesValue={likes}
                         />
-                    );
-                })}
+                    ),
+                )}
             </Flex>
             <Flex
                 justifyContent='center'

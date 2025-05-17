@@ -22,8 +22,8 @@ type SearchInputProps = {
     onSearch: () => void;
     onReset: () => void;
     onOpenFilters: () => void;
-    searchResultState: SEARCH_STATE | undefined;
-    isEnabled: boolean | undefined;
+    searchResultState: SEARCH_STATE;
+    isEnabled: boolean;
 };
 
 export const SearchInput: React.FC<SearchInputProps> = ({

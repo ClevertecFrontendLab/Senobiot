@@ -417,3 +417,14 @@ export type AuthPopupProps = {
     isOpen: boolean;
     onClose: () => void;
 };
+
+export type PreviewRecipesSectionProps = Partial<{
+    recipes: RecipeProps[];
+    markdownText: string;
+}>;
+
+export type RelevantKitchenSectionProps = Partial<{
+    title: string;
+    description: string;
+    data: RecipeProps[];
+}>;

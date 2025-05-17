@@ -1,17 +1,11 @@
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
-import { RecipeProps } from '~/types';
+import { RelevantKitchenSectionProps } from '~/types';
 
 import { CategoryHeader, TextRegular } from '../..';
 import CategorySectionNextCard from '../../CategorySectionNext/Card';
 import CardMinimized from '../../CategorySectionNext/CardMinimized';
-
-type RelevantKitchenSectionProps = {
-    title?: string;
-    description?: string;
-    data?: RecipeProps[];
-};
 
 export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
     title,

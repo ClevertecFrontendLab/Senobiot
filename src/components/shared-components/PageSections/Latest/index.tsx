@@ -3,16 +3,11 @@ import React from 'react';
 
 import { PAGE_TITLES } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
-import { RecipeProps } from '~/types';
+import { PreviewRecipesSectionProps } from '~/types';
 
 import { CategoryHeader, Slider } from '../..';
 
-interface LatestRecipesSectionProps {
-    recipes?: RecipeProps[];
-    markdownText?: string;
-}
-
-export const LatestRecipesSection: React.FC<LatestRecipesSectionProps> = ({
+export const LatestRecipesSection: React.FC<PreviewRecipesSectionProps> = ({
     recipes,
     markdownText,
 }) => {

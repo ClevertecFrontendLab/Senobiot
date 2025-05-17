@@ -7,6 +7,7 @@ import {
     EXCLUDED_ROUTES,
     INSCRIPTIONS,
     REGISTRATION_INPUT_LIST,
+    REGISTRATION_INPUTS_PER_STEP,
     TEST_IDS,
 } from '~/constants';
 import { useRegistrationForm } from '~/hooks';
@@ -65,7 +66,11 @@ const RegistrationPage: React.FC = () => {
                         onBlur={handleBlur}
                         showPassword={showPassword}
                         setShowPassword={handlePasswordShow}
-                        inputList={step === 1 ? inputList.slice(0, 3) : inputList.slice(-3)}
+                        inputList={
+                            step === 1
+                                ? inputList.slice(0, REGISTRATION_INPUTS_PER_STEP)
+                                : inputList.slice(-REGISTRATION_INPUTS_PER_STEP)
+                        }
                     />
                     {step === 1 ? (
                         <Button

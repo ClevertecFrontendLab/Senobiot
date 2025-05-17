@@ -12,15 +12,17 @@ import {
 
 import { useRecentCredentials } from './useRecentCredentials';
 
+const initialState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    login: '',
+    password: '',
+    passwordConfirm: '',
+};
+
 export const useRegistrationForm = () => {
-    const [formValues, setFormValues] = useState<FormValues>({
-        firstName: '',
-        lastName: '',
-        email: '',
-        login: '',
-        password: '',
-        passwordConfirm: '',
-    });
+    const [formValues, setFormValues] = useState<FormValues>(initialState);
     const [errors, setErrors] = useState<FormErrors>({});
     const [step, setStep] = useState(1);
     const [showPassword, setShowPassword] = useState<ShowPasswords>({});

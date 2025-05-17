@@ -343,3 +343,5 @@ export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
         autocomplete: 'new-password',
     },
 ];
+
+export const REGISTRATION_INPUTS_PER_STEP: number = 3;

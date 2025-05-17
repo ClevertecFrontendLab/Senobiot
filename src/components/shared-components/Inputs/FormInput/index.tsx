@@ -53,7 +53,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                     onMouseUp={() => setShowPassword(field, false)}
                     onMouseLeave={() => setShowPassword(field, false)}
                     sx={styles.getPasswordImgStyles(showPassword && showPassword[field])}
-                ></Button>
+                />
             )}
             {helper && <FormHelperText sx={styles.helper}>{helper}</FormHelperText>}
             <FormErrorMessage mt={1}>{error}</FormErrorMessage>
