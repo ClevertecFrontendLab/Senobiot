@@ -1,6 +1,7 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 
-import { ALERTS, POPUPS } from '~/constants';
+import { ALERTS, POPUPS, STATUS_CODES } from '~/constants';
+import { POSITIONS } from '~/constants/styles';
 import { Modals } from '~/types';
 
 import { authApi } from '..';
@@ -115,14 +116,14 @@ listener.startListening({
             data: { message },
         } = action.payload || {};
         const statusCode: number = Number(status);
-        console.log(action.payload);
-        if (statusCode === 400 && message) {
-            listenerApi.dispatch(setAppError({ title: message }));
+
+        if (statusCode === STATUS_CODES.BAD_REQUEST && message) {
+            listenerApi.dispatch(setAppError({ title: message, position: POSITIONS.alert }));
             listenerApi.dispatch(setAppLoader(false));
             return;
         }
 
-        const error = ALERTS.registration[statusCode] || {};
+        const error = { position: POSITIONS.alert, ...ALERTS.registration[statusCode] };
         listenerApi.dispatch(setAppError(error));
         listenerApi.dispatch(setAppLoader(false));
     },
@@ -133,16 +134,15 @@ listener.startListening({
     effect: (action, listenerApi) => {
         const { status } = action.payload || {};
         const statusCode: number = Number(status);
-
-        if (statusCode === 500) {
+        if (statusCode === STATUS_CODES.INTERNAL_SERVER_ERROR) {
             listenerApi.dispatch(setAppLoader(false));
             listenerApi.dispatch(setAppModal(Modals.AUTH_LOGIN_FAILED));
             return;
         }
-
         const error = {
             title: ALERTS.login[statusCode]?.title || '',
             body: ALERTS.login[statusCode]?.body || '',
+            position: POSITIONS.alert,
         };
         listenerApi.dispatch(setAppError(error));
         listenerApi.dispatch(setAppLoader(false));

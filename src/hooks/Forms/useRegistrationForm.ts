@@ -22,10 +22,19 @@ export const useRegistrationForm = () => {
         passwordConfirm: '',
     });
     const [errors, setErrors] = useState<FormErrors>({});
-    const [step, setStep] = useState<number>(1);
+    const [step, setStep] = useState(1);
     const [showPassword, setShowPassword] = useState<ShowPasswords>({});
     const [signUp] = useSignUpMutation();
     const { setRecentCredentials } = useRecentCredentials();
+    const validators: Record<keyof FormValues, (value: string, values?: FormValues) => string> = {
+        firstName: (value) => validateName(value),
+        lastName: (value) => validateName(value, false),
+        email: (value) => validateEmail(value),
+        login: (value) => validateLogin(value),
+        password: (value) => validatePassword(value),
+        passwordConfirm: (value, values) =>
+            values ? validateConfirmPassword(value, values.password) : '',
+    };
 
     const handleChange = (field: keyof FormValues, value: string) => {
         setFormValues((prev) => ({
@@ -50,16 +59,15 @@ export const useRegistrationForm = () => {
     };
 
     const getProgress = (): number => {
-        let validCount = 0;
+        const keys = Object.keys(formValues) as Array<keyof FormValues>;
+        let invalidCount = 0;
 
-        if (!validateName(formValues.firstName)) validCount++;
-        if (!validateName(formValues.lastName, false)) validCount++;
-        if (!validateEmail(formValues.email)) validCount++;
-        if (!validateLogin(formValues.login)) validCount++;
-        if (!validatePassword(formValues.password)) validCount++;
-        if (!validateConfirmPassword(formValues.passwordConfirm, formValues.password)) validCount++;
-
-        return (validCount / 6) * 100;
+        for (const key of keys) {
+            if (!validators[key](formValues[key], formValues)) {
+                invalidCount++;
+            }
+        }
+        return (invalidCount / keys.length) * 100;
     };
 
     const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {

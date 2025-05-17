@@ -1,5 +1,7 @@
 import { LoginInputsListProps, RegistrationInputsListProps, ResetnInputsListProps } from '~/types';
 
+export const BASE_URL = import.meta.env.BASE_URL;
+
 export const PAGE_TITLES = {
     home: 'Приятного аппетита!',
     slider: 'Новые рецепты',
@@ -129,6 +131,15 @@ export const API_QUERY_PARAMS = {
     sliderDefaultAmount: 10,
 } as const;
 
+export const STATUS_CODES = {
+    OK: 200,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR: 500,
+};
+
 export const ALERTS: {
     default: { title: string; body: string };
     login: Record<number, { title: string; body: string }>;
@@ -141,6 +152,7 @@ export const ALERTS: {
     login: {
         401: { title: 'Неверный логин или пароль', body: 'Попробуйте снова' },
         403: { title: 'E-mail не верифицирован', body: 'Проверьте почту и перейдите по ссылке' },
+        500: { title: 'Ошибка сервера', body: 'Попробуйте немного позже' },
     },
     registration: {
         500: { title: 'Ошибка сервера', body: 'Попробуйте немного позже' },
@@ -213,25 +225,25 @@ export const BUTTONS_TEXT = {
 export const BOTTOM_MENU_CONIG = [
     {
         name: 'Главная',
-        iconUrl: '/icons/bottom-menu/home.svg',
+        iconUrl: `${BASE_URL}assets/images/icons/bottom-menu/home.svg`,
         route: '',
         isActive: true,
     },
     {
         name: 'Поиск',
-        iconUrl: '/icons/bottom-menu/lense.svg',
+        iconUrl: `${BASE_URL}assets/images/icons/bottom-menu/lense.svg`,
         route: '',
         isActive: false,
     },
     {
         name: 'Записать',
-        iconUrl: '/icons/bottom-menu/pen.svg',
+        iconUrl: `${BASE_URL}assets/images/icons/bottom-menu/pen.svg`,
         route: '',
         isActive: false,
     },
     {
         name: 'Мой профиль',
-        iconUrl: '/avatars/avatar-4.png',
+        iconUrl: `${BASE_URL}assets/images/avatars/avatar-4.png`,
         route: '',
         isActive: false,
     },
@@ -308,7 +320,7 @@ export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
     {
         field: 'login',
         label: 'Логин для входа на сайт:',
-        // helper: 'Логин не менее 5 символов, только латиница',
+        helper: 'Логин не менее 5 символов, только латиница',
         placeholder: 'Логин',
         dataTestId: TEST_IDS.pages.signUp.secondStep.login,
         autocomplete: 'username',
@@ -318,7 +330,7 @@ export const REGISTRATION_INPUT_LIST: RegistrationInputsListProps[] = [
         label: 'Пароль:',
         type: 'password',
         placeholder: 'Пароль',
-        // helper: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
+        helper: 'Пароль не менее 8 символов, с заглавной буквой и цифрой',
         dataTestId: TEST_IDS.pages.signUp.secondStep.password,
         autocomplete: 'new-password',
     },

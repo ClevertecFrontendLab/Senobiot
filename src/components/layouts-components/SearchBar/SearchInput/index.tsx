@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { ChangeEvent } from 'react';
 
-import { PLACEHOLDERS, TEST_IDS } from '~/constants';
+import { BASE_URL, PLACEHOLDERS, TEST_IDS } from '~/constants';
 import { SEARCH_STATE } from '~/types';
 
 import * as styles from './SearchInput.styles';
@@ -41,7 +41,13 @@ export const SearchInput: React.FC<SearchInputProps> = ({
             <IconButton
                 data-test-id={TEST_IDS.filtersOpenButton}
                 onClick={onOpenFilters}
-                icon={<Image src='/icons/filter.svg' alt='filter' sx={styles.icon} />}
+                icon={
+                    <Image
+                        src={`${BASE_URL}assets/images/icons/filter.svg`}
+                        alt='filter'
+                        sx={styles.icon}
+                    />
+                }
                 aria-label='Filter'
                 sx={styles.filterButton}
             />

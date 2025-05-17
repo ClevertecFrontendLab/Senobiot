@@ -1,7 +1,7 @@
 import { Text, VStack } from '@chakra-ui/react';
 
 import { ButtonBlack, FormInput } from '~/components/shared-components';
-import { TEST_IDS } from '~/constants';
+import { BASE_URL, TEST_IDS } from '~/constants';
 import { useRestoreForm } from '~/hooks';
 import { AuthPopupProps } from '~/types';
 
@@ -45,7 +45,7 @@ export const RestoreByEmail: React.FC<AuthPopupProps> = ({ isOpen, onClose }) =>
             dataTestIdCloseButton={TEST_IDS.modals.restoreByEmail.closeButton}
             isOpen={isOpen}
             onClose={onClose}
-            imageSrc='/modals/modal-login-error.png'
+            imageSrc={`${BASE_URL}assets/images/modals/modal-login-error.png`}
             description={description}
             content={content}
             footer={footer}

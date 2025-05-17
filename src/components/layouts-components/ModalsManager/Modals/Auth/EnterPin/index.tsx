@@ -2,7 +2,7 @@ import { HStack, PinInput, PinInputField, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { TEST_IDS } from '~/constants';
+import { BASE_URL, STATUS_CODES, TEST_IDS } from '~/constants';
 import { useVerifyOtpMutation } from '~/redux';
 import { selectUserEmail } from '~/redux/selectors';
 import { AuthPopupProps } from '~/types';
@@ -11,7 +11,7 @@ import { ModalPopup } from '../../Default';
 
 export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
     const email = useSelector(selectUserEmail);
-    const [isInvalidCode, setIsInvalidCode] = useState<boolean>(false);
+    const [isInvalidCode, setIsInvalidCode] = useState(false);
     const [code, setCode] = useState('');
 
     const [verify, { error, isLoading }] = useVerifyOtpMutation();
@@ -23,15 +23,12 @@ export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
 
     useEffect(() => {
         if (error && 'status' in error) {
-            const { status } = error;
-            const statusCode: number = Number(status);
-
-            if (statusCode === 403) {
+            const { status: statusCode } = error;
+            if (statusCode === STATUS_CODES.FORBIDDEN) {
                 setIsInvalidCode(true);
                 setCode('');
             }
-
-            if (statusCode === 500) {
+            if (statusCode === STATUS_CODES.INTERNAL_SERVER_ERROR) {
                 setIsInvalidCode(false);
                 setCode('');
             }
@@ -76,7 +73,7 @@ export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
             header={isInvalidCode ? 'Неверный код' : ''}
             isOpen={isOpen}
             onClose={onClose}
-            imageSrc='/modals/modal-error.png'
+            imageSrc={`${BASE_URL}assets/images/modals/modal-restore-send.png`}
             description={description}
             footer={footer}
             content={content}

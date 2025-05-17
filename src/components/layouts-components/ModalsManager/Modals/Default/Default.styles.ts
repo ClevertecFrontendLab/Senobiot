@@ -10,9 +10,7 @@ export const content = {
     p: 8,
     borderRadius: 'md',
     justifyContent: 'space-between',
-    // zIndex: 199,
-    // '& .chakra-modal__content-container': { zIndex: 150 },
-    // '.chakra-modal__content-container': { zIndex: 150 },
+    fontFamily: 'Inter',
 };
 
 export const closeButton = {
@@ -20,13 +18,18 @@ export const closeButton = {
     borderRadius: '50%',
     top: 6,
     right: 6,
+    w: 6,
+    h: 6,
+    svg: {
+        w: 2.5,
+        h: 2.5,
+    },
 };
 
 export const image = {
     w: { base: '106px', xl: '208px' },
     h: { base: '106px', xl: '208px' },
     mx: 'auto',
-    // mb: 8,
 };
 
 export const header = {
@@ -62,6 +65,7 @@ export const footer = {
     a: {
         textDecoration: 'underline',
     },
+    textAlign: 'center',
 };
 
 export const body = {

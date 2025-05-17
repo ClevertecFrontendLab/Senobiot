@@ -1,7 +1,7 @@
 import { Flex, HStack, Image, Tab, TabList, Tabs, Text, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
-import { EXCLUDED_ROUTES } from '~/constants';
+import { BASE_URL, EXCLUDED_ROUTES } from '~/constants';
 
 import * as styles from './Auth.styles';
 
@@ -26,8 +26,16 @@ export const AuthPageWrapper: React.FC<AuthPageWrapperProps> = ({ children, page
         <VStack sx={styles.contentWrapper}>
             <VStack sx={styles.formWrapper}>
                 <HStack sx={styles.logoWrapper}>
-                    <Image sx={styles.logo} src='/logo-img.svg' alt='logo cup' />
-                    <Image sx={styles.logoText} src='/logo-text.svg' alt='logo text Yeedaa' />
+                    <Image
+                        sx={styles.logo}
+                        src={`${BASE_URL}assets/images/logo-img.svg`}
+                        alt='logo cup'
+                    />
+                    <Image
+                        sx={styles.logoText}
+                        src={`${BASE_URL}assets/images/logo-text.svg`}
+                        alt='logo text Yeedaa'
+                    />
                 </HStack>
                 <Tabs sx={styles.tabs} index={pageRoute === EXCLUDED_ROUTES.login ? 0 : 1}>
                     <TabList sx={styles.tablist}>

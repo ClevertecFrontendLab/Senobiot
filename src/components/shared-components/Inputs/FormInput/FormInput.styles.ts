@@ -1,10 +1,13 @@
 import { SystemStyleObject } from '@chakra-ui/react';
 
+import { BASE_URL } from '~/constants';
 import { BORDERS } from '~/constants/styles';
 
 export const getPasswordImgStyles = (showPassword: boolean = false): SystemStyleObject => ({
     position: 'relative',
-    bgImage: showPassword ? '/icons/password-show.svg' : '/icons/password-hide.svg',
+    bgImage: showPassword
+        ? `${BASE_URL}assets/images/icons/password-show.svg`
+        : `${BASE_URL}assets/images/icons/password-hide.svg`,
     bgRepeat: 'no-repeat',
     bgSize: 'cover',
     w: '18px',
@@ -36,4 +39,13 @@ export const input = {
         display: 'none',
     },
     pos: 'relative',
+    fontSize: '18px',
+    h: 12,
+};
+
+export const label = {
+    fontWeight: 400,
+    fontSize: '16px',
+    color: '#000',
+    mb: 1,
 };

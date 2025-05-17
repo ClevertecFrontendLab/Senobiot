@@ -25,6 +25,10 @@ export const WIDTHS: { [key: string]: number } = {
     burgerNavMenu: 344,
 };
 
+export const POSITIONS = {
+    alert: { left: { base: '50%', xl: 'calc(25% + 16px)', '2xl': 'calc(25% + 18px)' } },
+};
+
 export const HEIGHTS: { [key: string]: number } = {
     burgerNavMenu: 652,
 };

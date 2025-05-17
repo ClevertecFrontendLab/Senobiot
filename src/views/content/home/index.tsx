@@ -73,7 +73,7 @@ const HomePage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigation
     return (
         <ContentPageWrapper>
             {!filters.searchString && (isFetchingLatest || isFetchingJuiciest) && <Loader />}
-            {error && <AlertPopup onClose={resetError} />}
+            {error && <AlertPopup onClose={resetError} title={error.title} body={error.body} />}
 
             <SearchBar
                 searchResultState={searchResultState}

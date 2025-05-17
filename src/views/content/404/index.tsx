@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router';
 
 import { AlertPopup, ContentPageWrapper, SubtitleText } from '~/components/shared-components';
-import { PAGE_TITLES, TEST_IDS } from '~/constants';
+import { BASE_URL, PAGE_TITLES, TEST_IDS } from '~/constants';
 import { setAppError, userErrorSelector } from '~/redux/store/app-slice';
 
 const NotFoundPage: React.FC = () => {
@@ -26,7 +26,7 @@ const NotFoundPage: React.FC = () => {
                 mx='auto'
                 textAlign='center'
             >
-                <Image src='/404.png' mb={4}></Image>
+                <Image src={`${BASE_URL}assets/images/404.png`} mb={4}></Image>
                 <SubtitleText
                     titleHeading='h1'
                     titleTextFw={700}

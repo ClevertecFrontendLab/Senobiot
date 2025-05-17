@@ -1,9 +1,11 @@
+import { BASE_URL } from '~/constants';
+
 export const pageWrapper = {
     minH: '100vh',
     w: '100%',
     background: {
         base: 'linear-gradient(236.9deg, #EAFFC7 30.27%, #29813F 136.1%), #FFFFFF',
-        xl: 'url("auth-bg.webp") no-repeat  right center / 50% 100%, linear-gradient(236.9deg, #EAFFC7 30.27%, #29813F 136.1%), #FFFFFF',
+        xl: `url("${BASE_URL}assets/images/auth-bg.webp") no-repeat  right center / 50% 100%, linear-gradient(236.9deg, #EAFFC7 30.27%, #29813F 136.1%), #FFFFFF`,
     },
     p: { base: '72px 26px 26px', md: '140px 30px 30px', xl: '170px 30px 30px' },
 
@@ -27,7 +29,9 @@ export const copyrightWrapper = {
     '& > p': {
         fontSize: '12px',
         fontWeight: 600,
+        color: '#000',
     },
+
     '& > :last-child': {
         display: { base: 'none', xl: 'initial' },
     },

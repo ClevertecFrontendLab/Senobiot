@@ -70,7 +70,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
 
     return (
         <ContentPageWrapper pt={PADDINGS.pageRecieptTop}>
-            {error && <AlertPopup onClose={resetError} />}
+            {error && <AlertPopup onClose={resetError} title={error.title} body={error.body} />}
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
                 <RecieptSectionCard recipe={recipeData} />
                 <VStack

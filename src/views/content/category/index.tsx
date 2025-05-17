@@ -106,7 +106,7 @@ const CategoryPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ naviga
     return (
         <ContentPageWrapper>
             {!filters.searchString && isFetching && <Loader />}
-            {error && <AlertPopup onClose={resetError} />}
+            {error && <AlertPopup onClose={resetError} title={error.title} body={error.body} />}
             <SearchBar
                 searchResultState={searchResultState}
                 isLoading={!!filters.searchString && isFetching}

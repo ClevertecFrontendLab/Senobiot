@@ -1,6 +1,6 @@
 import { Link, Text } from '@chakra-ui/react';
 
-import { TEST_IDS } from '~/constants';
+import { BASE_URL, TEST_IDS } from '~/constants';
 import { AuthPopupProps } from '~/types';
 
 import { ModalPopup } from '../../Default';
@@ -24,7 +24,7 @@ export const VerificationFailed: React.FC<AuthPopupProps> = ({ isOpen, onClose }
             dataTestIdCloseButton={TEST_IDS.modals.verificationFailed.closeButton}
             isOpen={isOpen}
             onClose={onClose}
-            imageSrc='/modals/modal-error.png'
+            imageSrc={`${BASE_URL}assets/images/modals/modal-error.png`}
             header='Упс! Что-то пошло не так'
             description={description}
             footer={footer}

@@ -20,12 +20,12 @@ export const useSearchState = ({
     isError,
 }: UseSearchStateParams) => {
     const [searchResultState, setSearchResultState] = useState<SEARCH_STATE | undefined>(undefined);
-    const [markdownText, setMarkdownText] = useState<string | undefined>(undefined);
+    const [markdownText, setMarkdownText] = useState<string>('');
 
     useEffect(() => {
         if (searchString && isError) {
             setSearchResultState(SEARCH_STATE.ERROR);
-            setMarkdownText(undefined);
+            setMarkdownText('');
             return;
         }
 
@@ -40,10 +40,10 @@ export const useSearchState = ({
             setMarkdownText(searchString);
         } else if (searchString) {
             setSearchResultState(SEARCH_STATE.EMPTY);
-            setMarkdownText(undefined);
+            setMarkdownText('');
         } else {
             setSearchResultState(undefined);
-            setMarkdownText(undefined);
+            setMarkdownText('');
         }
     }, [searchString, categoryData, latestData, juiciestData, relevantData, isError]);
 

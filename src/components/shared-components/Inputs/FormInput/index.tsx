@@ -32,7 +32,7 @@ export const FormInput: React.FC<FormInputProps> = ({
 
     return (
         <FormControl isInvalid={!!error}>
-            <FormLabel mb={1}>{label}</FormLabel>
+            <FormLabel sx={styles.label}>{label}</FormLabel>
             <Input
                 type={
                     isPassword && showPassword ? (showPassword[field] ? 'text' : 'password') : type

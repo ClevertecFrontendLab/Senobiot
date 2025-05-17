@@ -23,7 +23,7 @@ import {
     SelectRegular,
     SwitchToggler,
 } from '~/components/shared-components';
-import { BUTTONS_TEXT, PLACEHOLDERS, TEST_IDS, TITLES } from '~/constants';
+import { BASE_URL, BUTTONS_TEXT, PLACEHOLDERS, TEST_IDS, TITLES } from '~/constants';
 import { useFilters } from '~/providers/Filters/useFilters';
 import { getCategories, getMeats, getSides } from '~/redux/selectors';
 
@@ -134,12 +134,11 @@ export const RecipeFilter: React.FC = () => {
                     data-test-id={TEST_IDS.filtersCloseButton}
                     sx={styles.closeButton}
                 >
-                    <Image src='/icons/close-filter-icon.svg'></Image>
+                    <Image src={`${BASE_URL}assets/images/icons/close-filter-icon.svg`}></Image>
                 </DrawerCloseButton>
                 <DrawerHeader sx={styles.header}>Фильтр</DrawerHeader>
                 <DrawerBody sx={styles.body}>
                     <VStack sx={styles.filtersWrapper}>
-                        {/* Категория */}
                         <VStack w='100%' position='relative'>
                             <SelectInnerTags
                                 dataTestId={TEST_IDS.filtersCategoryInput}
@@ -166,8 +165,6 @@ export const RecipeFilter: React.FC = () => {
                                 </VStack>
                             )}
                         </VStack>
-
-                        {/* Авторы */}
                         <VStack w='100%'>
                             <SelectRegular
                                 noResetButton={!selectedAuthors.length}
@@ -190,8 +187,6 @@ export const RecipeFilter: React.FC = () => {
                                 </VStack>
                             )}
                         </VStack>
-
-                        {/* meat */}
                         <Box mt={4} w='100%'>
                             <FilterTitle title={TITLES.filters.meat} />
                             {meats.map((meat, index) => (
@@ -206,8 +201,6 @@ export const RecipeFilter: React.FC = () => {
                                 />
                             ))}
                         </Box>
-
-                        {/* side */}
                         <Box mt={4} w='100%'>
                             <FilterTitle title={TITLES.filters.garnish} />
                             {sides.map((side, index) => (
@@ -223,8 +216,6 @@ export const RecipeFilter: React.FC = () => {
                                 />
                             ))}
                         </Box>
-
-                        {/* Allergens */}
                         <Box w='100%'>
                             <Flex sx={styles.allergensWrapper}>
                                 <SwitchToggler

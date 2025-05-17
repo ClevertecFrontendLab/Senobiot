@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router';
 
-import { EXCLUDED_ROUTES } from '~/constants';
+import { BASE_URL, EXCLUDED_ROUTES } from '~/constants';
 import { NavigationConfig } from '~/types';
 
 export const RouteGuard: React.FC<{
@@ -17,6 +17,10 @@ export const RouteGuard: React.FC<{
     }
 
     if (location === 'login') {
+        return <Navigate to='/' replace />;
+    }
+
+    if (location === BASE_URL) {
         return <Navigate to='/' replace />;
     }
 

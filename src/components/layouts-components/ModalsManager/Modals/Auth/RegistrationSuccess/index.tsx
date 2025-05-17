@@ -1,7 +1,7 @@
 import { Link, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
-import { EXCLUDED_ROUTES, TEST_IDS } from '~/constants';
+import { BASE_URL, EXCLUDED_ROUTES, TEST_IDS } from '~/constants';
 import { useRecentCredentials } from '~/hooks';
 
 import { ModalPopup } from '../../Default';
@@ -42,7 +42,7 @@ export const RegistrationSuccess: React.FC<AuthPopupProps> = ({ isOpen, onClose 
             dataTestIdCloseButton={TEST_IDS.modals.signUpSuccess.closeButton}
             isOpen={isOpen}
             onClose={handleClose}
-            imageSrc='/modals/modal-verification.png'
+            imageSrc={`${BASE_URL}assets/images/modals/modal-verification.png`}
             header='Остался последний шаг. Нужно верифицировать ваш e-mail'
             description={description}
             footer={footer}

@@ -1,4 +1,4 @@
-import { AlertStatus } from '@chakra-ui/react';
+import { AlertStatus, ResponsiveValue } from '@chakra-ui/react';
 import { MouseEventHandler } from 'react';
 
 export type RecipeProps = {
@@ -160,11 +160,6 @@ export enum SEARCH_STATE {
     ERROR = 'error-search',
 }
 
-// export type RelevantCategoryStateProps = {
-//     title: string;
-//     description?: string;
-// };
-
 export type CategoryMenuProps = {
     list: SubCategoryList[];
     activeSubcategory?: string;
@@ -180,6 +175,7 @@ export type AlertProps = {
     body?: string;
     status?: AlertStatus;
     noBody?: boolean;
+    position?: { left?: ResponsiveValue<string> };
 };
 
 export type BurgerNavMenuProps = {
@@ -379,12 +375,6 @@ export type SignUpResponse = {
     error?: string;
 };
 
-// export type SignInResponse = {
-//     statusCode: number;
-//     message: string;
-//     error?: string;
-// };
-
 export type useReciepeRequestsProps = {
     randomCategory?: AllCategories;
     isJuiciest?: boolean;
@@ -411,6 +401,7 @@ export type QueryParams = {
 export type AlertError = {
     title?: string;
     body?: string;
+    position?: { left?: ResponsiveValue<string> };
 };
 
 export enum Modals {

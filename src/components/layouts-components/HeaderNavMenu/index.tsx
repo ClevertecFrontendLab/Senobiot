@@ -23,7 +23,7 @@ import React from 'react';
 
 import { TextRegular, TitleText } from '~/components/shared-components';
 import { ProfileNotification } from '~/components/shared-components';
-import { TEST_IDS } from '~/constants';
+import { BASE_URL, TEST_IDS } from '~/constants';
 import { PADDINGS } from '~/constants/styles';
 
 import { BurgerNavMenu } from '../BurgerNavMenu';
@@ -81,7 +81,7 @@ export const HeaderNavMenu: React.FC = () => {
                         cursor='pointer'
                         minW={0}
                     >
-                        <Avatar size='md' src='/avatars/avatar-0.png' />
+                        <Avatar size='md' src={`${BASE_URL}assets/images/avatars/avatar-0.png`} />
                         <Flex
                             ml={3}
                             display='inline-flex'

@@ -18,7 +18,7 @@ import IngridientItem from './Item';
 export const IngridientsSection: React.FC<{ data?: RecipeProps }> = ({ data }) => {
     const [portions, setPortions] = useState<number>(data?.portions ?? 1);
 
-    if (!data || !data.portions || !data.ingredients?.length) {
+    if (!data?.portions || !data.ingredients?.length) {
         return null;
     }
 
@@ -66,7 +66,7 @@ export const IngridientsSection: React.FC<{ data?: RecipeProps }> = ({ data }) =
                             index={index}
                             key={index}
                             title={title}
-                            count={+count * (portions / data.portions)}
+                            count={Number(count) * (portions / data.portions)}
                             measureUnit={measureUnit}
                             isGrayed={!!(index % 2)}
                         />

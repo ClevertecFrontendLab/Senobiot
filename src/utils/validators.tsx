@@ -8,7 +8,6 @@ export const validateName = (value: string, isFirstName: boolean = true): string
 
 export const validateEmail = (value: string): string => {
     if (!value) return 'Введите e-mail';
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (value.length > 50) return 'Максимальная длина 50 символов';
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(value)) return 'Введите корректный e-mail';
