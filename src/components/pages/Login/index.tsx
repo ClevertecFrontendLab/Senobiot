@@ -56,13 +56,6 @@ const LoginPage: React.FC = () => {
                             autocomplete={e.autocomplete}
                         />
                     ))}
-                    <Link
-                        onClick={handleRestore}
-                        sx={styles.restore}
-                        data-test-id={TEST_IDS.pages.signIn.forgotLink}
-                    >
-                        {INSCRIPTIONS.loginRemember}
-                    </Link>
                     <Button
                         data-test-id={TEST_IDS.pages.signIn.submitButton}
                         sx={styles.buttonLogin}
@@ -70,6 +63,13 @@ const LoginPage: React.FC = () => {
                     >
                         {BUTTONS_TEXT.login}
                     </Button>
+                    <Link
+                        onClick={handleRestore}
+                        sx={styles.restore}
+                        data-test-id={TEST_IDS.pages.signIn.forgotLink}
+                    >
+                        {INSCRIPTIONS.loginRemember}
+                    </Link>
                 </VStack>
             </form>
         </AuthPageWrapper>

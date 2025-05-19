@@ -41,7 +41,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                 placeholder={placeholder}
                 onChange={(e) => onChange(field, e.target.value)}
                 onBlur={(e) => onBlur(field, e.target.value)}
-                sx={styles.input}
+                sx={styles.getInputStyles(isPassword)}
                 autoComplete={autocomplete}
                 data-test-id={dataTestId}
             />

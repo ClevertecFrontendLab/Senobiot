@@ -16,7 +16,7 @@ export const getPasswordImgStyles = (showPassword: boolean = false): SystemStyle
     h: '18px',
     pos: 'absolute',
     p: 0,
-    top: 10,
+    top: '44px',
     right: 4,
     _hover: { backgrounColor: 'none' },
     _active: { backgrounColor: 'none' },
@@ -29,10 +29,11 @@ export const helper = {
     color: 'blackAlpha.700',
 };
 
-export const input = {
+export const getInputStyles = (isPassword: boolean = false): SystemStyleObject => ({
     _placeholder: {
         color: 'lime.800',
     },
+    color: 'lime.800',
     bg: '#fff',
     border: BORDERS.lime,
     '::-ms-reveal': {
@@ -41,7 +42,8 @@ export const input = {
     pos: 'relative',
     fontSize: '18px',
     h: 12,
-};
+    pr: isPassword ? 9 : 'auto',
+});
 
 export const label = {
     fontWeight: 400,

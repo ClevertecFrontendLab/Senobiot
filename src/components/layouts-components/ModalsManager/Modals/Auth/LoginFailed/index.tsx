@@ -28,7 +28,7 @@ export const LoginFailed: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
             imageSrc={`${BASE_URL}assets/images/modals/modal-login-error.png`}
             header='Вход не выполнен'
             description={
-                <Text>
+                <Text color='blackAlpha.700'>
                     Что-то пошло не так.
                     <br />
                     Попробуйте еще раз

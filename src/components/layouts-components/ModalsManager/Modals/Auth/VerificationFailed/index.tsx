@@ -7,7 +7,7 @@ import { ModalPopup } from '../../Default';
 
 export const VerificationFailed: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
     const description = (
-        <Text>
+        <Text color='blackAlpha.700'>
             Ваша ссылка для верификации недействительна. Попробуйте зарегистрироваться снова.
         </Text>
     );

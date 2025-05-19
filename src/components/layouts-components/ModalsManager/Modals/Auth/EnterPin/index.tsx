@@ -60,6 +60,8 @@ export const EnterPin: React.FC<AuthPopupProps> = ({ isOpen, onClose }) => {
                     .fill(0)
                     .map((_, i) => (
                         <PinInputField
+                            minW={10}
+                            _placeholder={{ color: 'lime.800', fontSize: '20px' }}
                             key={i}
                             data-test-id={`${TEST_IDS.modals.otp.digitInput}${i + 1}`}
                         />
