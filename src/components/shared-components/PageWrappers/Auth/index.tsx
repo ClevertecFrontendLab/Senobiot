@@ -8,11 +8,11 @@ import * as styles from './Auth.styles';
 const tabsList = [
     {
         label: 'Вход на сайт',
-        route: '/login',
+        route: `/${EXCLUDED_ROUTES.login}`,
     },
     {
         label: 'Регистрация',
-        route: '/registration',
+        route: `/${EXCLUDED_ROUTES.registration}`,
     },
 ];
 

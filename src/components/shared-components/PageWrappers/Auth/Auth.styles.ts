@@ -7,9 +7,9 @@ export const pageWrapper = {
         base: 'linear-gradient(236.9deg, #EAFFC7 30.27%, #29813F 136.1%), #FFFFFF',
         xl: `url("${BASE_URL}assets/images/auth-bg.webp") no-repeat  right center / 50% 100%, linear-gradient(236.9deg, #EAFFC7 30.27%, #29813F 136.1%), #FFFFFF`,
     },
-    p: { base: '72px 26px 26px', md: '140px 30px 30px', xl: '170px 30px 30px' },
+    px: { base: '26px', md: '30px' },
 
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'flex-start',
     position: 'relative',
 };
@@ -17,6 +17,8 @@ export const pageWrapper = {
 export const contentWrapper = {
     w: { base: '100%', xl: '50%' },
     ml: 0,
+    flexGrow: 1,
+    justifyContent: 'center',
 };
 
 export const formWrapper = {
@@ -24,6 +26,7 @@ export const formWrapper = {
 };
 
 export const copyrightWrapper = {
+    mb: { base: 4, xl: '30px' },
     w: '100%',
     justifyContent: 'space-between',
     '& > p': {

@@ -8,15 +8,11 @@ import { PreviewRecipesSectionProps } from '~/types';
 import { CategoryHeader, Slider } from '../..';
 
 export const LatestRecipesSection: React.FC<PreviewRecipesSectionProps> = ({
-    recipes,
+    recipes = [],
     markdownText,
-}) => {
-    if (!recipes?.length) return null;
-
-    return (
-        <Flex mb={PADDINGS.subsectionHeaderMb} direction='column' w='100%'>
-            <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title={PAGE_TITLES.slider} />
-            <Slider markdownText={markdownText} slides={recipes} />
-        </Flex>
-    );
-};
+}) => (
+    <Flex mb={PADDINGS.subsectionHeaderMb} direction='column' w='100%'>
+        <CategoryHeader mb={PADDINGS.subsectionHeaderMb} title={PAGE_TITLES.slider} />
+        <Slider markdownText={markdownText} slides={recipes} />
+    </Flex>
+);

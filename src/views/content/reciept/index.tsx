@@ -72,7 +72,7 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
         <ContentPageWrapper pt={PADDINGS.pageRecieptTop}>
             {error && <AlertPopup onClose={resetError} title={error.title} body={error.body} />}
             <VStack px={{ base: 4, md: 5, xl: 0 }} m={0} gap={0} w='100%'>
-                <RecieptSectionCard recipe={recipeData} />
+                {recipeData && <RecieptSectionCard recipe={recipeData} />}
                 <VStack
                     gap={{ base: 6, xl: 8 }}
                     maxW='668px'
@@ -81,9 +81,9 @@ const RecieptPage: React.FC<{ navigationConfig: NavigationConfig }> = ({ navigat
                     mb={{ base: 10, xl: 14 }}
                     w='100%'
                 >
-                    <NutritionInfo nutritionValue={recipeData?.nutritionValue} />
+                    {recipeData && <NutritionInfo nutritionValue={recipeData.nutritionValue} />}
                     <IngridientsSection data={recipeData} />
-                    <CookingSteps data={recipeData} />
+                    {recipeData?.steps.length && <CookingSteps steps={recipeData.steps} />}
                     <AuthorCard authorData={authorData} />
                 </VStack>
                 <LatestRecipesSection recipes={latestData} />

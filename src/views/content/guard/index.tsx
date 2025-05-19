@@ -10,13 +10,13 @@ export const RouteGuard: React.FC<{
     const { pathname } = useLocation();
     const { navigationTree } = navigationConfig;
 
-    const location = pathname.split('/').filter((e) => e)[0];
+    const location = pathname.split('/').filter(Boolean)[0];
 
-    if (location === 'not-found') {
+    if (location === EXCLUDED_ROUTES.notFound) {
         return children;
     }
 
-    if (location === 'login') {
+    if (location === EXCLUDED_ROUTES.login) {
         return <Navigate to='/' replace />;
     }
 
@@ -30,7 +30,7 @@ export const RouteGuard: React.FC<{
         navigationTree.find((e) => e.categoryEn === location);
 
     if (!isValidRoute) {
-        return <Navigate to='/not-found' replace />;
+        return <Navigate to={`/${EXCLUDED_ROUTES.notFound}`} replace />;
     }
 
     return children;

@@ -11,6 +11,7 @@ export const PAGE_TITLES = {
 
 export const EXCLUDED_ROUTES = {
     registration: 'registration',
+    verification: 'verification',
     login: 'login',
     juiciest: 'the-juiciest',
     notFound: 'not-found',
