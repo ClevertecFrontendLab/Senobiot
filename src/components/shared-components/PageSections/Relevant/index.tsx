@@ -4,8 +4,8 @@ import React from 'react';
 import { RelevantKitchenSectionProps } from '~/types';
 
 import { CategoryHeader, TextRegular } from '../..';
-import CategorySectionNextCard from '../../CategorySectionNext/Card';
-import CardMinimized from '../../CategorySectionNext/CardMinimized';
+import CategorySectionNextCard from './Card';
+import CardMinimized from './CardMinimized';
 
 export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
     title,

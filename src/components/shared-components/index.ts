@@ -4,7 +4,6 @@ export * from './BlogsSection';
 export * from './BookmarksSection';
 export * from './Buttons';
 export * from './CategorySection';
-export * from './CategorySectionNext';
 export * from './Headers';
 export * from './Inputs';
 export * from './PageSections';
