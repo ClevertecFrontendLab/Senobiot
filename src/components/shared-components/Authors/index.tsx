@@ -1,6 +1,7 @@
 import { Avatar, Flex, HStack, VStack } from '@chakra-ui/react';
 import React from 'react';
 
+import { BASE_URL } from '~/constants';
 import { AuthorCardProps } from '~/types';
 
 import { StatItem, SubscribeButton, TextRegular } from '..';
@@ -62,7 +63,7 @@ export const AuthorCard: React.FC<{ authorData: AuthorCardProps }> = ({
                 >
                     <SubscribeButton />
                     <StatItem
-                        statIconUrl='/icons/subscribers.svg'
+                        statIconUrl={`${BASE_URL}assets/images/icons/subscribers.svg`}
                         stateIconSize={3}
                         stateTextFontSize='12px'
                         statValue={subscribers}

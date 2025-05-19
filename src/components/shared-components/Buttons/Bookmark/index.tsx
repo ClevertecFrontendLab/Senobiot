@@ -1,5 +1,6 @@
 import { Button, Image, ResponsiveValue, Text } from '@chakra-ui/react';
 
+import { BASE_URL } from '~/constants';
 import { BORDERS } from '~/constants/styles';
 
 export type ButtonBookBtnProps = {
@@ -27,7 +28,7 @@ export const ButtonbookBtn: React.FC<ButtonBookBtnProps> = ({
     bookBtnBorder = BORDERS.main,
     bookBtnBorderRadius = 'md',
     bookBtnVariant = 'outline',
-    bookBtnIconUrl = '/icons/bookmarks/heart.svg',
+    bookBtnIconUrl = `${BASE_URL}assets/images/icons/bookmarks/heart.svg`,
     bookBtnIconAltText = 'Сохранить',
     bookBtnIconMarginInlineEnd = { base: 0, xl: 2.4375 },
     bookBtnIconsize = { base: 3, xl: 3.5 },

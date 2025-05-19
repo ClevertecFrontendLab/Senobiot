@@ -1,6 +1,8 @@
 import { Flex, ResponsiveValue, Stack } from '@chakra-ui/react';
 import React from 'react';
 
+import { BASE_URL } from '~/constants';
+
 import { StatItem, StatItemProps } from '../';
 
 interface ProfileNotificationProps extends StatItemProps {
@@ -50,19 +52,19 @@ export const ProfileNotification: React.FC<ProfileNotificationProps> = ({
         <Stack direction={stackDirection} spacing={gap}>
             <StatItem
                 {...props}
-                statIconUrl='/icons/bookmarks/heart.svg'
+                statIconUrl={`${BASE_URL}assets/images/icons/bookmarks/heart.svg`}
                 statValue={bookmarksValue}
                 statIconAltText='heart'
             />
             <StatItem
                 {...props}
-                statIconUrl='/icons/bookmarks/pople.svg'
+                statIconUrl={`${BASE_URL}assets/images/icons/bookmarks/pople.svg`}
                 statValue={peopleValue}
                 statIconAltText='people'
             />
             <StatItem
                 {...props}
-                statIconUrl='/icons/bookmarks/emoji-heart-eyes.svg'
+                statIconUrl={`${BASE_URL}assets/images/icons/bookmarks/emoji-heart-eyes.svg`}
                 statValue={likesValue}
                 statIconAltText='face'
             />

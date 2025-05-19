@@ -19,8 +19,8 @@ export const FiltersProvider: React.FC<DrawerFiltersProviderProps> = ({
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const value: FiltersContextProps = {
-        openDrawer: onOpen,
-        closeDrawer: onClose,
+        openFilters: onOpen,
+        closeFilters: onClose,
         isOpen,
         filters,
         setFilters,

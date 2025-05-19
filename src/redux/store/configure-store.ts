@@ -1,22 +1,27 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { keysReducer } from '~/redux/reducers/keys';
-
-import { apiSlice } from '../query/create-api';
-import { navigationReducer } from '../reducers';
+import { authApi, recipesApi } from '..';
+import { listener } from '../middlewares/listener';
+import { authReducer, keysReducer, navigationReducer } from '../reducers';
 import appReducer, { appSlice } from './app-slice';
 
 const isProduction = false;
 const rootReducer = combineReducers({
     [appSlice.name]: appReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
+    [recipesApi.reducerPath]: recipesApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
     keys: keysReducer,
     navigation: navigationReducer,
+    auth: authReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware()
+            .prepend(listener.middleware)
+            .concat(recipesApi.middleware)
+            .concat(authApi.middleware),
     devTools: !isProduction,
 });

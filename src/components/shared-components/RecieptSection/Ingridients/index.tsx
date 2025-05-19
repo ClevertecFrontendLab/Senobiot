@@ -11,20 +11,16 @@ import {
 import React, { useState } from 'react';
 
 import { TEST_IDS } from '~/constants';
-import { Ingredients } from '~/types';
+import { RecipeProps } from '~/types';
 
 import IngridientItem from './Item';
 
-type IngridientsProps = {
-    ingredients: Ingredients[];
-    defaultPortions: number;
-};
+export const IngridientsSection: React.FC<{ data?: RecipeProps }> = ({ data }) => {
+    const [portions, setPortions] = useState<number>(data?.portions ?? 1);
 
-export const IngridientsSection: React.FC<IngridientsProps> = ({
-    ingredients,
-    defaultPortions,
-}) => {
-    const [portions, setPortions] = useState<number>(defaultPortions);
+    if (!data?.portions || !data.ingredients?.length) {
+        return null;
+    }
 
     return (
         <VStack w='100%'>
@@ -62,20 +58,16 @@ export const IngridientsSection: React.FC<IngridientsProps> = ({
                 </NumberInput>
             </Flex>
             <VStack w='100%'>
-                {ingredients.map((ingredient, index) => {
-                    const { title, count, measureUnit } = ingredient;
-
-                    return (
-                        <IngridientItem
-                            index={index}
-                            key={index}
-                            title={title}
-                            count={+count * (portions / defaultPortions)}
-                            measureUnit={measureUnit}
-                            isGrayed={!!(index % 2)}
-                        />
-                    );
-                })}
+                {data.ingredients.map(({ title, count, measureUnit }, index) => (
+                    <IngridientItem
+                        index={index}
+                        key={index}
+                        title={title}
+                        count={Number(count) * (portions / data.portions)}
+                        measureUnit={measureUnit}
+                        isGrayed={!!(index % 2)}
+                    />
+                ))}
             </VStack>
         </VStack>
     );

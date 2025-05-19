@@ -1,22 +1,24 @@
-import { Box, Flex, ResponsiveValue, Tag, TagCloseButton, TagLabel, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 import { MouseEventHandler } from 'react';
 
-import { BORDERS } from '~/constants/styles';
+import { PLACEHOLDERS } from '~/constants';
 
 import { ExpandButton, ResetButton } from '../SelectActionButons';
+import { getWrapperStyles, inputStyles, tagStyles } from './InnerTags.styles';
 
 type SelectInnerTagsProps = {
+    toggleDropdown: MouseEventHandler<HTMLDivElement>;
+    toggleTag?: MouseEventHandler<HTMLButtonElement>;
+    onReset?: React.MouseEventHandler<HTMLButtonElement>;
     options?: string[];
     placeholder?: string;
     isOpen?: boolean;
     noResetButton?: boolean;
     noTagCloseButton?: boolean;
-    toggleDropdown: MouseEventHandler<HTMLDivElement>;
-    toggleTag?: MouseEventHandler<HTMLButtonElement>;
-    onReset?: React.MouseEventHandler<HTMLButtonElement>;
     dataTestAllergenTag?: string;
+    dataTestIdToggler?: string;
+    isDisabled?: boolean;
     dataTestId?: string;
-    width?: ResponsiveValue<string>;
 };
 
 export const SelectInnerTags: React.FC<SelectInnerTagsProps> = ({
@@ -27,40 +29,21 @@ export const SelectInnerTags: React.FC<SelectInnerTagsProps> = ({
     onReset,
     noResetButton = false,
     noTagCloseButton = false,
-    placeholder = 'Выберите из списка...',
+    placeholder = PLACEHOLDERS.allergens,
     dataTestAllergenTag,
-    width,
+    dataTestIdToggler,
     dataTestId,
+    isDisabled,
 }) => (
     <Box
         data-test-id={dataTestId}
-        w={width}
-        p={2}
-        pr={10}
-        border='1px solid'
-        borderColor={isOpen || options?.length ? 'lime.400' : '#ccc'}
-        borderRadius='md'
-        cursor='pointer'
-        _focus={{ borderColor: 'lime.400' }}
-        _hover={{ borderColor: 'lime.400' }}
+        sx={getWrapperStyles(isOpen, options, false)}
         onClick={toggleDropdown}
     >
         {options?.length > 0 ? (
-            <Flex gap={2} wrap='wrap'>
+            <Flex gap={2} wrap='wrap' data-test-id={dataTestIdToggler}>
                 {options.map((option) => (
-                    <Tag
-                        data-test-id={dataTestAllergenTag}
-                        key={option}
-                        variant='outline'
-                        border={BORDERS.allergenTag}
-                        color='lime.600'
-                        fontSize='12px'
-                        pt={0.5}
-                        fontWeight={500}
-                        fontFamily='Inter'
-                        h='20px'
-                        boxShadow={0}
-                    >
+                    <Tag data-test-id={dataTestAllergenTag} key={option} sx={tagStyles}>
                         <TagLabel>{option}</TagLabel>
                         {!noTagCloseButton && <TagCloseButton onClick={toggleTag} />}
                     </Tag>
@@ -68,7 +51,9 @@ export const SelectInnerTags: React.FC<SelectInnerTagsProps> = ({
                 {!noResetButton && <ResetButton onReset={onReset} />}
             </Flex>
         ) : (
-            <Text color='blackAlpha.700'>{placeholder}</Text>
+            <Button isDisabled={isDisabled} data-test-id={dataTestIdToggler} sx={inputStyles}>
+                {placeholder}
+            </Button>
         )}
         <ExpandButton isOpen={isOpen} />
     </Box>

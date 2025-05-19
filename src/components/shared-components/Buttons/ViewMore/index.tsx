@@ -2,6 +2,8 @@ import { Button, ButtonProps, Image, ResponsiveValue } from '@chakra-ui/react';
 import React from 'react';
 import { LinkProps } from 'react-router';
 
+import { BASE_URL } from '~/constants';
+
 interface ButtonViewMoreProps extends ButtonProps {
     title: string;
     noButtonIcon?: boolean;
@@ -26,7 +28,12 @@ export const ButtonViewMore: React.FC<ButtonViewMoreProps> = ({
         py={2}
         rightIcon={
             noButtonIcon ? undefined : (
-                <Image src='/icons/arrow-right.svg' alt='arrow right' boxSize={4} mt={1} />
+                <Image
+                    src={`${BASE_URL}assets/images/icons/arrow-right.svg`}
+                    alt='arrow right'
+                    boxSize={4}
+                    mt={1}
+                />
             )
         }
         _hover={{

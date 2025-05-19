@@ -1,44 +1,78 @@
-import { Input } from '@chakra-ui/react';
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { SearchIcon } from '@chakra-ui/icons';
+import {
+    Button,
+    IconButton,
+    Image,
+    Input,
+    InputGroup,
+    InputLeftElement,
+    InputRightElement,
+} from '@chakra-ui/react';
+import { ChangeEvent } from 'react';
 
-import { BORDERS } from '~/constants/styles';
-import { SearchInputProps } from '~/types';
+import { BASE_URL, PLACEHOLDERS, TEST_IDS } from '~/constants';
+import { SEARCH_STATE } from '~/types';
 
-const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
-    const [inputValue, setInputValue] = useState('');
+import * as styles from './SearchInput.styles';
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value);
-    };
-
-    const isEnabled = inputValue.trim().length >= 3;
-
-    const handleSearch = () => {
-        if (isEnabled) {
-            onSearch(inputValue.trim());
-        }
-    };
-
-    const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (isEnabled && e.key === 'Enter') {
-            handleSearch();
-        }
-    };
-
-    return (
-        <Input
-            onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
-            borderRadius={6}
-            display='flex'
-            border={BORDERS.main}
-            pl={3}
-            placeholder='Название или ингредиент...'
-            size={{ base: 'sm', xl: 'lg' }}
-            _placeholder={{ color: '#134B00' }}
-            maxWidth='auto'
-        />
-    );
+type SearchInputProps = {
+    inputValue: string;
+    onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onSearch: () => void;
+    onReset: () => void;
+    onOpenFilters: () => void;
+    searchResultState: SEARCH_STATE;
+    isEnabled: boolean;
 };
 
-export default SearchInput;
+export const SearchInput: React.FC<SearchInputProps> = ({
+    inputValue,
+    onInputChange,
+    onKeyDown,
+    onSearch,
+    onReset,
+    onOpenFilters,
+    searchResultState,
+    isEnabled = false,
+}) => (
+    <InputGroup display='flex' alignItems='center'>
+        <InputLeftElement sx={styles.filterButtonWrapper}>
+            <IconButton
+                data-test-id={TEST_IDS.filtersOpenButton}
+                onClick={onOpenFilters}
+                icon={
+                    <Image
+                        src={`${BASE_URL}assets/images/icons/filter.svg`}
+                        alt='filter'
+                        sx={styles.icon}
+                    />
+                }
+                aria-label='Filter'
+                sx={styles.filterButton}
+            />
+        </InputLeftElement>
+        <Input
+            data-test-id={TEST_IDS.searchInput}
+            value={inputValue}
+            onChange={onInputChange}
+            onKeyDown={onKeyDown}
+            sx={styles.getInputStyles(searchResultState)}
+            placeholder={PLACEHOLDERS.search}
+        />
+        <InputRightElement display='flex'>
+            <IconButton
+                data-test-id={TEST_IDS.searchButton}
+                onClick={onSearch}
+                icon={<SearchIcon sx={styles.icon} />}
+                aria-label='Search'
+                sx={styles.getSearchButtonStyles(isEnabled)}
+            />
+            {inputValue && (
+                <Button onClick={onReset} sx={styles.resetButton}>
+                    ✕
+                </Button>
+            )}
+        </InputRightElement>
+    </InputGroup>
+);
